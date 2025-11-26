@@ -26,6 +26,8 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [selectedPhase, setSelectedPhase] = useState<Phase>("school");
   
   // Mock user quota - in production, this would come from backend
   const [userQuota] = useState<UserQuota>({
@@ -55,7 +57,8 @@ const Index = () => {
   };
 
   const handlePhaseClick = (phase: Phase) => {
-    navigate(`/leaderboard/${phase}`);
+    setSelectedPhase(phase);
+    setShowLeaderboard(true);
   };
 
   const phaseConcerns = concerns.filter((c) => c.phase === currentPhase);
@@ -142,10 +145,82 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="mb-6 space-y-4">
-          <h2 className="text-3xl font-bold text-foreground">
-            School Phase Concerns
-          </h2>
+        {showLeaderboard ? (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-3xl font-bold text-foreground">
+                {selectedPhase.charAt(0).toUpperCase() + selectedPhase.slice(1)} Phase Leaderboard
+              </h2>
+              <Button
+                variant="outline"
+                onClick={() => setShowLeaderboard(false)}
+                className="gap-2"
+              >
+                Back to Forum
+              </Button>
+            </div>
+            <p className="text-muted-foreground">
+              Top concerns ranked by community votes
+            </p>
+            
+            <div className="space-y-4">
+              {mockConcerns
+                .filter((c) => c.phase === selectedPhase)
+                .sort((a, b) => b.votes - a.votes)
+                .map((concern, index) => {
+                  const isTopThree = index < 3;
+                  const getMedalIcon = () => {
+                    if (index === 0) return "🥇";
+                    if (index === 1) return "🥈";
+                    if (index === 2) return "🥉";
+                    return null;
+                  };
+
+                  return (
+                    <div
+                      key={concern.id}
+                      className={`bg-card border rounded-lg p-6 transition-all hover:shadow-lg cursor-pointer ${
+                        isTopThree ? "border-2 border-primary bg-primary/5" : "border-border"
+                      }`}
+                      onClick={() => navigate(`/concern/${concern.id}`)}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="flex flex-col items-center gap-1 min-w-[60px]">
+                          {getMedalIcon() ? (
+                            <div className="text-3xl">{getMedalIcon()}</div>
+                          ) : (
+                            <div className="text-2xl font-bold text-muted-foreground">
+                              #{index + 1}
+                            </div>
+                          )}
+                          <div className="text-sm text-muted-foreground">
+                            {concern.votes} votes
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-semibold mb-2">{concern.title}</h3>
+                          <p className="text-muted-foreground line-clamp-2 mb-3">
+                            {concern.description}
+                          </p>
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                            <span>{concern.replies.length} replies</span>
+                            <span>
+                              {new Date(concern.timestamp).toLocaleDateString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="mb-6 space-y-4">
+              <h2 className="text-3xl font-bold text-foreground">
+                School Phase Concerns
+              </h2>
           
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
@@ -208,11 +283,13 @@ const Index = () => {
           ))}
         </div>
 
-        {filteredConcerns.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-muted-foreground text-lg mb-4">No concerns in this category yet.</p>
-            <p className="text-muted-foreground">Be the first to share a concern!</p>
-          </div>
+            {filteredConcerns.length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-muted-foreground text-lg mb-4">No concerns in this category yet.</p>
+                <p className="text-muted-foreground">Be the first to share a concern!</p>
+              </div>
+            )}
+          </>
         )}
       </main>
     </div>
