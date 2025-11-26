@@ -1,7 +1,14 @@
 import { Phase } from "@/types/concern";
 import { cn } from "@/lib/utils";
-import { Calendar } from "lucide-react";
+import { Calendar, Trophy } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { useNavigate } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PhaseTimelineProps {
   currentPhase: Phase;
@@ -30,6 +37,7 @@ export const PhaseTimeline = ({
   onSliderChange,
   isSimulating = false
 }: PhaseTimelineProps) => {
+  const navigate = useNavigate();
   const currentIndex = phases.findIndex((p) => p.key === currentPhase);
   const today = new Date();
   const actualDaysPassed = Math.floor((today.getTime() - phaseStartDate.getTime()) / (1000 * 60 * 60 * 24));
@@ -52,13 +60,29 @@ export const PhaseTimeline = ({
         <h3 className="text-lg font-semibold text-foreground">
           {phases[currentIndex].label}
         </h3>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Calendar className="h-4 w-4" />
-          <span className="font-medium">
-            {isSimulating 
-              ? `Day ${daysIntoCurrentPhase + 1} of 30` 
-              : `${daysRemaining} ${daysRemaining === 1 ? 'day' : 'days'} remaining`}
-          </span>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Calendar className="h-4 w-4" />
+            <span className="font-medium">
+              {isSimulating 
+                ? `Day ${daysIntoCurrentPhase + 1} of 30` 
+                : `${daysRemaining} ${daysRemaining === 1 ? 'day' : 'days'} remaining`}
+            </span>
+          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={() => navigate("/leaderboard/school")}
+                  className="w-3 h-3 rounded-full bg-primary hover:bg-primary/80 transition-colors"
+                  aria-label="View leaderboard"
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>View School Leaderboard</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
 

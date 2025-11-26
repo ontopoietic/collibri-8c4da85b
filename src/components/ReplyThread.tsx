@@ -3,22 +3,22 @@ import { CategoryBadge } from "./CategoryBadge";
 import { VoteButton } from "./VoteButton";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { MessageSquare, ExternalLink } from "lucide-react";
+import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, ThumbsUp, ThumbsDown } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { useState } from "react";
 
 interface ReplyThreadProps {
   replies: Reply[];
   onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
 }
 
-export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
-  if (replies.length === 0) return null;
+const ReplyItem = ({ reply, onReply }: { reply: Reply; onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const hasReplies = reply.replies.length > 0;
 
   return (
-    <div className="space-y-4">
-      {replies.map((reply) => (
-        <div key={reply.id} id={`reply-${reply.id}`} className="pl-6 border-l-2 border-border">
-          <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
+    <div id={`reply-${reply.id}`} className="pl-6 border-l-2 border-border">
+      <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
               <CategoryBadge category={reply.category} />
               <span className="text-xs text-muted-foreground">
@@ -69,26 +69,65 @@ export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
               </div>
             )}
             
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <VoteButton initialVotes={reply.votes} />
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => onReply(reply.id)}
+                onClick={() => onReply(reply.id, 'endorse')}
                 className="gap-1 text-xs"
               >
-                <MessageSquare className="h-3 w-3" />
-                Question
+                <ThumbsUp className="h-3 w-3" />
+                Endorse
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onReply(reply.id, 'object')}
+                className="gap-1 text-xs"
+              >
+                <ThumbsDown className="h-3 w-3" />
+                Object
+              </Button>
+              {hasReplies && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="gap-1 text-xs"
+                >
+                  {isExpanded ? (
+                    <>
+                      <ChevronUp className="h-3 w-3" />
+                      Hide Replies ({reply.replies.length})
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-3 w-3" />
+                      Show Replies ({reply.replies.length})
+                    </>
+                  )}
+                </Button>
+              )}
             </div>
 
-            {reply.replies.length > 0 && (
+            {hasReplies && isExpanded && (
               <div className="mt-4">
                 <ReplyThread replies={reply.replies} onReply={onReply} />
               </div>
             )}
           </div>
         </div>
+  );
+};
+
+export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
+  if (replies.length === 0) return null;
+
+  return (
+    <div className="space-y-4">
+      {replies.map((reply) => (
+        <ReplyItem key={reply.id} reply={reply} onReply={onReply} />
       ))}
     </div>
   );
