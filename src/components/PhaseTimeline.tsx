@@ -99,10 +99,10 @@ export const PhaseTimeline = ({
                       style={{ width: `${Math.min(100, (overallProgressPercentage / 33.33) * 100)}%` }}
                     />
                   </div>
-                  {/* Grade Interim: 5/90 = 5.56% */}
-                  <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "5.56%" }}>
+                  {/* Grade Interim: 5/90 = 5.56% - Light gray */}
+                  <div className="relative bg-muted/50 rounded-full overflow-hidden" style={{ width: "5.56%" }}>
                     <div
-                      className="h-full bg-primary transition-all duration-500 rounded-full"
+                      className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-full"
                       style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
                     />
                   </div>
@@ -113,10 +113,10 @@ export const PhaseTimeline = ({
                       style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 38.89) / 27.78) * 100))}%` }}
                     />
                   </div>
-                  {/* School Interim: 5/90 = 5.56% */}
-                  <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "5.56%" }}>
+                  {/* School Interim: 5/90 = 5.56% - Light gray */}
+                  <div className="relative bg-muted/50 rounded-full overflow-hidden" style={{ width: "5.56%" }}>
                     <div
-                      className="h-full bg-primary transition-all duration-500 rounded-full"
+                      className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-full"
                       style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
                     />
                   </div>
@@ -141,17 +141,17 @@ export const PhaseTimeline = ({
             </button>
           </div>
 
-          {/* Variant Voting labels above the timeline, not overlapping separators */}
-          <div className="absolute left-0 right-0 top-0 flex pointer-events-none">
+          {/* Variant Voting labels vertically centered with timeline */}
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex pointer-events-none gap-1">
             <div style={{ width: "33.33%" }} />
-            <div className="relative flex justify-center" style={{ width: "5.56%" }}>
-              <div className="mt-1 px-2 py-0.5 rounded-md text-[10px] font-medium text-amber-600 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shadow-sm">
+            <div className="relative flex items-center justify-center" style={{ width: "5.56%" }}>
+              <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                 Variant Voting
               </div>
             </div>
             <div style={{ width: "27.78%" }} />
-            <div className="relative flex justify-center" style={{ width: "5.56%" }}>
-              <div className="mt-1 px-2 py-0.5 rounded-md text-[10px] font-medium text-amber-600 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shadow-sm">
+            <div className="relative flex items-center justify-center" style={{ width: "5.56%" }}>
+              <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                 Variant Voting
               </div>
             </div>
