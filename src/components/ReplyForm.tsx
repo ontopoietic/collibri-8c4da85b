@@ -23,7 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ReplyCategory, Reply, ReplyReference } from "@/types/concern";
+import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { CategoryBadge } from "./CategoryBadge";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -33,7 +33,7 @@ interface ReplyFormProps {
     category: ReplyCategory,
     text: string,
     referencedReplies?: ReplyReference[],
-    counterProposal?: { text: string; postedAsConcern?: boolean }
+    counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: SolutionLevel }
   ) => void;
   onCancel: () => void;
   allowedCategories?: ReplyCategory[];
@@ -57,6 +57,7 @@ export const ReplyForm = ({
   const [hasCounterProposal, setHasCounterProposal] = useState(false);
   const [counterProposalText, setCounterProposalText] = useState("");
   const [postCounterAsConcern, setPostCounterAsConcern] = useState(false);
+  const [counterProposalSolutionLevel, setCounterProposalSolutionLevel] = useState<SolutionLevel | "">("");
 
   useEffect(() => {
     if (category === "variant" && originalText) {
@@ -68,7 +69,11 @@ export const ReplyForm = ({
     e.preventDefault();
     if (category && text.trim()) {
       const counterProposal = hasCounterProposal && counterProposalText.trim()
-        ? { text: counterProposalText, postedAsConcern: postCounterAsConcern }
+        ? { 
+            text: counterProposalText, 
+            postedAsConcern: postCounterAsConcern,
+            solutionLevel: counterProposalSolutionLevel ? counterProposalSolutionLevel as SolutionLevel : undefined
+          }
         : undefined;
       
       onSubmit(
@@ -83,6 +88,7 @@ export const ReplyForm = ({
       setHasCounterProposal(false);
       setCounterProposalText("");
       setPostCounterAsConcern(false);
+      setCounterProposalSolutionLevel("");
     }
   };
 
@@ -217,15 +223,33 @@ export const ReplyForm = ({
                 />
               </div>
 
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="postAsConcern"
-                  checked={postCounterAsConcern}
-                  onCheckedChange={(checked) => setPostCounterAsConcern(checked as boolean)}
-                />
-                <Label htmlFor="postAsConcern" className="text-sm cursor-pointer">
-                  Post as a counter-proposal concern on the forum
-                </Label>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="postAsConcern"
+                    checked={postCounterAsConcern}
+                    onCheckedChange={(checked) => setPostCounterAsConcern(checked as boolean)}
+                  />
+                  <Label htmlFor="postAsConcern" className="text-sm cursor-pointer">
+                    Post as a counter-proposal concern on the forum
+                  </Label>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Where can this be solved?</Label>
+                  <Select 
+                    value={counterProposalSolutionLevel} 
+                    onValueChange={(value) => setCounterProposalSolutionLevel(value as SolutionLevel)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select solution level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="school">School</SelectItem>
+                      <SelectItem value="ministries">Ministries</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
           )}

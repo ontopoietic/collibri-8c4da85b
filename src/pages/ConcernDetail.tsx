@@ -7,8 +7,15 @@ import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import { ReplyCategory, Reply, ReplyReference } from "@/types/concern";
+import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const typeConfig = {
   problem: {
@@ -33,6 +40,8 @@ const ConcernDetail = () => {
   const navigate = useNavigate();
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyToId, setReplyToId] = useState<string | null>(null);
+  const [filterCategory, setFilterCategory] = useState<ReplyCategory | "all">("all");
+  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   
   const concern = mockConcerns.find((c) => c.id === id);
 
@@ -80,12 +89,36 @@ const ConcernDetail = () => {
     category: ReplyCategory,
     text: string,
     referencedReplies?: ReplyReference[],
-    counterProposal?: { text: string; postedAsConcern?: boolean }
+    counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: SolutionLevel }
   ) => {
     console.log("New reply:", { category, text, referencedReplies, counterProposal });
     setShowReplyForm(false);
     setReplyToId(null);
   };
+
+  const sortReplies = (replies: Reply[]): Reply[] => {
+    const sorted = [...replies].sort((a, b) => {
+      if (sortBy === "popularity") return b.votes - a.votes;
+      if (sortBy === "oldest") return a.timestamp.getTime() - b.timestamp.getTime();
+      return b.timestamp.getTime() - a.timestamp.getTime();
+    });
+    
+    return sorted.map(reply => ({
+      ...reply,
+      replies: sortReplies(reply.replies)
+    }));
+  };
+
+  const filterReplies = (replies: Reply[]): Reply[] => {
+    return replies
+      .filter(reply => filterCategory === "all" || reply.category === filterCategory)
+      .map(reply => ({
+        ...reply,
+        replies: filterReplies(reply.replies)
+      }));
+  };
+
+  const processedReplies = sortReplies(filterReplies(concern?.replies || []));
 
   return (
     <div className="min-h-screen bg-background">
@@ -114,6 +147,14 @@ const ConcernDetail = () => {
             <h1 className="text-3xl font-bold mb-4 text-foreground">{concern.title}</h1>
             <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
           </div>
+
+          {concern.solutionLevel && (
+            <div className="bg-muted p-3 rounded-lg">
+              <p className="text-sm font-medium">
+                Solution Level: <Badge variant="outline">{concern.solutionLevel === "school" ? "School" : "Ministries"}</Badge>
+              </p>
+            </div>
+          )}
 
           {(concern.referencedProblemId || concern.referencedObjectionId) && (
             <div className="bg-muted p-4 rounded-lg space-y-2">
@@ -161,9 +202,35 @@ const ConcernDetail = () => {
 
         {concern.replies.length > 0 && (
           <div className="mt-8 space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">Responses</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-foreground">Responses</h2>
+              <div className="flex gap-2">
+                <Select value={filterCategory} onValueChange={(value: any) => setFilterCategory(value)}>
+                  <SelectTrigger className="w-[160px]">
+                    <SelectValue placeholder="Filter" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="objection">Objections</SelectItem>
+                    <SelectItem value="proposal">Proposals</SelectItem>
+                    <SelectItem value="pro-argument">Pro-Arguments</SelectItem>
+                    <SelectItem value="variant">Variants</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                  <SelectTrigger className="w-[140px]">
+                    <SelectValue placeholder="Sort" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="newest">Newest</SelectItem>
+                    <SelectItem value="oldest">Oldest</SelectItem>
+                    <SelectItem value="popularity">Popularity</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
             <ReplyThread
-              replies={concern.replies}
+              replies={processedReplies}
               onReply={(parentId) => {
                 setReplyToId(parentId);
                 setShowReplyForm(true);

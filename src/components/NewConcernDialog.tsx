@@ -17,10 +17,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
-import { ConcernType } from "@/types/concern";
+import { ConcernType, SolutionLevel } from "@/types/concern";
 
 interface NewConcernDialogProps {
-  onSubmit: (type: ConcernType, title: string, description: string) => void;
+  onSubmit: (type: ConcernType, title: string, description: string, solutionLevel?: SolutionLevel) => void;
 }
 
 export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
@@ -28,14 +28,19 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
   const [type, setType] = useState<ConcernType | "">("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [solutionLevel, setSolutionLevel] = useState<SolutionLevel | "">("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (type && title.trim() && description.trim()) {
-      onSubmit(type as ConcernType, title, description);
+      const solution = (type === "proposal" || type === "counter-proposal") && solutionLevel 
+        ? solutionLevel as SolutionLevel 
+        : undefined;
+      onSubmit(type as ConcernType, title, description, solution);
       setType("");
       setTitle("");
       setDescription("");
+      setSolutionLevel("");
       setOpen(false);
     }
   };
@@ -84,6 +89,21 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
               className="min-h-[150px]"
             />
           </div>
+
+          {(type === "proposal" || type === "counter-proposal") && (
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Where can this be solved?</label>
+              <Select value={solutionLevel} onValueChange={(value) => setSolutionLevel(value as SolutionLevel)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select solution level" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="school">School</SelectItem>
+                  <SelectItem value="ministries">Ministries</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
           <div className="flex gap-2 justify-end">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
