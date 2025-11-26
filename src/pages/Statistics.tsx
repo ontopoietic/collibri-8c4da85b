@@ -106,14 +106,33 @@ const Statistics = () => {
     },
   ];
 
-  // Top concerns by votes
-  const topConcerns = [...displayConcerns]
-    .sort((a, b) => b.votes - a.votes)
-    .slice(0, 5)
-    .map((c) => ({
-      name: c.title.substring(0, 30) + "...",
-      votes: c.votes,
-    }));
+  // Activity by grade (mock data for 12 grades)
+  const gradeActivity = Array.from({ length: 12 }, (_, i) => {
+    const grade = i + 1;
+    const gradeConcerns = displayConcerns.filter(c => c.group?.includes(`Grade ${grade}`));
+    const gradeReplies = gradeConcerns.flatMap(c => getAllReplies(c.replies));
+    const totalPosts = gradeConcerns.length + gradeReplies.length;
+    const totalVotes = gradeConcerns.reduce((sum, c) => sum + c.votes, 0) + 
+                      gradeReplies.reduce((sum, r) => sum + r.votes, 0);
+    return {
+      grade: `Grade ${grade}`,
+      activity: totalPosts + totalVotes,
+      posts: totalPosts,
+      votes: totalVotes,
+    };
+  });
+
+  // Active users timeline (mock data)
+  const activeUsersTimeline = [
+    { date: "Week 1", users: 45 },
+    { date: "Week 2", users: 67 },
+    { date: "Week 3", users: 89 },
+    { date: "Week 4", users: 103 },
+    { date: "Week 5", users: 98 },
+    { date: "Week 6", users: 112 },
+    { date: "Week 7", users: 128 },
+    { date: "Week 8", users: 134 },
+  ];
 
   // Engagement over time with reply categories
   const engagementByDate = new Map<string, { 
@@ -427,20 +446,45 @@ const Statistics = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Top Concerns by Votes</CardTitle>
+              <CardTitle>Activity by Grade</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={topConcerns} layout="vertical">
+                <BarChart data={gradeActivity}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis dataKey="name" type="category" width={200} />
+                  <XAxis dataKey="grade" />
+                  <YAxis />
                   <Tooltip />
-                  <Bar dataKey="votes" fill="hsl(var(--proposal))" />
+                  <Legend />
+                  <Bar dataKey="posts" stackId="a" fill="hsl(var(--primary))" name="Posts" />
+                  <Bar dataKey="votes" stackId="a" fill="hsl(var(--proposal))" name="Votes" />
                 </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Active Users Timeline</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={activeUsersTimeline}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line 
+                    type="monotone" 
+                    dataKey="users" 
+                    stroke="hsl(var(--primary))" 
+                    strokeWidth={2}
+                    name="Active Users"
+                  />
+                </LineChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
