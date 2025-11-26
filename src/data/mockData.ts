@@ -458,18 +458,38 @@ export const mockConcerns: Concern[] = [
     phase: "school",
     group: "Whole School",
     replies: [
-      createReply("r28", "pro-argument", "Three bikes from my grade were stolen last month alone!", 22, 26.5),
-      createReply("r29", "objection", "Installing proper security costs money and requires construction permits.", 15, 26, [], undefined, {
+      createReply("r28", "pro-argument", "Three bikes from my grade were stolen last month alone!", 22, 26.5, [
+        createReply("r28a", "pro-argument", "My bike was stolen and it was my only way to get to school. Now I have to take the bus.", 8, 26.3, [
+          createReply("r28a1", "proposal", "Maybe we could start a bike-sharing program for students who lost theirs?", 5, 26.1)
+        ]),
+        createReply("r28b", "objection", "Are we sure it's theft and not just students forgetting where they parked?", 3, 26.2, [
+          createReply("r28b1", "pro-argument", "The school office has received 12 official theft reports this semester alone.", 6, 26)
+        ])
+      ]),
+      createReply("r29", "objection", "Installing proper security costs money and requires construction permits.", 15, 26, [
+        createReply("r29a", "proposal", "We could apply for a safety grant from the district to cover the camera costs.", 9, 25.8),
+        createReply("r29b", "objection", "Even with funding, construction permits take months to approve.", 4, 25.7)
+      ], undefined, {
         text: "Install CCTV cameras in bike areas and implement a registered lock system with student ID verification.",
         solutionLevel: "school"
       }),
-      createReply("r30", "proposal", "Add more bike racks in well-lit areas near main entrances with camera coverage.", 28, 25.5),
+      createReply("r30", "proposal", "Add more bike racks in well-lit areas near main entrances with camera coverage.", 28, 25.5, [
+        createReply("r30a", "pro-argument", "The front entrance has excellent lighting and is visible from the main office.", 11, 25.3),
+        createReply("r30b", "objection", "That area is already crowded with student drop-offs in the morning.", 6, 25.2, [
+          createReply("r30b1", "proposal", "We could designate specific times for bike parking vs car drop-off.", 7, 25)
+        ])
+      ]),
       createReply("r31", "pro-argument", "Some students stopped biking to school because of theft concerns.", 19, 25),
       createReply("r32", "variant", "There isn't enough covered bike parking and bikes are being stolen. We need both expanded parking infrastructure AND security measures like cameras and better lighting.", 25, 24.5, [], [
         { id: "r30", text: "Add more bike racks in well-lit areas.", category: "proposal" },
         { id: "r29", text: "Install CCTV cameras in bike areas.", category: "objection" }
       ]),
-      createReply("r33", "proposal", "Create a bike registration system with engraved IDs to deter theft.", 17, 24),
+      createReply("r33", "proposal", "Create a bike registration system with engraved IDs to deter theft.", 17, 24, [
+        createReply("r33a", "pro-argument", "Many universities use this system successfully.", 8, 23.8),
+        createReply("r33b", "question", "Who would manage the registration database?", 4, 23.7, [
+          createReply("r33b1", "proposal", "The student council could handle registrations during lunch breaks.", 6, 23.5)
+        ])
+      ]),
     ],
   },
   {
@@ -483,13 +503,28 @@ export const mockConcerns: Concern[] = [
     group: "Whole School",
     solutionLevel: "school",
     replies: [
-      createReply("r34", "pro-argument", "This would really help students who can't study well at home.", 24, 23.5),
-      createReply("r35", "objection", "This requires hiring additional staff which might not be feasible budget-wise.", 18, 23, [], undefined, {
+      createReply("r34", "pro-argument", "This would really help students who can't study well at home.", 24, 23.5, [
+        createReply("r34a", "pro-argument", "My house is too noisy with my siblings. The library is the only quiet place I can focus.", 12, 23.3, [
+          createReply("r34a1", "pro-argument", "Same here. I get so much more done when I can stay at school longer.", 7, 23.2)
+        ]),
+        createReply("r34b", "question", "How many students would actually use extended hours?", 5, 23.1, [
+          createReply("r34b1", "proposal", "We could run a survey to gauge interest before implementing.", 9, 23)
+        ])
+      ]),
+      createReply("r35", "objection", "This requires hiring additional staff which might not be feasible budget-wise.", 18, 23, [
+        createReply("r35a", "objection", "Librarians also need work-life balance. We can't expect them to work 10-hour days.", 8, 22.8),
+        createReply("r35b", "proposal", "What if we hire part-time staff specifically for evening shifts?", 6, 22.7)
+      ], undefined, {
         text: "Implement a volunteer senior student program where upperclassmen can supervise in exchange for community service credits.",
         solutionLevel: "school"
       }),
-      createReply("r36", "pro-argument", "Many students commute and could use the extra time before heading home.", 21, 22.5),
-      createReply("r37", "proposal", "Start with extending hours just two days per week as a trial.", 16, 22),
+      createReply("r36", "pro-argument", "Many students commute and could use the extra time before heading home.", 21, 22.5, [
+        createReply("r36a", "pro-argument", "My bus doesn't leave until 6:30 anyway, so I just sit around waiting.", 10, 22.3)
+      ]),
+      createReply("r37", "proposal", "Start with extending hours just two days per week as a trial.", 16, 22, [
+        createReply("r37a", "pro-argument", "A trial period would help us work out any issues before full implementation.", 9, 21.8),
+        createReply("r37b", "proposal", "Make it Tuesdays and Thursdays when most students have heavy homework loads.", 7, 21.7)
+      ]),
       createReply("r38", "variant", "Open the library until 6 PM on weekdays with a hybrid staffing model using both paid staff and trained student volunteers to manage costs while meeting student needs.", 23, 21.5, [], [
         { id: "r35", text: "Implement a volunteer senior student program.", category: "objection" },
         { id: "r37", text: "Start with extending hours two days per week.", category: "proposal" }
@@ -601,18 +636,36 @@ export const mockConcerns: Concern[] = [
     group: "Whole School",
     solutionLevel: "school",
     replies: [
-      createReply("r59", "pro-argument", "We should be teaching environmental responsibility through action.", 23, 8.5),
-      createReply("r60", "pro-argument", "Other schools have successful programs we could model ours after.", 20, 8),
-      createReply("r61", "objection", "Initial setup costs and ongoing maintenance require dedicated resources.", 15, 7.5, [], undefined, {
+      createReply("r59", "pro-argument", "We should be teaching environmental responsibility through action.", 23, 8.5, [
+        createReply("r59a", "pro-argument", "Climate change education is pointless if we don't practice what we preach.", 11, 8.3, [
+          createReply("r59a1", "pro-argument", "Students will be more engaged in science class when they see real-world applications.", 6, 8.2)
+        ]),
+        createReply("r59b", "proposal", "We could partner with local environmental organizations for guidance.", 8, 8.1)
+      ]),
+      createReply("r60", "pro-argument", "Other schools have successful programs we could model ours after.", 20, 8, [
+        createReply("r60a", "question", "Which schools should we look at as examples?", 7, 7.8, [
+          createReply("r60a1", "proposal", "Lincoln High reduced their waste by 60% in two years with a similar program.", 10, 7.7)
+        ])
+      ]),
+      createReply("r61", "objection", "Initial setup costs and ongoing maintenance require dedicated resources.", 15, 7.5, [
+        createReply("r61a", "objection", "Someone needs to empty recycling bins daily and transport materials. That's labor costs.", 6, 7.3),
+        createReply("r61b", "proposal", "Students could volunteer for recycling duty as part of a school service requirement.", 9, 7.2, [
+          createReply("r61b1", "pro-argument", "This teaches responsibility and gives students ownership of the program.", 7, 7.1)
+        ])
+      ], undefined, {
         text: "Apply for environmental grants and create a student sustainability committee to manage the program.",
         solutionLevel: "school"
       }),
-      createReply("r62", "proposal", "Start small with recycling bins in cafeteria and expand from there.", 18, 7),
+      createReply("r62", "proposal", "Start small with recycling bins in cafeteria and expand from there.", 18, 7, [
+        createReply("r62a", "pro-argument", "Testing in one area lets us fix problems before scaling up.", 8, 6.8)
+      ]),
       createReply("r63", "variant", "Create a comprehensive sustainability program by starting with cafeteria recycling and progressively expanding while securing grant funding and building a student management committee.", 26, 6.5, [], [
         { id: "r62", text: "Start small with recycling bins in cafeteria.", category: "proposal" },
         { id: "r61", text: "Apply for environmental grants and create student committee.", category: "objection" }
       ]),
-      createReply("r64", "pro-argument", "This could save the school money on energy bills long-term.", 16, 6),
+      createReply("r64", "pro-argument", "This could save the school money on energy bills long-term.", 16, 6, [
+        createReply("r64a", "proposal", "LED bulb replacements alone could save thousands per year.", 7, 5.8)
+      ]),
     ],
   },
   {
