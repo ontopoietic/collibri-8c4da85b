@@ -138,7 +138,7 @@ export const PhaseTimeline = ({
               {/* Phase separators - at day 30, day 35, day 60, day 65 */}
               <div className="absolute top-0 left-0 right-0 h-full pointer-events-none flex">
                 {/* Day 30 - End of Class */}
-                <div className="flex-1 border-r-2 border-border" />
+                <div style={{ width: '33.33%' }} className="border-r-2 border-border" />
                 {/* Day 35 - End of Grade Variant Voting */}
                 <div style={{ width: '5.56%' }} className="border-r-2 border-border" />
                 {/* Day 60 - End of Grade */}
@@ -146,13 +146,13 @@ export const PhaseTimeline = ({
                 {/* Day 65 - End of School Variant Voting */}
                 <div style={{ width: '5.56%' }} className="border-r-2 border-border" />
                 {/* Remaining School phase */}
-                <div className="flex-1" />
+                <div style={{ width: '27.77%' }} />
               </div>
               
               {/* Interim phase indicators - only for Grade and School phases */}
               <div className="absolute -top-6 left-0 right-0 flex pointer-events-none">
                 {/* Class phase - no interim */}
-                <div className="flex-1" />
+                <div style={{ width: '33.33%' }} />
                 
                 {/* Grade phase interim (days 31-35) */}
                 <div className="relative" style={{ width: '5.56%' }}>
@@ -170,7 +170,7 @@ export const PhaseTimeline = ({
                     <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
                   </div>
                 </div>
-                <div className="flex-1" />
+                <div style={{ width: '27.77%' }} />
               </div>
             </div>
             
