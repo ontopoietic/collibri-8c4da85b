@@ -20,6 +20,8 @@ const Leaderboard = () => {
     grade: "Grade Phase",
     school: "School Phase",
   };
+  
+  const phases: Phase[] = ["class", "grade", "school"];
 
   const getMedalIcon = (index: number) => {
     if (index === 0) return <Trophy className="h-6 w-6 text-yellow-500" />;
@@ -43,9 +45,21 @@ const Leaderboard = () => {
         <h1 className="text-4xl font-bold mb-2 text-foreground">
           {phaseLabels[phase as Phase]} Leaderboard
         </h1>
-        <p className="text-muted-foreground mb-8">
+        <p className="text-muted-foreground mb-4">
           Top concerns ranked by community votes
         </p>
+        
+        <div className="flex gap-2 mb-8">
+          {phases.map((p) => (
+            <Button
+              key={p}
+              variant={p === phase ? "default" : "outline"}
+              onClick={() => navigate(`/leaderboard/${p}`)}
+            >
+              {phaseLabels[p]}
+            </Button>
+          ))}
+        </div>
 
         <div className="space-y-4">
           {phaseConcerns.map((concern, index) => {

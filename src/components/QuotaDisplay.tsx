@@ -19,7 +19,7 @@ const quotaConfig = [
 
 export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
   return (
-    <Card className="p-4 bg-card border border-border">
+    <Card className="p-4 bg-card border border-border h-full flex flex-col">
       <h3 className="text-lg font-semibold mb-4 text-foreground">Your Phase Quota</h3>
       <div className="space-y-3">
         {quotaConfig.map((config) => {

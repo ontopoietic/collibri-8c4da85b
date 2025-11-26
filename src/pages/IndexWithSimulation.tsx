@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { ConcernCard } from "@/components/ConcernCard";
 import { NewConcernDialog } from "@/components/NewConcernDialog";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search } from "lucide-react";
+import { BarChart3, Bell, Search, Play, Pause } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -27,16 +27,104 @@ const Index = () => {
   const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   
-  // Mock user quota - in production, this would come from backend
-  const [userQuota] = useState<UserQuota>({
-    concerns: { used: 2, total: 3 },
-    votes: { used: 7, total: 10 },
-    variants: { used: 1, total: 3 },
-    proposals: { used: 2, total: 3 },
-    proArguments: { used: 3, total: 5 },
-    objections: { used: 4, total: 5 },
-    questions: { used: 1, total: 3 },
-  });
+  // Simulation state
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [simulationProgress, setSimulationProgress] = useState(100); // 0-100%
+
+  // Calculate the simulated "current time" based on slider
+  const now = new Date();
+  const phaseStartDate = new Date(now.getTime() - 46 * 60 * 60 * 1000); // 46 hours ago
+  const phaseDuration = 46; // hours in the mock data
+  
+  const getSimulatedTime = (progress: number): Date => {
+    const simulatedHours = (progress / 100) * phaseDuration;
+    return new Date(phaseStartDate.getTime() + simulatedHours * 60 * 60 * 1000);
+  };
+
+  const simulatedCurrentTime = isSimulating ? getSimulatedTime(simulationProgress) : now;
+
+  // Filter and adjust concerns based on simulated time
+  const simulatedConcerns = useMemo(() => {
+    if (!isSimulating) return concerns;
+
+    return concerns
+      .filter(c => c.timestamp <= simulatedCurrentTime)
+      .map(concern => {
+        // Calculate votes based on time (simulate gradual voting)
+        const concernAge = (simulatedCurrentTime.getTime() - concern.timestamp.getTime()) / (1000 * 60 * 60);
+        const totalAge = (now.getTime() - concern.timestamp.getTime()) / (1000 * 60 * 60);
+        const voteRatio = Math.min(1, concernAge / totalAge);
+        const simulatedVotes = Math.floor(concern.votes * voteRatio);
+
+        // Filter and adjust replies based on time
+        const filterReplies = (replies: Reply[]): Reply[] => {
+          return replies
+            .filter(r => r.timestamp <= simulatedCurrentTime)
+            .map(reply => {
+              const replyAge = (simulatedCurrentTime.getTime() - reply.timestamp.getTime()) / (1000 * 60 * 60);
+              const replyTotalAge = (now.getTime() - reply.timestamp.getTime()) / (1000 * 60 * 60);
+              const replyVoteRatio = Math.min(1, replyAge / replyTotalAge);
+              
+              return {
+                ...reply,
+                votes: Math.floor(reply.votes * replyVoteRatio),
+                replies: filterReplies(reply.replies),
+              };
+            });
+        };
+
+        return {
+          ...concern,
+          votes: simulatedVotes,
+          replies: filterReplies(concern.replies),
+        };
+      });
+  }, [concerns, isSimulating, simulatedCurrentTime, now]);
+
+  // Calculate simulated quota based on activity
+  const simulatedQuota = useMemo((): UserQuota => {
+    if (!isSimulating) {
+      return {
+        concerns: { used: 2, total: 3 },
+        votes: { used: 7, total: 10 },
+        variants: { used: 1, total: 3 },
+        proposals: { used: 2, total: 3 },
+        proArguments: { used: 3, total: 5 },
+        objections: { used: 4, total: 5 },
+        questions: { used: 1, total: 3 },
+      };
+    }
+
+    // Count activities up to simulated time
+    const concernsCount = simulatedConcerns.filter(c => c.phase === currentPhase).length;
+    
+    const getAllReplies = (replies: Reply[]): Reply[] => {
+      let all: Reply[] = [];
+      replies.forEach(r => {
+        all.push(r);
+        all = all.concat(getAllReplies(r.replies));
+      });
+      return all;
+    };
+
+    const allReplies = simulatedConcerns.flatMap(c => getAllReplies(c.replies));
+    const proposalsCount = allReplies.filter(r => r.category === 'proposal').length;
+    const variantsCount = allReplies.filter(r => r.category === 'variant').length;
+    const proArgsCount = allReplies.filter(r => r.category === 'pro-argument').length;
+    const objectionsCount = allReplies.filter(r => r.category === 'objection').length;
+    const questionsCount = allReplies.filter(r => r.category === 'question').length;
+    const votesCount = simulatedConcerns.reduce((sum, c) => sum + c.votes, 0);
+
+    return {
+      concerns: { used: Math.min(concernsCount, 3), total: 3 },
+      votes: { used: Math.min(votesCount, 10), total: 10 },
+      variants: { used: Math.min(variantsCount, 3), total: 3 },
+      proposals: { used: Math.min(proposalsCount, 3), total: 3 },
+      proArguments: { used: Math.min(proArgsCount, 5), total: 5 },
+      objections: { used: Math.min(objectionsCount, 5), total: 5 },
+      questions: { used: Math.min(questionsCount, 3), total: 3 },
+    };
+  }, [isSimulating, simulatedConcerns, currentPhase]);
 
   const handleNewConcern = (type: ConcernType, title: string, description: string, solutionLevel?: SolutionLevel) => {
     const newConcern: Concern = {
@@ -58,7 +146,7 @@ const Index = () => {
     navigate(`/leaderboard/${phase}`);
   };
 
-  const phaseConcerns = concerns.filter((c) => c.phase === currentPhase);
+  const phaseConcerns = simulatedConcerns.filter((c) => c.phase === currentPhase);
 
   // Helper function to search through replies recursively
   const searchInReplies = (replies: Reply[], query: string): boolean => {
@@ -90,7 +178,6 @@ const Index = () => {
       // Activity filter
       if (filterBy === "unnoticed" && (concern.votes > 0 || concern.replies.length > 0)) return false;
       if (filterBy === "followed" && concern.votes === 0) return false;
-      // Note: "my-posts" would require user authentication
       
       return true;
     })
@@ -110,6 +197,14 @@ const Index = () => {
               <h1 className="text-3xl font-bold text-foreground">Collibri</h1>
             </div>
             <div className="flex items-center gap-3">
+              <Button
+                variant={isSimulating ? "default" : "outline"}
+                onClick={() => setIsSimulating(!isSimulating)}
+                className="gap-2"
+              >
+                {isSimulating ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                {isSimulating ? "Stop Simulation" : "Simulate Timeline"}
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => navigate("/notifications")}
@@ -135,10 +230,18 @@ const Index = () => {
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
           <div className="lg:col-span-3 flex flex-col">
-            <PhaseTimeline currentPhase={currentPhase} onPhaseClick={handlePhaseClick} />
+            <PhaseTimeline 
+              currentPhase={currentPhase} 
+              onPhaseClick={handlePhaseClick}
+              phaseStartDate={phaseStartDate}
+              phaseDurationDays={Math.ceil(phaseDuration / 24)}
+              sliderValue={simulationProgress}
+              onSliderChange={setSimulationProgress}
+              isSimulating={isSimulating}
+            />
           </div>
           <div className="lg:col-span-1 flex flex-col">
-            <QuotaDisplay quota={userQuota} />
+            <QuotaDisplay quota={simulatedQuota} />
           </div>
         </div>
         
@@ -210,8 +313,10 @@ const Index = () => {
 
         {filteredConcerns.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-muted-foreground text-lg mb-4">No concerns in this category yet.</p>
-            <p className="text-muted-foreground">Be the first to share a concern!</p>
+            <p className="text-muted-foreground text-lg mb-4">
+              {isSimulating ? "No concerns posted yet at this point in time." : "No concerns in this category yet."}
+            </p>
+            {!isSimulating && <p className="text-muted-foreground">Be the first to share a concern!</p>}
           </div>
         )}
       </main>
