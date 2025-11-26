@@ -77,16 +77,16 @@ export const PhaseTimeline = ({
       <div className="space-y-6 flex-1">
         {/* Full timeline with phase indicators and phase buttons */}
         <div className="relative h-24">
-          {/* Vertical dashed separators and interim highlights (full height) */}
+          {/* Vertical separators (full height) */}
           <div className="absolute inset-0 pointer-events-none flex">
             {/* Class Phase (Day 1-30) */}
-            <div style={{ width: "33.33%" }} className="border-r-2 border-dashed border-border" />
+            <div style={{ width: "33.33%" }} className="border-r border-border" />
             {/* Grade Interim (Day 31-35) */}
-            <div style={{ width: "5.56%" }} className="border-r-2 border-dashed border-border bg-amber-500/10" />
+            <div style={{ width: "5.56%" }} className="border-r border-border bg-amber-500/5" />
             {/* Grade Phase (Day 36-60) */}
-            <div style={{ width: "27.78%" }} className="border-r-2 border-dashed border-border" />
+            <div style={{ width: "27.78%" }} className="border-r border-border" />
             {/* School Interim (Day 61-65) */}
-            <div style={{ width: "5.56%" }} className="border-r-2 border-dashed border-border bg-amber-500/10" />
+            <div style={{ width: "5.56%" }} className="border-r border-border bg-amber-500/5" />
             {/* School Phase (Day 66-90) */}
             <div style={{ width: "27.77%" }} />
           </div>
@@ -117,9 +117,11 @@ export const PhaseTimeline = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => navigate("/leaderboard/school")}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rounded-full bg-primary hover:bg-primary/80 transition-colors shadow-sm border border-card"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full ml-2 p-1.5 rounded-md bg-card border border-border hover:bg-accent transition-colors shadow-sm"
                     aria-label="View leaderboard"
-                  />
+                  >
+                    <Trophy className="h-3.5 w-3.5 text-primary" />
+                  </button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>View School Leaderboard</p>
@@ -128,28 +130,24 @@ export const PhaseTimeline = ({
             </TooltipProvider>
           </div>
 
-          {/* Variant Voting labels horizontally centered on the line */}
-          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex pointer-events-none">
+          {/* Variant Voting labels above the timeline, consistent with phase button style */}
+          <div className="absolute left-0 right-0 top-0 flex pointer-events-none">
             <div style={{ width: "33.33%" }} />
-            <div className="relative" style={{ width: "5.56%" }}>
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 text-center">
-                <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">
-                  Variant Voting
-                </span>
+            <div className="relative flex items-start justify-center" style={{ width: "5.56%" }}>
+              <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-amber-600 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shadow-sm">
+                Variant Voting
               </div>
             </div>
             <div style={{ width: "27.78%" }} />
-            <div className="relative" style={{ width: "5.56%" }}>
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 text-center">
-                <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">
-                  Variant Voting
-                </span>
+            <div className="relative flex items-start justify-center" style={{ width: "5.56%" }}>
+              <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-amber-600 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shadow-sm">
+                Variant Voting
               </div>
             </div>
           </div>
 
           {/* Phase buttons above the timeline, connected by small stems */}
-          <div className="absolute left-0 right-0 top-0 h-full">
+          <div className="absolute left-0 right-0 top-6 h-full">
             {/* Class Phase Button */}
             <TooltipProvider>
               <Tooltip>
