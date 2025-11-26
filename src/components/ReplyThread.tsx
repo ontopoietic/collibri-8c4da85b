@@ -1,4 +1,4 @@
-import { Reply } from "@/types/concern";
+import { Reply, ReplyCategory, ReplyReference, SolutionLevel } from "@/types/concern";
 import { CategoryBadge } from "./CategoryBadge";
 import { VoteButton } from "./VoteButton";
 import { Button } from "./ui/button";
@@ -6,15 +6,51 @@ import { Badge } from "./ui/badge";
 import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, ThumbsUp, ThumbsDown } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
+import { ReplyForm } from "./ReplyForm";
 
 interface ReplyThreadProps {
   replies: Reply[];
   onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
+  availableReplies?: Reply[];
 }
 
-const ReplyItem = ({ reply, onReply }: { reply: Reply; onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void }) => {
+const getAllRepliesFlat = (replies: Reply[]): Reply[] => {
+  const allReplies: Reply[] = [];
+  const traverse = (replyList: Reply[]) => {
+    replyList.forEach((reply) => {
+      allReplies.push(reply);
+      if (reply.replies.length > 0) {
+        traverse(reply.replies);
+      }
+    });
+  };
+  traverse(replies);
+  return allReplies;
+};
+
+const ReplyItem = ({ 
+  reply, 
+  onReply, 
+  availableReplies 
+}: { 
+  reply: Reply; 
+  onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
+  availableReplies: Reply[];
+}) => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [showReplyForm, setShowReplyForm] = useState(false);
+  const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
   const hasReplies = reply.replies.length > 0;
+
+  const handleReplySubmit = (
+    category: ReplyCategory,
+    text: string,
+    referencedReplies?: ReplyReference[],
+    counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: SolutionLevel }
+  ) => {
+    console.log("New reply to", reply.id, ":", { category, text, referencedReplies, counterProposal });
+    setShowReplyForm(false);
+  };
 
   return (
     <div id={`reply-${reply.id}`} className="pl-6 border-l-2 border-border">
@@ -74,7 +110,10 @@ const ReplyItem = ({ reply, onReply }: { reply: Reply; onReply: (parentId: strin
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => onReply(reply.id, 'endorse')}
+                onClick={() => {
+                  setReplyType('endorse');
+                  setShowReplyForm(true);
+                }}
                 className="gap-1 text-xs"
               >
                 <ThumbsUp className="h-3 w-3" />
@@ -83,7 +122,10 @@ const ReplyItem = ({ reply, onReply }: { reply: Reply; onReply: (parentId: strin
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => onReply(reply.id, 'object')}
+                onClick={() => {
+                  setReplyType('object');
+                  setShowReplyForm(true);
+                }}
                 className="gap-1 text-xs"
               >
                 <ThumbsDown className="h-3 w-3" />
@@ -111,9 +153,21 @@ const ReplyItem = ({ reply, onReply }: { reply: Reply; onReply: (parentId: strin
               )}
             </div>
 
+            {showReplyForm && (
+              <div className="mt-4">
+                <ReplyForm
+                  onSubmit={handleReplySubmit}
+                  onCancel={() => setShowReplyForm(false)}
+                  replyType={replyType}
+                  originalText={reply.text}
+                  availableReplies={availableReplies}
+                />
+              </div>
+            )}
+
             {hasReplies && isExpanded && (
               <div className="mt-4">
-                <ReplyThread replies={reply.replies} onReply={onReply} />
+                <ReplyThread replies={reply.replies} onReply={onReply} availableReplies={availableReplies} />
               </div>
             )}
           </div>
@@ -121,13 +175,16 @@ const ReplyItem = ({ reply, onReply }: { reply: Reply; onReply: (parentId: strin
   );
 };
 
-export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
+export const ReplyThread = ({ replies, onReply, availableReplies }: ReplyThreadProps) => {
   if (replies.length === 0) return null;
+
+  // If availableReplies not provided, compute it from current replies
+  const allReplies = availableReplies || getAllRepliesFlat(replies);
 
   return (
     <div className="space-y-4">
       {replies.map((reply) => (
-        <ReplyItem key={reply.id} reply={reply} onReply={onReply} />
+        <ReplyItem key={reply.id} reply={reply} onReply={onReply} availableReplies={allReplies} />
       ))}
     </div>
   );

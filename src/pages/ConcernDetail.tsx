@@ -283,6 +283,7 @@ const ConcernDetail = () => {
                       setReplyType(type);
                       setShowReplyForm(true);
                     }}
+                    availableReplies={availableReplies}
                   />
                 ) : (
                   <p className="text-muted-foreground text-center py-8">No responses yet. Be the first to respond!</p>
@@ -311,6 +312,7 @@ const ConcernDetail = () => {
                       setReplyType(type);
                       setShowReplyForm(true);
                     }}
+                    availableReplies={availableReplies}
                   />
                 ) : (
                   <p className="text-muted-foreground text-center py-8">No questions yet. Ask the first question!</p>
