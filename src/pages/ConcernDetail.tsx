@@ -199,7 +199,7 @@ const ConcernDetail = () => {
                 setShowReplyForm(false);
                 setReplyToId(null);
               }}
-              originalText={replyToTarget?.text}
+              originalText={replyToTarget?.text ?? concern.description}
               availableReplies={availableReplies}
             />
           )}
