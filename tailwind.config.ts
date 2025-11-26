@@ -47,6 +47,22 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        objection: {
+          DEFAULT: "hsl(var(--objection))",
+          foreground: "hsl(var(--objection-foreground))",
+        },
+        proposal: {
+          DEFAULT: "hsl(var(--proposal))",
+          foreground: "hsl(var(--proposal-foreground))",
+        },
+        "pro-argument": {
+          DEFAULT: "hsl(var(--pro-argument))",
+          foreground: "hsl(var(--pro-argument-foreground))",
+        },
+        variant: {
+          DEFAULT: "hsl(var(--variant))",
+          foreground: "hsl(var(--variant-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
