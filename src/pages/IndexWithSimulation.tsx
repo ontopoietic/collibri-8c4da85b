@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search, Play, Pause } from "lucide-react";
+import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -17,6 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -199,6 +204,17 @@ const Index = () => {
                 {isSimulating ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
                 {isSimulating ? "Stop Simulation" : "Simulate Timeline"}
               </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="gap-2">
+                    <ChartNoAxesCombined className="h-4 w-4" />
+                    My Quota
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[500px] p-0" align="end">
+                  <QuotaDisplay quota={simulatedQuota} />
+                </PopoverContent>
+              </Popover>
               <Button
                 variant="outline"
                 onClick={() => navigate("/notifications")}
@@ -222,7 +238,7 @@ const Index = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="space-y-6 mb-8">
+        <div className="mb-8">
           <PhaseTimeline 
             currentPhase={currentPhase} 
             onPhaseClick={handlePhaseClick}
@@ -232,7 +248,6 @@ const Index = () => {
             onSliderChange={setSimulationProgress}
             isSimulating={isSimulating}
           />
-          <QuotaDisplay quota={simulatedQuota} />
         </div>
         
         <div className="mb-6 space-y-4">
