@@ -6,7 +6,7 @@ import { VoteButton } from "@/components/VoteButton";
 import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale, HelpCircle } from "lucide-react";
+import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -41,6 +41,7 @@ const ConcernDetail = () => {
   const navigate = useNavigate();
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyToId, setReplyToId] = useState<string | null>(null);
+  const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
   const [filterCategory, setFilterCategory] = useState<ReplyCategory | "all">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   
@@ -177,18 +178,44 @@ const ConcernDetail = () => {
             </div>
           )}
 
-          <div className="flex items-center gap-4 pt-4 border-t border-border">
+          <div className="flex items-center gap-3 pt-4 border-t border-border">
             <VoteButton initialVotes={concern.votes} />
             <Button
-              variant="outline"
+              variant="default"
               onClick={() => {
-                setShowReplyForm(!showReplyForm);
+                setReplyType('endorse');
+                setShowReplyForm(true);
                 setReplyToId(null);
               }}
               className="gap-2"
             >
-              <MessageSquare className="h-4 w-4" />
-              Add Response
+              <ThumbsUp className="h-4 w-4" />
+              Endorse
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setReplyType('object');
+                setShowReplyForm(true);
+                setReplyToId(null);
+              }}
+              className="gap-2"
+            >
+              <ThumbsDown className="h-4 w-4" />
+              Object
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setReplyType('question');
+                setShowReplyForm(true);
+                setReplyToId(null);
+              }}
+              className="gap-2"
+            >
+              <HelpCircle className="h-4 w-4" />
+              Ask Question
             </Button>
           </div>
 
@@ -199,6 +226,7 @@ const ConcernDetail = () => {
                 setShowReplyForm(false);
                 setReplyToId(null);
               }}
+              replyType={replyType}
               originalText={replyToTarget?.text ?? concern.description}
               availableReplies={availableReplies}
             />
@@ -250,8 +278,9 @@ const ConcernDetail = () => {
                 {regularReplies.length > 0 ? (
                   <ReplyThread
                     replies={regularReplies}
-                    onReply={(parentId) => {
+                    onReply={(parentId, type = 'question') => {
                       setReplyToId(parentId);
+                      setReplyType(type);
                       setShowReplyForm(true);
                     }}
                   />
@@ -277,8 +306,9 @@ const ConcernDetail = () => {
                 {questions.length > 0 ? (
                   <ReplyThread
                     replies={questions}
-                    onReply={(parentId) => {
+                    onReply={(parentId, type = 'question') => {
                       setReplyToId(parentId);
+                      setReplyType(type);
                       setShowReplyForm(true);
                     }}
                   />

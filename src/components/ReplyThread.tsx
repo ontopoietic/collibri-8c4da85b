@@ -8,7 +8,7 @@ import { formatDistanceToNow } from "date-fns";
 
 interface ReplyThreadProps {
   replies: Reply[];
-  onReply: (parentId: string) => void;
+  onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
 }
 
 export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
@@ -72,13 +72,13 @@ export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
             <div className="flex items-center gap-2">
               <VoteButton initialVotes={reply.votes} />
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={() => onReply(reply.id)}
-                className="gap-1"
+                className="gap-1 text-xs"
               >
-                <MessageSquare className="h-4 w-4" />
-                Reply
+                <MessageSquare className="h-3 w-3" />
+                Question
               </Button>
             </div>
 

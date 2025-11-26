@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { CategoryBadge } from "./CategoryBadge";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, AlertCircle, Lightbulb, ThumbsUp, GitBranch } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ReplyFormProps {
@@ -36,17 +36,41 @@ interface ReplyFormProps {
     counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: SolutionLevel }
   ) => void;
   onCancel: () => void;
-  allowedCategories?: ReplyCategory[];
+  replyType: 'endorse' | 'object' | 'question';
   originalText?: string;
   availableReplies?: Reply[];
 }
 
-const allCategories: ReplyCategory[] = ["objection", "proposal", "pro-argument", "variant", "question"];
+const categoryConfig = {
+  objection: {
+    label: "Objection",
+    icon: AlertCircle,
+    description: "Point out issues or concerns",
+  },
+  proposal: {
+    label: "Proposal",
+    icon: Lightbulb,
+    description: "Suggest a new solution",
+  },
+  "pro-argument": {
+    label: "Pro-Argument",
+    icon: ThumbsUp,
+    description: "Support with reasoning",
+  },
+  variant: {
+    label: "Variant",
+    icon: GitBranch,
+    description: "Suggest a modification",
+  },
+};
+
+const endorseCategories: ReplyCategory[] = ["pro-argument", "variant", "proposal"];
+const objectCategories: ReplyCategory[] = ["objection"];
 
 export const ReplyForm = ({
   onSubmit,
   onCancel,
-  allowedCategories = allCategories,
+  replyType,
   originalText = "",
   availableReplies = [],
 }: ReplyFormProps) => {
@@ -59,11 +83,25 @@ export const ReplyForm = ({
   const [postCounterAsConcern, setPostCounterAsConcern] = useState(false);
   const [counterProposalSolutionLevel, setCounterProposalSolutionLevel] = useState<SolutionLevel | "">("");
 
+  const allowedCategories = replyType === 'question' 
+    ? ['question' as ReplyCategory]
+    : replyType === 'endorse' 
+    ? endorseCategories 
+    : objectCategories;
+
+  useEffect(() => {
+    // Auto-select if only one category available
+    if (allowedCategories.length === 1) {
+      setCategory(allowedCategories[0]);
+    } else {
+      setCategory("");
+    }
+  }, [replyType]);
+
   useEffect(() => {
     if (category === "variant" && originalText) {
       setText(originalText);
     } else if (category && category !== "variant") {
-      // Clear text when switching to non-variant categories
       setText("");
     }
   }, [category, originalText]);
@@ -106,24 +144,40 @@ export const ReplyForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-card p-4 rounded-lg border border-border">
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Response Category</label>
-        <Select value={category} onValueChange={(value) => setCategory(value as ReplyCategory)}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select a category" />
-          </SelectTrigger>
-          <SelectContent>
-            {allowedCategories.map((cat) => (
-              <SelectItem key={cat} value={cat}>
-                <div className="flex items-center gap-2">
-                  <CategoryBadge category={cat} />
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-4 bg-card p-6 rounded-lg border border-border">
+      {replyType !== 'question' && allowedCategories.length > 1 && (
+        <div className="space-y-3">
+          <label className="text-sm font-medium">Response Type</label>
+          <div className="grid grid-cols-2 gap-3">
+            {allowedCategories.map((cat) => {
+              const config = categoryConfig[cat as keyof typeof categoryConfig];
+              if (!config) return null;
+              const Icon = config.icon;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setCategory(cat)}
+                  className={cn(
+                    "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all",
+                    category === cat
+                      ? "border-primary bg-primary/5"
+                      : "border-border bg-card hover:bg-muted/50"
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    <Icon className="h-5 w-5" />
+                    <span className="font-medium">{config.label}</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground text-left">
+                    {config.description}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {category === "variant" && availableReplies.length > 0 && (
         <div className="space-y-2">
@@ -189,11 +243,13 @@ export const ReplyForm = ({
       )}
 
       <div className="space-y-2">
-        <label className="text-sm font-medium">Your Response</label>
+        <label className="text-sm font-medium">
+          {replyType === 'question' ? 'Your Question' : 'Your Response'}
+        </label>
         <Textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Share your thoughts..."
+          placeholder={replyType === 'question' ? 'What would you like to know?' : 'Share your thoughts...'}
           className="min-h-[120px]"
         />
       </div>
@@ -264,7 +320,7 @@ export const ReplyForm = ({
           Cancel
         </Button>
         <Button type="submit" disabled={!category || !text.trim()}>
-          Submit Response
+          Submit {replyType === 'question' ? 'Question' : 'Response'}
         </Button>
       </div>
     </form>
