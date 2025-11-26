@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { Scale, BarChart3, Bell, Search } from "lucide-react";
+import { BarChart3, Bell, Search } from "lucide-react";
+import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
 import {
@@ -105,8 +106,8 @@ const Index = () => {
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Scale className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl font-bold text-foreground">Democratic Forum</h1>
+              <img src={collibriLogo} alt="Collibri" className="h-10 w-10" />
+              <h1 className="text-3xl font-bold text-foreground">Collibri</h1>
             </div>
             <div className="flex items-center gap-3">
               <Button
