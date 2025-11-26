@@ -1,8 +1,9 @@
 import { Reply } from "@/types/concern";
 import { CategoryBadge } from "./CategoryBadge";
 import { VoteButton } from "./VoteButton";
-import { Button } from "@/components/ui/button";
-import { MessageSquare } from "lucide-react";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { MessageSquare, ExternalLink } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 interface ReplyThreadProps {
@@ -16,8 +17,8 @@ export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
   return (
     <div className="space-y-4">
       {replies.map((reply) => (
-        <div key={reply.id} className="pl-6 border-l-2 border-border">
-          <div className="bg-card rounded-lg p-4 space-y-3">
+        <div key={reply.id} id={`reply-${reply.id}`} className="pl-6 border-l-2 border-border">
+          <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
               <CategoryBadge category={reply.category} />
               <span className="text-xs text-muted-foreground">
@@ -28,14 +29,31 @@ export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
             <p className="text-foreground leading-relaxed">{reply.text}</p>
             
             {reply.referencedReplies && reply.referencedReplies.length > 0 && (
-              <div className="bg-muted p-3 rounded-md space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">References:</p>
-                {reply.referencedReplies.map((ref) => (
-                  <div key={ref.id} className="text-xs flex items-center gap-2">
-                    <CategoryBadge category={ref.category} />
-                    <span className="text-muted-foreground truncate">{ref.text}</span>
-                  </div>
-                ))}
+              <div className="mt-3 space-y-2">
+                <p className="text-sm font-medium text-muted-foreground">References:</p>
+                <div className="flex flex-wrap gap-2">
+                  {reply.referencedReplies.map((ref) => (
+                    <Badge
+                      key={ref.id}
+                      variant="outline"
+                      className="cursor-pointer hover:bg-muted transition-colors gap-1"
+                      onClick={() => {
+                        const element = document.getElementById(`reply-${ref.id}`);
+                        if (element) {
+                          element.scrollIntoView({ behavior: "smooth", block: "center" });
+                          element.classList.add("ring-2", "ring-primary");
+                          setTimeout(() => {
+                            element.classList.remove("ring-2", "ring-primary");
+                          }, 2000);
+                        }
+                      }}
+                    >
+                      <CategoryBadge category={ref.category} />
+                      <span className="max-w-[200px] truncate">{ref.text}</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </Badge>
+                  ))}
+                </div>
               </div>
             )}
 

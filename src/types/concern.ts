@@ -2,6 +2,8 @@ export type ConcernType = "problem" | "proposal" | "counter-proposal";
 
 export type ReplyCategory = "objection" | "proposal" | "pro-argument" | "variant";
 
+export type SolutionLevel = "school" | "ministries";
+
 export interface ReplyReference {
   id: string;
   text: string;
@@ -19,6 +21,7 @@ export interface Reply {
   counterProposal?: {
     text: string;
     postedAsConcern?: boolean;
+    solutionLevel?: SolutionLevel;
   };
 }
 
@@ -37,4 +40,5 @@ export interface Concern {
   referencedOriginalPostId?: string;
   phase: Phase;
   group?: string; // class name or grade name
+  solutionLevel?: SolutionLevel;
 }

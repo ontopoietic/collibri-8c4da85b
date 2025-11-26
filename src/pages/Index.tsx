@@ -3,18 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { ConcernCard } from "@/components/ConcernCard";
 import { NewConcernDialog } from "@/components/NewConcernDialog";
 import { Button } from "@/components/ui/button";
-import { Concern, ConcernType, Phase } from "@/types/concern";
+import { Input } from "@/components/ui/input";
+import { Concern, ConcernType, Phase, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { Scale, BarChart3 } from "lucide-react";
+import { Scale, BarChart3, Bell, Search } from "lucide-react";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Index = () => {
   const navigate = useNavigate();
   const [concerns, setConcerns] = useState<Concern[]>(mockConcerns);
   const [activeTab, setActiveTab] = useState<"all" | "problems" | "proposals">("all");
   const [currentPhase] = useState<Phase>("school");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed">("all");
+  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
 
-  const handleNewConcern = (type: ConcernType, title: string, description: string) => {
+  const handleNewConcern = (type: ConcernType, title: string, description: string, solutionLevel?: SolutionLevel) => {
     const newConcern: Concern = {
       id: Date.now().toString(),
       type,
@@ -25,6 +36,7 @@ const Index = () => {
       timestamp: new Date(),
       phase: currentPhase,
       group: "Whole School",
+      solutionLevel,
     };
     setConcerns([newConcern, ...concerns]);
   };
@@ -35,12 +47,33 @@ const Index = () => {
 
   const phaseConcerns = concerns.filter((c) => c.phase === currentPhase);
 
-  const filteredConcerns = phaseConcerns.filter((concern) => {
-    if (activeTab === "all") return true;
-    if (activeTab === "problems") return concern.type === "problem";
-    if (activeTab === "proposals") return concern.type === "proposal" || concern.type === "counter-proposal";
-    return true;
-  });
+  const filteredConcerns = phaseConcerns
+    .filter((concern) => {
+      // Type filter
+      if (activeTab === "problems" && concern.type !== "problem") return false;
+      if (activeTab === "proposals" && concern.type !== "proposal" && concern.type !== "counter-proposal") return false;
+      
+      // Search filter
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        if (!concern.title.toLowerCase().includes(query) && 
+            !concern.description.toLowerCase().includes(query)) {
+          return false;
+        }
+      }
+      
+      // Activity filter
+      if (filterBy === "unnoticed" && (concern.votes > 0 || concern.replies.length > 0)) return false;
+      if (filterBy === "followed" && concern.votes === 0) return false;
+      // Note: "my-posts" would require user authentication
+      
+      return true;
+    })
+    .sort((a, b) => {
+      if (sortBy === "popularity") return b.votes - a.votes;
+      if (sortBy === "oldest") return a.timestamp.getTime() - b.timestamp.getTime();
+      return b.timestamp.getTime() - a.timestamp.getTime(); // newest
+    });
 
   return (
     <div className="min-h-screen bg-background">
@@ -52,6 +85,14 @@ const Index = () => {
               <h1 className="text-3xl font-bold text-foreground">Democratic Forum</h1>
             </div>
             <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                onClick={() => navigate("/notifications")}
+                className="gap-2"
+              >
+                <Bell className="h-4 w-4" />
+                Notifications
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => navigate("/statistics")}
@@ -69,11 +110,45 @@ const Index = () => {
       <main className="max-w-6xl mx-auto px-4 py-8">
         <PhaseTimeline currentPhase={currentPhase} onPhaseClick={handlePhaseClick} />
         
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
+        <div className="mb-6 space-y-4">
+          <h2 className="text-3xl font-bold text-foreground">
             School Phase Concerns
           </h2>
-          <div className="flex gap-2 mb-4">
+          
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search concerns..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Select value={filterBy} onValueChange={(value: any) => setFilterBy(value)}>
+              <SelectTrigger className="w-full sm:w-[180px]">
+                <SelectValue placeholder="Filter by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Posts</SelectItem>
+                <SelectItem value="my-posts">My Posts</SelectItem>
+                <SelectItem value="followed">Followed</SelectItem>
+                <SelectItem value="unnoticed">Unnoticed</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+              <SelectTrigger className="w-full sm:w-[180px]">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">Newest</SelectItem>
+                <SelectItem value="oldest">Oldest</SelectItem>
+                <SelectItem value="popularity">Popularity</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex gap-2">
             <Button
               variant={activeTab === "all" ? "default" : "outline"}
               onClick={() => setActiveTab("all")}
