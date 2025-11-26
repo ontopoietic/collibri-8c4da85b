@@ -41,7 +41,7 @@ interface ReplyFormProps {
   availableReplies?: Reply[];
 }
 
-const allCategories: ReplyCategory[] = ["objection", "proposal", "pro-argument", "variant"];
+const allCategories: ReplyCategory[] = ["objection", "proposal", "pro-argument", "variant", "question"];
 
 export const ReplyForm = ({
   onSubmit,
