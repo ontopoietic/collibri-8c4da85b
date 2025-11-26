@@ -2,7 +2,7 @@ import { Concern } from "@/types/concern";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { VoteButton } from "./VoteButton";
-import { MessageSquare, AlertCircle, Lightbulb } from "lucide-react";
+import { MessageSquare, AlertCircle, Lightbulb, Scale } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
@@ -21,9 +21,9 @@ const typeConfig = {
     icon: Lightbulb,
     className: "bg-proposal/10 text-proposal border-proposal/20",
   },
-  both: {
-    label: "Problem & Proposal",
-    icon: Lightbulb,
+  "counter-proposal": {
+    label: "Counter-Proposal",
+    icon: Scale,
     className: "bg-primary/10 text-primary border-primary/20",
   },
 };
