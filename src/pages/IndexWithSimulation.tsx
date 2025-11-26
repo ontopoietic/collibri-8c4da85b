@@ -296,6 +296,8 @@ const Index = () => {
             <VariantVoting 
               concerns={simulatedConcerns.filter(c => c.phase === getPreviousPhase())} 
               onVote={handleVariantVote}
+              dayIntoPhase={Math.floor(dayIntoPhase)}
+              interimDuration={5}
             />
           </div>
         ) : (
