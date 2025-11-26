@@ -47,85 +47,37 @@ export const PhaseTimeline = ({
     ? Math.floor((sliderValue / 100) * phaseDurationDays)
     : actualDaysPassed;
     
+  // Calculate overall progress percentage (0-100% across all 90 days)
+  const overallProgressPercentage = (daysPassed / phaseDurationDays) * 100;
+  
   // Calculate which phase we're in and its progress
   const currentPhaseDayStart = currentIndex * 30;
-  const currentPhaseDayEnd = (currentIndex + 1) * 30;
   const daysIntoCurrentPhase = Math.max(0, Math.min(30, daysPassed - currentPhaseDayStart));
   const daysRemaining = Math.max(0, 30 - daysIntoCurrentPhase);
-  const progressPercentage = (daysIntoCurrentPhase / 30) * 100;
   
   // Check if in interim phase (first 5 days)
   const isInInterim = daysIntoCurrentPhase < 5;
 
   return (
     <div className="bg-card border border-border rounded-lg p-6 h-full flex flex-col">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-foreground">
-          {phases[currentIndex].label}
+          Timeline Overview
         </h3>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Calendar className="h-4 w-4" />
-            <span className="font-medium">
-              {isSimulating 
-                ? `Day ${daysIntoCurrentPhase + 1} of 30` 
-                : `${daysRemaining} ${daysRemaining === 1 ? 'day' : 'days'} remaining`}
-            </span>
-          </div>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={() => navigate("/leaderboard/school")}
-                  className="w-3 h-3 rounded-full bg-primary hover:bg-primary/80 transition-colors"
-                  aria-label="View leaderboard"
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>View School Leaderboard</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Calendar className="h-4 w-4" />
+          <span className="font-medium">
+            {isSimulating 
+              ? `Day ${daysPassed + 1} of ${phaseDurationDays}` 
+              : `${daysRemaining} days left in ${phases[currentIndex].label}`}
+          </span>
         </div>
       </div>
 
-      <div className="space-y-4 flex-1">
-        {/* Phase selector buttons */}
-        <div className="flex gap-2">
-          {phases.map((phase, index) => {
-            const isActive = index <= currentIndex;
-            const isCurrent = phase.key === currentPhase;
-
-            return (
-              <button
-                key={phase.key}
-                onClick={() => onPhaseClick(phase.key)}
-                className={cn(
-                  "flex-1 px-3 py-2 rounded-md text-sm font-medium transition-all",
-                  isCurrent
-                    ? "bg-primary text-primary-foreground"
-                    : isActive
-                    ? "bg-primary/20 text-foreground hover:bg-primary/30"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80"
-                )}
-              >
-                {phase.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Timeline slider when simulating */}
-        {isSimulating && onSliderChange ? (
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs text-muted-foreground mb-1">
-              <span>(Day 1 - 30)</span>
-              <span className="text-center">(Day 31 - 60)</span>
-              <span>(Day 61 - 90)</span>
-            </div>
-            
-            {/* Timeline with phase separators and interim indicators */}
-            <div className="relative">
+      <div className="space-y-6 flex-1">
+        {/* Full timeline with phase indicators */}
+        <div className="space-y-3">{isSimulating && onSliderChange ? (
+            <div className="space-y-2">
               <Slider
                 value={[sliderValue]}
                 onValueChange={(values) => onSliderChange(values[0])}
@@ -134,116 +86,161 @@ export const PhaseTimeline = ({
                 step={0.5}
                 className="w-full"
               />
-              
-              {/* Phase separators - at day 30, day 35, day 60, day 65 */}
-              <div className="absolute top-0 left-0 right-0 h-full pointer-events-none flex">
-                {/* Day 30 - End of Class */}
-                <div style={{ width: '33.33%' }} className="border-r-2 border-border" />
-                {/* Day 35 - End of Grade Variant Voting */}
-                <div style={{ width: '5.56%' }} className="border-r-2 border-border" />
-                {/* Day 60 - End of Grade */}
-                <div style={{ width: '27.78%' }} className="border-r-2 border-border" />
-                {/* Day 65 - End of School Variant Voting */}
-                <div style={{ width: '5.56%' }} className="border-r-2 border-border" />
-                {/* Remaining School phase */}
-                <div style={{ width: '27.77%' }} />
-              </div>
-              
-              {/* Interim phase indicators - only for Grade and School phases */}
-              <div className="absolute -top-6 left-0 right-0 flex pointer-events-none">
-                {/* Class phase - no interim */}
-                <div style={{ width: '33.33%' }} />
-                
-                {/* Grade phase interim (days 31-35) */}
-                <div className="relative" style={{ width: '5.56%' }}>
-                  <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
-                  <div className="absolute -top-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
-                  </div>
-                </div>
-                <div style={{ width: '27.78%' }} />
-                
-                {/* School phase interim (days 61-65) */}
-                <div className="relative" style={{ width: '5.56%' }}>
-                  <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
-                  <div className="absolute -top-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
-                  </div>
-                </div>
-                <div style={{ width: '27.77%' }} />
-              </div>
+            </div>
+          ) : (
+            <div className="relative h-3 bg-muted rounded-full overflow-hidden">
+              {/* Progress bar across all phases */}
+              <div
+                className="h-full bg-primary transition-all duration-500 rounded-full"
+                style={{ width: `${overallProgressPercentage}%` }}
+              />
+            </div>
+          )}
+
+          
+          {/* Phase separators with dashed lines and interim indicators */}
+          <div className="relative h-12 -mt-2">
+            <div className="absolute top-0 left-0 right-0 h-full pointer-events-none flex">
+              {/* Class Phase (Day 1-30) */}
+              <div style={{ width: '33.33%' }} className="border-r-2 border-dashed border-border" />
+              {/* Grade Interim (Day 31-35) */}
+              <div style={{ width: '5.56%' }} className="border-r-2 border-dashed border-border bg-amber-500/10" />
+              {/* Grade Phase (Day 36-60) */}
+              <div style={{ width: '27.78%' }} className="border-r-2 border-dashed border-border" />
+              {/* School Interim (Day 61-65) */}
+              <div style={{ width: '5.56%' }} className="border-r-2 border-dashed border-border bg-amber-500/10" />
+              {/* School Phase (Day 66-90) */}
+              <div style={{ width: '27.77%' }} />
             </div>
             
-            <div className="text-xs text-muted-foreground text-center mt-2">
-              Simulating: Overall Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} ({phases[currentIndex].label}{isInInterim && currentPhase !== "class" ? ' - Variant Voting' : ''})
+            {/* Variant Voting labels */}
+            <div className="absolute top-0 left-0 right-0 flex pointer-events-none">
+              <div style={{ width: '33.33%' }} />
+              <div className="relative" style={{ width: '5.56%' }}>
+                <div className="absolute -top-1 left-0 right-0 text-center">
+                  <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
+                </div>
+              </div>
+              <div style={{ width: '27.78%' }} />
+              <div className="relative" style={{ width: '5.56%' }}>
+                <div className="absolute -top-1 left-0 right-0 text-center">
+                  <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
+                </div>
+              </div>
             </div>
           </div>
-        ) : (
-          <>
-            {/* Day progress bar with variant voting indicator */}
-            <div className="relative">
-              {/* Variant Voting phase label - only for Grade and School phases */}
-              {currentPhase !== "class" && (
-                <div className="absolute -top-6 left-0" style={{ width: '16.67%' }}>
-                  <div className="text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
-                  </div>
-                </div>
-              )}
-              
-              <div className="h-3 bg-muted rounded-full overflow-hidden relative">
-                {/* Variant voting phase background - only for Grade and School phases */}
-                {currentPhase !== "class" && (
-                  <div className="absolute inset-0 flex">
-                    <div className="bg-amber-500/20" style={{ width: '16.67%' }} />
-                    <div className="flex-1" />
-                  </div>
-                )}
-                {/* Progress bar */}
-                <div
-                  className="h-full bg-primary transition-all duration-500 rounded-full relative z-10"
-                  style={{ width: `${progressPercentage}%` }}
-                />
-              </div>
-              
-              {/* Variant voting phase separator - only for Grade and School phases */}
-              {currentPhase !== "class" && (
-                <div className="absolute left-[16.67%] top-0 h-3 w-0.5 bg-amber-600" />
-              )}
-              
-            {/* Day markers for current phase */}
-              <div className="flex justify-between mt-2 px-1">
-                {Array.from({ length: 10 }, (_, i) => {
-                  const dayNumber = Math.floor((i / 9) * 29) + 1;
-                  const isPassed = dayNumber <= daysIntoCurrentPhase;
-                  const isInterimDay = currentPhase !== "class" && dayNumber <= 5;
-                  
-                  return (
-                    <div key={i} className="flex flex-col items-center">
-                      <div
-                        className={cn(
-                          "w-2 h-2 rounded-full transition-colors mb-1",
-                          isPassed ? (isInterimDay ? "bg-amber-500" : "bg-primary") : "bg-border"
-                        )}
-                      />
-                      <span className={cn(
-                        "text-[10px]",
-                        isPassed ? (isInterimDay ? "text-amber-600 font-medium" : "text-foreground font-medium") : "text-muted-foreground"
-                      )}>
-                        {dayNumber}
-                      </span>
+          
+          {/* Phase buttons with pointers */}
+          <div className="relative flex items-end">
+            {/* Class Phase Button - positioned at start (Day 15) */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => onPhaseClick("class")}
+                    className={cn(
+                      "absolute flex flex-col items-center gap-1 transition-all group",
+                      currentPhase === "class" ? "z-10" : "z-0"
+                    )}
+                    style={{ left: '16.67%', transform: 'translateX(-50%)' }}
+                  >
+                    <div className={cn(
+                      "px-3 py-1.5 rounded-md text-xs font-semibold transition-all shadow-sm",
+                      "flex items-center gap-1.5",
+                      currentPhase === "class"
+                        ? "bg-primary text-primary-foreground scale-110"
+                        : "bg-card border border-border text-foreground hover:bg-accent"
+                    )}>
+                      <Trophy className="h-3 w-3" />
+                      <span>Class</span>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                    <div className={cn(
+                      "w-0.5 h-4 transition-all",
+                      currentPhase === "class" ? "bg-primary" : "bg-border"
+                    )} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View Class Leaderboard</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
 
+            {/* Grade Phase Button - positioned at center (Day 45) */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => onPhaseClick("grade")}
+                    className={cn(
+                      "absolute flex flex-col items-center gap-1 transition-all group",
+                      currentPhase === "grade" ? "z-10" : "z-0"
+                    )}
+                    style={{ left: '50%', transform: 'translateX(-50%)' }}
+                  >
+                    <div className={cn(
+                      "px-3 py-1.5 rounded-md text-xs font-semibold transition-all shadow-sm",
+                      "flex items-center gap-1.5",
+                      currentPhase === "grade"
+                        ? "bg-primary text-primary-foreground scale-110"
+                        : "bg-card border border-border text-foreground hover:bg-accent"
+                    )}>
+                      <Trophy className="h-3 w-3" />
+                      <span>Grade</span>
+                    </div>
+                    <div className={cn(
+                      "w-0.5 h-4 transition-all",
+                      currentPhase === "grade" ? "bg-primary" : "bg-border"
+                    )} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View Grade Leaderboard</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {/* School Phase Button - positioned at end (Day 75) */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => onPhaseClick("school")}
+                    className={cn(
+                      "absolute flex flex-col items-center gap-1 transition-all group",
+                      currentPhase === "school" ? "z-10" : "z-0"
+                    )}
+                    style={{ left: '83.33%', transform: 'translateX(-50%)' }}
+                  >
+                    <div className={cn(
+                      "px-3 py-1.5 rounded-md text-xs font-semibold transition-all shadow-sm",
+                      "flex items-center gap-1.5",
+                      currentPhase === "school"
+                        ? "bg-primary text-primary-foreground scale-110"
+                        : "bg-card border border-border text-foreground hover:bg-accent"
+                    )}>
+                      <Trophy className="h-3 w-3" />
+                      <span>School</span>
+                    </div>
+                    <div className={cn(
+                      "w-0.5 h-4 transition-all",
+                      currentPhase === "school" ? "bg-primary" : "bg-border"
+                    )} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View School Leaderboard</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          
+          {isSimulating && (
             <div className="text-xs text-muted-foreground text-center">
-              Day {daysIntoCurrentPhase + 1} of 30 in {phases[currentIndex].label}
-              {isInInterim && currentPhase !== "class" && <span className="text-amber-600 font-medium"> (Variant Voting Phase)</span>}
+              Simulating: Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} ({phases[currentIndex].label}{isInInterim && currentPhase !== "class" ? ' - Variant Voting' : ''})
             </div>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
