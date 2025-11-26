@@ -19,9 +19,9 @@ const quotaConfig = [
 
 export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
   return (
-    <Card className="p-4 bg-card border border-border h-full flex flex-col">
-      <h3 className="text-lg font-semibold mb-4 text-foreground">Your Phase Quota</h3>
-      <div className="space-y-3">
+    <Card className="p-6 bg-card border border-border h-full flex flex-col">
+      <h3 className="text-lg font-semibold mb-6 text-foreground">Your Phase Quota</h3>
+      <div className="space-y-4 flex-1">
         {quotaConfig.map((config) => {
           const quotaData = quota[config.key as keyof UserQuota];
           const percentage = (quotaData.used / quotaData.total) * 100;
@@ -46,7 +46,7 @@ export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
           );
         })}
       </div>
-      <p className="text-xs text-muted-foreground mt-4">
+      <p className="text-xs text-muted-foreground mt-6 pt-4 border-t border-border">
         Quotas reset at the end of each phase
       </p>
     </Card>

@@ -83,20 +83,9 @@ const Index = () => {
 
   // Calculate simulated quota based on activity
   const simulatedQuota = useMemo((): UserQuota => {
-    if (!isSimulating) {
-      return {
-        concerns: { used: 2, total: 3 },
-        votes: { used: 7, total: 10 },
-        variants: { used: 1, total: 3 },
-        proposals: { used: 2, total: 3 },
-        proArguments: { used: 3, total: 5 },
-        objections: { used: 4, total: 5 },
-        questions: { used: 1, total: 3 },
-      };
-    }
-
-    // Count activities up to simulated time
-    const concernsCount = simulatedConcerns.filter(c => c.phase === currentPhase).length;
+    // Count activities up to simulated time from the simulated concerns
+    const phaseConcerns = simulatedConcerns.filter(c => c.phase === currentPhase);
+    const concernsCount = phaseConcerns.length;
     
     const getAllReplies = (replies: Reply[]): Reply[] => {
       let all: Reply[] = [];
@@ -107,13 +96,18 @@ const Index = () => {
       return all;
     };
 
-    const allReplies = simulatedConcerns.flatMap(c => getAllReplies(c.replies));
+    const allReplies = phaseConcerns.flatMap(c => getAllReplies(c.replies));
     const proposalsCount = allReplies.filter(r => r.category === 'proposal').length;
     const variantsCount = allReplies.filter(r => r.category === 'variant').length;
     const proArgsCount = allReplies.filter(r => r.category === 'pro-argument').length;
     const objectionsCount = allReplies.filter(r => r.category === 'objection').length;
     const questionsCount = allReplies.filter(r => r.category === 'question').length;
-    const votesCount = simulatedConcerns.reduce((sum, c) => sum + c.votes, 0);
+    
+    // Sum votes from all concerns and their replies
+    const sumVotes = (replies: Reply[]): number => {
+      return replies.reduce((sum, r) => sum + r.votes + sumVotes(r.replies), 0);
+    };
+    const votesCount = phaseConcerns.reduce((sum, c) => sum + c.votes + sumVotes(c.replies), 0);
 
     return {
       concerns: { used: Math.min(concernsCount, 3), total: 3 },
@@ -124,7 +118,7 @@ const Index = () => {
       objections: { used: Math.min(objectionsCount, 5), total: 5 },
       questions: { used: Math.min(questionsCount, 3), total: 3 },
     };
-  }, [isSimulating, simulatedConcerns, currentPhase]);
+  }, [simulatedConcerns, currentPhase]);
 
   const handleNewConcern = (type: ConcernType, title: string, description: string, solutionLevel?: SolutionLevel) => {
     const newConcern: Concern = {
@@ -228,8 +222,8 @@ const Index = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-          <div className="lg:col-span-3 flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div className="lg:col-span-2">
             <PhaseTimeline 
               currentPhase={currentPhase} 
               onPhaseClick={handlePhaseClick}
@@ -240,7 +234,7 @@ const Index = () => {
               isSimulating={isSimulating}
             />
           </div>
-          <div className="lg:col-span-1 flex flex-col">
+          <div className="lg:col-span-1">
             <QuotaDisplay quota={simulatedQuota} />
           </div>
         </div>
