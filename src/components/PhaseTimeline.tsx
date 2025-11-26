@@ -142,6 +142,96 @@ export const PhaseTimeline = ({
                   </div>
                 </div>
               </div>
+
+              {/* Phase buttons above the timeline, connecting directly */}
+              <div className="absolute left-0 right-0 top-0 flex">
+                {/* Class Phase Button */}
+                <button
+                  onClick={() => onPhaseClick("class")}
+                  className={cn(
+                    "absolute flex flex-col items-center gap-0 transition-all",
+                    currentPhase === "class" ? "z-10" : "z-0"
+                  )}
+                  style={{ left: "16.67%", transform: "translateX(-50%)" }}
+                >
+                  <div
+                    className={cn(
+                      "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
+                      "flex items-center gap-1.5 whitespace-nowrap",
+                      currentPhase === "class"
+                        ? "bg-primary text-primary-foreground scale-110"
+                        : "bg-card border border-border text-foreground hover:bg-accent"
+                    )}
+                  >
+                    <Trophy className="h-3 w-3" />
+                    <span>Class</span>
+                  </div>
+                  <div
+                    className={cn(
+                      "w-0.5 h-6 transition-all",
+                      currentPhase === "class" ? "bg-primary" : "bg-border"
+                    )}
+                  />
+                </button>
+
+                {/* Grade Phase Button */}
+                <button
+                  onClick={() => onPhaseClick("grade")}
+                  className={cn(
+                    "absolute flex flex-col items-center gap-0 transition-all",
+                    currentPhase === "grade" ? "z-10" : "z-0"
+                  )}
+                  style={{ left: "50%", transform: "translateX(-50%)" }}
+                >
+                  <div
+                    className={cn(
+                      "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
+                      "flex items-center gap-1.5 whitespace-nowrap",
+                      currentPhase === "grade"
+                        ? "bg-primary text-primary-foreground scale-110"
+                        : "bg-card border border-border text-foreground hover:bg-accent"
+                    )}
+                  >
+                    <Trophy className="h-3 w-3" />
+                    <span>Grade</span>
+                  </div>
+                  <div
+                    className={cn(
+                      "w-0.5 h-6 transition-all",
+                      currentPhase === "grade" ? "bg-primary" : "bg-border"
+                    )}
+                  />
+                </button>
+
+                {/* School Phase Button */}
+                <button
+                  onClick={() => onPhaseClick("school")}
+                  className={cn(
+                    "absolute flex flex-col items-center gap-0 transition-all",
+                    currentPhase === "school" ? "z-10" : "z-0"
+                  )}
+                  style={{ left: "83.33%", transform: "translateX(-50%)" }}
+                >
+                  <div
+                    className={cn(
+                      "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
+                      "flex items-center gap-1.5 whitespace-nowrap",
+                      currentPhase === "school"
+                        ? "bg-primary text-primary-foreground scale-110"
+                        : "bg-card border border-border text-foreground hover:bg-accent"
+                    )}
+                  >
+                    <Trophy className="h-3 w-3" />
+                    <span>School</span>
+                  </div>
+                  <div
+                    className={cn(
+                      "w-0.5 h-6 transition-all",
+                      currentPhase === "school" ? "bg-primary" : "bg-border"
+                    )}
+                  />
+                </button>
+              </div>
             </div>
 
             {/* Leaderboard button - larger with more space */}
@@ -151,96 +241,6 @@ export const PhaseTimeline = ({
               aria-label="View leaderboard"
             >
               <Trophy className="h-4 w-4 text-primary" />
-            </button>
-          </div>
-
-          {/* Phase buttons above the timeline, connecting directly */}
-          <div className="absolute left-0 right-0 top-0">
-            {/* Class Phase Button */}
-            <button
-              onClick={() => onPhaseClick("class")}
-              className={cn(
-                "absolute flex flex-col items-center gap-0 transition-all",
-                currentPhase === "class" ? "z-10" : "z-0"
-              )}
-              style={{ left: "16.67%", transform: "translateX(-50%)" }}
-            >
-              <div
-                className={cn(
-                  "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
-                  "flex items-center gap-1.5 whitespace-nowrap",
-                  currentPhase === "class"
-                    ? "bg-primary text-primary-foreground scale-110"
-                    : "bg-card border border-border text-foreground hover:bg-accent"
-                )}
-              >
-                <Trophy className="h-3 w-3" />
-                <span>Class</span>
-              </div>
-              <div
-                className={cn(
-                  "w-0.5 h-6 transition-all",
-                  currentPhase === "class" ? "bg-primary" : "bg-border"
-                )}
-              />
-            </button>
-
-            {/* Grade Phase Button */}
-            <button
-              onClick={() => onPhaseClick("grade")}
-              className={cn(
-                "absolute flex flex-col items-center gap-0 transition-all",
-                currentPhase === "grade" ? "z-10" : "z-0"
-              )}
-              style={{ left: "50%", transform: "translateX(-50%)" }}
-            >
-              <div
-                className={cn(
-                  "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
-                  "flex items-center gap-1.5 whitespace-nowrap",
-                  currentPhase === "grade"
-                    ? "bg-primary text-primary-foreground scale-110"
-                    : "bg-card border border-border text-foreground hover:bg-accent"
-                )}
-              >
-                <Trophy className="h-3 w-3" />
-                <span>Grade</span>
-              </div>
-              <div
-                className={cn(
-                  "w-0.5 h-6 transition-all",
-                  currentPhase === "grade" ? "bg-primary" : "bg-border"
-                )}
-              />
-            </button>
-
-            {/* School Phase Button */}
-            <button
-              onClick={() => onPhaseClick("school")}
-              className={cn(
-                "absolute flex flex-col items-center gap-0 transition-all",
-                currentPhase === "school" ? "z-10" : "z-0"
-              )}
-              style={{ left: "83.33%", transform: "translateX(-50%)" }}
-            >
-              <div
-                className={cn(
-                  "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
-                  "flex items-center gap-1.5 whitespace-nowrap",
-                  currentPhase === "school"
-                    ? "bg-primary text-primary-foreground scale-110"
-                    : "bg-card border border-border text-foreground hover:bg-accent"
-                )}
-              >
-                <Trophy className="h-3 w-3" />
-                <span>School</span>
-              </div>
-              <div
-                className={cn(
-                  "w-0.5 h-6 transition-all",
-                  currentPhase === "school" ? "bg-primary" : "bg-border"
-                )}
-              />
             </button>
           </div>
         </div>
