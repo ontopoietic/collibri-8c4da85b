@@ -142,9 +142,21 @@ export const PhaseTimeline = ({
                 <div className="flex-1" />
               </div>
               
-              {/* Interim phase indicators */}
+              {/* Interim phase indicators - only for Grade and School phases */}
               <div className="absolute -top-6 left-0 right-0 flex pointer-events-none">
-                {/* Class phase interim */}
+                {/* Class phase - no interim */}
+                <div className="flex-1" />
+                
+                {/* Grade phase interim (days 31-35) */}
+                <div className="relative" style={{ width: '5.56%' }}>
+                  <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
+                  <div className="absolute -top-1 left-0 right-0 text-center">
+                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Interim</span>
+                  </div>
+                </div>
+                <div style={{ width: '27.78%' }} />
+                
+                {/* School phase interim (days 61-65) */}
                 <div className="relative" style={{ width: '5.56%' }}>
                   <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
                   <div className="absolute -top-1 left-0 right-0 text-center">
@@ -152,28 +164,11 @@ export const PhaseTimeline = ({
                   </div>
                 </div>
                 <div className="flex-1" />
-                
-                {/* Grade phase interim */}
-                <div className="relative" style={{ width: '5.56%' }}>
-                  <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
-                  <div className="absolute -top-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Interim</span>
-                  </div>
-                </div>
-                <div className="flex-1" />
-                
-                {/* School phase interim */}
-                <div className="relative" style={{ width: '5.56%' }}>
-                  <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
-                  <div className="absolute -top-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Interim</span>
-                  </div>
-                </div>
               </div>
             </div>
             
             <div className="text-xs text-muted-foreground text-center mt-2">
-              Simulating: Overall Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} ({phases[currentIndex].label}{isInInterim ? ' - Interim' : ''})
+              Simulating: Overall Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} ({phases[currentIndex].label}{isInInterim && currentPhase !== "class" ? ' - Interim' : ''})
             </div>
           </div>
         ) : (
@@ -181,11 +176,13 @@ export const PhaseTimeline = ({
             {/* Day progress bar with interim indicator */}
             <div className="relative">
               <div className="h-3 bg-muted rounded-full overflow-hidden relative">
-                {/* Interim phase background */}
-                <div className="absolute inset-0 flex">
-                  <div className="bg-amber-500/20" style={{ width: '16.67%' }} />
-                  <div className="flex-1" />
-                </div>
+                {/* Interim phase background - only for Grade and School phases */}
+                {currentPhase !== "class" && (
+                  <div className="absolute inset-0 flex">
+                    <div className="bg-amber-500/20" style={{ width: '16.67%' }} />
+                    <div className="flex-1" />
+                  </div>
+                )}
                 {/* Progress bar */}
                 <div
                   className="h-full bg-primary transition-all duration-500 rounded-full relative z-10"
@@ -193,15 +190,17 @@ export const PhaseTimeline = ({
                 />
               </div>
               
-              {/* Interim phase separator */}
-              <div className="absolute left-[16.67%] top-0 h-3 w-0.5 bg-amber-600" />
+              {/* Interim phase separator - only for Grade and School phases */}
+              {currentPhase !== "class" && (
+                <div className="absolute left-[16.67%] top-0 h-3 w-0.5 bg-amber-600" />
+              )}
               
             {/* Day markers for current phase */}
               <div className="flex justify-between mt-2 px-1">
                 {Array.from({ length: 10 }, (_, i) => {
                   const dayNumber = Math.floor((i / 9) * 29) + 1;
                   const isPassed = dayNumber <= daysIntoCurrentPhase;
-                  const isInterimDay = dayNumber <= 5;
+                  const isInterimDay = currentPhase !== "class" && dayNumber <= 5;
                   
                   return (
                     <div key={i} className="flex flex-col items-center">
@@ -225,7 +224,7 @@ export const PhaseTimeline = ({
 
             <div className="text-xs text-muted-foreground text-center">
               Day {daysIntoCurrentPhase + 1} of 30 in {phases[currentIndex].label}
-              {isInInterim && <span className="text-amber-600 font-medium"> (Interim Phase)</span>}
+              {isInInterim && currentPhase !== "class" && <span className="text-amber-600 font-medium"> (Interim Phase)</span>}
             </div>
           </>
         )}
