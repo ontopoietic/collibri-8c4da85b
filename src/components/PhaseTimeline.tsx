@@ -76,79 +76,81 @@ export const PhaseTimeline = ({
 
       <div className="space-y-6 flex-1">
         {/* Full timeline with phase indicators and phase buttons */}
-        <div className="relative h-24">
+        <div className="relative h-28">
           {/* Vertical separators (reduced height) */}
-          <div className="absolute inset-y-6 left-0 right-0 pointer-events-none flex">
+          <div className="absolute top-8 bottom-0 left-0 right-0 pointer-events-none flex">
             {/* Class Phase (Day 1-30) */}
-            <div style={{ width: "33.33%" }} className="border-r border-border" />
+            <div style={{ width: "calc(33.33% - 2px)" }} className="border-r border-border" />
+            <div style={{ width: "4px" }} /> {/* Gap for separator */}
             {/* Grade Interim (Day 31-35) */}
-            <div style={{ width: "5.56%" }} className="border-r border-border bg-amber-500/5" />
+            <div style={{ width: "calc(5.56% - 2px)" }} className="border-r border-border bg-amber-500/5" />
+            <div style={{ width: "4px" }} /> {/* Gap for separator */}
             {/* Grade Phase (Day 36-60) */}
-            <div style={{ width: "27.78%" }} className="border-r border-border" />
+            <div style={{ width: "calc(27.78% - 2px)" }} className="border-r border-border" />
+            <div style={{ width: "4px" }} /> {/* Gap for separator */}
             {/* School Interim (Day 61-65) */}
-            <div style={{ width: "5.56%" }} className="border-r border-border bg-amber-500/5" />
+            <div style={{ width: "calc(5.56% - 2px)" }} className="border-r border-border bg-amber-500/5" />
+            <div style={{ width: "4px" }} /> {/* Gap for separator */}
             {/* School Phase (Day 66-90) */}
-            <div style={{ width: "27.77%" }} />
+            <div style={{ width: "calc(27.77% - 2px)" }} />
           </div>
 
-          {/* Timeline bar centered vertically with gaps at separators */}
-          <div className="absolute left-0 right-6 top-1/2 -translate-y-1/2">
-            {isSimulating && onSliderChange ? (
-              <Slider
-                value={[sliderValue]}
-                onValueChange={(values) => onSliderChange(values[0])}
-                min={0}
-                max={100}
-                step={0.5}
-                className="w-full"
-              />
-            ) : (
-              <div className="relative h-3 flex">
-                {/* Progress bar segments with gaps */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.min(100, (overallProgressPercentage / 33.33) * 100)}%` }}
-                  />
+          {/* Timeline bar with gaps aligned to separators */}
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex items-center gap-1">
+            <div className="flex-1 flex items-center gap-1">
+              {isSimulating && onSliderChange ? (
+                <Slider
+                  value={[sliderValue]}
+                  onValueChange={(values) => onSliderChange(values[0])}
+                  min={0}
+                  max={100}
+                  step={0.5}
+                  className="w-full"
+                />
+              ) : (
+                <div className="relative h-3 flex w-full gap-1">
+                  {/* Progress bar segments with gaps */}
+                  <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
+                    <div
+                      className="h-full bg-primary transition-all duration-500 rounded-full"
+                      style={{ width: `${Math.min(100, (overallProgressPercentage / 33.33) * 100)}%` }}
+                    />
+                  </div>
+                  <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "5.56%" }}>
+                    <div
+                      className="h-full bg-primary transition-all duration-500 rounded-full"
+                      style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
+                    />
+                  </div>
+                  <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.78%" }}>
+                    <div
+                      className="h-full bg-primary transition-all duration-500 rounded-full"
+                      style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 38.89) / 27.78) * 100))}%` }}
+                    />
+                  </div>
+                  <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "5.56%" }}>
+                    <div
+                      className="h-full bg-primary transition-all duration-500 rounded-full"
+                      style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
+                    />
+                  </div>
+                  <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.77%" }}>
+                    <div
+                      className="h-full bg-primary transition-all duration-500 rounded-full"
+                      style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 72.23) / 27.77) * 100))}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="w-1" /> {/* Gap */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "5.56%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
-                  />
-                </div>
-                <div className="w-1" /> {/* Gap */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.78%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 38.89) / 27.78) * 100))}%` }}
-                  />
-                </div>
-                <div className="w-1" /> {/* Gap */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "5.56%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
-                  />
-                </div>
-                <div className="w-1" /> {/* Gap */}
-                <div className="relative bg-muted rounded-full overflow-hidden flex-1">
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 72.23) / 27.77) * 100))}%` }}
-                  />
-                </div>
-              </div>
-            )}
+              )}
+            </div>
 
-            {/* Leaderboard button - clickable, attached to end of timeline */}
+            {/* Leaderboard button - larger with more space */}
             <button
               onClick={() => navigate("/leaderboard/school")}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full ml-2 p-1.5 rounded-md bg-card border border-border hover:bg-accent transition-colors shadow-sm cursor-pointer"
+              className="ml-4 p-2 rounded-md bg-card border border-border hover:bg-accent transition-colors shadow-sm cursor-pointer flex-shrink-0"
               aria-label="View leaderboard"
             >
-              <Trophy className="h-3.5 w-3.5 text-primary" />
+              <Trophy className="h-4 w-4 text-primary" />
             </button>
           </div>
 
@@ -168,13 +170,13 @@ export const PhaseTimeline = ({
             </div>
           </div>
 
-          {/* Phase buttons above the timeline */}
-          <div className="absolute left-0 right-0 bottom-full mb-2 h-12">
+          {/* Phase buttons above the timeline, connecting directly */}
+          <div className="absolute left-0 right-0 top-0">
             {/* Class Phase Button */}
             <button
               onClick={() => onPhaseClick("class")}
               className={cn(
-                "absolute flex flex-col items-center gap-0.5 transition-all",
+                "absolute flex flex-col items-center gap-0 transition-all",
                 currentPhase === "class" ? "z-10" : "z-0"
               )}
               style={{ left: "16.67%", transform: "translateX(-50%)" }}
@@ -193,7 +195,7 @@ export const PhaseTimeline = ({
               </div>
               <div
                 className={cn(
-                  "w-0.5 h-4 transition-all",
+                  "w-0.5 h-6 transition-all",
                   currentPhase === "class" ? "bg-primary" : "bg-border"
                 )}
               />
@@ -203,7 +205,7 @@ export const PhaseTimeline = ({
             <button
               onClick={() => onPhaseClick("grade")}
               className={cn(
-                "absolute flex flex-col items-center gap-0.5 transition-all",
+                "absolute flex flex-col items-center gap-0 transition-all",
                 currentPhase === "grade" ? "z-10" : "z-0"
               )}
               style={{ left: "50%", transform: "translateX(-50%)" }}
@@ -222,7 +224,7 @@ export const PhaseTimeline = ({
               </div>
               <div
                 className={cn(
-                  "w-0.5 h-4 transition-all",
+                  "w-0.5 h-6 transition-all",
                   currentPhase === "grade" ? "bg-primary" : "bg-border"
                 )}
               />
@@ -232,7 +234,7 @@ export const PhaseTimeline = ({
             <button
               onClick={() => onPhaseClick("school")}
               className={cn(
-                "absolute flex flex-col items-center gap-0.5 transition-all",
+                "absolute flex flex-col items-center gap-0 transition-all",
                 currentPhase === "school" ? "z-10" : "z-0"
               )}
               style={{ left: "83.33%", transform: "translateX(-50%)" }}
@@ -251,7 +253,7 @@ export const PhaseTimeline = ({
               </div>
               <div
                 className={cn(
-                  "w-0.5 h-4 transition-all",
+                  "w-0.5 h-6 transition-all",
                   currentPhase === "school" ? "bg-primary" : "bg-border"
                 )}
               />
