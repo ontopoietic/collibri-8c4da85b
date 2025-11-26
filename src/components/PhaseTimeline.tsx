@@ -168,7 +168,7 @@ export const PhaseTimeline = ({
                   </div>
                   <div
                     className={cn(
-                      "w-0.5 h-6 transition-all",
+                      "w-0.5 h-4 transition-all",
                       currentPhase === "class" ? "bg-primary" : "bg-border"
                     )}
                   />
@@ -197,7 +197,7 @@ export const PhaseTimeline = ({
                   </div>
                   <div
                     className={cn(
-                      "w-0.5 h-6 transition-all",
+                      "w-0.5 h-4 transition-all",
                       currentPhase === "grade" ? "bg-primary" : "bg-border"
                     )}
                   />
@@ -226,7 +226,7 @@ export const PhaseTimeline = ({
                   </div>
                   <div
                     className={cn(
-                      "w-0.5 h-6 transition-all",
+                      "w-0.5 h-4 transition-all",
                       currentPhase === "school" ? "bg-primary" : "bg-border"
                     )}
                   />
