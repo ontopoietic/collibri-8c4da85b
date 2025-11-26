@@ -62,6 +62,9 @@ export const ReplyForm = ({
   useEffect(() => {
     if (category === "variant" && originalText) {
       setText(originalText);
+    } else if (category && category !== "variant") {
+      // Clear text when switching to non-variant categories
+      setText("");
     }
   }, [category, originalText]);
 
