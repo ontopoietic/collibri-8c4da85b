@@ -35,6 +35,26 @@ export const mockConcerns: Concern[] = [
     timestamp: daysAgo(85),
     phase: "class",
     group: "Class 10A",
+    variants: [
+      {
+        id: "v1-1",
+        title: "Cafeteria Food Quality Issues",
+        text: "The food served in our cafeteria is often cold and lacks variety. Students are frequently complaining about limited healthy options.",
+        votes: 12,
+      },
+      {
+        id: "v1-2",
+        title: "Cafeteria Food Quality and Timing Concerns",
+        text: "The food served in our cafeteria is often cold and lacks variety, but we should also consider extending lunch break times to reduce crowding. This addresses both timing and variety concerns.",
+        votes: 18,
+      },
+      {
+        id: "v1-3",
+        title: "Comprehensive Cafeteria Service Improvement",
+        text: "The food served in our cafeteria is often cold and lacks variety. We propose a student feedback system for menu items and extended lunch breaks to improve both quality and timing issues.",
+        votes: 24,
+      },
+    ],
     replies: [
       createReply("r1", "objection", "I think the main issue is timing, not quality. Food is hot when served.", 8, 84.5),
       createReply("r2", "pro-argument", "Absolutely agree! I've noticed many students skip lunch because of this.", 12, 84.2),
@@ -61,6 +81,26 @@ export const mockConcerns: Concern[] = [
     phase: "class",
     group: "Class 9B",
     solutionLevel: "school",
+    variants: [
+      {
+        id: "v2-1",
+        title: "Implement Digital Assignment Submission",
+        text: "We should move to a fully digital assignment submission system to reduce paper waste and make tracking easier.",
+        votes: 8,
+      },
+      {
+        id: "v2-2",
+        title: "Hybrid Digital and Physical Assignment System",
+        text: "We should move to a hybrid assignment submission system with offline access capabilities, combining digital efficiency with accessibility for all students who may not have reliable internet.",
+        votes: 14,
+      },
+      {
+        id: "v2-3",
+        title: "Digital Assignment System with Extended Access",
+        text: "Implement a fully digital assignment submission system using free platforms like Google Classroom, with extended library hours for students who need school computers for submissions.",
+        votes: 22,
+      },
+    ],
     replies: [
       createReply("r5", "pro-argument", "This would help the environment and make it easier to keep track of deadlines.", 9, 81.5),
       createReply("r6", "objection", "Not all students have reliable internet access at home. This could be unfair.", 14, 81, [], undefined, {
@@ -87,6 +127,26 @@ export const mockConcerns: Concern[] = [
     timestamp: daysAgo(78),
     phase: "class",
     group: "Class 8C",
+    variants: [
+      {
+        id: "v3-1",
+        title: "Limited Access to Sports Equipment",
+        text: "Our class doesn't have enough sports equipment for PE lessons, leading to long waiting times and reduced activity.",
+        votes: 7,
+      },
+      {
+        id: "v3-2",
+        title: "Sports Equipment and Class Size Issues",
+        text: "Our class doesn't have enough sports equipment for PE lessons, but the real issue is that PE classes are too large. We need smaller groups and better equipment distribution.",
+        votes: 11,
+      },
+      {
+        id: "v3-3",
+        title: "Comprehensive PE Equipment Solution",
+        text: "Our class doesn't have enough sports equipment for PE lessons. We propose organizing equipment-sharing schedules between classes, purchasing multi-use items, and applying for budget allocation for additional equipment.",
+        votes: 16,
+      },
+    ],
     replies: [
       createReply("r9", "pro-argument", "Yes! Half the class just stands around waiting for their turn.", 8, 77.5),
       createReply("r10", "proposal", "We could create a rotation system and extend PE class time.", 6, 77, [], undefined, {
@@ -183,6 +243,26 @@ export const mockConcerns: Concern[] = [
     timestamp: daysAgo(56),
     phase: "grade",
     group: "Grade 10",
+    variants: [
+      {
+        id: "v4-1",
+        title: "Homework Overload Across Subjects",
+        text: "Students are receiving excessive homework from multiple subjects with overlapping deadlines, causing stress and burnout.",
+        votes: 15,
+      },
+      {
+        id: "v4-2",
+        title: "Homework Coordination and Cap Policy",
+        text: "Students are receiving excessive homework from multiple subjects with overlapping deadlines. We need a homework cap policy of maximum 2 hours per night and a shared calendar for teachers to coordinate.",
+        votes: 28,
+      },
+      {
+        id: "v4-3",
+        title: "Comprehensive Homework Management System",
+        text: "Students are receiving excessive homework from multiple subjects with overlapping deadlines. We propose a 2-hour homework cap, monthly grade-level teacher coordination meetings, and a shared digital calendar for assignment tracking.",
+        votes: 34,
+      },
+    ],
     replies: [
       createReply("r13", "pro-argument", "Definitely! Sometimes I have 4 major assignments due the same week.", 18, 55.5),
       createReply("r14", "objection", "Teachers don't coordinate because they have their own curriculum requirements.", 12, 55, [], undefined, {
@@ -210,6 +290,26 @@ export const mockConcerns: Concern[] = [
     phase: "grade",
     group: "Grade 11",
     solutionLevel: "school",
+    variants: [
+      {
+        id: "v5-1",
+        title: "Mental Health Support Program",
+        text: "Establish regular access to school counselors and mental health resources for all students in our grade.",
+        votes: 12,
+      },
+      {
+        id: "v5-2",
+        title: "Mental Health Support with Curriculum Integration",
+        text: "Establish regular access to school counselors and mental health resources, while adding mental health education to the curriculum so everyone understands it better.",
+        votes: 20,
+      },
+      {
+        id: "v5-3",
+        title: "Comprehensive Mental Health Initiative",
+        text: "Establish regular access to school counselors and mental health resources, implement peer support training, partner with external mental health organizations, and integrate mental health education into the curriculum.",
+        votes: 31,
+      },
+    ],
     replies: [
       createReply("r18", "pro-argument", "This is so important! Many students struggle silently.", 16, 51.5),
       createReply("r19", "pro-argument", "Mental health should be treated as seriously as physical health.", 19, 51),
@@ -233,6 +333,26 @@ export const mockConcerns: Concern[] = [
     timestamp: daysAgo(48),
     phase: "grade",
     group: "Grade 9",
+    variants: [
+      {
+        id: "v6-1",
+        title: "Outdated Computer Lab Equipment",
+        text: "Computer lab machines are 8+ years old, frequently crash, and can't run modern software needed for coursework.",
+        votes: 10,
+      },
+      {
+        id: "v6-2",
+        title: "Computer Lab Equipment and BYOD Solution",
+        text: "Computer lab machines are 8+ years old and frequently crash. We should apply for technology grants and also implement a BYOD (Bring Your Own Device) policy for students who have laptops.",
+        votes: 18,
+      },
+      {
+        id: "v6-3",
+        title: "Multi-Phase Computer Lab Modernization",
+        text: "Computer lab machines are outdated and can't run modern software. We propose applying for government grants, partnering with tech companies for donations, implementing BYOD policy, and using cloud-based software solutions as alternatives.",
+        votes: 25,
+      },
+    ],
     replies: [
       createReply("r23", "pro-argument", "We can't even run basic design software for our projects.", 12, 47.5),
       createReply("r24", "objection", "New computers are expensive. School budget may not allow it.", 8, 47, [], undefined, {
