@@ -44,7 +44,7 @@ export const PhaseTimeline = ({
 
   return (
     <div className="bg-card border border-border rounded-lg p-6 h-full flex flex-col">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-foreground">
           {phases[currentIndex].label}
         </h3>
@@ -56,7 +56,7 @@ export const PhaseTimeline = ({
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4 flex-1">
         {/* Phase selector buttons */}
         <div className="flex gap-2">
           {phases.map((phase, index) => {
