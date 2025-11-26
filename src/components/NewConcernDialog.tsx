@@ -62,7 +62,6 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
               <SelectContent>
                 <SelectItem value="problem">Problem</SelectItem>
                 <SelectItem value="proposal">Proposal</SelectItem>
-                <SelectItem value="both">Problem & Proposal</SelectItem>
               </SelectContent>
             </Select>
           </div>
