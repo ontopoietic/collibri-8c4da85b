@@ -280,7 +280,7 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>Class</span>
                   </div>
-                  <div className={cn("w-0.5 h-10", currentPhase === "class" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-9", currentPhase === "class" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
 
@@ -290,7 +290,7 @@ export const PhaseTimeline = ({
                   <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                     Variant Voting
                   </div>
-                  <div className="w-0.5 h-10 bg-border" />
+                  <div className="w-0.5 h-9 bg-border" />
                 </div>
               </div>
 
@@ -314,7 +314,7 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>Grade</span>
                   </div>
-                  <div className={cn("w-0.5 h-10", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-9", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
 
@@ -324,14 +324,15 @@ export const PhaseTimeline = ({
                   <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                     Variant Voting
                   </div>
-                  <div className="w-0.5 h-10 bg-border" />
+                  <div className="w-0.5 h-9 bg-border" />
                 </div>
               </div>
 
               {/* School Phase Label */}
               <div className="flex justify-center" style={{ width: "27.77%" }}>
                 <button
-                  onClick={() => onPhaseClick("school")}
+                  onClick={() => onPhaseClick("school")
+                  }
                   className={cn(
                     "flex flex-col items-center gap-0",
                     currentPhase === "school" ? "z-10" : "z-0"
@@ -348,7 +349,7 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>School</span>
                   </div>
-                  <div className={cn("w-0.5 h-10", currentPhase === "school" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-9", currentPhase === "school" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
             </div>
