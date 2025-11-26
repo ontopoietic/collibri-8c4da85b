@@ -390,7 +390,7 @@ const Statistics = () => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="count">
+                  <Bar dataKey="count" radius={[8, 8, 0, 0]}>
                     {replyCategoryData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[entry.name]} />
                     ))}
@@ -458,8 +458,8 @@ const Statistics = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="posts" stackId="a" fill="hsl(var(--primary))" name="Posts" />
-                  <Bar dataKey="votes" stackId="a" fill="hsl(var(--proposal))" name="Votes" />
+                  <Bar dataKey="posts" stackId="a" fill="hsl(var(--primary))" name="Posts" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="votes" stackId="a" fill="hsl(var(--proposal))" name="Votes" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
