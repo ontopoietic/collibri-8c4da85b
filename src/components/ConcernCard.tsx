@@ -1,6 +1,7 @@
 import { Concern } from "@/types/concern";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AspectBadges } from "@/components/AspectBadges";
 import { MessageSquare, AlertCircle, Lightbulb, Scale, ThumbsUp } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -45,10 +46,15 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
     >
       <div className="space-y-4">
         <div className="flex items-start justify-between gap-4">
-          <Badge variant="outline" className={config.className}>
-            <Icon className="mr-1 h-3 w-3" />
-            {config.label}
-          </Badge>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Badge variant="outline" className={config.className}>
+              <Icon className="mr-1 h-3 w-3" />
+              {config.label}
+            </Badge>
+            {concern.aspects && concern.aspects.length > 0 && (
+              <AspectBadges aspects={concern.aspects} />
+            )}
+          </div>
           <span className="text-xs text-muted-foreground">
             {formatDistanceToNow(concern.timestamp, { addSuffix: true })}
           </span>

@@ -12,7 +12,8 @@ const createReply = (
   daysAgo: number,
   replies: Reply[] = [],
   referencedReplies?: { id: string; text: string; category: "objection" | "proposal" | "pro-argument" | "variant" | "question" }[],
-  counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: "school" | "ministries" }
+  counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: "school" | "ministries" },
+  aspects?: ("problem" | "proposal")[]
 ): Reply => ({
   id,
   category,
@@ -22,6 +23,7 @@ const createReply = (
   timestamp: new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000),
   referencedReplies,
   counterProposal,
+  aspects,
 });
 
 export const mockConcerns: Concern[] = [
@@ -502,6 +504,23 @@ export const mockConcerns: Concern[] = [
     phase: "school",
     group: "Whole School",
     solutionLevel: "school",
+    aspects: ["problem", "proposal"],
+    variants: [
+      {
+        id: "v8-1",
+        title: "Extended Library Hours (Weekday Focus)",
+        text: "Open the library until 6 PM on weekdays only, focusing resources on consistent daily access.",
+        votes: 28,
+        aspects: ["problem", "proposal"],
+      },
+      {
+        id: "v8-2",
+        title: "Extended Library Hours with Weekend Priority",
+        text: "Open the library until 6 PM on weekdays and all day Saturday (8 AM to 5 PM) to maximize weekend study opportunities.",
+        votes: 39,
+        aspects: ["problem", "proposal"],
+      },
+    ],
     replies: [
       createReply("r34", "pro-argument", "This would really help students who can't study well at home.", 24, 23.5, [
         createReply("r34a", "pro-argument", "My house is too noisy with my siblings. The library is the only quiet place I can focus.", 12, 23.3, [
@@ -524,7 +543,7 @@ export const mockConcerns: Concern[] = [
       createReply("r37", "proposal", "Start with extending hours just two days per week as a trial.", 16, 22, [
         createReply("r37a", "pro-argument", "A trial period would help us work out any issues before full implementation.", 9, 21.8),
         createReply("r37b", "proposal", "Make it Tuesdays and Thursdays when most students have heavy homework loads.", 7, 21.7)
-      ]),
+      ], undefined, undefined, ["problem", "proposal"]),
       createReply("r38", "variant", "Open the library until 6 PM on weekdays with a hybrid staffing model using both paid staff and trained student volunteers to manage costs while meeting student needs.", 23, 21.5, [], [
         { id: "r35", text: "Implement a volunteer senior student program.", category: "objection" },
         { id: "r37", text: "Start with extending hours two days per week.", category: "proposal" }
