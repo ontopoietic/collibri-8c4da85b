@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { ConcernCard } from "@/components/ConcernCard";
 import { NewConcernDialog } from "@/components/NewConcernDialog";
 import { Button } from "@/components/ui/button";
-import { Concern, ConcernType } from "@/types/concern";
+import { Concern, ConcernType, Phase } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
 import { Scale, BarChart3 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { PhaseTimeline } from "@/components/PhaseTimeline";
 
 const Index = () => {
   const navigate = useNavigate();
   const [concerns, setConcerns] = useState<Concern[]>(mockConcerns);
   const [activeTab, setActiveTab] = useState<"all" | "problems" | "proposals">("all");
+  const [currentPhase] = useState<Phase>("school");
 
   const handleNewConcern = (type: ConcernType, title: string, description: string) => {
     const newConcern: Concern = {
@@ -22,11 +23,19 @@ const Index = () => {
       votes: 0,
       replies: [],
       timestamp: new Date(),
+      phase: currentPhase,
+      group: "Whole School",
     };
     setConcerns([newConcern, ...concerns]);
   };
 
-  const filteredConcerns = concerns.filter((concern) => {
+  const handlePhaseClick = (phase: Phase) => {
+    navigate(`/leaderboard/${phase}`);
+  };
+
+  const phaseConcerns = concerns.filter((c) => c.phase === currentPhase);
+
+  const filteredConcerns = phaseConcerns.filter((concern) => {
     if (activeTab === "all") return true;
     if (activeTab === "problems") return concern.type === "problem";
     if (activeTab === "proposals") return concern.type === "proposal" || concern.type === "counter-proposal";
@@ -58,8 +67,12 @@ const Index = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
+        <PhaseTimeline currentPhase={currentPhase} onPhaseClick={handlePhaseClick} />
+        
         <div className="mb-6">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Community Concerns</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-4">
+            School Phase Concerns
+          </h2>
           <div className="flex gap-2 mb-4">
             <Button
               variant={activeTab === "all" ? "default" : "outline"}
