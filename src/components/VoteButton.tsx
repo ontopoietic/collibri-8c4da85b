@@ -1,21 +1,51 @@
 import { Button } from "@/components/ui/button";
 import { ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface VoteButtonProps {
   initialVotes: number;
-  onVote?: () => void;
+  onVote?: (isAdding: boolean) => void;
+  remainingVotes?: number;
+  hasVotedInitially?: boolean;
 }
 
-export const VoteButton = ({ initialVotes, onVote }: VoteButtonProps) => {
+export const VoteButton = ({ 
+  initialVotes, 
+  onVote, 
+  remainingVotes,
+  hasVotedInitially = false 
+}: VoteButtonProps) => {
   const [votes, setVotes] = useState(initialVotes);
-  const [hasVoted, setHasVoted] = useState(false);
+  const [hasVoted, setHasVoted] = useState(hasVotedInitially);
 
   const handleVote = () => {
-    if (!hasVoted) {
+    if (hasVoted) {
+      // Remove vote
+      setVotes(votes - 1);
+      setHasVoted(false);
+      onVote?.(false);
+      
+      const newRemaining = remainingVotes !== undefined ? remainingVotes + 1 : undefined;
+      toast.success("Vote removed", {
+        description: newRemaining !== undefined 
+          ? `You have ${newRemaining} vote${newRemaining !== 1 ? 's' : ''} remaining`
+          : undefined,
+        duration: 2000,
+      });
+    } else {
+      // Add vote
       setVotes(votes + 1);
       setHasVoted(true);
-      onVote?.();
+      onVote?.(true);
+      
+      const newRemaining = remainingVotes !== undefined ? remainingVotes - 1 : undefined;
+      toast.success("Vote added", {
+        description: newRemaining !== undefined 
+          ? `You have ${newRemaining} vote${newRemaining !== 1 ? 's' : ''} remaining`
+          : undefined,
+        duration: 2000,
+      });
     }
   };
 

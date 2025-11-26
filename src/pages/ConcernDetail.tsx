@@ -45,6 +45,8 @@ const ConcernDetail = () => {
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
   const [filterCategory, setFilterCategory] = useState<ReplyCategory | "all">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
+  const [hasVoted, setHasVoted] = useState(false);
+  const [remainingVotes, setRemainingVotes] = useState(10);
   
   const concern = mockConcerns.find((c) => c.id === id);
 
@@ -186,7 +188,15 @@ const ConcernDetail = () => {
           )}
 
           <div className="flex items-center gap-3 pt-4 border-t border-border">
-            <VoteButton initialVotes={concern.votes} />
+            <VoteButton 
+              initialVotes={concern.votes} 
+              hasVotedInitially={hasVoted}
+              remainingVotes={remainingVotes}
+              onVote={(isAdding) => {
+                setHasVoted(isAdding);
+                setRemainingVotes(prev => isAdding ? prev - 1 : prev + 1);
+              }}
+            />
             <Button
               variant="default"
               onClick={() => {
