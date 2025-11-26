@@ -47,12 +47,13 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
       <div className="space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2 flex-wrap">
-            <Badge variant="outline" className={config.className}>
-              <Icon className="mr-1 h-3 w-3" />
-              {config.label}
-            </Badge>
-            {concern.aspects && concern.aspects.length > 0 && (
+            {concern.aspects && concern.aspects.length > 0 ? (
               <AspectBadges aspects={concern.aspects} />
+            ) : (
+              <Badge variant="outline" className={config.className}>
+                <Icon className="mr-1 h-3 w-3" />
+                {config.label}
+              </Badge>
             )}
           </div>
           <span className="text-xs text-muted-foreground">
