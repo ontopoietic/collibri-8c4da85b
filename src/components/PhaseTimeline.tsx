@@ -158,7 +158,7 @@ export const PhaseTimeline = ({
                 <div className="relative" style={{ width: '5.56%' }}>
                   <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
                   <div className="absolute -top-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Variant Voting</span>
+                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
                   </div>
                 </div>
                 <div style={{ width: '27.78%' }} />
@@ -167,7 +167,7 @@ export const PhaseTimeline = ({
                 <div className="relative" style={{ width: '5.56%' }}>
                   <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
                   <div className="absolute -top-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Variant Voting</span>
+                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
                   </div>
                 </div>
                 <div className="flex-1" />
@@ -180,10 +180,19 @@ export const PhaseTimeline = ({
           </div>
         ) : (
           <>
-            {/* Day progress bar with interim indicator */}
+            {/* Day progress bar with variant voting indicator */}
             <div className="relative">
+              {/* Variant Voting phase label - only for Grade and School phases */}
+              {currentPhase !== "class" && (
+                <div className="absolute -top-6 left-0" style={{ width: '16.67%' }}>
+                  <div className="text-center">
+                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
+                  </div>
+                </div>
+              )}
+              
               <div className="h-3 bg-muted rounded-full overflow-hidden relative">
-                {/* Interim phase background - only for Grade and School phases */}
+                {/* Variant voting phase background - only for Grade and School phases */}
                 {currentPhase !== "class" && (
                   <div className="absolute inset-0 flex">
                     <div className="bg-amber-500/20" style={{ width: '16.67%' }} />
@@ -197,7 +206,7 @@ export const PhaseTimeline = ({
                 />
               </div>
               
-              {/* Interim phase separator - only for Grade and School phases */}
+              {/* Variant voting phase separator - only for Grade and School phases */}
               {currentPhase !== "class" && (
                 <div className="absolute left-[16.67%] top-0 h-3 w-0.5 bg-amber-600" />
               )}
