@@ -22,6 +22,8 @@ export interface Reply {
   };
 }
 
+export type Phase = "class" | "grade" | "school";
+
 export interface Concern {
   id: string;
   type: ConcernType;
@@ -33,4 +35,6 @@ export interface Concern {
   referencedProblemId?: string;
   referencedObjectionId?: string;
   referencedOriginalPostId?: string;
+  phase: Phase;
+  group?: string; // class name or grade name
 }

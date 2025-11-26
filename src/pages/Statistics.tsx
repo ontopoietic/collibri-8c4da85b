@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Users, MessageSquare, ThumbsUp, FileText } from "lucide-react";
+import { ArrowLeft, MessageSquare, ThumbsUp, FileText } from "lucide-react";
 import { mockConcerns } from "@/data/mockData";
+import { Phase } from "@/types/concern";
 import {
   BarChart,
   Bar,
@@ -21,10 +23,17 @@ import {
 
 const Statistics = () => {
   const navigate = useNavigate();
+  const [viewMode, setViewMode] = useState<"interval" | "phase">("interval");
+  const [selectedPhase, setSelectedPhase] = useState<Phase>("school");
+
+  // Filter data based on view mode
+  const displayConcerns = viewMode === "interval" 
+    ? mockConcerns 
+    : mockConcerns.filter(c => c.phase === selectedPhase);
 
   // Calculate statistics
-  const totalConcerns = mockConcerns.length;
-  const totalVotes = mockConcerns.reduce((sum, c) => sum + c.votes, 0);
+  const totalConcerns = displayConcerns.length;
+  const totalVotes = displayConcerns.reduce((sum, c) => sum + c.votes, 0);
   
   const getAllReplies = (replies: any[]): any[] => {
     let allReplies: any[] = [];
@@ -37,7 +46,7 @@ const Statistics = () => {
     return allReplies;
   };
 
-  const allReplies = mockConcerns.flatMap((c) => getAllReplies(c.replies));
+  const allReplies = displayConcerns.flatMap((c) => getAllReplies(c.replies));
   const totalReplies = allReplies.length;
   const totalReplyVotes = allReplies.reduce((sum, r) => sum + r.votes, 0);
 
@@ -45,17 +54,33 @@ const Statistics = () => {
   const concernTypeData = [
     {
       name: "Problems",
-      count: mockConcerns.filter((c) => c.type === "problem").length,
+      count: displayConcerns.filter((c) => c.type === "problem").length,
     },
     {
       name: "Proposals",
-      count: mockConcerns.filter((c) => c.type === "proposal").length,
+      count: displayConcerns.filter((c) => c.type === "proposal").length,
     },
     {
       name: "Counter-Proposals",
-      count: mockConcerns.filter((c) => c.type === "counter-proposal").length,
+      count: displayConcerns.filter((c) => c.type === "counter-proposal").length,
     },
   ];
+
+  // Phase distribution (only for interval view)
+  const phaseData = viewMode === "interval" ? [
+    {
+      name: "Class Phase",
+      count: mockConcerns.filter((c) => c.phase === "class").length,
+    },
+    {
+      name: "Grade Phase",
+      count: mockConcerns.filter((c) => c.phase === "grade").length,
+    },
+    {
+      name: "School Phase",
+      count: mockConcerns.filter((c) => c.phase === "school").length,
+    },
+  ] : [];
 
   // Reply category distribution
   const replyCategoryData = [
@@ -78,7 +103,7 @@ const Statistics = () => {
   ];
 
   // Top concerns by votes
-  const topConcerns = [...mockConcerns]
+  const topConcerns = [...displayConcerns]
     .sort((a, b) => b.votes - a.votes)
     .slice(0, 5)
     .map((c) => ({
@@ -87,7 +112,7 @@ const Statistics = () => {
     }));
 
   // Engagement over time (mock data based on timestamps)
-  const engagementData = mockConcerns.map((c) => ({
+  const engagementData = displayConcerns.map((c) => ({
     date: new Date(c.timestamp).toLocaleDateString(),
     concerns: 1,
     replies: c.replies.length,
@@ -107,7 +132,44 @@ const Statistics = () => {
           Back to Feed
         </Button>
 
-        <h1 className="text-4xl font-bold mb-8 text-foreground">Platform Statistics</h1>
+        <h1 className="text-4xl font-bold mb-4 text-foreground">Platform Statistics</h1>
+        
+        <div className="flex gap-2 mb-8">
+          <Button
+            variant={viewMode === "interval" ? "default" : "outline"}
+            onClick={() => setViewMode("interval")}
+          >
+            Full Interval
+          </Button>
+          <Button
+            variant={viewMode === "phase" ? "default" : "outline"}
+            onClick={() => setViewMode("phase")}
+          >
+            Phase View
+          </Button>
+          {viewMode === "phase" && (
+            <>
+              <Button
+                variant={selectedPhase === "class" ? "default" : "outline"}
+                onClick={() => setSelectedPhase("class")}
+              >
+                Class Phase
+              </Button>
+              <Button
+                variant={selectedPhase === "grade" ? "default" : "outline"}
+                onClick={() => setSelectedPhase("grade")}
+              >
+                Grade Phase
+              </Button>
+              <Button
+                variant={selectedPhase === "school" ? "default" : "outline"}
+                onClick={() => setSelectedPhase("school")}
+              >
+                School Phase
+              </Button>
+            </>
+          )}
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
@@ -196,6 +258,27 @@ const Statistics = () => {
             </CardContent>
           </Card>
         </div>
+
+        {viewMode === "interval" && phaseData.length > 0 && (
+          <div className="grid grid-cols-1 gap-6 mb-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Participation Across Phases</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={phaseData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="hsl(var(--primary))" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 gap-6">
           <Card>
