@@ -135,10 +135,17 @@ export const PhaseTimeline = ({
                 className="w-full"
               />
               
-              {/* Phase separators */}
+              {/* Phase separators - at day 30, day 35, day 60, day 65 */}
               <div className="absolute top-0 left-0 right-0 h-full pointer-events-none flex">
+                {/* Day 30 - End of Class */}
                 <div className="flex-1 border-r-2 border-border" />
-                <div className="flex-1 border-r-2 border-border" />
+                {/* Day 35 - End of Grade Variant Voting */}
+                <div style={{ width: '5.56%' }} className="border-r-2 border-border" />
+                {/* Day 60 - End of Grade */}
+                <div style={{ width: '27.78%' }} className="border-r-2 border-border" />
+                {/* Day 65 - End of School Variant Voting */}
+                <div style={{ width: '5.56%' }} className="border-r-2 border-border" />
+                {/* Remaining School phase */}
                 <div className="flex-1" />
               </div>
               
@@ -151,7 +158,7 @@ export const PhaseTimeline = ({
                 <div className="relative" style={{ width: '5.56%' }}>
                   <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
                   <div className="absolute -top-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Interim</span>
+                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Variant Voting</span>
                   </div>
                 </div>
                 <div style={{ width: '27.78%' }} />
@@ -160,7 +167,7 @@ export const PhaseTimeline = ({
                 <div className="relative" style={{ width: '5.56%' }}>
                   <div className="absolute inset-0 bg-amber-500/20 rounded-sm" />
                   <div className="absolute -top-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Interim</span>
+                    <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded">Variant Voting</span>
                   </div>
                 </div>
                 <div className="flex-1" />
@@ -168,7 +175,7 @@ export const PhaseTimeline = ({
             </div>
             
             <div className="text-xs text-muted-foreground text-center mt-2">
-              Simulating: Overall Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} ({phases[currentIndex].label}{isInInterim && currentPhase !== "class" ? ' - Interim' : ''})
+              Simulating: Overall Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} ({phases[currentIndex].label}{isInInterim && currentPhase !== "class" ? ' - Variant Voting' : ''})
             </div>
           </div>
         ) : (
@@ -224,7 +231,7 @@ export const PhaseTimeline = ({
 
             <div className="text-xs text-muted-foreground text-center">
               Day {daysIntoCurrentPhase + 1} of 30 in {phases[currentIndex].label}
-              {isInInterim && currentPhase !== "class" && <span className="text-amber-600 font-medium"> (Interim Phase)</span>}
+              {isInInterim && currentPhase !== "class" && <span className="text-amber-600 font-medium"> (Variant Voting Phase)</span>}
             </div>
           </>
         )}

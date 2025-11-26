@@ -60,14 +60,14 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
     <>
       <div className="space-y-6">
         <div className="text-center space-y-3">
-          <h2 className="text-2xl font-bold">Variant Voting Phase (Interim)</h2>
+          <h2 className="text-2xl font-bold">Variant Voting Phase</h2>
           <p className="text-muted-foreground">
             Vote for your preferred version of each top concern from the previous phase
           </p>
           <div className="bg-muted/50 border border-border rounded-lg p-4 max-w-md mx-auto">
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm">
-                <span className="font-medium">Interim phase duration:</span>
+                <span className="font-medium">Variant voting duration:</span>
                 <span className="text-primary font-semibold">{interimDuration} days</span>
               </div>
               <div className="flex justify-between items-center text-sm">
