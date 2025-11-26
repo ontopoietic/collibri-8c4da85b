@@ -216,7 +216,15 @@ const Statistics = () => {
     },
   ];
 
-  const COLORS = ["hsl(var(--destructive))", "hsl(var(--proposal))", "hsl(var(--primary))", "hsl(var(--pro-argument))"];
+  const COLORS = ["hsl(var(--objection))", "hsl(var(--proposal))", "hsl(var(--primary))", "hsl(var(--pro-argument))"];
+  
+  const CATEGORY_COLORS: { [key: string]: string } = {
+    "Objections": "hsl(var(--objection))",
+    "Proposals": "hsl(var(--proposal))",
+    "Pro-Arguments": "hsl(var(--pro-argument))",
+    "Variants": "hsl(var(--variant))",
+    "Questions": "hsl(var(--muted-foreground))",
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -353,6 +361,7 @@ const Statistics = () => {
                     outerRadius={80}
                     fill="hsl(var(--primary))"
                     dataKey="count"
+                    stroke="none"
                   >
                     {concernTypeData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -375,7 +384,11 @@ const Statistics = () => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="count" fill="hsl(var(--primary))" />
+                  <Bar dataKey="count">
+                    {replyCategoryData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[entry.name]} />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -397,9 +410,10 @@ const Statistics = () => {
                     outerRadius={80}
                     fill="hsl(var(--primary))"
                     dataKey="votes"
+                    stroke="none"
                   >
                     {votesByCategoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[entry.name] || COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -424,27 +438,6 @@ const Statistics = () => {
             </CardContent>
           </Card>
         </div>
-
-        {viewMode === "interval" && phaseData.length > 0 && (
-          <div className="grid grid-cols-1 gap-6 mb-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Participation Across Phases</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={phaseData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="count" fill="hsl(var(--primary))" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </div>
-        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
