@@ -118,7 +118,7 @@ export const PhaseTimeline = ({
             <div className="flex justify-between text-xs text-muted-foreground mb-1">
               <span>Class (Day 1)</span>
               <span className="text-center">Grade (Day 31)</span>
-              <span>School (Day 90)</span>
+              <span>School (Day 61)</span>
             </div>
             <Slider
               value={[sliderValue]}
@@ -129,7 +129,7 @@ export const PhaseTimeline = ({
               className="w-full"
             />
             <div className="text-xs text-muted-foreground text-center mt-2">
-              Simulating: Overall Day {daysPassed + 1} of {phaseDurationDays} ({phases[currentIndex].label})
+              Simulating: Overall Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} ({phases[currentIndex].label})
             </div>
           </div>
         ) : (
