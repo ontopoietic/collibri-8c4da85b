@@ -27,7 +27,6 @@ const Index = () => {
   const navigate = useNavigate();
   const [concerns, setConcerns] = useState<Concern[]>(mockConcerns);
   const [activeTab, setActiveTab] = useState<"all" | "problems" | "proposals">("all");
-  const [currentPhase] = useState<Phase>("school");
   const [searchQuery, setSearchQuery] = useState("");
   const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
@@ -36,17 +35,25 @@ const Index = () => {
   const [isSimulating, setIsSimulating] = useState(false);
   const [simulationProgress, setSimulationProgress] = useState(100); // 0-100%
 
-  // Calculate the simulated "current time" based on slider
+  // Calculate the simulated "current time" and phase based on slider
   const now = new Date();
-  const phaseStartDate = new Date(now.getTime() - 28 * 24 * 60 * 60 * 1000); // 28 days ago
-  const phaseDuration = 30; // days per phase
+  const allPhasesStartDate = new Date(now.getTime() - 88 * 24 * 60 * 60 * 1000); // 88 days ago (close to 90)
+  const totalDuration = 90; // days for all 3 phases
   
   const getSimulatedTime = (progress: number): Date => {
-    const simulatedDays = (progress / 100) * phaseDuration;
-    return new Date(phaseStartDate.getTime() + simulatedDays * 24 * 60 * 60 * 1000);
+    const simulatedDays = (progress / 100) * totalDuration;
+    return new Date(allPhasesStartDate.getTime() + simulatedDays * 24 * 60 * 60 * 1000);
+  };
+
+  const getSimulatedPhase = (progress: number): Phase => {
+    const simulatedDays = (progress / 100) * totalDuration;
+    if (simulatedDays < 30) return "class";
+    if (simulatedDays < 60) return "grade";
+    return "school";
   };
 
   const simulatedCurrentTime = isSimulating ? getSimulatedTime(simulationProgress) : now;
+  const currentPhase: Phase = isSimulating ? getSimulatedPhase(simulationProgress) : "school";
 
   // Filter and adjust concerns based on simulated time
   const simulatedConcerns = useMemo(() => {
@@ -242,8 +249,8 @@ const Index = () => {
           <PhaseTimeline 
             currentPhase={currentPhase} 
             onPhaseClick={handlePhaseClick}
-            phaseStartDate={phaseStartDate}
-            phaseDurationDays={phaseDuration}
+            phaseStartDate={allPhasesStartDate}
+            phaseDurationDays={totalDuration}
             sliderValue={simulationProgress}
             onSliderChange={setSimulationProgress}
             isSimulating={isSimulating}
