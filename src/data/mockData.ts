@@ -271,11 +271,20 @@ export const mockConcerns: Concern[] = [
         text: "Establish a shared digital calendar where teachers can see all assignment deadlines and coordinate better.",
         solutionLevel: "school"
       }),
+      createReply("r14a", "question", "How would a homework cap actually be enforced? Would teachers be penalized for exceeding it?", 9, 54.8, [
+        createReply("r14a1", "proposal", "Teachers would self-report assignments in the shared system, and grade coordinators review it monthly. No penalties, just collaborative adjustments.", 11, 54.6)
+      ]),
       createReply("r15", "proposal", "Create a homework cap policy - maximum 2 hours per night across all subjects.", 22, 54.5, [], undefined, {
         text: "Implement a homework coordination system with grade-level teacher meetings monthly.",
         solutionLevel: "ministries"
       }),
+      createReply("r15a", "question", "What about students who work at different speeds? Two hours for some might be 30 minutes for others.", 7, 54.3, [
+        createReply("r15a1", "pro-argument", "The cap should be based on average student completion time. Teachers can survey students to calibrate workload expectations better.", 8, 54.1)
+      ]),
       createReply("r16", "pro-argument", "My grades are suffering because I can't give enough attention to each subject.", 14, 54),
+      createReply("r16a", "question", "Has anyone actually tracked how much homework we get versus how much is recommended by education experts?", 6, 53.8, [
+        createReply("r16a1", "pro-argument", "According to research, high schoolers should have max 2 hours total. We're getting 3-4 hours on average based on the student survey last month.", 10, 53.6)
+      ]),
       createReply("r17", "variant", "Students are receiving excessive homework from multiple subjects with overlapping deadlines. We need both a homework cap policy AND teacher coordination through a shared calendar system.", 20, 53.5, [], [
         { id: "r15", text: "Create a homework cap policy.", category: "proposal" },
         { id: "r14", text: "Teachers don't coordinate deadlines.", category: "objection" }
@@ -314,12 +323,21 @@ export const mockConcerns: Concern[] = [
     ],
     replies: [
       createReply("r18", "pro-argument", "This is so important! Many students struggle silently.", 16, 51.5),
+      createReply("r18a", "question", "What would students actually do during counselor sessions? Is it just talking or are there specific programs?", 8, 51.3, [
+        createReply("r18a1", "pro-argument", "Counselors offer coping strategies, stress management techniques, and can refer students to specialists when needed. It's evidence-based support, not just chatting.", 11, 51.1)
+      ]),
       createReply("r19", "pro-argument", "Mental health should be treated as seriously as physical health.", 19, 51),
       createReply("r20", "objection", "We only have one counselor for 400 students. We need more staff first.", 13, 50.5, [], undefined, {
         text: "Partner with local mental health organizations to provide weekly group sessions and train peer support students.",
         solutionLevel: "school"
       }),
+      createReply("r20a", "question", "How would peer support training work? Wouldn't that put too much responsibility on students?", 7, 50.3, [
+        createReply("r20a1", "proposal", "Peer supporters would be trained professionals to listen and direct peers to appropriate resources, not to provide therapy. Similar to many university programs.", 9, 50.1)
+      ]),
       createReply("r21", "proposal", "Add mental health education to the curriculum so everyone understands it better.", 11, 50),
+      createReply("r21a", "question", "Which class would mental health education fit into? We already have packed schedules.", 5, 49.8, [
+        createReply("r21a1", "proposal", "It could be integrated into health class or offered as optional workshops during lunch periods, similar to the college prep sessions.", 8, 49.6)
+      ]),
       createReply("r22", "variant", "Establish regular access to school counselors and mental health resources, while also implementing peer support training and partnerships with external organizations to scale our capacity.", 17, 49.5, [], [
         { id: "r20", text: "We need more staff first.", category: "objection" },
         { id: "r21", text: "Add mental health education to curriculum.", category: "proposal" }
@@ -491,7 +509,13 @@ export const mockConcerns: Concern[] = [
         createReply("r33a", "pro-argument", "Many universities use this system successfully.", 8, 23.8),
         createReply("r33b", "question", "Who would manage the registration database?", 4, 23.7, [
           createReply("r33b1", "proposal", "The student council could handle registrations during lunch breaks.", 6, 23.5)
+        ]),
+        createReply("r33c", "question", "Would there be a cost for bike registration, and what happens if someone loses their registration?", 5, 23.6, [
+          createReply("r33c1", "proposal", "Registration should be free and linked to student IDs. Lost registrations can be reprinted from the database for a small admin fee.", 7, 23.4)
         ])
+      ]),
+      createReply("r33d", "question", "How long would it take to install all the security cameras and new bike racks? Can we start with temporary measures?", 9, 23.9, [
+        createReply("r33d1", "proposal", "We could implement a volunteer bike monitor system immediately while waiting for permanent infrastructure - upperclassmen could supervise during arrival and dismissal times.", 11, 23.7)
       ]),
     ],
   },
@@ -543,8 +567,17 @@ export const mockConcerns: Concern[] = [
       ]),
       createReply("r37", "proposal", "Start with extending hours just two days per week as a trial.", 16, 22, [
         createReply("r37a", "pro-argument", "A trial period would help us work out any issues before full implementation.", 9, 21.8),
-        createReply("r37b", "proposal", "Make it Tuesdays and Thursdays when most students have heavy homework loads.", 7, 21.7)
+        createReply("r37b", "proposal", "Make it Tuesdays and Thursdays when most students have heavy homework loads.", 7, 21.7),
+        createReply("r37c", "question", "How would we measure success during the trial? What metrics would determine if we expand?", 6, 21.75, [
+          createReply("r37c1", "proposal", "Track daily attendance, student feedback surveys, and check if students report improved grades or reduced stress. If 60%+ students find it helpful and attendance is consistent, we expand.", 8, 21.65)
+        ])
       ], undefined, undefined, ["problem", "proposal"]),
+      createReply("r37d", "question", "What about students who need to catch specific buses? Would extended hours conflict with transportation schedules?", 7, 21.9, [
+        createReply("r37d1", "pro-argument", "Good point. The school could coordinate with the bus company to add a 6:15 PM route for extended hours users, or arrange carpool matching through the student portal.", 10, 21.7)
+      ]),
+      createReply("r37e", "question", "Would there be food available during extended hours? Students can't study effectively if they're hungry.", 8, 21.85, [
+        createReply("r37e1", "proposal", "The cafeteria could offer light snacks and drinks at cost price during extended hours, or we could allow students to bring their own food into the library during evening study time.", 9, 21.6)
+      ]),
       createReply("r38", "variant", "Open the library until 6 PM on weekdays with a hybrid staffing model using both paid staff and trained student volunteers to manage costs while meeting student needs.", 23, 21.5, [], [
         { id: "r35", text: "Implement a volunteer senior student program.", category: "objection" },
         { id: "r37", text: "Start with extending hours two days per week.", category: "proposal" }
@@ -574,6 +607,12 @@ export const mockConcerns: Concern[] = [
         { id: "r40", text: "Allow student-led clubs with rotating supervision.", category: "objection" }
       ]),
       createReply("r44", "proposal", "Partner with local organizations and professionals to mentor specialized clubs.", 20, 18),
+      createReply("r44a", "question", "How would we find and vet professionals to mentor clubs? We need to ensure they're qualified and safe for students.", 8, 17.8, [
+        createReply("r44a1", "proposal", "The school administration could coordinate with local businesses and universities, run background checks, and require mentors to meet the same standards as volunteer coaches.", 12, 17.6)
+      ]),
+      createReply("r44b", "question", "What if there's interest in a club but no teacher wants to advise it? Would it just not happen?", 7, 17.9, [
+        createReply("r44b1", "proposal", "Student-led clubs could share advisors - one teacher could oversee 2-3 clubs with rotating check-ins rather than attending every meeting. This is common at larger schools.", 10, 17.7)
+      ]),
     ],
   },
   {
