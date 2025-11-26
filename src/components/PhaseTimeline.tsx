@@ -141,16 +141,16 @@ export const PhaseTimeline = ({
             </button>
           </div>
 
-          {/* Variant Voting labels vertically centered above timeline */}
-          <div className="absolute left-0 right-0 top-4 flex pointer-events-none gap-1">
+          {/* Variant Voting labels aligned with interim timeline segments */}
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-full flex pointer-events-none gap-1 mt-1">
             <div style={{ width: "33.33%" }} />
-            <div className="relative flex items-center justify-center" style={{ width: "5.56%" }}>
+            <div className="relative flex items-end justify-center" style={{ width: "5.56%" }}>
               <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                 Variant Voting
               </div>
             </div>
             <div style={{ width: "27.78%" }} />
-            <div className="relative flex items-center justify-center" style={{ width: "5.56%" }}>
+            <div className="relative flex items-end justify-center" style={{ width: "5.56%" }}>
               <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                 Variant Voting
               </div>
