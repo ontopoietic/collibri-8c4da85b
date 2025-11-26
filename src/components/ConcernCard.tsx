@@ -1,8 +1,7 @@
 import { Concern } from "@/types/concern";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { VoteButton } from "./VoteButton";
-import { MessageSquare, AlertCircle, Lightbulb, Scale } from "lucide-react";
+import { MessageSquare, AlertCircle, Lightbulb, Scale, ThumbsUp } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
@@ -61,7 +60,10 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
         </div>
 
         <div className="flex items-center gap-4 pt-2">
-          <VoteButton initialVotes={concern.votes} />
+          <div className="flex items-center gap-1 text-muted-foreground">
+            <ThumbsUp className="h-4 w-4" />
+            <span className="text-sm font-semibold">{concern.votes}</span>
+          </div>
           <div className="flex items-center gap-1 text-muted-foreground">
             <MessageSquare className="h-4 w-4" />
             <span className="text-sm">{totalReplies}</span>

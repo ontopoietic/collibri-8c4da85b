@@ -75,6 +75,7 @@ export const ReplyForm = ({
   availableReplies = [],
 }: ReplyFormProps) => {
   const [category, setCategory] = useState<ReplyCategory | "">("");
+  const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [selectedReplies, setSelectedReplies] = useState<ReplyReference[]>([]);
   const [openReplySelect, setOpenReplySelect] = useState(false);
@@ -108,6 +109,11 @@ export const ReplyForm = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Check if title is required (for proposals) and if it's filled
+    if (category === 'proposal' && !title.trim()) {
+      return; // Don't submit if title is missing for proposals
+    }
+    
     if (category && text.trim()) {
       const counterProposal = hasCounterProposal && counterProposalText.trim()
         ? { 
@@ -124,6 +130,7 @@ export const ReplyForm = ({
         counterProposal
       );
       setCategory("");
+      setTitle("");
       setText("");
       setSelectedReplies([]);
       setHasCounterProposal(false);
@@ -242,6 +249,20 @@ export const ReplyForm = ({
         </div>
       )}
 
+      {category && (
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Title {category === 'proposal' ? '' : '(optional)'}
+          </label>
+          <Input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Brief title..."
+            required={category === 'proposal'}
+          />
+        </div>
+      )}
+
       <div className="space-y-2">
         <label className="text-sm font-medium">
           {replyType === 'question' ? 'Your Question' : 'Your Response'}
@@ -319,7 +340,10 @@ export const ReplyForm = ({
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" disabled={!category || !text.trim()}>
+        <Button 
+          type="submit" 
+          disabled={!category || !text.trim() || (category === 'proposal' && !title.trim())}
+        >
           Submit {replyType === 'question' ? 'Question' : 'Response'}
         </Button>
       </div>

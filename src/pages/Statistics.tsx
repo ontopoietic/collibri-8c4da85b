@@ -25,6 +25,10 @@ const Statistics = () => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<"interval" | "phase">("interval");
   const [selectedPhase, setSelectedPhase] = useState<Phase>("school");
+  
+  const handlePhaseClick = (phase: Phase) => {
+    navigate(`/leaderboard/${phase}`);
+  };
 
   // Filter data based on view mode
   const displayConcerns = viewMode === "interval" 
@@ -151,19 +155,28 @@ const Statistics = () => {
             <>
               <Button
                 variant={selectedPhase === "class" ? "default" : "outline"}
-                onClick={() => setSelectedPhase("class")}
+                onClick={() => {
+                  setSelectedPhase("class");
+                  handlePhaseClick("class");
+                }}
               >
                 Class Phase
               </Button>
               <Button
                 variant={selectedPhase === "grade" ? "default" : "outline"}
-                onClick={() => setSelectedPhase("grade")}
+                onClick={() => {
+                  setSelectedPhase("grade");
+                  handlePhaseClick("grade");
+                }}
               >
                 Grade Phase
               </Button>
               <Button
                 variant={selectedPhase === "school" ? "default" : "outline"}
-                onClick={() => setSelectedPhase("school")}
+                onClick={() => {
+                  setSelectedPhase("school");
+                  handlePhaseClick("school");
+                }}
               >
                 School Phase
               </Button>
