@@ -144,7 +144,7 @@ export const PhaseTimeline = ({
               </div>
 
               {/* Phase buttons above the timeline, connecting directly */}
-              <div className="absolute left-0 right-0 top-0 flex">
+              <div className="absolute left-0 right-0 top-0 -translate-y-full flex">
                 {/* Class Phase Button */}
                 <button
                   onClick={() => onPhaseClick("class")}
