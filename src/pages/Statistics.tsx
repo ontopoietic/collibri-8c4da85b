@@ -107,20 +107,20 @@ const Statistics = () => {
   ];
 
   // Activity by grade (mock data for 12 grades)
-  const gradeActivity = Array.from({ length: 12 }, (_, i) => {
-    const grade = i + 1;
-    const gradeConcerns = displayConcerns.filter(c => c.group?.includes(`Grade ${grade}`));
-    const gradeReplies = gradeConcerns.flatMap(c => getAllReplies(c.replies));
-    const totalPosts = gradeConcerns.length + gradeReplies.length;
-    const totalVotes = gradeConcerns.reduce((sum, c) => sum + c.votes, 0) + 
-                      gradeReplies.reduce((sum, r) => sum + r.votes, 0);
-    return {
-      grade: `Grade ${grade}`,
-      activity: totalPosts + totalVotes,
-      posts: totalPosts,
-      votes: totalVotes,
-    };
-  });
+  const gradeActivity = [
+    { grade: "Grade 1", posts: 12, votes: 34 },
+    { grade: "Grade 2", posts: 15, votes: 42 },
+    { grade: "Grade 3", posts: 18, votes: 51 },
+    { grade: "Grade 4", posts: 23, votes: 67 },
+    { grade: "Grade 5", posts: 28, votes: 79 },
+    { grade: "Grade 6", posts: 31, votes: 88 },
+    { grade: "Grade 7", posts: 35, votes: 102 },
+    { grade: "Grade 8", posts: 41, votes: 118 },
+    { grade: "Grade 9", posts: 38, votes: 110 },
+    { grade: "Grade 10", posts: 44, votes: 125 },
+    { grade: "Grade 11", posts: 47, votes: 134 },
+    { grade: "Grade 12", posts: 52, votes: 148 },
+  ];
 
   // Active users timeline (mock data)
   const activeUsersTimeline = [
