@@ -12,6 +12,8 @@ interface ReplyThreadProps {
   replies: Reply[];
   onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
   availableReplies?: Reply[];
+  openFormId?: string | null;
+  onFormToggle?: (replyId: string | null) => void;
 }
 
 const getAllRepliesFlat = (replies: Reply[]): Reply[] => {
@@ -31,16 +33,20 @@ const getAllRepliesFlat = (replies: Reply[]): Reply[] => {
 const ReplyItem = ({ 
   reply, 
   onReply, 
-  availableReplies 
+  availableReplies,
+  openFormId,
+  onFormToggle
 }: { 
   reply: Reply; 
   onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
   availableReplies: Reply[];
+  openFormId?: string | null;
+  onFormToggle?: (replyId: string | null) => void;
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
   const hasReplies = reply.replies.length > 0;
+  const showReplyForm = openFormId === reply.id;
 
   const handleReplySubmit = (
     category: ReplyCategory,
@@ -49,7 +55,12 @@ const ReplyItem = ({
     counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: SolutionLevel }
   ) => {
     console.log("New reply to", reply.id, ":", { category, text, referencedReplies, counterProposal });
-    setShowReplyForm(false);
+    onFormToggle?.(null);
+  };
+
+  const handleFormOpen = (type: 'endorse' | 'object' | 'question') => {
+    setReplyType(type);
+    onFormToggle?.(reply.id);
   };
 
   return (
@@ -110,10 +121,7 @@ const ReplyItem = ({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => {
-                  setReplyType('endorse');
-                  setShowReplyForm(true);
-                }}
+                onClick={() => handleFormOpen('endorse')}
                 className="gap-1 text-xs"
               >
                 <ThumbsUp className="h-3 w-3" />
@@ -122,10 +130,7 @@ const ReplyItem = ({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => {
-                  setReplyType('object');
-                  setShowReplyForm(true);
-                }}
+                onClick={() => handleFormOpen('object')}
                 className="gap-1 text-xs"
               >
                 <ThumbsDown className="h-3 w-3" />
@@ -157,7 +162,7 @@ const ReplyItem = ({
               <div className="mt-4">
                 <ReplyForm
                   onSubmit={handleReplySubmit}
-                  onCancel={() => setShowReplyForm(false)}
+                  onCancel={() => onFormToggle?.(null)}
                   replyType={replyType}
                   originalText={reply.text}
                   availableReplies={availableReplies}
@@ -167,7 +172,13 @@ const ReplyItem = ({
 
             {hasReplies && isExpanded && (
               <div className="mt-4">
-                <ReplyThread replies={reply.replies} onReply={onReply} availableReplies={availableReplies} />
+                <ReplyThread 
+                  replies={reply.replies} 
+                  onReply={onReply} 
+                  availableReplies={availableReplies}
+                  openFormId={openFormId}
+                  onFormToggle={onFormToggle}
+                />
               </div>
             )}
           </div>
@@ -175,16 +186,29 @@ const ReplyItem = ({
   );
 };
 
-export const ReplyThread = ({ replies, onReply, availableReplies }: ReplyThreadProps) => {
+export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle }: ReplyThreadProps) => {
+  const [localOpenFormId, setLocalOpenFormId] = useState<string | null>(null);
+  
   if (replies.length === 0) return null;
 
   // If availableReplies not provided, compute it from current replies
   const allReplies = availableReplies || getAllRepliesFlat(replies);
+  
+  // Use parent's state if provided, otherwise use local state
+  const activeFormId = openFormId !== undefined ? openFormId : localOpenFormId;
+  const handleFormToggle = onFormToggle || setLocalOpenFormId;
 
   return (
     <div className="space-y-4">
       {replies.map((reply) => (
-        <ReplyItem key={reply.id} reply={reply} onReply={onReply} availableReplies={allReplies} />
+        <ReplyItem 
+          key={reply.id} 
+          reply={reply} 
+          onReply={onReply} 
+          availableReplies={allReplies}
+          openFormId={activeFormId}
+          onFormToggle={handleFormToggle}
+        />
       ))}
     </div>
   );
