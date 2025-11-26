@@ -75,38 +75,49 @@ export const PhaseTimeline = ({
       </div>
 
       <div className="space-y-6 flex-1">
-        {/* Full timeline with phase indicators */}
-        <div className="space-y-3">
-          {/* Timeline bar and controls */}
-          <div className="relative">
+        {/* Full timeline with phase indicators and phase buttons */}
+        <div className="relative h-24">
+          {/* Vertical dashed separators and interim highlights (full height) */}
+          <div className="absolute inset-0 pointer-events-none flex">
+            {/* Class Phase (Day 1-30) */}
+            <div style={{ width: "33.33%" }} className="border-r-2 border-dashed border-border" />
+            {/* Grade Interim (Day 31-35) */}
+            <div style={{ width: "5.56%" }} className="border-r-2 border-dashed border-border bg-amber-500/10" />
+            {/* Grade Phase (Day 36-60) */}
+            <div style={{ width: "27.78%" }} className="border-r-2 border-dashed border-border" />
+            {/* School Interim (Day 61-65) */}
+            <div style={{ width: "5.56%" }} className="border-r-2 border-dashed border-border bg-amber-500/10" />
+            {/* School Phase (Day 66-90) */}
+            <div style={{ width: "27.77%" }} />
+          </div>
+
+          {/* Timeline bar centered vertically */}
+          <div className="absolute left-0 right-6 top-1/2 -translate-y-1/2">
             {isSimulating && onSliderChange ? (
-              <div className="space-y-2">
-                <Slider
-                  value={[sliderValue]}
-                  onValueChange={(values) => onSliderChange(values[0])}
-                  min={0}
-                  max={100}
-                  step={0.5}
-                  className="w-full"
-                />
-              </div>
+              <Slider
+                value={[sliderValue]}
+                onValueChange={(values) => onSliderChange(values[0])}
+                min={0}
+                max={100}
+                step={0.5}
+                className="w-full"
+              />
             ) : (
               <div className="relative h-3 bg-muted rounded-full overflow-hidden">
-                {/* Progress bar across all phases */}
                 <div
                   className="h-full bg-primary transition-all duration-500 rounded-full"
                   style={{ width: `${overallProgressPercentage}%` }}
                 />
               </div>
             )}
-            
-            {/* Leaderboard button - positioned at the end of timeline */}
+
+            {/* Leaderboard button - visually attached to end of timeline */}
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => navigate("/leaderboard/school")}
-                    className="absolute -right-8 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary hover:bg-primary/80 transition-colors shadow-sm"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rounded-full bg-primary hover:bg-primary/80 transition-colors shadow-sm border border-card"
                     aria-label="View leaderboard"
                   />
                 </TooltipTrigger>
@@ -117,151 +128,152 @@ export const PhaseTimeline = ({
             </TooltipProvider>
           </div>
 
-          
-          {/* Phase separators with dashed lines, interim indicators, and phase buttons */}
-          <div className="relative h-16 mt-4">
-            {/* Vertical dashed separators */}
-            <div className="absolute top-0 left-0 right-0 h-full pointer-events-none flex">
-              {/* Class Phase (Day 1-30) */}
-              <div style={{ width: '33.33%' }} className="border-r-2 border-dashed border-border" />
-              {/* Grade Interim (Day 31-35) */}
-              <div style={{ width: '5.56%' }} className="border-r-2 border-dashed border-border bg-amber-500/10" />
-              {/* Grade Phase (Day 36-60) */}
-              <div style={{ width: '27.78%' }} className="border-r-2 border-dashed border-border" />
-              {/* School Interim (Day 61-65) */}
-              <div style={{ width: '5.56%' }} className="border-r-2 border-dashed border-border bg-amber-500/10" />
-              {/* School Phase (Day 66-90) */}
-              <div style={{ width: '27.77%' }} />
-            </div>
-            
-            {/* Variant Voting labels */}
-            <div className="absolute top-0 left-0 right-0 flex pointer-events-none">
-              <div style={{ width: '33.33%' }} />
-              <div className="relative" style={{ width: '5.56%' }}>
-                <div className="absolute -top-5 left-0 right-0 text-center">
-                  <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
-                </div>
-              </div>
-              <div style={{ width: '27.78%' }} />
-              <div className="relative" style={{ width: '5.56%' }}>
-                <div className="absolute -top-5 left-0 right-0 text-center">
-                  <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">Variant Voting</span>
-                </div>
+          {/* Variant Voting labels horizontally centered on the line */}
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex pointer-events-none">
+            <div style={{ width: "33.33%" }} />
+            <div className="relative" style={{ width: "5.56%" }}>
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 text-center">
+                <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">
+                  Variant Voting
+                </span>
               </div>
             </div>
-            
-            {/* Phase buttons with pointers - positioned relative to timeline */}
-            <div className="absolute top-2 left-0 right-0 h-full">
-              {/* Class Phase Button */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => onPhaseClick("class")}
+            <div style={{ width: "27.78%" }} />
+            <div className="relative" style={{ width: "5.56%" }}>
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 text-center">
+                <span className="text-[9px] font-medium text-amber-600 bg-background px-1 rounded whitespace-nowrap">
+                  Variant Voting
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Phase buttons above the timeline, connected by small stems */}
+          <div className="absolute left-0 right-0 top-0 h-full">
+            {/* Class Phase Button */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => onPhaseClick("class")}
+                    className={cn(
+                      "absolute flex flex-col items-center gap-0.5 transition-all group",
+                      currentPhase === "class" ? "z-10" : "z-0"
+                    )}
+                    style={{ left: "16.67%", transform: "translateX(-50%)" }}
+                  >
+                    <div
                       className={cn(
-                        "absolute flex flex-col items-center gap-0.5 transition-all group",
-                        currentPhase === "class" ? "z-10" : "z-0"
-                      )}
-                      style={{ left: '16.67%', transform: 'translateX(-50%)' }}
-                    >
-                      <div className={cn(
-                        "w-0.5 h-3 transition-all mb-0.5",
-                        currentPhase === "class" ? "bg-primary" : "bg-border"
-                      )} />
-                      <div className={cn(
                         "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
                         "flex items-center gap-1.5 whitespace-nowrap",
                         currentPhase === "class"
                           ? "bg-primary text-primary-foreground scale-110"
                           : "bg-card border border-border text-foreground hover:bg-accent"
-                      )}>
-                        <Trophy className="h-3 w-3" />
-                        <span>Class</span>
-                      </div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>View Class Leaderboard</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              {/* Grade Phase Button */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => onPhaseClick("grade")}
-                      className={cn(
-                        "absolute flex flex-col items-center gap-0.5 transition-all group",
-                        currentPhase === "grade" ? "z-10" : "z-0"
                       )}
-                      style={{ left: '50%', transform: 'translateX(-50%)' }}
                     >
-                      <div className={cn(
-                        "w-0.5 h-3 transition-all mb-0.5",
-                        currentPhase === "grade" ? "bg-primary" : "bg-border"
-                      )} />
-                      <div className={cn(
+                      <Trophy className="h-3 w-3" />
+                      <span>Class</span>
+                    </div>
+                    <div
+                      className={cn(
+                        "w-0.5 h-4 transition-all",
+                        currentPhase === "class" ? "bg-primary" : "bg-border"
+                      )}
+                    />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View Class Leaderboard</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {/* Grade Phase Button */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => onPhaseClick("grade")}
+                    className={cn(
+                      "absolute flex flex-col items-center gap-0.5 transition-all group",
+                      currentPhase === "grade" ? "z-10" : "z-0"
+                    )}
+                    style={{ left: "50%", transform: "translateX(-50%)" }}
+                  >
+                    <div
+                      className={cn(
                         "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
                         "flex items-center gap-1.5 whitespace-nowrap",
                         currentPhase === "grade"
                           ? "bg-primary text-primary-foreground scale-110"
                           : "bg-card border border-border text-foreground hover:bg-accent"
-                      )}>
-                        <Trophy className="h-3 w-3" />
-                        <span>Grade</span>
-                      </div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>View Grade Leaderboard</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              {/* School Phase Button */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => onPhaseClick("school")}
-                      className={cn(
-                        "absolute flex flex-col items-center gap-0.5 transition-all group",
-                        currentPhase === "school" ? "z-10" : "z-0"
                       )}
-                      style={{ left: '83.33%', transform: 'translateX(-50%)' }}
                     >
-                      <div className={cn(
-                        "w-0.5 h-3 transition-all mb-0.5",
-                        currentPhase === "school" ? "bg-primary" : "bg-border"
-                      )} />
-                      <div className={cn(
+                      <Trophy className="h-3 w-3" />
+                      <span>Grade</span>
+                    </div>
+                    <div
+                      className={cn(
+                        "w-0.5 h-4 transition-all",
+                        currentPhase === "grade" ? "bg-primary" : "bg-border"
+                      )}
+                    />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View Grade Leaderboard</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {/* School Phase Button */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => onPhaseClick("school")}
+                    className={cn(
+                      "absolute flex flex-col items-center gap-0.5 transition-all group",
+                      currentPhase === "school" ? "z-10" : "z-0"
+                    )}
+                    style={{ left: "83.33%", transform: "translateX(-50%)" }}
+                  >
+                    <div
+                      className={cn(
                         "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
                         "flex items-center gap-1.5 whitespace-nowrap",
                         currentPhase === "school"
                           ? "bg-primary text-primary-foreground scale-110"
                           : "bg-card border border-border text-foreground hover:bg-accent"
-                      )}>
-                        <Trophy className="h-3 w-3" />
-                        <span>School</span>
-                      </div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>View School Leaderboard</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+                      )}
+                    >
+                      <Trophy className="h-3 w-3" />
+                      <span>School</span>
+                    </div>
+                    <div
+                      className={cn(
+                        "w-0.5 h-4 transition-all",
+                        currentPhase === "school" ? "bg-primary" : "bg-border"
+                      )}
+                    />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View School Leaderboard</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
-          
-          {isSimulating && (
-            <div className="text-xs text-muted-foreground text-center">
-              Simulating: Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} ({phases[currentIndex].label}{isInInterim && currentPhase !== "class" ? ' - Variant Voting' : ''})
-            </div>
-          )}
         </div>
+
+        {isSimulating && (
+          <div className="text-xs text-muted-foreground text-center">
+            Simulating: Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} (
+              {phases[currentIndex].label}
+              {isInInterim && currentPhase !== "class" ? " - Variant Voting" : ""}
+            )
+          </div>
+        )}
       </div>
     </div>
   );
