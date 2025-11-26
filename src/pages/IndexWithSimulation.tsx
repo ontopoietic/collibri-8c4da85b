@@ -222,21 +222,17 @@ const Index = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-2">
-            <PhaseTimeline 
-              currentPhase={currentPhase} 
-              onPhaseClick={handlePhaseClick}
-              phaseStartDate={phaseStartDate}
-              phaseDurationDays={Math.ceil(phaseDuration / 24)}
-              sliderValue={simulationProgress}
-              onSliderChange={setSimulationProgress}
-              isSimulating={isSimulating}
-            />
-          </div>
-          <div className="lg:col-span-1">
-            <QuotaDisplay quota={simulatedQuota} />
-          </div>
+        <div className="space-y-6 mb-8">
+          <PhaseTimeline 
+            currentPhase={currentPhase} 
+            onPhaseClick={handlePhaseClick}
+            phaseStartDate={phaseStartDate}
+            phaseDurationDays={Math.ceil(phaseDuration / 24)}
+            sliderValue={simulationProgress}
+            onSliderChange={setSimulationProgress}
+            isSimulating={isSimulating}
+          />
+          <QuotaDisplay quota={simulatedQuota} />
         </div>
         
         <div className="mb-6 space-y-4">
