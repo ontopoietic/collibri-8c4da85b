@@ -459,6 +459,7 @@ export const mockConcerns: Concern[] = [
     timestamp: daysAgo(27),
     phase: "school",
     group: "Whole School",
+    aspects: ["problem", "proposal"],
     replies: [
       createReply("r28", "pro-argument", "Three bikes from my grade were stolen last month alone!", 22, 26.5, [
         createReply("r28a", "pro-argument", "My bike was stolen and it was my only way to get to school. Now I have to take the bus.", 8, 26.3, [
@@ -559,6 +560,7 @@ export const mockConcerns: Concern[] = [
     timestamp: daysAgo(21),
     phase: "school",
     group: "Whole School",
+    aspects: ["problem", "proposal"],
     replies: [
       createReply("r39", "pro-argument", "I'm interested in coding but there's no computer science club.", 19, 20.5),
       createReply("r40", "objection", "Teachers are already overworked and can't supervise more clubs.", 14, 20, [], undefined, {
@@ -654,6 +656,7 @@ export const mockConcerns: Concern[] = [
     phase: "school",
     group: "Whole School",
     solutionLevel: "school",
+    aspects: ["problem", "proposal"],
     replies: [
       createReply("r59", "pro-argument", "We should be teaching environmental responsibility through action.", 23, 8.5, [
         createReply("r59a", "pro-argument", "Climate change education is pointless if we don't practice what we preach.", 11, 8.3, [
@@ -720,6 +723,7 @@ export const mockConcerns: Concern[] = [
     phase: "school",
     group: "Whole School",
     solutionLevel: "school",
+    aspects: ["problem", "proposal"],
     replies: [
       createReply("r70", "pro-argument", "Peer tutoring helped me improve my math grade last year.", 15, 2.5),
       createReply("r71", "pro-argument", "Students often understand concepts better when explained by peers.", 17, 2),

@@ -5,6 +5,7 @@ import { ArrowLeft, Trophy, Medal } from "lucide-react";
 import { mockConcerns } from "@/data/mockData";
 import { Phase } from "@/types/concern";
 import { TypeBadge } from "@/components/TypeBadge";
+import { AspectBadges } from "@/components/AspectBadges";
 import { cn } from "@/lib/utils";
 
 const Leaderboard = () => {
@@ -87,8 +88,11 @@ const Leaderboard = () => {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
                         <TypeBadge type={concern.type} />
+                        {concern.aspects && concern.aspects.length > 0 && (
+                          <AspectBadges aspects={concern.aspects} />
+                        )}
                         {concern.group && (
                           <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground">
                             {concern.group}
