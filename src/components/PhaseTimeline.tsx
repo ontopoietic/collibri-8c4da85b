@@ -83,7 +83,7 @@ export const PhaseTimeline = ({
           <div className="flex items-center gap-4">
             <div className="relative flex-1">
               {/* Timeline bar */}
-              <div className="relative h-3 flex w-full">
+              <div className="relative h-3 flex w-full mt-4">
                 {/* Class Phase: 30/90 = 33.33% */}
                 <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
                   <div
