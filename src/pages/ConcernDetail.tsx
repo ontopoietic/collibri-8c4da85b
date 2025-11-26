@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { VoteButton } from "@/components/VoteButton";
 import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
-import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb } from "lucide-react";
+import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import { ReplyCategory } from "@/types/concern";
+import { ReplyCategory, Reply, ReplyReference } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
 
 const typeConfig = {
@@ -21,9 +21,9 @@ const typeConfig = {
     icon: Lightbulb,
     className: "bg-proposal/10 text-proposal border-proposal/20",
   },
-  both: {
-    label: "Problem & Proposal",
-    icon: Lightbulb,
+  "counter-proposal": {
+    label: "Counter-Proposal",
+    icon: Scale,
     className: "bg-primary/10 text-primary border-primary/20",
   },
 };
@@ -32,6 +32,7 @@ const ConcernDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [showReplyForm, setShowReplyForm] = useState(false);
+  const [replyToId, setReplyToId] = useState<string | null>(null);
   
   const concern = mockConcerns.find((c) => c.id === id);
 
@@ -49,9 +50,41 @@ const ConcernDetail = () => {
   const config = typeConfig[concern.type];
   const Icon = config.icon;
 
-  const handleReply = (category: ReplyCategory, text: string) => {
-    console.log("New reply:", { category, text });
+  const getAllReplies = (replies: Reply[]): Reply[] => {
+    const allReplies: Reply[] = [];
+    const traverse = (replyList: Reply[]) => {
+      replyList.forEach((reply) => {
+        allReplies.push(reply);
+        if (reply.replies.length > 0) {
+          traverse(reply.replies);
+        }
+      });
+    };
+    traverse(replies);
+    return allReplies;
+  };
+
+  const findReplyById = (replies: Reply[], id: string): Reply | null => {
+    for (const reply of replies) {
+      if (reply.id === id) return reply;
+      const found = findReplyById(reply.replies, id);
+      if (found) return found;
+    }
+    return null;
+  };
+
+  const replyToTarget = replyToId ? findReplyById(concern.replies, replyToId) : null;
+  const availableReplies = getAllReplies(concern.replies);
+
+  const handleReply = (
+    category: ReplyCategory,
+    text: string,
+    referencedReplies?: ReplyReference[],
+    counterProposal?: { text: string; postedAsConcern?: boolean }
+  ) => {
+    console.log("New reply:", { category, text, referencedReplies, counterProposal });
     setShowReplyForm(false);
+    setReplyToId(null);
   };
 
   return (
@@ -82,11 +115,30 @@ const ConcernDetail = () => {
             <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
           </div>
 
+          {(concern.referencedProblemId || concern.referencedObjectionId) && (
+            <div className="bg-muted p-4 rounded-lg space-y-2">
+              <p className="text-sm font-medium">References:</p>
+              {concern.referencedOriginalPostId && (
+                <p className="text-sm text-muted-foreground">
+                  Original post: #{concern.referencedOriginalPostId}
+                </p>
+              )}
+              {concern.referencedObjectionId && (
+                <p className="text-sm text-muted-foreground">
+                  In response to objection: #{concern.referencedObjectionId}
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="flex items-center gap-4 pt-4 border-t border-border">
             <VoteButton initialVotes={concern.votes} />
             <Button
               variant="outline"
-              onClick={() => setShowReplyForm(!showReplyForm)}
+              onClick={() => {
+                setShowReplyForm(!showReplyForm);
+                setReplyToId(null);
+              }}
               className="gap-2"
             >
               <MessageSquare className="h-4 w-4" />
@@ -97,7 +149,12 @@ const ConcernDetail = () => {
           {showReplyForm && (
             <ReplyForm
               onSubmit={handleReply}
-              onCancel={() => setShowReplyForm(false)}
+              onCancel={() => {
+                setShowReplyForm(false);
+                setReplyToId(null);
+              }}
+              originalText={replyToTarget?.text}
+              availableReplies={availableReplies}
             />
           )}
         </div>
@@ -108,7 +165,7 @@ const ConcernDetail = () => {
             <ReplyThread
               replies={concern.replies}
               onReply={(parentId) => {
-                console.log("Reply to:", parentId);
+                setReplyToId(parentId);
                 setShowReplyForm(true);
               }}
             />

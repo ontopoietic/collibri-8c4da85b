@@ -3,7 +3,7 @@ import { Concern } from "@/types/concern";
 export const mockConcerns: Concern[] = [
   {
     id: "1",
-    type: "both",
+    type: "proposal",
     title: "Increase bike lane safety in downtown area",
     description:
       "The current bike lanes downtown lack proper barriers from vehicle traffic, creating dangerous situations especially during rush hours. I propose adding physical barriers or bollards along major corridors to protect cyclists.",

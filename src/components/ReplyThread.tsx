@@ -27,6 +27,30 @@ export const ReplyThread = ({ replies, onReply }: ReplyThreadProps) => {
             
             <p className="text-foreground leading-relaxed">{reply.text}</p>
             
+            {reply.referencedReplies && reply.referencedReplies.length > 0 && (
+              <div className="bg-muted p-3 rounded-md space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">References:</p>
+                {reply.referencedReplies.map((ref) => (
+                  <div key={ref.id} className="text-xs flex items-center gap-2">
+                    <CategoryBadge category={ref.category} />
+                    <span className="text-muted-foreground truncate">{ref.text}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {reply.counterProposal && (
+              <div className="bg-primary/5 border border-primary/20 p-3 rounded-md space-y-2">
+                <p className="text-xs font-medium text-primary">Counter-Proposal:</p>
+                <p className="text-sm text-foreground">{reply.counterProposal.text}</p>
+                {reply.counterProposal.postedAsConcern && (
+                  <p className="text-xs text-muted-foreground italic">
+                    Posted as a forum concern
+                  </p>
+                )}
+              </div>
+            )}
+            
             <div className="flex items-center gap-2">
               <VoteButton initialVotes={reply.votes} />
               <Button

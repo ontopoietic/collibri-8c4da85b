@@ -1,0 +1,242 @@
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Users, MessageSquare, ThumbsUp, FileText } from "lucide-react";
+import { mockConcerns } from "@/data/mockData";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+} from "recharts";
+
+const Statistics = () => {
+  const navigate = useNavigate();
+
+  // Calculate statistics
+  const totalConcerns = mockConcerns.length;
+  const totalVotes = mockConcerns.reduce((sum, c) => sum + c.votes, 0);
+  
+  const getAllReplies = (replies: any[]): any[] => {
+    let allReplies: any[] = [];
+    replies.forEach((reply) => {
+      allReplies.push(reply);
+      if (reply.replies.length > 0) {
+        allReplies = allReplies.concat(getAllReplies(reply.replies));
+      }
+    });
+    return allReplies;
+  };
+
+  const allReplies = mockConcerns.flatMap((c) => getAllReplies(c.replies));
+  const totalReplies = allReplies.length;
+  const totalReplyVotes = allReplies.reduce((sum, r) => sum + r.votes, 0);
+
+  // Concern type distribution
+  const concernTypeData = [
+    {
+      name: "Problems",
+      count: mockConcerns.filter((c) => c.type === "problem").length,
+    },
+    {
+      name: "Proposals",
+      count: mockConcerns.filter((c) => c.type === "proposal").length,
+    },
+    {
+      name: "Counter-Proposals",
+      count: mockConcerns.filter((c) => c.type === "counter-proposal").length,
+    },
+  ];
+
+  // Reply category distribution
+  const replyCategoryData = [
+    {
+      name: "Objections",
+      count: allReplies.filter((r) => r.category === "objection").length,
+    },
+    {
+      name: "Proposals",
+      count: allReplies.filter((r) => r.category === "proposal").length,
+    },
+    {
+      name: "Pro-Arguments",
+      count: allReplies.filter((r) => r.category === "pro-argument").length,
+    },
+    {
+      name: "Variants",
+      count: allReplies.filter((r) => r.category === "variant").length,
+    },
+  ];
+
+  // Top concerns by votes
+  const topConcerns = [...mockConcerns]
+    .sort((a, b) => b.votes - a.votes)
+    .slice(0, 5)
+    .map((c) => ({
+      name: c.title.substring(0, 30) + "...",
+      votes: c.votes,
+    }));
+
+  // Engagement over time (mock data based on timestamps)
+  const engagementData = mockConcerns.map((c) => ({
+    date: new Date(c.timestamp).toLocaleDateString(),
+    concerns: 1,
+    replies: c.replies.length,
+  }));
+
+  const COLORS = ["hsl(var(--destructive))", "hsl(var(--proposal))", "hsl(var(--primary))", "hsl(var(--pro-argument))"];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <Button
+          variant="ghost"
+          onClick={() => navigate("/")}
+          className="mb-6 gap-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Feed
+        </Button>
+
+        <h1 className="text-4xl font-bold mb-8 text-foreground">Platform Statistics</h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Concerns</CardTitle>
+              <FileText className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{totalConcerns}</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Replies</CardTitle>
+              <MessageSquare className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{totalReplies}</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Concern Votes</CardTitle>
+              <ThumbsUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{totalVotes}</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Reply Votes</CardTitle>
+              <ThumbsUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{totalReplyVotes}</div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Concern Types Distribution</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={concernTypeData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(entry) => entry.name}
+                    outerRadius={80}
+                    fill="hsl(var(--primary))"
+                    dataKey="count"
+                  >
+                    {concernTypeData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Reply Categories Distribution</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={replyCategoryData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="count" fill="hsl(var(--primary))" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Top Concerns by Votes</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={topConcerns} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis dataKey="name" type="category" width={200} />
+                  <Tooltip />
+                  <Bar dataKey="votes" fill="hsl(var(--proposal))" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Participation Timeline</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={engagementData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="concerns" stroke="hsl(var(--primary))" />
+                  <Line type="monotone" dataKey="replies" stroke="hsl(var(--proposal))" />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Statistics;

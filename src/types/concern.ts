@@ -1,6 +1,12 @@
-export type ConcernType = "problem" | "proposal" | "both";
+export type ConcernType = "problem" | "proposal" | "counter-proposal";
 
 export type ReplyCategory = "objection" | "proposal" | "pro-argument" | "variant";
+
+export interface ReplyReference {
+  id: string;
+  text: string;
+  category: ReplyCategory;
+}
 
 export interface Reply {
   id: string;
@@ -9,6 +15,11 @@ export interface Reply {
   votes: number;
   replies: Reply[];
   timestamp: Date;
+  referencedReplies?: ReplyReference[];
+  counterProposal?: {
+    text: string;
+    postedAsConcern?: boolean;
+  };
 }
 
 export interface Concern {
@@ -19,4 +30,7 @@ export interface Concern {
   votes: number;
   replies: Reply[];
   timestamp: Date;
+  referencedProblemId?: string;
+  referencedObjectionId?: string;
+  referencedOriginalPostId?: string;
 }
