@@ -259,13 +259,13 @@ export const PhaseTimeline = ({
           <h4 className="text-sm font-semibold text-muted-foreground mb-4">New Timeline Design</h4>
           <div className="relative h-32">
             {/* All labels positioned at the top */}
-            <div className="absolute top-0 left-0 right-12 flex">
+            <div className="absolute top-0 left-0 right-12 flex gap-1">
               {/* Class Phase Label */}
               <div className="flex justify-center" style={{ width: "33.33%" }}>
                 <button
                   onClick={() => onPhaseClick("class")}
                   className={cn(
-                    "flex flex-col items-center gap-1",
+                    "flex flex-col items-center gap-0",
                     currentPhase === "class" ? "z-10" : "z-0"
                   )}
                 >
@@ -280,17 +280,17 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>Class</span>
                   </div>
-                  <div className={cn("w-0.5 h-8", currentPhase === "class" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-[4.5rem]", currentPhase === "class" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
 
               {/* Grade Voting Label */}
               <div className="flex justify-center" style={{ width: "5.56%" }}>
-                <div className="flex flex-col items-center gap-1">
+                <div className="flex flex-col items-center gap-0">
                   <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                     Variant Voting
                   </div>
-                  <div className="w-0.5 h-8 bg-border" />
+                  <div className="w-0.5 h-[4.5rem] bg-border" />
                 </div>
               </div>
 
@@ -299,7 +299,7 @@ export const PhaseTimeline = ({
                 <button
                   onClick={() => onPhaseClick("grade")}
                   className={cn(
-                    "flex flex-col items-center gap-1",
+                    "flex flex-col items-center gap-0",
                     currentPhase === "grade" ? "z-10" : "z-0"
                   )}
                 >
@@ -314,17 +314,17 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>Grade</span>
                   </div>
-                  <div className={cn("w-0.5 h-8", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-[4.5rem]", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
 
               {/* School Voting Label */}
               <div className="flex justify-center" style={{ width: "5.56%" }}>
-                <div className="flex flex-col items-center gap-1">
+                <div className="flex flex-col items-center gap-0">
                   <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                     Variant Voting
                   </div>
-                  <div className="w-0.5 h-8 bg-border" />
+                  <div className="w-0.5 h-[4.5rem] bg-border" />
                 </div>
               </div>
 
@@ -333,7 +333,7 @@ export const PhaseTimeline = ({
                 <button
                   onClick={() => onPhaseClick("school")}
                   className={cn(
-                    "flex flex-col items-center gap-1",
+                    "flex flex-col items-center gap-0",
                     currentPhase === "school" ? "z-10" : "z-0"
                   )}
                 >
@@ -348,14 +348,14 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>School</span>
                   </div>
-                  <div className={cn("w-0.5 h-8", currentPhase === "school" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-[4.5rem]", currentPhase === "school" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
             </div>
 
             {/* Timeline bar positioned below labels */}
             <div className="absolute top-[4.5rem] left-0 right-0 flex items-center gap-4">
-              <div className="flex-1 flex h-3">
+              <div className="flex-1 flex h-3 gap-1">
                 {/* Class Phase */}
                 <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
                   <div
