@@ -280,7 +280,7 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>Class</span>
                   </div>
-                  <div className={cn("w-0.5 h-[4.5rem]", currentPhase === "class" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-10", currentPhase === "class" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
 
@@ -290,7 +290,7 @@ export const PhaseTimeline = ({
                   <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                     Variant Voting
                   </div>
-                  <div className="w-0.5 h-[4.5rem] bg-border" />
+                  <div className="w-0.5 h-10 bg-border" />
                 </div>
               </div>
 
@@ -314,7 +314,7 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>Grade</span>
                   </div>
-                  <div className={cn("w-0.5 h-[4.5rem]", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-10", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
 
@@ -324,7 +324,7 @@ export const PhaseTimeline = ({
                   <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
                     Variant Voting
                   </div>
-                  <div className="w-0.5 h-[4.5rem] bg-border" />
+                  <div className="w-0.5 h-10 bg-border" />
                 </div>
               </div>
 
@@ -348,13 +348,13 @@ export const PhaseTimeline = ({
                     <Trophy className="h-3 w-3" />
                     <span>School</span>
                   </div>
-                  <div className={cn("w-0.5 h-[4.5rem]", currentPhase === "school" ? "bg-primary" : "bg-border")} />
+                  <div className={cn("w-0.5 h-10", currentPhase === "school" ? "bg-primary" : "bg-border")} />
                 </button>
               </div>
             </div>
 
             {/* Timeline bar positioned below labels */}
-            <div className="absolute top-[4.5rem] left-0 right-0 flex items-center gap-4">
+            <div className="absolute top-10 left-0 right-0 flex items-center gap-4">
               <div className="flex-1 flex h-3 gap-1">
                 {/* Class Phase */}
                 <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
