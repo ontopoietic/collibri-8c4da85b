@@ -27,6 +27,14 @@ export interface Reply {
 
 export type Phase = "class" | "grade" | "school";
 
+export interface ConcernVariant {
+  id: string;
+  title: string;
+  text: string;
+  votes: number;
+  authorId?: string;
+}
+
 export interface Concern {
   id: string;
   type: ConcernType;
@@ -43,6 +51,8 @@ export interface Concern {
   solutionLevel?: SolutionLevel;
   phaseStartDate?: Date;
   phaseEndDate?: Date;
+  variants?: ConcernVariant[];
+  selectedVariantId?: string;
 }
 
 export interface UserQuota {
