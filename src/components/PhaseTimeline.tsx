@@ -75,188 +75,8 @@ export const PhaseTimeline = ({
       </div>
 
       <div className="space-y-6 flex-1">
-        {/* Full timeline with phase indicators and phase buttons */}
-        <div className="relative h-28">
-
-          {/* Timeline bar with gaps aligned to exact separator positions */}
-          {/* Bar + labels share the same width (exclude leaderboard button) */}
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1">
-              {/* Timeline bar */}
-              <div className="relative h-3 flex w-full mt-4">
-                {/* Class Phase: 30/90 = 33.33% */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.min(100, (overallProgressPercentage / 33.33) * 100)}%` }}
-                  />
-                </div>
-                {/* Grade Interim: 5/90 = 5.56% - Light gray */}
-                <div className="relative bg-muted/50 rounded-full overflow-hidden" style={{ width: "5.56%" }}>
-                  <div
-                    className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
-                  />
-                </div>
-                {/* Grade Phase: 25/90 = 27.78% */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.78%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 38.89) / 27.78) * 100))}%` }}
-                  />
-                </div>
-                {/* School Interim: 5/90 = 5.56% - Light gray */}
-                <div className="relative bg-muted/50 rounded-full overflow-hidden" style={{ width: "5.56%" }}>
-                  <div
-                    className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
-                  />
-                </div>
-                {/* School Phase: 25/90 = 27.77% */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.77%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 72.23) / 27.77) * 100))}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Variant Voting labels connected to interim timeline segments (same width as bar) */}
-              <div className="absolute left-0 right-0 top-0 -translate-y-full flex pointer-events-none">
-                <div style={{ width: "33.33%" }} />
-                <div className="relative flex justify-center" style={{ width: "5.56%" }}>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
-                      Variant Voting
-                    </div>
-                    <div className="w-0.5 h-4 bg-border" />
-                  </div>
-                </div>
-                <div style={{ width: "27.78%" }} />
-                <div className="relative flex justify-center" style={{ width: "5.56%" }}>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
-                      Variant Voting
-                    </div>
-                    <div className="w-0.5 h-4 bg-border" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Phase buttons above the timeline, connecting directly */}
-              <div className="absolute left-0 right-0 top-0 -translate-y-full flex">
-                {/* Class Phase Button */}
-                <button
-                  onClick={() => onPhaseClick("class")}
-                  className={cn(
-                    "absolute flex flex-col items-center gap-0 transition-all",
-                    currentPhase === "class" ? "z-10" : "z-0"
-                  )}
-                  style={{ left: "16.67%", transform: "translateX(-50%)" }}
-                >
-                  <div
-                    className={cn(
-                      "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
-                      "flex items-center gap-1.5 whitespace-nowrap",
-                      currentPhase === "class"
-                        ? "bg-primary text-primary-foreground scale-110"
-                        : "bg-card border border-border text-foreground hover:bg-accent"
-                    )}
-                  >
-                    <Trophy className="h-3 w-3" />
-                    <span>Class</span>
-                  </div>
-                  <div
-                    className={cn(
-                      "w-0.5 h-4 transition-all",
-                      currentPhase === "class" ? "bg-primary" : "bg-border"
-                    )}
-                  />
-                </button>
-
-                {/* Grade Phase Button */}
-                <button
-                  onClick={() => onPhaseClick("grade")}
-                  className={cn(
-                    "absolute flex flex-col items-center gap-0 transition-all",
-                    currentPhase === "grade" ? "z-10" : "z-0"
-                  )}
-                  style={{ left: "50%", transform: "translateX(-50%)" }}
-                >
-                  <div
-                    className={cn(
-                      "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
-                      "flex items-center gap-1.5 whitespace-nowrap",
-                      currentPhase === "grade"
-                        ? "bg-primary text-primary-foreground scale-110"
-                        : "bg-card border border-border text-foreground hover:bg-accent"
-                    )}
-                  >
-                    <Trophy className="h-3 w-3" />
-                    <span>Grade</span>
-                  </div>
-                  <div
-                    className={cn(
-                      "w-0.5 h-4 transition-all",
-                      currentPhase === "grade" ? "bg-primary" : "bg-border"
-                    )}
-                  />
-                </button>
-
-                {/* School Phase Button */}
-                <button
-                  onClick={() => onPhaseClick("school")}
-                  className={cn(
-                    "absolute flex flex-col items-center gap-0 transition-all",
-                    currentPhase === "school" ? "z-10" : "z-0"
-                  )}
-                  style={{ left: "83.33%", transform: "translateX(-50%)" }}
-                >
-                  <div
-                    className={cn(
-                      "px-2.5 py-1 rounded-md text-xs font-semibold transition-all shadow-sm",
-                      "flex items-center gap-1.5 whitespace-nowrap",
-                      currentPhase === "school"
-                        ? "bg-primary text-primary-foreground scale-110"
-                        : "bg-card border border-border text-foreground hover:bg-accent"
-                    )}
-                  >
-                    <Trophy className="h-3 w-3" />
-                    <span>School</span>
-                  </div>
-                  <div
-                    className={cn(
-                      "w-0.5 h-4 transition-all",
-                      currentPhase === "school" ? "bg-primary" : "bg-border"
-                    )}
-                  />
-                </button>
-              </div>
-            </div>
-
-            {/* Leaderboard button - larger with more space */}
-            <button
-              onClick={() => navigate("/leaderboard/school")}
-              className="p-2 rounded-md bg-card border border-border hover:bg-accent transition-colors shadow-sm cursor-pointer flex-shrink-0"
-              aria-label="View leaderboard"
-            >
-              <Trophy className="h-4 w-4 text-primary" />
-            </button>
-          </div>
-        </div>
-
-        {isSimulating && (
-          <div className="text-xs text-muted-foreground text-center">
-            Simulating: Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} (
-              {phases[currentIndex].label}
-              {isInInterim && currentPhase !== "class" ? " - Variant Voting" : ""}
-            )
-          </div>
-        )}
-
-        {/* NEW REDESIGNED TIMELINE */}
-        <div className="mt-8 pt-8 border-t border-border">
-          <h4 className="text-sm font-semibold text-muted-foreground mb-4">New Timeline Design</h4>
+        {/* Timeline */}
+        <div className="space-y-4">
           <div className="relative h-32">
             {/* All labels positioned at the top */}
             <div className="absolute top-0 left-0 right-12 flex gap-1">
@@ -271,13 +91,13 @@ export const PhaseTimeline = ({
                 >
                   <div
                     className={cn(
-                      "px-2.5 py-1 rounded-md text-xs font-semibold shadow-sm flex items-center gap-1.5 whitespace-nowrap",
+                      "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
                       currentPhase === "class"
                         ? "bg-primary text-primary-foreground"
                         : "bg-card border border-border text-foreground hover:bg-accent"
                     )}
                   >
-                    <Trophy className="h-3 w-3" />
+                    <Trophy className="h-4 w-4" />
                     <span>Class</span>
                   </div>
                   <div className={cn("w-0.5 h-9", currentPhase === "class" ? "bg-primary" : "bg-border")} />
@@ -305,13 +125,13 @@ export const PhaseTimeline = ({
                 >
                   <div
                     className={cn(
-                      "px-2.5 py-1 rounded-md text-xs font-semibold shadow-sm flex items-center gap-1.5 whitespace-nowrap",
+                      "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
                       currentPhase === "grade"
                         ? "bg-primary text-primary-foreground"
                         : "bg-card border border-border text-foreground hover:bg-accent"
                     )}
                   >
-                    <Trophy className="h-3 w-3" />
+                    <Trophy className="h-4 w-4" />
                     <span>Grade</span>
                   </div>
                   <div className={cn("w-0.5 h-9", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
@@ -340,13 +160,13 @@ export const PhaseTimeline = ({
                 >
                   <div
                     className={cn(
-                      "px-2.5 py-1 rounded-md text-xs font-semibold shadow-sm flex items-center gap-1.5 whitespace-nowrap",
+                      "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
                       currentPhase === "school"
                         ? "bg-primary text-primary-foreground"
                         : "bg-card border border-border text-foreground hover:bg-accent"
                     )}
                   >
-                    <Trophy className="h-3 w-3" />
+                    <Trophy className="h-4 w-4" />
                     <span>School</span>
                   </div>
                   <div className={cn("w-0.5 h-9", currentPhase === "school" ? "bg-primary" : "bg-border")} />
@@ -404,6 +224,26 @@ export const PhaseTimeline = ({
               </button>
             </div>
           </div>
+
+          {/* Simulation Status and Slider */}
+          {isSimulating && (
+            <div className="mt-6 space-y-3">
+              <div className="text-xs text-muted-foreground text-center">
+                Simulating: Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} (
+                  {phases[currentIndex].label}
+                  {isInInterim && currentPhase !== "class" ? " - Variant Voting" : ""}
+                )
+              </div>
+              <Slider
+                value={[sliderValue]}
+                onValueChange={(value) => onSliderChange?.(value[0])}
+                min={0}
+                max={100}
+                step={1}
+                className="w-full"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
