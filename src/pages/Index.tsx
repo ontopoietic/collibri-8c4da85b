@@ -4,10 +4,11 @@ import { ConcernCard } from "@/components/ConcernCard";
 import { NewConcernDialog } from "@/components/NewConcernDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Concern, ConcernType, Phase, SolutionLevel } from "@/types/concern";
+import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
 import { Scale, BarChart3, Bell, Search } from "lucide-react";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
+import { QuotaDisplay } from "@/components/QuotaDisplay";
 import {
   Select,
   SelectContent,
@@ -24,6 +25,17 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
+  
+  // Mock user quota - in production, this would come from backend
+  const [userQuota] = useState<UserQuota>({
+    concerns: { used: 2, total: 3 },
+    votes: { used: 7, total: 10 },
+    variants: { used: 1, total: 3 },
+    proposals: { used: 2, total: 3 },
+    proArguments: { used: 3, total: 5 },
+    objections: { used: 4, total: 5 },
+    questions: { used: 1, total: 3 },
+  });
 
   const handleNewConcern = (type: ConcernType, title: string, description: string, solutionLevel?: SolutionLevel) => {
     const newConcern: Concern = {
@@ -47,17 +59,29 @@ const Index = () => {
 
   const phaseConcerns = concerns.filter((c) => c.phase === currentPhase);
 
+  // Helper function to search through replies recursively
+  const searchInReplies = (replies: Reply[], query: string): boolean => {
+    for (const reply of replies) {
+      if (reply.text.toLowerCase().includes(query)) return true;
+      if (searchInReplies(reply.replies, query)) return true;
+    }
+    return false;
+  };
+
   const filteredConcerns = phaseConcerns
     .filter((concern) => {
       // Type filter
       if (activeTab === "problems" && concern.type !== "problem") return false;
       if (activeTab === "proposals" && concern.type !== "proposal" && concern.type !== "counter-proposal") return false;
       
-      // Search filter
+      // Search filter - now includes replies
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
-        if (!concern.title.toLowerCase().includes(query) && 
-            !concern.description.toLowerCase().includes(query)) {
+        const titleMatch = concern.title.toLowerCase().includes(query);
+        const descriptionMatch = concern.description.toLowerCase().includes(query);
+        const replyMatch = searchInReplies(concern.replies, query);
+        
+        if (!titleMatch && !descriptionMatch && !replyMatch) {
           return false;
         }
       }
@@ -108,7 +132,14 @@ const Index = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <PhaseTimeline currentPhase={currentPhase} onPhaseClick={handlePhaseClick} />
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+          <div className="lg:col-span-3">
+            <PhaseTimeline currentPhase={currentPhase} onPhaseClick={handlePhaseClick} />
+          </div>
+          <div className="lg:col-span-1">
+            <QuotaDisplay quota={userQuota} />
+          </div>
+        </div>
         
         <div className="mb-6 space-y-4">
           <h2 className="text-3xl font-bold text-foreground">

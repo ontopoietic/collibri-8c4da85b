@@ -1,6 +1,6 @@
 export type ConcernType = "problem" | "proposal" | "counter-proposal";
 
-export type ReplyCategory = "objection" | "proposal" | "pro-argument" | "variant";
+export type ReplyCategory = "objection" | "proposal" | "pro-argument" | "variant" | "question";
 
 export type SolutionLevel = "school" | "ministries";
 
@@ -41,4 +41,16 @@ export interface Concern {
   phase: Phase;
   group?: string; // class name or grade name
   solutionLevel?: SolutionLevel;
+  phaseStartDate?: Date;
+  phaseEndDate?: Date;
+}
+
+export interface UserQuota {
+  concerns: { used: number; total: number };
+  votes: { used: number; total: number };
+  variants: { used: number; total: number };
+  proposals: { used: number; total: number };
+  proArguments: { used: number; total: number };
+  objections: { used: number; total: number };
+  questions: { used: number; total: number };
 }

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { ReplyCategory } from "@/types/concern";
-import { AlertCircle, Lightbulb, ThumbsUp, GitBranch } from "lucide-react";
+import { AlertCircle, Lightbulb, ThumbsUp, GitBranch, HelpCircle } from "lucide-react";
 
 interface CategoryBadgeProps {
   category: ReplyCategory;
@@ -26,6 +26,11 @@ const categoryConfig = {
     label: "Variant",
     icon: GitBranch,
     className: "bg-variant text-variant-foreground hover:bg-variant/90",
+  },
+  question: {
+    label: "Question",
+    icon: HelpCircle,
+    className: "bg-blue-500 text-white hover:bg-blue-600",
   },
 };
 

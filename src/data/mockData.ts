@@ -6,12 +6,12 @@ const hoursAgo = (hours: number) => new Date(now.getTime() - hours * 60 * 60 * 1
 // Helper to create replies with references
 const createReply = (
   id: string,
-  category: "objection" | "proposal" | "pro-argument" | "variant",
+  category: "objection" | "proposal" | "pro-argument" | "variant" | "question",
   text: string,
   votes: number,
   hoursAgo: number,
   replies: Reply[] = [],
-  referencedReplies?: { id: string; text: string; category: "objection" | "proposal" | "pro-argument" | "variant" }[],
+  referencedReplies?: { id: string; text: string; category: "objection" | "proposal" | "pro-argument" | "variant" | "question" }[],
   counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: "school" | "ministries" }
 ): Reply => ({
   id,
@@ -46,6 +46,9 @@ export const mockConcerns: Concern[] = [
         { id: "r1", text: "I think the main issue is timing, not quality.", category: "objection" },
         { id: "r2", text: "Absolutely agree! I've noticed many students skip lunch.", category: "pro-argument" }
       ]),
+      createReply("r4a", "question", "How many students actually eat in the cafeteria versus bringing their own lunch? Maybe the issue isn't as widespread as we think?", 5, 1.0, [
+        createReply("r4a1", "pro-argument", "Good point! According to the student council survey, about 75% of students regularly use the cafeteria, so this affects most of us.", 3, 0.5)
+      ]),
     ],
   },
   {
@@ -69,6 +72,9 @@ export const mockConcerns: Concern[] = [
       createReply("r8", "variant", "We should move to a fully digital assignment submission system with offline access capabilities, combining digital efficiency with accessibility for all students.", 11, 2, [], [
         { id: "r6", text: "Not all students have reliable internet access.", category: "objection" },
         { id: "r5", text: "This would help the environment.", category: "pro-argument" }
+      ]),
+      createReply("r8a", "question", "What platform would we use for this? Are there any free options that work well for schools?", 4, 2.5, [
+        createReply("r8a1", "proposal", "Google Classroom is free and most students already have accounts. It integrates with Google Drive for easy file management.", 6, 2.0)
       ]),
     ],
   },

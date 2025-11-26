@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { VoteButton } from "@/components/VoteButton";
 import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
-import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale, HelpCircle } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -109,16 +110,20 @@ const ConcernDetail = () => {
     }));
   };
 
-  const filterReplies = (replies: Reply[]): Reply[] => {
+  const filterReplies = (replies: Reply[], excludeCategory?: ReplyCategory): Reply[] => {
     return replies
-      .filter(reply => filterCategory === "all" || reply.category === filterCategory)
+      .filter(reply => {
+        if (excludeCategory && reply.category === excludeCategory) return false;
+        return filterCategory === "all" || reply.category === filterCategory;
+      })
       .map(reply => ({
         ...reply,
-        replies: filterReplies(reply.replies)
+        replies: filterReplies(reply.replies, excludeCategory)
       }));
   };
 
-  const processedReplies = sortReplies(filterReplies(concern?.replies || []));
+  const regularReplies = sortReplies(filterReplies(concern?.replies || [], "question"));
+  const questions = sortReplies(concern?.replies.filter(r => r.category === "question") || []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -201,41 +206,87 @@ const ConcernDetail = () => {
         </div>
 
         {concern.replies.length > 0 && (
-          <div className="mt-8 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-foreground">Responses</h2>
-              <div className="flex gap-2">
-                <Select value={filterCategory} onValueChange={(value: any) => setFilterCategory(value)}>
-                  <SelectTrigger className="w-[160px]">
-                    <SelectValue placeholder="Filter" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
-                    <SelectItem value="objection">Objections</SelectItem>
-                    <SelectItem value="proposal">Proposals</SelectItem>
-                    <SelectItem value="pro-argument">Pro-Arguments</SelectItem>
-                    <SelectItem value="variant">Variants</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
-                  <SelectTrigger className="w-[140px]">
-                    <SelectValue placeholder="Sort" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="newest">Newest</SelectItem>
-                    <SelectItem value="oldest">Oldest</SelectItem>
-                    <SelectItem value="popularity">Popularity</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <ReplyThread
-              replies={processedReplies}
-              onReply={(parentId) => {
-                setReplyToId(parentId);
-                setShowReplyForm(true);
-              }}
-            />
+          <div className="mt-8">
+            <Tabs defaultValue="responses" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="responses">
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Responses ({regularReplies.length})
+                </TabsTrigger>
+                <TabsTrigger value="questions">
+                  <HelpCircle className="h-4 w-4 mr-2" />
+                  Q&A ({questions.length})
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="responses" className="space-y-4 mt-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-foreground">Responses</h2>
+                  <div className="flex gap-2">
+                    <Select value={filterCategory} onValueChange={(value: any) => setFilterCategory(value)}>
+                      <SelectTrigger className="w-[160px]">
+                        <SelectValue placeholder="Filter" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Categories</SelectItem>
+                        <SelectItem value="objection">Objections</SelectItem>
+                        <SelectItem value="proposal">Proposals</SelectItem>
+                        <SelectItem value="pro-argument">Pro-Arguments</SelectItem>
+                        <SelectItem value="variant">Variants</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue placeholder="Sort" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="newest">Newest</SelectItem>
+                        <SelectItem value="oldest">Oldest</SelectItem>
+                        <SelectItem value="popularity">Popularity</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                {regularReplies.length > 0 ? (
+                  <ReplyThread
+                    replies={regularReplies}
+                    onReply={(parentId) => {
+                      setReplyToId(parentId);
+                      setShowReplyForm(true);
+                    }}
+                  />
+                ) : (
+                  <p className="text-muted-foreground text-center py-8">No responses yet. Be the first to respond!</p>
+                )}
+              </TabsContent>
+
+              <TabsContent value="questions" className="space-y-4 mt-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-foreground">Questions & Answers</h2>
+                  <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                    <SelectTrigger className="w-[140px]">
+                      <SelectValue placeholder="Sort" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="newest">Newest</SelectItem>
+                      <SelectItem value="oldest">Oldest</SelectItem>
+                      <SelectItem value="popularity">Popularity</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {questions.length > 0 ? (
+                  <ReplyThread
+                    replies={questions}
+                    onReply={(parentId) => {
+                      setReplyToId(parentId);
+                      setShowReplyForm(true);
+                    }}
+                  />
+                ) : (
+                  <p className="text-muted-foreground text-center py-8">No questions yet. Ask the first question!</p>
+                )}
+              </TabsContent>
+            </Tabs>
           </div>
         )}
       </div>
