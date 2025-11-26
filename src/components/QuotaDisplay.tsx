@@ -39,47 +39,55 @@ const QuotaItem = ({
 };
 
 export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
-  const quotaPairs = [
-    [
-      { key: "concerns", label: "Concerns", icon: AlertCircle, color: "text-destructive" },
-      { key: "proposals", label: "Proposals", icon: Lightbulb, color: "text-proposal" }
-    ],
-    [
-      { key: "objections", label: "Objections", icon: ThumbsDown, color: "text-orange-600" },
-      { key: "proArguments", label: "Pro-Arguments", icon: ThumbsUp, color: "text-green-600" }
-    ],
-    [
-      { key: "variants", label: "Variants", icon: Scale, color: "text-muted-foreground" },
-      { key: "questions", label: "Questions", icon: HelpCircle, color: "text-blue-600" }
-    ]
-  ];
-
   return (
     <Card className="p-6 bg-card border border-border">
       <h3 className="text-lg font-semibold mb-6 text-foreground">Your Phase Quota</h3>
       
-      {/* Votes - Prominent first row */}
-      <div className="mb-6 pb-6 border-b border-border">
-        <QuotaItem 
-          config={{ label: "Votes", icon: ThumbsUp, color: "text-primary" }}
-          quotaData={quota.votes}
-          isLarge={true}
-        />
-      </div>
-
-      {/* Paired quotas in 3 rows */}
       <div className="space-y-6">
-        {quotaPairs.map((pair, rowIndex) => (
-          <div key={rowIndex} className="grid grid-cols-2 gap-6">
-            {pair.map((config) => (
-              <QuotaItem
-                key={config.key}
-                config={config}
-                quotaData={quota[config.key as keyof UserQuota]}
-              />
-            ))}
-          </div>
-        ))}
+        {/* First row: Votes */}
+        <div className="pb-6 border-b border-border">
+          <QuotaItem 
+            config={{ label: "Votes", icon: ThumbsUp, color: "text-primary" }}
+            quotaData={quota.votes}
+            isLarge={true}
+          />
+        </div>
+
+        {/* Second row: Concerns, Proposals */}
+        <div className="grid grid-cols-2 gap-6 pb-6 border-b border-border">
+          <QuotaItem
+            config={{ label: "Concerns", icon: AlertCircle, color: "text-destructive" }}
+            quotaData={quota.concerns}
+          />
+          <QuotaItem
+            config={{ label: "Proposals", icon: Lightbulb, color: "text-proposal" }}
+            quotaData={quota.proposals}
+          />
+        </div>
+
+        {/* Third row: Objections, Pro-Arguments */}
+        <div className="grid grid-cols-2 gap-6 pb-6 border-b border-border">
+          <QuotaItem
+            config={{ label: "Objections", icon: ThumbsDown, color: "text-orange-600" }}
+            quotaData={quota.objections}
+          />
+          <QuotaItem
+            config={{ label: "Pro-Arguments", icon: ThumbsUp, color: "text-green-600" }}
+            quotaData={quota.proArguments}
+          />
+        </div>
+
+        {/* Fourth row: Variants, Questions */}
+        <div className="grid grid-cols-2 gap-6">
+          <QuotaItem
+            config={{ label: "Variants", icon: Scale, color: "text-muted-foreground" }}
+            quotaData={quota.variants}
+          />
+          <QuotaItem
+            config={{ label: "Questions", icon: HelpCircle, color: "text-blue-600" }}
+            quotaData={quota.questions}
+          />
+        </div>
       </div>
 
       <p className="text-xs text-muted-foreground mt-6 pt-6 border-t border-border">
