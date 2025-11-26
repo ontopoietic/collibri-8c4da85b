@@ -38,12 +38,12 @@ const Index = () => {
 
   // Calculate the simulated "current time" based on slider
   const now = new Date();
-  const phaseStartDate = new Date(now.getTime() - 46 * 60 * 60 * 1000); // 46 hours ago
-  const phaseDuration = 46; // hours in the mock data
+  const phaseStartDate = new Date(now.getTime() - 28 * 24 * 60 * 60 * 1000); // 28 days ago
+  const phaseDuration = 30; // days per phase
   
   const getSimulatedTime = (progress: number): Date => {
-    const simulatedHours = (progress / 100) * phaseDuration;
-    return new Date(phaseStartDate.getTime() + simulatedHours * 60 * 60 * 1000);
+    const simulatedDays = (progress / 100) * phaseDuration;
+    return new Date(phaseStartDate.getTime() + simulatedDays * 24 * 60 * 60 * 1000);
   };
 
   const simulatedCurrentTime = isSimulating ? getSimulatedTime(simulationProgress) : now;
@@ -56,8 +56,8 @@ const Index = () => {
       .filter(c => c.timestamp <= simulatedCurrentTime)
       .map(concern => {
         // Calculate votes based on time (simulate gradual voting)
-        const concernAge = (simulatedCurrentTime.getTime() - concern.timestamp.getTime()) / (1000 * 60 * 60);
-        const totalAge = (now.getTime() - concern.timestamp.getTime()) / (1000 * 60 * 60);
+        const concernAge = (simulatedCurrentTime.getTime() - concern.timestamp.getTime()) / (1000 * 60 * 60 * 24);
+        const totalAge = (now.getTime() - concern.timestamp.getTime()) / (1000 * 60 * 60 * 24);
         const voteRatio = Math.min(1, concernAge / totalAge);
         const simulatedVotes = Math.floor(concern.votes * voteRatio);
 
@@ -66,8 +66,8 @@ const Index = () => {
           return replies
             .filter(r => r.timestamp <= simulatedCurrentTime)
             .map(reply => {
-              const replyAge = (simulatedCurrentTime.getTime() - reply.timestamp.getTime()) / (1000 * 60 * 60);
-              const replyTotalAge = (now.getTime() - reply.timestamp.getTime()) / (1000 * 60 * 60);
+              const replyAge = (simulatedCurrentTime.getTime() - reply.timestamp.getTime()) / (1000 * 60 * 60 * 24);
+              const replyTotalAge = (now.getTime() - reply.timestamp.getTime()) / (1000 * 60 * 60 * 24);
               const replyVoteRatio = Math.min(1, replyAge / replyTotalAge);
               
               return {
@@ -243,7 +243,7 @@ const Index = () => {
             currentPhase={currentPhase} 
             onPhaseClick={handlePhaseClick}
             phaseStartDate={phaseStartDate}
-            phaseDurationDays={Math.ceil(phaseDuration / 24)}
+            phaseDurationDays={phaseDuration}
             sliderValue={simulationProgress}
             onSliderChange={setSimulationProgress}
             isSimulating={isSimulating}
