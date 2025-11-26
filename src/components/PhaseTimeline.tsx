@@ -25,7 +25,7 @@ export const PhaseTimeline = ({
   onPhaseClick,
   phaseStartDate = new Date(2024, 0, 1),
   phaseEndDate = new Date(2024, 0, 31),
-  phaseDurationDays = 30,
+  phaseDurationDays = 90,
   sliderValue = 100,
   onSliderChange,
   isSimulating = false
@@ -39,8 +39,12 @@ export const PhaseTimeline = ({
     ? Math.floor((sliderValue / 100) * phaseDurationDays)
     : actualDaysPassed;
     
-  const daysRemaining = Math.max(0, phaseDurationDays - daysPassed);
-  const progressPercentage = Math.min(100, (daysPassed / phaseDurationDays) * 100);
+  // Calculate which phase we're in and its progress
+  const currentPhaseDayStart = currentIndex * 30;
+  const currentPhaseDayEnd = (currentIndex + 1) * 30;
+  const daysIntoCurrentPhase = Math.max(0, Math.min(30, daysPassed - currentPhaseDayStart));
+  const daysRemaining = Math.max(0, 30 - daysIntoCurrentPhase);
+  const progressPercentage = (daysIntoCurrentPhase / 30) * 100;
 
   return (
     <div className="bg-card border border-border rounded-lg p-6 h-full flex flex-col">
@@ -51,7 +55,9 @@ export const PhaseTimeline = ({
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4" />
           <span className="font-medium">
-            {isSimulating ? `Day ${daysPassed + 1}` : `${daysRemaining} ${daysRemaining === 1 ? 'day' : 'days'} remaining`}
+            {isSimulating 
+              ? `Day ${daysIntoCurrentPhase + 1} of 30` 
+              : `${daysRemaining} ${daysRemaining === 1 ? 'day' : 'days'} remaining`}
           </span>
         </div>
       </div>
@@ -86,19 +92,20 @@ export const PhaseTimeline = ({
         {isSimulating && onSliderChange ? (
           <div className="space-y-2">
             <div className="flex justify-between text-xs text-muted-foreground mb-1">
-              <span>Start</span>
-              <span>Today</span>
+              <span>Class (Day 1)</span>
+              <span className="text-center">Grade (Day 31)</span>
+              <span>School (Day 90)</span>
             </div>
             <Slider
               value={[sliderValue]}
               onValueChange={(values) => onSliderChange(values[0])}
               min={0}
               max={100}
-              step={1}
+              step={0.5}
               className="w-full"
             />
             <div className="text-xs text-muted-foreground text-center mt-2">
-              Simulating: Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays}
+              Simulating: Overall Day {daysPassed + 1} of {phaseDurationDays} ({phases[currentIndex].label})
             </div>
           </div>
         ) : (
@@ -112,11 +119,11 @@ export const PhaseTimeline = ({
                 />
               </div>
               
-              {/* Day markers */}
+            {/* Day markers for current phase */}
               <div className="flex justify-between mt-2 px-1">
-                {Array.from({ length: Math.min(phaseDurationDays, 10) }, (_, i) => {
-                  const dayNumber = Math.floor((i / 9) * (phaseDurationDays - 1)) + 1;
-                  const isPassed = dayNumber <= daysPassed;
+                {Array.from({ length: 10 }, (_, i) => {
+                  const dayNumber = Math.floor((i / 9) * 29) + 1;
+                  const isPassed = dayNumber <= daysIntoCurrentPhase;
                   
                   return (
                     <div key={i} className="flex flex-col items-center">
@@ -139,7 +146,7 @@ export const PhaseTimeline = ({
             </div>
 
             <div className="text-xs text-muted-foreground text-center">
-              Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays}
+              Day {daysIntoCurrentPhase + 1} of 30 in {phases[currentIndex].label}
             </div>
           </>
         )}
