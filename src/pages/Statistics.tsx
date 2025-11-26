@@ -27,7 +27,7 @@ const Statistics = () => {
   const [selectedPhase, setSelectedPhase] = useState<Phase>("school");
   
   const handlePhaseClick = (phase: Phase) => {
-    navigate(`/leaderboard/${phase}`);
+    setSelectedPhase(phase);
   };
 
   // Filter data based on view mode
@@ -115,12 +115,87 @@ const Statistics = () => {
       votes: c.votes,
     }));
 
-  // Engagement over time (mock data based on timestamps)
-  const engagementData = displayConcerns.map((c) => ({
-    date: new Date(c.timestamp).toLocaleDateString(),
-    concerns: 1,
-    replies: c.replies.length,
-  }));
+  // Engagement over time with reply categories
+  const engagementByDate = new Map<string, { 
+    concerns: number; 
+    objections: number;
+    proposals: number;
+    proArguments: number;
+    variants: number;
+    questions: number;
+  }>();
+  
+  displayConcerns.forEach((c) => {
+    const date = new Date(c.timestamp).toLocaleDateString();
+    if (!engagementByDate.has(date)) {
+      engagementByDate.set(date, { concerns: 0, objections: 0, proposals: 0, proArguments: 0, variants: 0, questions: 0 });
+    }
+    const entry = engagementByDate.get(date)!;
+    entry.concerns++;
+    
+    const concernReplies = getAllReplies(c.replies);
+    concernReplies.forEach((reply) => {
+      if (reply.category === "objection") entry.objections++;
+      else if (reply.category === "proposal") entry.proposals++;
+      else if (reply.category === "pro-argument") entry.proArguments++;
+      else if (reply.category === "variant") entry.variants++;
+      else if (reply.category === "question") entry.questions++;
+    });
+  });
+
+  const engagementData = Array.from(engagementByDate.entries())
+    .map(([date, data]) => ({ date, ...data }))
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  // Vote distribution by reply category
+  const votesByCategoryData = [
+    {
+      name: "Objections",
+      votes: allReplies.filter((r) => r.category === "objection").reduce((sum, r) => sum + r.votes, 0),
+    },
+    {
+      name: "Proposals",
+      votes: allReplies.filter((r) => r.category === "proposal").reduce((sum, r) => sum + r.votes, 0),
+    },
+    {
+      name: "Pro-Arguments",
+      votes: allReplies.filter((r) => r.category === "pro-argument").reduce((sum, r) => sum + r.votes, 0),
+    },
+    {
+      name: "Variants",
+      votes: allReplies.filter((r) => r.category === "variant").reduce((sum, r) => sum + r.votes, 0),
+    },
+    {
+      name: "Questions",
+      votes: allReplies.filter((r) => r.category === "question").reduce((sum, r) => sum + r.votes, 0),
+    },
+  ].filter(item => item.votes > 0);
+
+  // Reply type ratios
+  const objectionCount = allReplies.filter((r) => r.category === "objection").length;
+  const proArgumentCount = allReplies.filter((r) => r.category === "pro-argument").length;
+  const proposalCount = allReplies.filter((r) => r.category === "proposal").length;
+  const variantCount = allReplies.filter((r) => r.category === "variant").length;
+  const questionCount = allReplies.filter((r) => r.category === "question").length;
+
+  const replyRatios = [
+    {
+      name: "Pro-Arguments per Objection",
+      ratio: objectionCount > 0 ? (proArgumentCount / objectionCount).toFixed(2) : "N/A",
+    },
+    {
+      name: "Proposals per Objection",
+      ratio: objectionCount > 0 ? (proposalCount / objectionCount).toFixed(2) : "N/A",
+    },
+    {
+      name: "Objections per Proposal",
+      ratio: proposalCount > 0 ? (objectionCount / proposalCount).toFixed(2) : "N/A",
+    },
+    {
+      name: "Variants per Concern",
+      ratio: totalConcerns > 0 ? (variantCount / totalConcerns).toFixed(2) : "N/A",
+    },
+  ];
 
   const COLORS = ["hsl(var(--destructive))", "hsl(var(--proposal))", "hsl(var(--primary))", "hsl(var(--pro-argument))"];
 
@@ -155,28 +230,19 @@ const Statistics = () => {
             <>
               <Button
                 variant={selectedPhase === "class" ? "default" : "outline"}
-                onClick={() => {
-                  setSelectedPhase("class");
-                  handlePhaseClick("class");
-                }}
+                onClick={() => handlePhaseClick("class")}
               >
                 Class Phase
               </Button>
               <Button
                 variant={selectedPhase === "grade" ? "default" : "outline"}
-                onClick={() => {
-                  setSelectedPhase("grade");
-                  handlePhaseClick("grade");
-                }}
+                onClick={() => handlePhaseClick("grade")}
               >
                 Grade Phase
               </Button>
               <Button
                 variant={selectedPhase === "school" ? "default" : "outline"}
-                onClick={() => {
-                  setSelectedPhase("school");
-                  handlePhaseClick("school");
-                }}
+                onClick={() => handlePhaseClick("school")}
               >
                 School Phase
               </Button>
@@ -226,6 +292,31 @@ const Statistics = () => {
           </Card>
         </div>
 
+        <div className="grid grid-cols-1 gap-6 mb-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Participation Timeline</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={engagementData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="concerns" stroke="hsl(var(--primary))" name="Concerns" />
+                  <Line type="monotone" dataKey="objections" stroke="hsl(var(--destructive))" name="Objections" />
+                  <Line type="monotone" dataKey="proposals" stroke="hsl(var(--proposal))" name="Proposals" />
+                  <Line type="monotone" dataKey="proArguments" stroke="hsl(var(--pro-argument))" name="Pro-Arguments" />
+                  <Line type="monotone" dataKey="variants" stroke="hsl(var(--accent))" name="Variants" />
+                  <Line type="monotone" dataKey="questions" stroke="hsl(var(--muted-foreground))" name="Questions" />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <Card>
             <CardHeader>
@@ -270,6 +361,49 @@ const Statistics = () => {
               </ResponsiveContainer>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Vote Distribution by Categories</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={votesByCategoryData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(entry) => `${entry.name}: ${entry.votes}`}
+                    outerRadius={80}
+                    fill="hsl(var(--primary))"
+                    dataKey="votes"
+                  >
+                    {votesByCategoryData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Reply Type Ratios</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {replyRatios.map((ratio, index) => (
+                  <div key={index} className="flex justify-between items-center p-3 bg-muted rounded-lg">
+                    <span className="text-sm font-medium">{ratio.name}</span>
+                    <span className="text-lg font-bold text-primary">{ratio.ratio}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {viewMode === "interval" && phaseData.length > 0 && (
@@ -307,25 +441,6 @@ const Statistics = () => {
                   <Tooltip />
                   <Bar dataKey="votes" fill="hsl(var(--proposal))" />
                 </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Participation Timeline</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={engagementData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="concerns" stroke="hsl(var(--primary))" />
-                  <Line type="monotone" dataKey="replies" stroke="hsl(var(--proposal))" />
-                </LineChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
