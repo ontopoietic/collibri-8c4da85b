@@ -77,25 +77,21 @@ export const PhaseTimeline = ({
       <div className="space-y-6 flex-1">
         {/* Full timeline with phase indicators and phase buttons */}
         <div className="relative h-28">
-          {/* Vertical separators (reduced height) */}
+          {/* Vertical separators aligned to exact days */}
           <div className="absolute top-8 bottom-0 left-0 right-0 pointer-events-none flex">
-            {/* Class Phase (Day 1-30) */}
-            <div style={{ width: "calc(33.33% - 2px)" }} className="border-r border-border" />
-            <div style={{ width: "4px" }} /> {/* Gap for separator */}
-            {/* Grade Interim (Day 31-35) */}
-            <div style={{ width: "calc(5.56% - 2px)" }} className="border-r border-border bg-amber-500/5" />
-            <div style={{ width: "4px" }} /> {/* Gap for separator */}
-            {/* Grade Phase (Day 36-60) */}
-            <div style={{ width: "calc(27.78% - 2px)" }} className="border-r border-border" />
-            <div style={{ width: "4px" }} /> {/* Gap for separator */}
-            {/* School Interim (Day 61-65) */}
-            <div style={{ width: "calc(5.56% - 2px)" }} className="border-r border-border bg-amber-500/5" />
-            <div style={{ width: "4px" }} /> {/* Gap for separator */}
-            {/* School Phase (Day 66-90) */}
-            <div style={{ width: "calc(27.77% - 2px)" }} />
+            {/* Class Phase: Days 1-30 (30 days = 33.33%) */}
+            <div style={{ width: "33.33%" }} className="border-r border-border" />
+            {/* Grade Interim: Days 31-35 (5 days = 5.56%) */}
+            <div style={{ width: "5.56%" }} className="border-r border-border bg-amber-500/5" />
+            {/* Grade Phase: Days 36-60 (25 days = 27.78%) */}
+            <div style={{ width: "27.78%" }} className="border-r border-border" />
+            {/* School Interim: Days 61-65 (5 days = 5.56%) */}
+            <div style={{ width: "5.56%" }} className="border-r border-border bg-amber-500/5" />
+            {/* School Phase: Days 66-90 (25 days = 27.77%) */}
+            <div style={{ width: "27.77%" }} />
           </div>
 
-          {/* Timeline bar with gaps aligned to separators */}
+          {/* Timeline bar with gaps aligned to exact separator positions */}
           <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex items-center gap-1">
             <div className="flex-1 flex items-center gap-1">
               {isSimulating && onSliderChange ? (
@@ -109,31 +105,35 @@ export const PhaseTimeline = ({
                 />
               ) : (
                 <div className="relative h-3 flex w-full gap-1">
-                  {/* Progress bar segments with gaps */}
+                  {/* Class Phase: 30/90 = 33.33% */}
                   <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
                     <div
                       className="h-full bg-primary transition-all duration-500 rounded-full"
                       style={{ width: `${Math.min(100, (overallProgressPercentage / 33.33) * 100)}%` }}
                     />
                   </div>
+                  {/* Grade Interim: 5/90 = 5.56% */}
                   <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "5.56%" }}>
                     <div
                       className="h-full bg-primary transition-all duration-500 rounded-full"
                       style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
                     />
                   </div>
+                  {/* Grade Phase: 25/90 = 27.78% */}
                   <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.78%" }}>
                     <div
                       className="h-full bg-primary transition-all duration-500 rounded-full"
                       style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 38.89) / 27.78) * 100))}%` }}
                     />
                   </div>
+                  {/* School Interim: 5/90 = 5.56% */}
                   <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "5.56%" }}>
                     <div
                       className="h-full bg-primary transition-all duration-500 rounded-full"
                       style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
                     />
                   </div>
+                  {/* School Phase: 25/90 = 27.77% */}
                   <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.77%" }}>
                     <div
                       className="h-full bg-primary transition-all duration-500 rounded-full"
