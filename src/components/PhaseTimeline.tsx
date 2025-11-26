@@ -77,18 +77,26 @@ export const PhaseTimeline = ({
       <div className="space-y-6 flex-1">
         {/* Full timeline with phase indicators and phase buttons */}
         <div className="relative h-28">
-          {/* Vertical separators aligned to exact days */}
-          <div className="absolute top-8 bottom-0 left-0 right-0 pointer-events-none flex">
-            {/* Class Phase: Days 1-30 (30 days = 33.33%) */}
-            <div style={{ width: "33.33%" }} className="border-r border-border" />
-            {/* Grade Interim: Days 31-35 (5 days = 5.56%) */}
-            <div style={{ width: "5.56%" }} className="border-r border-border bg-amber-500/5" />
-            {/* Grade Phase: Days 36-60 (25 days = 27.78%) */}
-            <div style={{ width: "27.78%" }} className="border-r border-border" />
-            {/* School Interim: Days 61-65 (5 days = 5.56%) */}
-            <div style={{ width: "5.56%" }} className="border-r border-border bg-amber-500/5" />
-            {/* School Phase: Days 66-90 (25 days = 27.77%) */}
-            <div style={{ width: "27.77%" }} />
+          {/* Vertical separators aligned to timeline gaps */}
+          <div className="absolute top-8 bottom-0 left-0 right-0 pointer-events-none flex gap-1">
+            {/* Class Phase: Days 1-30 */}
+            <div style={{ width: "33.33%" }} className="" />
+            {/* Separator border */}
+            <div className="w-px bg-border" />
+            {/* Grade Interim: Days 31-35 */}
+            <div style={{ width: "5.56%" }} className="bg-amber-500/5" />
+            {/* Separator border */}
+            <div className="w-px bg-border" />
+            {/* Grade Phase: Days 36-60 */}
+            <div style={{ width: "27.78%" }} className="" />
+            {/* Separator border */}
+            <div className="w-px bg-border" />
+            {/* School Interim: Days 61-65 */}
+            <div style={{ width: "5.56%" }} className="bg-amber-500/5" />
+            {/* Separator border */}
+            <div className="w-px bg-border" />
+            {/* School Phase: Days 66-90 */}
+            <div style={{ width: "27.77%" }} className="" />
           </div>
 
           {/* Timeline bar with gaps aligned to exact separator positions */}
