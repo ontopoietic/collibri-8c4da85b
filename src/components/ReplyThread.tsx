@@ -1,5 +1,6 @@
 import { Reply, ReplyCategory, ReplyReference, SolutionLevel } from "@/types/concern";
 import { CategoryBadge } from "./CategoryBadge";
+import { AspectBadges } from "./AspectBadges";
 import { VoteButton } from "./VoteButton";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -67,7 +68,12 @@ const ReplyItem = ({
     <div id={`reply-${reply.id}`} className="pl-6 border-l-2 border-border">
       <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
-              <CategoryBadge category={reply.category} />
+              <div className="flex items-center gap-2 flex-wrap">
+                <CategoryBadge category={reply.category} />
+                {reply.aspects && reply.aspects.length > 0 && (
+                  <AspectBadges aspects={reply.aspects} />
+                )}
+              </div>
               <span className="text-xs text-muted-foreground">
                 {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
               </span>

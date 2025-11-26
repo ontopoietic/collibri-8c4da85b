@@ -1,4 +1,5 @@
 export type ConcernType = "problem" | "proposal" | "counter-proposal";
+export type ConcernAspect = "problem" | "proposal";
 
 export type ReplyCategory = "objection" | "proposal" | "pro-argument" | "variant" | "question";
 
@@ -23,6 +24,7 @@ export interface Reply {
     postedAsConcern?: boolean;
     solutionLevel?: SolutionLevel;
   };
+  aspects?: ConcernAspect[];
 }
 
 export type Phase = "class" | "grade" | "school";
@@ -33,6 +35,7 @@ export interface ConcernVariant {
   text: string;
   votes: number;
   authorId?: string;
+  aspects?: ConcernAspect[];
 }
 
 export interface Concern {
@@ -53,6 +56,7 @@ export interface Concern {
   phaseEndDate?: Date;
   variants?: ConcernVariant[];
   selectedVariantId?: string;
+  aspects?: ConcernAspect[];
 }
 
 export interface UserQuota {

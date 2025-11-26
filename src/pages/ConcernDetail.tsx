@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { VoteButton } from "@/components/VoteButton";
 import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
+import { AspectBadges } from "@/components/AspectBadges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
@@ -140,10 +141,15 @@ const ConcernDetail = () => {
 
         <div className="bg-card rounded-lg p-8 shadow-sm space-y-6">
           <div className="flex items-start justify-between gap-4">
-            <Badge variant="outline" className={config.className}>
-              <Icon className="mr-1 h-3 w-3" />
-              {config.label}
-            </Badge>
+            <div className="flex items-center gap-2 flex-wrap">
+              <Badge variant="outline" className={config.className}>
+                <Icon className="mr-1 h-3 w-3" />
+                {config.label}
+              </Badge>
+              {concern.aspects && concern.aspects.length > 0 && (
+                <AspectBadges aspects={concern.aspects} />
+              )}
+            </div>
             <span className="text-xs text-muted-foreground">
               {formatDistanceToNow(concern.timestamp, { addSuffix: true })}
             </span>
