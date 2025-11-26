@@ -119,9 +119,9 @@ export const PhaseTimeline = ({
         {isSimulating && onSliderChange ? (
           <div className="space-y-2">
             <div className="flex justify-between text-xs text-muted-foreground mb-1">
-              <span>Class (Day 1)</span>
-              <span className="text-center">Grade (Day 31)</span>
-              <span>School (Day 61)</span>
+              <span>(Day 1 - 30)</span>
+              <span className="text-center">(Day 31 - 60)</span>
+              <span>(Day 61 - 90)</span>
             </div>
             
             {/* Timeline with phase separators and interim indicators */}
