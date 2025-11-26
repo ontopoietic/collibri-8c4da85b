@@ -218,6 +218,12 @@ const Statistics = () => {
 
   const COLORS = ["hsl(var(--objection))", "hsl(var(--proposal))", "hsl(var(--primary))", "hsl(var(--pro-argument))"];
   
+  const CONCERN_TYPE_COLORS: { [key: string]: string } = {
+    "Problems": "hsl(var(--objection))",
+    "Proposals": "hsl(var(--proposal))",
+    "Counter-Proposals": "hsl(var(--variant))",
+  };
+  
   const CATEGORY_COLORS: { [key: string]: string } = {
     "Objections": "hsl(var(--objection))",
     "Proposals": "hsl(var(--proposal))",
@@ -364,7 +370,7 @@ const Statistics = () => {
                     stroke="none"
                   >
                     {concernTypeData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell key={`cell-${index}`} fill={CONCERN_TYPE_COLORS[entry.name] || COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip />
