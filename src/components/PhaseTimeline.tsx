@@ -77,8 +77,8 @@ export const PhaseTimeline = ({
       <div className="space-y-6 flex-1">
         {/* Full timeline with phase indicators and phase buttons */}
         <div className="relative h-24">
-          {/* Vertical separators (full height) */}
-          <div className="absolute inset-0 pointer-events-none flex">
+          {/* Vertical separators (reduced height) */}
+          <div className="absolute inset-y-6 left-0 right-0 pointer-events-none flex">
             {/* Class Phase (Day 1-30) */}
             <div style={{ width: "33.33%" }} className="border-r border-border" />
             {/* Grade Interim (Day 31-35) */}
@@ -117,7 +117,7 @@ export const PhaseTimeline = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => navigate("/leaderboard/school")}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full ml-2 p-1.5 rounded-md bg-card border border-border hover:bg-accent transition-colors shadow-sm"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full ml-2 p-1.5 rounded-md bg-card border border-border hover:bg-accent transition-colors shadow-sm z-20"
                     aria-label="View leaderboard"
                   >
                     <Trophy className="h-3.5 w-3.5 text-primary" />
@@ -130,17 +130,17 @@ export const PhaseTimeline = ({
             </TooltipProvider>
           </div>
 
-          {/* Variant Voting labels above the timeline, consistent with phase button style */}
+          {/* Variant Voting labels above the timeline, not overlapping separators */}
           <div className="absolute left-0 right-0 top-0 flex pointer-events-none">
             <div style={{ width: "33.33%" }} />
-            <div className="relative flex items-start justify-center" style={{ width: "5.56%" }}>
-              <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-amber-600 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shadow-sm">
+            <div className="relative flex justify-center" style={{ width: "5.56%" }}>
+              <div className="mt-1 px-2 py-0.5 rounded-md text-[10px] font-medium text-amber-600 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shadow-sm">
                 Variant Voting
               </div>
             </div>
             <div style={{ width: "27.78%" }} />
-            <div className="relative flex items-start justify-center" style={{ width: "5.56%" }}>
-              <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-amber-600 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shadow-sm">
+            <div className="relative flex justify-center" style={{ width: "5.56%" }}>
+              <div className="mt-1 px-2 py-0.5 rounded-md text-[10px] font-medium text-amber-600 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shadow-sm">
                 Variant Voting
               </div>
             </div>
