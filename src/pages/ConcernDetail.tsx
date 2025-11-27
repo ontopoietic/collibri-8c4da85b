@@ -175,13 +175,33 @@ const ConcernDetail = () => {
             <div className="bg-muted p-4 rounded-lg space-y-2">
               <p className="text-sm font-medium">References:</p>
               {concern.referencedOriginalPostId && (
-                <p className="text-sm text-muted-foreground">
-                  Original post: #{concern.referencedOriginalPostId}
+                <p className="text-sm">
+                  Original post:{" "}
+                  <Button
+                    variant="link"
+                    className="h-auto p-0 text-sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/concern/${concern.referencedOriginalPostId}`);
+                    }}
+                  >
+                    #{concern.referencedOriginalPostId}
+                  </Button>
                 </p>
               )}
               {concern.referencedObjectionId && (
-                <p className="text-sm text-muted-foreground">
-                  In response to objection: #{concern.referencedObjectionId}
+                <p className="text-sm">
+                  In response to objection:{" "}
+                  <Button
+                    variant="link"
+                    className="h-auto p-0 text-sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/concern/${concern.referencedObjectionId}`);
+                    }}
+                  >
+                    #{concern.referencedObjectionId}
+                  </Button>
                 </p>
               )}
             </div>

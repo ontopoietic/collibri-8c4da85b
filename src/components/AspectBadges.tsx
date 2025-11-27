@@ -10,12 +10,12 @@ const aspectConfig = {
   problem: {
     label: "Problem",
     icon: AlertTriangle,
-    className: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+    className: "bg-destructive/10 text-destructive border-destructive/20",
   },
   proposal: {
     label: "Proposal",
     icon: Lightbulb,
-    className: "bg-proposal text-proposal-foreground hover:bg-proposal/90",
+    className: "bg-proposal/10 text-proposal border-proposal/20",
   },
 };
 
@@ -28,7 +28,7 @@ export const AspectBadges = ({ aspects }: AspectBadgesProps) => {
         const config = aspectConfig[aspect];
         const Icon = config.icon;
         return (
-          <Badge key={aspect} className={config.className}>
+          <Badge key={aspect} variant="outline" className={config.className}>
             <Icon className="mr-1 h-3 w-3" />
             {config.label}
           </Badge>
