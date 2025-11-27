@@ -265,13 +265,14 @@ const Index = () => {
             <Button
               variant={activeTab === "problems" ? "default" : "outline"}
               onClick={() => setActiveTab("problems")}
-              className={activeTab === "problems" ? "bg-problem hover:bg-problem/90 text-problem-foreground" : ""}
+              className={activeTab === "problems" ? "bg-problem hover:bg-problem/90 text-problem-foreground" : "hover:bg-problem hover:text-problem-foreground"}
             >
               Problems
             </Button>
             <Button
               variant={activeTab === "proposals" ? "default" : "outline"}
               onClick={() => setActiveTab("proposals")}
+              className={activeTab === "proposals" ? "bg-proposal hover:bg-proposal/90 text-proposal-foreground" : "hover:bg-proposal hover:text-proposal-foreground"}
             >
               Proposals
             </Button>
