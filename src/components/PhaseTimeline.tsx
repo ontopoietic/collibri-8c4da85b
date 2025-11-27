@@ -288,7 +288,7 @@ export const PhaseTimeline = ({
 
           {/* Date/Day Indicators */}
           {!isMobile && (
-            <div className="relative text-xs text-muted-foreground mt-2">
+            <div className="relative text-xs text-muted-foreground mt-2 mb-6 md:mb-8">
               <div className="absolute whitespace-nowrap" style={{ left: "0%" }}>Day 1</div>
               <div className="absolute whitespace-nowrap" style={{ left: "33.33%", transform: "translateX(-50%)" }}>Day 30</div>
               <div className="absolute whitespace-nowrap" style={{ left: "38.89%", transform: "translateX(-50%)" }}>Day 35</div>
