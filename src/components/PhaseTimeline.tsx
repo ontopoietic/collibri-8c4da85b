@@ -110,7 +110,7 @@ export const PhaseTimeline = ({
                     disabled={daysPassed < 30}
                     className={cn(
                       "relative rounded-lg transition-all duration-300 group",
-                      isMobile ? "h-14" : "h-12",
+                      "h-8 sm:h-10 md:h-12 lg:h-14",
                       daysPassed >= 30 
                         ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
@@ -148,7 +148,7 @@ export const PhaseTimeline = ({
                   <div
                     className={cn(
                       "relative rounded-lg transition-all duration-300 cursor-default",
-                      isMobile ? "h-14" : "h-12",
+                      "h-8 sm:h-10 md:h-12 lg:h-14",
                       overallProgressPercentage > 33.33 && overallProgressPercentage < 38.89 && "ring-2 ring-primary/50"
                     )}
                     style={{ width: "5.56%" }}
@@ -160,7 +160,7 @@ export const PhaseTimeline = ({
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-3 w-3 md:h-3.5 md:w-3.5 text-foreground" />
+                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5 text-foreground" />
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -179,7 +179,7 @@ export const PhaseTimeline = ({
                     disabled={daysPassed < 65}
                     className={cn(
                       "relative rounded-lg transition-all duration-300 group",
-                      isMobile ? "h-14" : "h-12",
+                      "h-8 sm:h-10 md:h-12 lg:h-14",
                       daysPassed >= 65 
                         ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
@@ -217,7 +217,7 @@ export const PhaseTimeline = ({
                   <div
                     className={cn(
                       "relative rounded-lg transition-all duration-300 cursor-default",
-                      isMobile ? "h-14" : "h-12",
+                      "h-8 sm:h-10 md:h-12 lg:h-14",
                       overallProgressPercentage > 66.67 && overallProgressPercentage < 72.23 && "ring-2 ring-primary/50"
                     )}
                     style={{ width: "5.56%" }}
@@ -229,7 +229,7 @@ export const PhaseTimeline = ({
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-3 w-3 md:h-3.5 md:w-3.5 text-foreground" />
+                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5 text-foreground" />
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -248,7 +248,7 @@ export const PhaseTimeline = ({
                     disabled={daysPassed < 90}
                     className={cn(
                       "relative rounded-lg transition-all duration-300 group",
-                      isMobile ? "h-14" : "h-12",
+                      "h-8 sm:h-10 md:h-12 lg:h-14",
                       daysPassed >= 90
                         ? "cursor-pointer hover:scale-[1.02]"
                         : "cursor-not-allowed opacity-50",
