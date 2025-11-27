@@ -160,7 +160,7 @@ export const PhaseTimeline = ({
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5 text-foreground" />
+                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" style={{ color: '#3B3C4C' }} />
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -229,7 +229,7 @@ export const PhaseTimeline = ({
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5 text-foreground" />
+                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" style={{ color: '#3B3C4C' }} />
                     </div>
                   </div>
                 </TooltipTrigger>
