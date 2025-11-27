@@ -1,6 +1,6 @@
 import { Phase } from "@/types/concern";
 import { cn } from "@/lib/utils";
-import { Calendar, Trophy, User, Users, School, Vote } from "lucide-react";
+import { Calendar, Trophy, User, Users, School, CheckSquare } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
 import {
@@ -133,9 +133,11 @@ export const PhaseTimeline = ({
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
                       />
                     </div>
-                    <div className="relative flex items-center justify-center h-full gap-1.5">
-                      <Vote className="h-3 w-3 text-foreground opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-                      <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card/95 px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">Variant Selection</span>
+                    <div className="relative flex items-center justify-center h-full">
+                      <CheckSquare className="h-3.5 w-3.5 text-foreground opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 pointer-events-none">
+                        <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card px-3 py-1.5 rounded shadow-xl border border-border">Variant Selection</span>
+                      </div>
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -200,9 +202,11 @@ export const PhaseTimeline = ({
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
                       />
                     </div>
-                    <div className="relative flex items-center justify-center h-full gap-1.5">
-                      <Vote className="h-3 w-3 text-foreground opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-                      <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card/95 px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">Variant Selection</span>
+                    <div className="relative flex items-center justify-center h-full">
+                      <CheckSquare className="h-3.5 w-3.5 text-foreground opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 pointer-events-none">
+                        <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card px-3 py-1.5 rounded shadow-xl border border-border">Variant Selection</span>
+                      </div>
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -252,13 +256,13 @@ export const PhaseTimeline = ({
           </div>
 
           {/* Date/Day Indicators */}
-          <div className="flex justify-between text-xs text-muted-foreground mt-2 px-1">
-            <span>Day 1</span>
-            <span>Day 30</span>
-            <span>Day 35</span>
-            <span>Day 60</span>
-            <span>Day 65</span>
-            <span>Day 90</span>
+          <div className="relative text-xs text-muted-foreground mt-2">
+            <div className="absolute" style={{ left: "0%" }}>Day 1</div>
+            <div className="absolute" style={{ left: "33.33%", transform: "translateX(-50%)" }}>Day 30</div>
+            <div className="absolute" style={{ left: "38.89%", transform: "translateX(-50%)" }}>Day 35</div>
+            <div className="absolute" style={{ left: "66.67%", transform: "translateX(-50%)" }}>Day 60</div>
+            <div className="absolute" style={{ left: "72.23%", transform: "translateX(-50%)" }}>Day 65</div>
+            <div className="absolute" style={{ left: "100%", transform: "translateX(-100%)" }}>Day 90</div>
           </div>
 
           {/* Simulation Status and Slider */}
