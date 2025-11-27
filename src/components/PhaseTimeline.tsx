@@ -240,7 +240,7 @@ export const PhaseTimeline = ({
             </div>
                 
                 {/* Arrow indicator */}
-                <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0 mt-7" />
                 
             {/* Variant Selection Section - Smaller with desktop styling */}
             <div className="w-24">
@@ -377,7 +377,7 @@ export const PhaseTimeline = ({
                       </span>
                     </div>
                     
-                    <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-7" />
                     
                     {/* Selection */}
                     <div className="w-24">

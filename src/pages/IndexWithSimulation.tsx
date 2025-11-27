@@ -302,14 +302,6 @@ const Index = () => {
             {/* Desktop Navigation */}
             {!isMobile && (
               <div className="flex items-center gap-2">
-                <Button
-                  variant={isSimulating ? "default" : "secondary-action"}
-                  onClick={handleSimulationToggle}
-                  className="gap-2"
-                >
-                  {isSimulating ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                  <span className="hidden lg:inline">{isSimulating ? "Stop Simulation" : "Simulate Timeline"}</span>
-                </Button>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="secondary-action" className="gap-2">
