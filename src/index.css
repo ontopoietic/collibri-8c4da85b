@@ -40,8 +40,8 @@ All colors MUST be HSL.
     --radius: 2.25rem;
 
     /* Category colors */
-    --objection: 255 8% 89%;
-    --objection-foreground: 218 13% 48%;
+    --objection: 7 95% 72%;
+    --objection-foreground: 7 95% 72%;
 
     --proposal: 255 8% 89%;
     --proposal-foreground: 218 13% 48%;
@@ -131,8 +131,8 @@ All colors MUST be HSL.
     --input: 245 20% 30%;
     --ring: 8 100% 68%;
 
-    --objection: 255 8% 89%;
-    --objection-foreground: 218 13% 48%;
+    --objection: 7 95% 72%;
+    --objection-foreground: 7 95% 72%;
 
     --proposal: 255 8% 89%;
     --proposal-foreground: 218 13% 48%;

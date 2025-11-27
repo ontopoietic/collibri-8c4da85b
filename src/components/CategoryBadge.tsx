@@ -11,7 +11,7 @@ const categoryConfig = {
   objection: {
     label: "Objection",
     icon: AlertCircle,
-    className: "bg-objection text-objection-foreground hover:bg-objection/90",
+    className: "bg-transparent text-objection-foreground border-objection",
   },
   proposal: {
     label: "Proposal",
@@ -45,7 +45,7 @@ export const CategoryBadge = ({ category, isAnswerToQuestion }: CategoryBadgePro
     : config.label;
 
   return (
-    <Badge className={config.className}>
+    <Badge className={config.className} variant={category === "objection" ? "outline" : undefined}>
       <Icon className="mr-1 h-3 w-3" />
       {label}
     </Badge>
