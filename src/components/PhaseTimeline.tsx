@@ -64,13 +64,13 @@ export const PhaseTimeline = ({
   // Calculate days until next phase
   let daysUntilText = "";
   if (isInClassPhase || isInClassVoting) {
-    const daysUntilGrade = 35 - daysPassed;
+    const daysUntilGrade = Math.round(35 - daysPassed);
     daysUntilText = `${daysUntilGrade} days until Grade Level`;
   } else if (isInGradePhase || isInGradeVoting) {
-    const daysUntilSchool = 65 - daysPassed;
+    const daysUntilSchool = Math.round(65 - daysPassed);
     daysUntilText = `${daysUntilSchool} days until School Level`;
   } else if (isInSchoolPhase) {
-    const daysRemaining = 90 - daysPassed;
+    const daysRemaining = Math.round(90 - daysPassed);
     daysUntilText = `${daysRemaining} days left in School Level`;
   }
   
@@ -285,7 +285,7 @@ export const PhaseTimeline = ({
 
           {/* Simulation Status and Slider */}
           {isSimulating && (
-            <div className="mt-6 space-y-3">
+            <div className="mt-10 space-y-3">
               <Slider
                 value={[sliderValue]}
                 onValueChange={(value) => onSliderChange?.(value[0])}
