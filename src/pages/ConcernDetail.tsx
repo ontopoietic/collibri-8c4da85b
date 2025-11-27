@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { CategoryBadge } from "@/components/CategoryBadge";
 import { VoteButton } from "@/components/VoteButton";
 import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown } from "lucide-react";
+import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -40,6 +41,20 @@ const typeConfig = {
 const ConcernDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [navigationHistory, setNavigationHistory] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Track navigation history for nested back navigation
+    const currentPath = location.pathname;
+    setNavigationHistory((prev) => {
+      const lastPath = prev[prev.length - 1];
+      if (lastPath !== currentPath) {
+        return [...prev, currentPath];
+      }
+      return prev;
+    });
+  }, [location.pathname]);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyToId, setReplyToId] = useState<string | null>(null);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
@@ -90,6 +105,89 @@ const ConcernDetail = () => {
   const replyToTarget = replyToId ? findReplyById(concern.replies, replyToId) : null;
   const availableReplies = getAllReplies(concern.replies);
 
+  const handleBackNavigation = () => {
+    if (navigationHistory.length > 1) {
+      // Remove current page and go to previous
+      const newHistory = [...navigationHistory];
+      newHistory.pop(); // Remove current
+      const previousPath = newHistory[newHistory.length - 1];
+      if (previousPath && previousPath !== location.pathname) {
+        setNavigationHistory(newHistory);
+        navigate(previousPath);
+        return;
+      }
+    }
+    // Fallback to forum
+    navigate("/");
+  };
+
+  const getReferencedContent = (refId: string) => {
+    // Try to find in concerns first
+    const referencedConcern = mockConcerns.find(c => c.id === refId);
+    if (referencedConcern) {
+      return {
+        type: 'concern' as const,
+        title: referencedConcern.title,
+        id: refId
+      };
+    }
+    
+    // Try to find in replies
+    const findInReplies = (replies: Reply[]): Reply | null => {
+      for (const reply of replies) {
+        if (reply.id === refId) return reply;
+        const found = findReplyById(reply.replies, refId);
+        if (found) return found;
+      }
+      return null;
+    };
+
+    // Search in all concerns' replies
+    for (const c of mockConcerns) {
+      const reply = findInReplies(c.replies);
+      if (reply) {
+        return {
+          type: 'reply' as const,
+          text: reply.text,
+          category: reply.category,
+          concernId: c.id,
+          replyId: refId
+        };
+      }
+    }
+    
+    return null;
+  };
+
+  const handleReferenceClick = (refId: string) => {
+    const content = getReferencedContent(refId);
+    if (!content) return;
+
+    if (content.type === 'concern') {
+      navigate(`/concern/${content.id}`);
+    } else {
+      // Navigate to the concern and scroll to the reply
+      navigate(`/concern/${content.concernId}`, { state: { scrollToReply: content.replyId } });
+    }
+  };
+
+  // Handle scroll to reply on mount if specified
+  useEffect(() => {
+    const state = location.state as { scrollToReply?: string } | undefined;
+    if (state?.scrollToReply) {
+      setTimeout(() => {
+        const element = document.getElementById(`reply-${state.scrollToReply}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+          element.classList.add("ring-2", "ring-primary");
+          setTimeout(() => {
+            element.classList.remove("ring-2", "ring-primary");
+          }, 2000);
+        }
+      }, 100);
+    }
+  }, [location.state]);
+
   const handleReply = (
     category: ReplyCategory,
     text: string,
@@ -134,11 +232,11 @@ const ConcernDetail = () => {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <Button
           variant="ghost"
-          onClick={() => navigate("/")}
+          onClick={handleBackNavigation}
           className="mb-6 gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Feed
+          Back to Forum
         </Button>
 
         <div className="bg-card rounded-lg p-8 shadow-sm space-y-6">
@@ -171,39 +269,61 @@ const ConcernDetail = () => {
             </div>
           )}
 
-          {(concern.referencedProblemId || concern.referencedObjectionId) && (
-            <div className="bg-muted p-4 rounded-lg space-y-2">
+          {(concern.referencedOriginalPostId || concern.referencedObjectionId) && (
+            <div className="bg-muted p-4 rounded-lg space-y-3">
               <p className="text-sm font-medium">References:</p>
-              {concern.referencedOriginalPostId && (
-                <p className="text-sm">
-                  Original post:{" "}
-                  <Button
-                    variant="link"
-                    className="h-auto p-0 text-sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/concern/${concern.referencedOriginalPostId}`);
-                    }}
-                  >
-                    #{concern.referencedOriginalPostId}
-                  </Button>
-                </p>
-              )}
-              {concern.referencedObjectionId && (
-                <p className="text-sm">
-                  In response to objection:{" "}
-                  <Button
-                    variant="link"
-                    className="h-auto p-0 text-sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/concern/${concern.referencedObjectionId}`);
-                    }}
-                  >
-                    #{concern.referencedObjectionId}
-                  </Button>
-                </p>
-              )}
+              <div className="flex flex-wrap gap-2">
+                {concern.referencedOriginalPostId && (() => {
+                  const content = getReferencedContent(concern.referencedOriginalPostId);
+                  if (!content) return null;
+                  
+                  return (
+                    <Badge
+                      variant="outline"
+                      className="cursor-pointer hover:bg-muted transition-colors gap-1"
+                      onClick={() => handleReferenceClick(concern.referencedOriginalPostId!)}
+                    >
+                      {content.type === 'concern' ? (
+                        <>
+                          <span className="text-xs font-medium">Original:</span>
+                          <span className="max-w-[200px] truncate">{content.title}</span>
+                        </>
+                      ) : (
+                        <>
+                          <CategoryBadge category={content.category} />
+                          <span className="max-w-[200px] truncate">{content.text}</span>
+                        </>
+                      )}
+                      <ExternalLink className="h-3 w-3" />
+                    </Badge>
+                  );
+                })()}
+                {concern.referencedObjectionId && (() => {
+                  const content = getReferencedContent(concern.referencedObjectionId);
+                  if (!content) return null;
+                  
+                  return (
+                    <Badge
+                      variant="outline"
+                      className="cursor-pointer hover:bg-muted transition-colors gap-1"
+                      onClick={() => handleReferenceClick(concern.referencedObjectionId!)}
+                    >
+                      {content.type === 'concern' ? (
+                        <>
+                          <span className="text-xs font-medium">Objection:</span>
+                          <span className="max-w-[200px] truncate">{content.title}</span>
+                        </>
+                      ) : (
+                        <>
+                          <CategoryBadge category={content.category} />
+                          <span className="max-w-[200px] truncate">{content.text}</span>
+                        </>
+                      )}
+                      <ExternalLink className="h-3 w-3" />
+                    </Badge>
+                  );
+                })()}
+              </div>
             </div>
           )}
 
