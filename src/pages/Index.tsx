@@ -265,6 +265,7 @@ const Index = () => {
             <Button
               variant={activeTab === "problems" ? "default" : "outline"}
               onClick={() => setActiveTab("problems")}
+              className={activeTab === "problems" ? "bg-problem hover:bg-problem/90 text-problem-foreground" : ""}
             >
               Problems
             </Button>
