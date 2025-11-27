@@ -58,6 +58,9 @@ All colors MUST be HSL.
     --problem: 37 100% 50%;
     --problem-foreground: 0 0% 100%;
 
+    --problem-aspect: 37 100% 50%;
+    --problem-aspect-foreground: 37 100% 50%;
+
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;
 
@@ -145,6 +148,9 @@ All colors MUST be HSL.
 
     --problem: 37 100% 50%;
     --problem-foreground: 0 0% 100%;
+
+    --problem-aspect: 37 100% 50%;
+    --problem-aspect-foreground: 37 100% 50%;
 
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;
