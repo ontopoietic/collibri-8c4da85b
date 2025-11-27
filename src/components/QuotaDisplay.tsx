@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { UserQuota } from "@/types/concern";
-import { AlertCircle, Lightbulb, ThumbsUp, HelpCircle, Scale, ThumbsDown, Plus } from "lucide-react";
+import { AlertCircle, Lightbulb, ThumbsUp, HelpCircle, Scale, ThumbsDown, Flag } from "lucide-react";
 
 interface QuotaDisplayProps {
   quota: UserQuota;
@@ -72,7 +72,7 @@ export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
             quotaData={quota.objections}
           />
           <QuotaItem
-            config={{ label: "Pro-Arguments", icon: Plus, color: "text-green-600" }}
+            config={{ label: "Pro-Arguments", icon: Flag, color: "text-green-600" }}
             quotaData={quota.proArguments}
           />
         </div>
