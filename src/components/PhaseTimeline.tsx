@@ -88,15 +88,6 @@ export const PhaseTimeline = ({
   const isMobile = useIsMobile();
   const [viewedPhase, setViewedPhase] = useState<Phase | null>(null);
   const currentIndex = phases.findIndex((p) => p.key === currentPhase);
-  
-  // Find current main phase for tracking changes
-  const currentMainPhase = mainPhases.find(p => daysPassed >= p.deliberationStart && daysPassed < p.votingEnd);
-  const currentMainPhaseKey = currentMainPhase?.key || null;
-  
-  // Reset viewed phase when simulation moves to a different phase
-  useEffect(() => {
-    setViewedPhase(null);
-  }, [currentMainPhaseKey]);
   const today = new Date();
   const actualDaysPassed = Math.floor((today.getTime() - phaseStartDate.getTime()) / (1000 * 60 * 60 * 24));
   
@@ -106,6 +97,15 @@ export const PhaseTimeline = ({
     : persistedDay !== null 
       ? persistedDay
       : actualDaysPassed;
+  
+  // Find current main phase for tracking changes
+  const currentMainPhase = mainPhases.find(p => daysPassed >= p.deliberationStart && daysPassed < p.votingEnd);
+  const currentMainPhaseKey = currentMainPhase?.key || null;
+  
+  // Reset viewed phase when simulation moves to a different phase
+  useEffect(() => {
+    setViewedPhase(null);
+  }, [currentMainPhaseKey]);
     
   // Calculate overall progress percentage (0-100% across all 95 days)
   const overallProgressPercentage = (daysPassed / phaseDurationDays) * 100;
