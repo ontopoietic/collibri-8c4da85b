@@ -12,6 +12,8 @@ import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, 
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Select,
   SelectContent,
@@ -42,6 +44,7 @@ const ConcernDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useIsMobile();
   const [navigationHistory, setNavigationHistory] = useState<string[]>([]);
 
   useEffect(() => {
@@ -58,6 +61,7 @@ const ConcernDetail = () => {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyToId, setReplyToId] = useState<string | null>(null);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
+  const [activeAction, setActiveAction] = useState<'endorse' | 'object' | 'vote' | null>(null);
   const [filterCategory, setFilterCategory] = useState<ReplyCategory | "all">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   const [hasVoted, setHasVoted] = useState(false);
@@ -228,7 +232,7 @@ const ConcernDetail = () => {
   const questions = sortReplies(concern?.replies.filter(r => r.category === "question") || []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <Button
           variant="ghost"
@@ -337,43 +341,47 @@ const ConcernDetail = () => {
                 setRemainingVotes(prev => isAdding ? prev - 1 : prev + 1);
               }}
             />
-            <Button
-              variant="endorse"
-              onClick={() => {
-                setReplyType('endorse');
-                setShowReplyForm(true);
-                setReplyToId(null);
-              }}
-              className="gap-2 bg-endorse text-endorse-foreground hover:bg-endorse-hover"
-            >
-              <ThumbsUp className="h-4 w-4" />
-              Endorse
-            </Button>
-            <Button
-              variant="object"
-              onClick={() => {
-                setReplyType('object');
-                setShowReplyForm(true);
-                setReplyToId(null);
-              }}
-              className="gap-2"
-            >
-              <ThumbsDown className="h-4 w-4" />
-              Object
-            </Button>
-            <Button
-              variant="question"
-              size="sm"
-              onClick={() => {
-                setReplyType('question');
-                setShowReplyForm(true);
-                setReplyToId(null);
-              }}
-              className="gap-2"
-            >
-              <HelpCircle className="h-4 w-4" />
-              Ask Question
-            </Button>
+            {!isMobile && (
+              <>
+                <Button
+                  variant="endorse"
+                  onClick={() => {
+                    setReplyType('endorse');
+                    setShowReplyForm(true);
+                    setReplyToId(null);
+                  }}
+                  className="gap-2 bg-endorse text-endorse-foreground hover:bg-endorse-hover"
+                >
+                  <ThumbsUp className="h-4 w-4" />
+                  Endorse
+                </Button>
+                <Button
+                  variant="object"
+                  onClick={() => {
+                    setReplyType('object');
+                    setShowReplyForm(true);
+                    setReplyToId(null);
+                  }}
+                  className="gap-2"
+                >
+                  <ThumbsDown className="h-4 w-4" />
+                  Object
+                </Button>
+                <Button
+                  variant="question"
+                  size="sm"
+                  onClick={() => {
+                    setReplyType('question');
+                    setShowReplyForm(true);
+                    setReplyToId(null);
+                  }}
+                  className="gap-2"
+                >
+                  <HelpCircle className="h-4 w-4" />
+                  Ask Question
+                </Button>
+              </>
+            )}
           </div>
 
           {showReplyForm && (
@@ -479,6 +487,30 @@ const ConcernDetail = () => {
           </div>
         )}
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav
+        concernDetailMode={true}
+        activeAction={activeAction}
+        onEndorse={() => {
+          setActiveAction(activeAction === 'endorse' ? null : 'endorse');
+          setReplyType('endorse');
+          setShowReplyForm(activeAction !== 'endorse');
+          setReplyToId(null);
+        }}
+        onObject={() => {
+          setActiveAction(activeAction === 'object' ? null : 'object');
+          setReplyType('object');
+          setShowReplyForm(activeAction !== 'object');
+          setReplyToId(null);
+        }}
+        onAskQuestion={() => {
+          setActiveAction(activeAction === 'vote' ? null : 'vote');
+          setReplyType('question');
+          setShowReplyForm(activeAction !== 'vote');
+          setReplyToId(null);
+        }}
+      />
     </div>
   );
 };

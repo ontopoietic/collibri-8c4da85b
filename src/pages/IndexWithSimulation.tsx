@@ -5,9 +5,10 @@ import { NewConcernDialog } from "@/components/NewConcernDialog";
 import { VariantVoting } from "@/components/VariantVoting";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Menu, Network } from "lucide-react";
+import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Network, AlertTriangle, Lightbulb } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -23,14 +24,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -41,7 +37,16 @@ const Index = () => {
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [leaderboardPhase, setLeaderboardPhase] = useState<Phase>("class");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showNewConcernDialog, setShowNewConcernDialog] = useState(false);
+  
+  // Mobile concern form state
+  const [isProblem, setIsProblem] = useState(false);
+  const [isSolution, setIsSolution] = useState(false);
+  const [problemTitle, setProblemTitle] = useState("");
+  const [problemDescription, setProblemDescription] = useState("");
+  const [solutionTitle, setSolutionTitle] = useState("");
+  const [solutionDescription, setSolutionDescription] = useState("");
+  const [solutionLevel, setSolutionLevel] = useState<SolutionLevel | "">("");
   
   // Simulation state
   const [isSimulating, setIsSimulating] = useState(false);
@@ -214,7 +219,34 @@ const Index = () => {
       solutionLevel,
     };
     setConcerns([newConcern, ...concerns]);
+    setShowNewConcernDialog(false);
   };
+
+  const handleMobileSubmit = () => {
+    // Submit problem if selected
+    if (isProblem && problemTitle.trim() && problemDescription.trim()) {
+      handleNewConcern("problem", problemTitle, problemDescription);
+    }
+    
+    // Submit solution if selected
+    if (isSolution && solutionTitle.trim() && solutionDescription.trim()) {
+      const solution = solutionLevel ? solutionLevel as SolutionLevel : undefined;
+      handleNewConcern("proposal", solutionTitle, solutionDescription, solution);
+    }
+    
+    // Reset form
+    setIsProblem(false);
+    setIsSolution(false);
+    setProblemTitle("");
+    setProblemDescription("");
+    setSolutionTitle("");
+    setSolutionDescription("");
+    setSolutionLevel("");
+    setShowNewConcernDialog(false);
+  };
+
+  const canSubmit = (isProblem && problemTitle.trim() && problemDescription.trim()) || 
+                    (isSolution && solutionTitle.trim() && solutionDescription.trim());
 
   const handlePhaseClick = (phase: Phase) => {
     // Toggle: if already viewing this phase's leaderboard, go back to forum
@@ -341,88 +373,11 @@ const Index = () => {
               </div>
             )}
 
-            {/* Mobile Menu */}
-            {isMobile && (
-              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    <Menu className="h-5 w-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-[300px]">
-                  <SheetHeader>
-                    <SheetTitle>Menu</SheetTitle>
-                  </SheetHeader>
-                  <div className="flex flex-col gap-4 mt-6">
-                    <Button
-                      variant={isSimulating ? "default" : "secondary-action"}
-                      onClick={() => {
-                        handleSimulationToggle();
-                        setMobileMenuOpen(false);
-                      }}
-                      className="gap-2 w-full justify-start"
-                    >
-                      {isSimulating ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                      {isSimulating ? "Stop Simulation" : "Simulate Timeline"}
-                    </Button>
-                    
-                    <div className="border border-border rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2 text-sm font-medium">
-                        <ChartNoAxesCombined className="h-4 w-4" />
-                        <span>My Quota</span>
-                      </div>
-                      <QuotaDisplay quota={simulatedQuota} />
-                    </div>
-
-                    <Button
-                      variant="secondary-action"
-                      onClick={() => {
-                        navigate("/notifications");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="gap-2 w-full justify-start"
-                    >
-                      <Bell className="h-4 w-4" />
-                      Notifications
-                    </Button>
-                    
-                    <Button
-                      variant="statistics"
-                      onClick={() => {
-                        navigate("/statistics");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="gap-2 w-full justify-start"
-                    >
-                      <BarChart3 className="h-4 w-4" />
-                      Statistics
-                    </Button>
-                    
-                    <Button
-                      variant="secondary"
-                      onClick={() => {
-                        navigate("/graph");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="gap-2 w-full justify-start"
-                    >
-                      <Network className="h-4 w-4" />
-                      Graph
-                    </Button>
-                    
-                    <NewConcernDialog onSubmit={(type, title, desc, level) => {
-                      handleNewConcern(type, title, desc, level);
-                      setMobileMenuOpen(false);
-                    }} />
-                  </div>
-                </SheetContent>
-              </Sheet>
-            )}
           </div>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-8">
+      <main className="max-w-6xl mx-auto px-4 py-8 pb-20 md:pb-8">
         <div className="mb-8">
           <PhaseTimeline 
             currentPhase={currentPhase} 
@@ -576,6 +531,111 @@ const Index = () => {
           </>
         )}
       </main>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav onNewConcern={() => setShowNewConcernDialog(true)} />
+
+      {/* New Concern Dialog for Mobile */}
+      <Dialog open={showNewConcernDialog} onOpenChange={setShowNewConcernDialog}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>New Concern</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6">
+            {/* Problem Section */}
+            <div className="space-y-4">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isProblem}
+                  onChange={(e) => setIsProblem(e.target.checked)}
+                  className="h-4 w-4"
+                />
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5 text-problem-aspect" />
+                  <span className="font-medium">I want to describe a Problem</span>
+                </div>
+              </label>
+              
+              {isProblem && (
+                <div className="pl-7 space-y-3">
+                  <Input
+                    placeholder="Problem Title"
+                    value={problemTitle}
+                    onChange={(e) => setProblemTitle(e.target.value)}
+                  />
+                  <Textarea
+                    placeholder="Describe the problem..."
+                    value={problemDescription}
+                    onChange={(e) => setProblemDescription(e.target.value)}
+                    rows={4}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Solution Section */}
+            <div className="space-y-4">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isSolution}
+                  onChange={(e) => setIsSolution(e.target.checked)}
+                  className="h-4 w-4"
+                />
+                <div className="flex items-center gap-2">
+                  <Lightbulb className="h-5 w-5 text-proposal" />
+                  <span className="font-medium">I want to propose a Solution</span>
+                </div>
+              </label>
+              
+              {isSolution && (
+                <div className="pl-7 space-y-3">
+                  <Input
+                    placeholder="Solution Title"
+                    value={solutionTitle}
+                    onChange={(e) => setSolutionTitle(e.target.value)}
+                  />
+                  <Textarea
+                    placeholder="Describe your solution..."
+                    value={solutionDescription}
+                    onChange={(e) => setSolutionDescription(e.target.value)}
+                    rows={4}
+                  />
+                  <Select value={solutionLevel} onValueChange={(value: SolutionLevel) => setSolutionLevel(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Solution Level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="school">School</SelectItem>
+                      <SelectItem value="ministries">Ministries</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+            </div>
+
+            <div className="flex gap-2 pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowNewConcernDialog(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                onClick={handleMobileSubmit}
+                disabled={!canSubmit}
+                className="flex-1"
+              >
+                Submit Concern(s)
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
