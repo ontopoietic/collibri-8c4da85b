@@ -2,7 +2,7 @@ import { Concern } from "@/types/concern";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectBadges } from "@/components/AspectBadges";
-import { MessageSquare, AlertCircle, Lightbulb, Scale, ThumbsUp } from "lucide-react";
+import { MessageSquare, AlertTriangle, Lightbulb, Scale, ThumbsUp } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ interface ConcernCardProps {
 const typeConfig = {
   problem: {
     label: "Problem",
-    icon: AlertCircle,
+    icon: AlertTriangle,
     className: "bg-transparent text-problem-aspect border-problem-aspect",
   },
   proposal: {
