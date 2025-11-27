@@ -153,9 +153,9 @@ export const PhaseTimeline = ({
                     )}
                     style={{ width: "5.56%" }}
                   >
-                    <div className="absolute inset-0 rounded-lg transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
+                    <div className="absolute inset-0 rounded-lg overflow-hidden transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
                       <div
-                        className="h-full rounded-lg transition-all duration-500"
+                        className="h-full transition-all duration-500"
                         style={{ 
                           width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%`,
                           backgroundColor: '#2A2B37'
@@ -225,9 +225,9 @@ export const PhaseTimeline = ({
                     )}
                     style={{ width: "5.56%" }}
                   >
-                    <div className="absolute inset-0 rounded-lg transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
+                    <div className="absolute inset-0 rounded-lg overflow-hidden transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
                       <div
-                        className="h-full rounded-lg transition-all duration-500"
+                        className="h-full transition-all duration-500"
                         style={{ 
                           width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%`,
                           backgroundColor: '#2A2B37'
