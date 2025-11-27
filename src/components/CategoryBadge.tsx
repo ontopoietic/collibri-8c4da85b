@@ -39,8 +39,10 @@ export const CategoryBadge = ({ category, isAnswerToQuestion }: CategoryBadgePro
   const config = categoryConfig[category];
   const Icon = config.icon;
   
-  // Override label for pro-argument when it's an answer to a question
-  const label = isAnswerToQuestion && category === "pro-argument" ? "Answer" : config.label;
+  // Override label for proposal and pro-argument when they're answers to questions
+  const label = isAnswerToQuestion && (category === "pro-argument" || category === "proposal") 
+    ? "Answer" 
+    : config.label;
 
   return (
     <Badge className={config.className}>
