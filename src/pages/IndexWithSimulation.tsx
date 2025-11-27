@@ -324,6 +324,7 @@ const Index = () => {
             sliderValue={simulationProgress}
             onSliderChange={setSimulationProgress}
             isSimulating={isSimulating}
+            persistedDay={persistedSimulationDay}
           />
         </div>
         

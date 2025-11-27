@@ -19,6 +19,7 @@ interface PhaseTimelineProps {
   sliderValue?: number;
   onSliderChange?: (value: number) => void;
   isSimulating?: boolean;
+  persistedDay?: number | null;
 }
 
 const phases: { key: Phase; label: string }[] = [
@@ -35,17 +36,20 @@ export const PhaseTimeline = ({
   phaseDurationDays = 90,
   sliderValue = 100,
   onSliderChange,
-  isSimulating = false
+  isSimulating = false,
+  persistedDay = null
 }: PhaseTimelineProps) => {
   const navigate = useNavigate();
   const currentIndex = phases.findIndex((p) => p.key === currentPhase);
   const today = new Date();
   const actualDaysPassed = Math.floor((today.getTime() - phaseStartDate.getTime()) / (1000 * 60 * 60 * 24));
   
-  // Use slider value when simulating, otherwise use actual days
+  // Use slider value when simulating, persisted day when available, otherwise use actual days
   const daysPassed = isSimulating 
     ? Math.floor((sliderValue / 100) * phaseDurationDays)
-    : actualDaysPassed;
+    : persistedDay !== null 
+      ? persistedDay
+      : actualDaysPassed;
     
   // Calculate overall progress percentage (0-100% across all 90 days)
   const overallProgressPercentage = (daysPassed / phaseDurationDays) * 100;
@@ -112,7 +116,7 @@ export const PhaseTimeline = ({
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{daysPassed >= 30 ? "View Class Leaderboard" : "Available after 30 days"}</p>
+                  <p>{daysPassed >= 30 ? "View Class Leaderboard" : "Available when phase is complete"}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -179,7 +183,7 @@ export const PhaseTimeline = ({
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{daysPassed >= 65 ? "View Grade Leaderboard" : "Available after 65 days"}</p>
+                  <p>{daysPassed >= 65 ? "View Grade Leaderboard" : "Available when phase is complete"}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -245,7 +249,7 @@ export const PhaseTimeline = ({
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{daysPassed >= 90 ? "View School Leaderboard" : "Available after 90 days"}</p>
+                  <p>{daysPassed >= 90 ? "View School Leaderboard" : "Available when phase is complete"}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
