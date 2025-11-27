@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Phase } from "@/types/concern";
 import { cn } from "@/lib/utils";
 import { Calendar, Trophy, User, Users, School, CheckSquare, ChevronRight, Play, Pause, CheckCircle2 } from "lucide-react";
@@ -88,6 +88,15 @@ export const PhaseTimeline = ({
   const isMobile = useIsMobile();
   const [viewedPhase, setViewedPhase] = useState<Phase | null>(null);
   const currentIndex = phases.findIndex((p) => p.key === currentPhase);
+  
+  // Find current main phase for tracking changes
+  const currentMainPhase = mainPhases.find(p => daysPassed >= p.deliberationStart && daysPassed < p.votingEnd);
+  const currentMainPhaseKey = currentMainPhase?.key || null;
+  
+  // Reset viewed phase when simulation moves to a different phase
+  useEffect(() => {
+    setViewedPhase(null);
+  }, [currentMainPhaseKey]);
   const today = new Date();
   const actualDaysPassed = Math.floor((today.getTime() - phaseStartDate.getTime()) / (1000 * 60 * 60 * 24));
   
@@ -100,9 +109,6 @@ export const PhaseTimeline = ({
     
   // Calculate overall progress percentage (0-100% across all 95 days)
   const overallProgressPercentage = (daysPassed / phaseDurationDays) * 100;
-  
-  // Find current main phase for mobile view
-  const currentMainPhase = mainPhases.find(p => daysPassed >= p.deliberationStart && daysPassed < p.votingEnd);
   
   // Display the viewed phase if user clicked on a completed phase dot, otherwise show current
   const displayedPhase = viewedPhase 
@@ -234,17 +240,20 @@ export const PhaseTimeline = ({
                 </div>
                 
                 {/* Arrow indicator */}
-                <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0" />
                 
-                {/* Variant Selection Section */}
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <CheckSquare className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm font-medium text-muted-foreground">Vote</span>
+                {/* Variant Selection Section - Smaller with desktop styling */}
+                <div className="w-20">
+                  <div 
+                    className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md"
+                    style={{ backgroundColor: '#3B3C4C' }}
+                  >
+                    <CheckSquare className="h-3 w-3 text-white" />
+                    <span className="text-xs font-medium text-white">Selection</span>
                   </div>
-                  <Progress value={votingProgress} className="h-2 mb-1" />
-                  <span className="text-xs text-muted-foreground">
-                    {isViewingCompletedPhase ? "Complete" : isInVoting ? `Day ${Math.floor(votingDaysIn) + 1} of 5` : isVotingComplete ? "Complete" : "Upcoming"}
+                  <Progress value={votingProgress} className="h-1.5 mb-1" />
+                  <span className="text-[10px] text-muted-foreground">
+                    {isViewingCompletedPhase ? "Done" : isInVoting ? `Day ${Math.floor(votingDaysIn) + 1}/5` : isVotingComplete ? "Done" : "Soon"}
                   </span>
                 </div>
               </div>
@@ -261,15 +270,13 @@ export const PhaseTimeline = ({
                   <button
                     key={phase.key}
                     onClick={() => {
-                      if (isCompleted) {
-                        // Toggle: if clicking the same phase, reset to current view
-                        if (isViewing) {
-                          setViewedPhase(null);
-                        } else {
-                          setViewedPhase(phase.key);
-                        }
+                      // Allow clicking current phase to reset to live view
+                      if (isCurrent || isViewing) {
+                        setViewedPhase(null);
+                      } else if (isCompleted) {
+                        setViewedPhase(phase.key);
                       }
-                      // Also trigger the leaderboard toggle
+                      // Also trigger the leaderboard toggle for completed phases
                       if (isCompleted) {
                         onPhaseClick(phase.key);
                       }
@@ -278,7 +285,8 @@ export const PhaseTimeline = ({
                       "w-4 h-4 rounded-full transition-all",
                       isCurrent && !isViewing && "ring-2 ring-primary ring-offset-2 ring-offset-card",
                       isViewing && "ring-2 ring-foreground ring-offset-2 ring-offset-card",
-                      isCompleted ? "bg-primary cursor-pointer hover:scale-110" : "bg-muted cursor-default"
+                      // Make current phase clickable too
+                      (isCompleted || isCurrent) ? "bg-primary cursor-pointer hover:scale-110" : "bg-muted cursor-default"
                     )}
                     aria-label={`${phase.label} phase${isCurrent ? " (current)" : ""}${isCompleted ? " (completed)" : ""}`}
                   />
