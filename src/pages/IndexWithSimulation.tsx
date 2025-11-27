@@ -50,8 +50,8 @@ const Index = () => {
 
   // Calculate the simulated "current time" and phase based on slider
   const now = new Date();
-  const allPhasesStartDate = new Date(now.getTime() - 88 * 24 * 60 * 60 * 1000); // 88 days ago (close to 90)
-  const totalDuration = 90; // days for all 3 phases
+  const allPhasesStartDate = new Date(now.getTime() - 93 * 24 * 60 * 60 * 1000); // 93 days ago (close to 95)
+  const totalDuration = 95; // days for all 3 phases + variant selection phases
   
   const getSimulatedTime = (progress: number): Date => {
     const simulatedDays = (progress / 100) * totalDuration;
@@ -429,6 +429,7 @@ const Index = () => {
             onSliderChange={setSimulationProgress}
             isSimulating={isSimulating}
             persistedDay={persistedSimulationDay}
+            onSimulationToggle={handleSimulationToggle}
           />
         </div>
         
