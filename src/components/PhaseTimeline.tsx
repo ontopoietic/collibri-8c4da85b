@@ -153,14 +153,17 @@ export const PhaseTimeline = ({
                     )}
                     style={{ width: "5.56%" }}
                   >
-                    <div className="absolute inset-0 bg-variant/20 rounded-lg hover:bg-variant/30 transition-all duration-300">
+                    <div className="absolute inset-0 rounded-lg transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
                       <div
-                        className="h-full bg-variant transition-all duration-500 rounded-lg"
-                        style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
+                        className="h-full rounded-lg transition-all duration-500"
+                        style={{ 
+                          width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%`,
+                          backgroundColor: '#2A2B37'
+                        }}
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" style={{ color: '#3B3C4C' }} />
+                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" color="white" />
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -222,14 +225,17 @@ export const PhaseTimeline = ({
                     )}
                     style={{ width: "5.56%" }}
                   >
-                    <div className="absolute inset-0 bg-variant/20 rounded-lg hover:bg-variant/30 transition-all duration-300">
+                    <div className="absolute inset-0 rounded-lg transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
                       <div
-                        className="h-full bg-variant transition-all duration-500 rounded-lg"
-                        style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
+                        className="h-full rounded-lg transition-all duration-500"
+                        style={{ 
+                          width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%`,
+                          backgroundColor: '#2A2B37'
+                        }}
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" style={{ color: '#3B3C4C' }} />
+                      <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" color="white" />
                     </div>
                   </div>
                 </TooltipTrigger>
