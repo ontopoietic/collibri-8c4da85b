@@ -1,6 +1,6 @@
 import { Phase } from "@/types/concern";
 import { cn } from "@/lib/utils";
-import { Calendar, Trophy } from "lucide-react";
+import { Calendar, Trophy, Users, UsersRound, School } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
 import {
@@ -79,29 +79,43 @@ export const PhaseTimeline = ({
         <div className="space-y-4">
           <div className="relative h-32">
             {/* All labels positioned at the top */}
-            <div className="absolute top-0 left-0 right-12 flex gap-1">
+            <div className="absolute top-0 left-0 right-0 flex gap-1">
               {/* Class Phase Label */}
               <div className="flex justify-center" style={{ width: "33.33%" }}>
-                <button
-                  onClick={() => onPhaseClick("class")}
-                  className={cn(
-                    "flex flex-col items-center gap-0",
-                    currentPhase === "class" ? "z-10" : "z-0"
-                  )}
-                >
+                <div className="flex flex-col items-center gap-0">
                   <div
                     className={cn(
                       "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
                       currentPhase === "class"
                         ? "bg-primary text-primary-foreground"
-                        : "bg-card border border-border text-foreground hover:bg-accent"
+                        : "bg-card border border-border text-foreground"
                     )}
                   >
-                    <Trophy className="h-4 w-4" />
+                    <Users className="h-4 w-4" />
                     <span>Class</span>
                   </div>
                   <div className={cn("w-0.5 h-8", currentPhase === "class" ? "bg-primary" : "bg-border")} />
-                </button>
+                </div>
+              </div>
+              
+              {/* Class Leaderboard Button */}
+              <div className="flex justify-center items-start" style={{ width: "0%" }}>
+                <div className="flex flex-col items-center gap-0 -ml-4">
+                  <button
+                    onClick={() => onPhaseClick("class")}
+                    disabled={daysPassed < 30}
+                    className={cn(
+                      "p-1.5 rounded-md border shadow-sm transition-colors flex-shrink-0",
+                      daysPassed >= 30
+                        ? "bg-card border-border hover:bg-accent cursor-pointer"
+                        : "bg-muted border-muted-foreground/20 cursor-not-allowed opacity-50"
+                    )}
+                    aria-label="View class leaderboard"
+                  >
+                    <Trophy className="h-3 w-3 text-primary" />
+                  </button>
+                  <div className="w-0.5 h-8 bg-border" />
+                </div>
               </div>
 
               {/* Grade Voting Label */}
@@ -116,26 +130,40 @@ export const PhaseTimeline = ({
 
               {/* Grade Phase Label */}
               <div className="flex justify-center" style={{ width: "27.78%" }}>
-                <button
-                  onClick={() => onPhaseClick("grade")}
-                  className={cn(
-                    "flex flex-col items-center gap-0",
-                    currentPhase === "grade" ? "z-10" : "z-0"
-                  )}
-                >
+                <div className="flex flex-col items-center gap-0">
                   <div
                     className={cn(
                       "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
                       currentPhase === "grade"
                         ? "bg-primary text-primary-foreground"
-                        : "bg-card border border-border text-foreground hover:bg-accent"
+                        : "bg-card border border-border text-foreground"
                     )}
                   >
-                    <Trophy className="h-4 w-4" />
+                    <UsersRound className="h-4 w-4" />
                     <span>Grade</span>
                   </div>
                   <div className={cn("w-0.5 h-8", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
-                </button>
+                </div>
+              </div>
+              
+              {/* Grade Leaderboard Button */}
+              <div className="flex justify-center items-start" style={{ width: "0%" }}>
+                <div className="flex flex-col items-center gap-0 -ml-4">
+                  <button
+                    onClick={() => onPhaseClick("grade")}
+                    disabled={daysPassed < 65}
+                    className={cn(
+                      "p-1.5 rounded-md border shadow-sm transition-colors flex-shrink-0",
+                      daysPassed >= 65
+                        ? "bg-card border-border hover:bg-accent cursor-pointer"
+                        : "bg-muted border-muted-foreground/20 cursor-not-allowed opacity-50"
+                    )}
+                    aria-label="View grade leaderboard"
+                  >
+                    <Trophy className="h-3 w-3 text-primary" />
+                  </button>
+                  <div className="w-0.5 h-8 bg-border" />
+                </div>
               </div>
 
               {/* School Voting Label */}
@@ -150,31 +178,45 @@ export const PhaseTimeline = ({
 
               {/* School Phase Label */}
               <div className="flex justify-center" style={{ width: "27.77%" }}>
-                <button
-                  onClick={() => onPhaseClick("school")}
-                  className={cn(
-                    "flex flex-col items-center gap-0",
-                    currentPhase === "school" ? "z-10" : "z-0"
-                  )}
-                >
+                <div className="flex flex-col items-center gap-0">
                   <div
                     className={cn(
                       "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
                       currentPhase === "school"
                         ? "bg-primary text-primary-foreground"
-                        : "bg-card border border-border text-foreground hover:bg-accent"
+                        : "bg-card border border-border text-foreground"
                     )}
                   >
-                    <Trophy className="h-4 w-4" />
+                    <School className="h-4 w-4" />
                     <span>School</span>
                   </div>
                   <div className={cn("w-0.5 h-8", currentPhase === "school" ? "bg-primary" : "bg-border")} />
-                </button>
+                </div>
+              </div>
+              
+              {/* School Leaderboard Button */}
+              <div className="flex justify-center items-start" style={{ width: "0%" }}>
+                <div className="flex flex-col items-center gap-0 -ml-4">
+                  <button
+                    onClick={() => onPhaseClick("school")}
+                    disabled={daysPassed < 90}
+                    className={cn(
+                      "p-1.5 rounded-md border shadow-sm transition-colors flex-shrink-0",
+                      daysPassed >= 90
+                        ? "bg-card border-border hover:bg-accent cursor-pointer"
+                        : "bg-muted border-muted-foreground/20 cursor-not-allowed opacity-50"
+                    )}
+                    aria-label="View school leaderboard"
+                  >
+                    <Trophy className="h-3 w-3 text-primary" />
+                  </button>
+                  <div className="w-0.5 h-8 bg-border" />
+                </div>
               </div>
             </div>
 
             {/* Timeline bar positioned below labels */}
-            <div className="absolute top-10 left-0 right-0 flex items-center gap-4">
+            <div className="absolute top-10 left-0 right-0 flex items-center">
               <div className="flex-1 flex h-3 gap-1">
                 {/* Class Phase */}
                 <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
@@ -212,15 +254,6 @@ export const PhaseTimeline = ({
                   />
                 </div>
               </div>
-
-              {/* Leaderboard button */}
-              <button
-                onClick={() => navigate("/leaderboard/school")}
-                className="p-2 rounded-md bg-card border border-border hover:bg-accent transition-colors shadow-sm cursor-pointer flex-shrink-0"
-                aria-label="View leaderboard"
-              >
-                <Trophy className="h-4 w-4 text-primary" />
-              </button>
             </div>
           </div>
 
