@@ -89,10 +89,14 @@ export default {
   				DEFAULT: 'hsl(var(--pro-argument))',
   				foreground: 'hsl(var(--pro-argument-foreground))'
   			},
-  			variant: {
-  				DEFAULT: 'hsl(var(--variant))',
-  				foreground: 'hsl(var(--variant-foreground))'
-  			},
+			variant: {
+				DEFAULT: 'hsl(var(--variant))',
+				foreground: 'hsl(var(--variant-foreground))'
+			},
+			'concern-type': {
+				DEFAULT: 'hsl(var(--concern-type))',
+				foreground: 'hsl(var(--concern-type-foreground))'
+			},
 			school: {
 				DEFAULT: 'hsl(var(--school))',
 				foreground: 'hsl(var(--school-foreground))'
