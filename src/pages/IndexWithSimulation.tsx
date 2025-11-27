@@ -36,9 +36,8 @@ const Index = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [concerns, setConcerns] = useState<Concern[]>(mockConcerns);
-  const [activeTab, setActiveTab] = useState<"all" | "problems" | "proposals">("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed">("all");
+  const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed" | "problems" | "proposals">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [leaderboardPhase, setLeaderboardPhase] = useState<Phase>("class");
@@ -250,9 +249,9 @@ const Index = () => {
 
   const filteredConcerns = phaseConcerns
     .filter((concern) => {
-      // Type filter
-      if (activeTab === "problems" && concern.type !== "problem") return false;
-      if (activeTab === "proposals" && concern.type !== "proposal" && concern.type !== "counter-proposal") return false;
+      // Type filter based on filterBy dropdown
+      if (filterBy === "problems" && concern.type !== "problem") return false;
+      if (filterBy === "proposals" && concern.type !== "proposal" && concern.type !== "counter-proposal") return false;
       
       // Search filter - now includes replies
       if (searchQuery) {
@@ -517,6 +516,8 @@ const Index = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Posts</SelectItem>
+                    <SelectItem value="problems">Problems</SelectItem>
+                    <SelectItem value="proposals">Proposals</SelectItem>
                     <SelectItem value="my-posts">My Posts</SelectItem>
                     <SelectItem value="followed">Followed</SelectItem>
                     <SelectItem value="unnoticed">Unnoticed</SelectItem>
@@ -532,29 +533,6 @@ const Index = () => {
                     <SelectItem value="popularity">Popularity</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-
-              <div className="flex gap-2">
-                <Button
-                  variant={activeTab === "all" ? "default" : "outline"}
-                  onClick={() => setActiveTab("all")}
-                >
-                  All
-                </Button>
-                <Button
-                  variant={activeTab === "problems" ? "default" : "outline"}
-                  onClick={() => setActiveTab("problems")}
-                  className={activeTab === "problems" ? "bg-problem hover:bg-problem/90 text-problem-foreground" : "hover:bg-problem hover:text-problem-foreground"}
-                >
-                  Problems
-                </Button>
-                <Button
-                  variant={activeTab === "proposals" ? "default" : "outline"}
-                  onClick={() => setActiveTab("proposals")}
-                  className={activeTab === "proposals" ? "bg-proposal hover:bg-proposal/90 text-proposal-foreground" : "hover:bg-proposal hover:text-proposal-foreground"}
-                >
-                  Proposals
-                </Button>
               </div>
             </div>
 
