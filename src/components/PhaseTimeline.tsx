@@ -347,13 +347,15 @@ export const PhaseTimeline = ({
                   )}
                   onClick={() => isCompleted && onPhaseClick(phase.key)}
                 >
-                  {/* Completed badge */}
-                  {isCompleted && (
-                    <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground mb-2">
-                      <CheckCircle2 className="h-3 w-3" />
-                      <span>Complete</span>
-                    </div>
-                  )}
+                  {/* Completed badge - always reserve space for consistent alignment */}
+                  <div className="h-5 mb-2 flex items-center">
+                    {isCompleted && (
+                      <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <CheckCircle2 className="h-3 w-3" />
+                        <span>Complete</span>
+                      </div>
+                    )}
+                  </div>
                   
                   <div className="flex items-center gap-3">
                     {/* Deliberation */}
