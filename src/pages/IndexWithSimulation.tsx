@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Menu } from "lucide-react";
+import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Menu, Network } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -325,6 +325,14 @@ const Index = () => {
                   <BarChart3 className="h-4 w-4" />
                   <span className="hidden lg:inline">Statistics</span>
                 </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => navigate("/graph")}
+                  className="gap-2"
+                >
+                  <Network className="h-4 w-4" />
+                  <span className="hidden lg:inline">Graph</span>
+                </Button>
                 <NewConcernDialog onSubmit={handleNewConcern} />
               </div>
             )}
@@ -384,6 +392,18 @@ const Index = () => {
                     >
                       <BarChart3 className="h-4 w-4" />
                       Statistics
+                    </Button>
+                    
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        navigate("/graph");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="gap-2 w-full justify-start"
+                    >
+                      <Network className="h-4 w-4" />
+                      Graph
                     </Button>
                     
                     <NewConcernDialog onSubmit={(type, title, desc, level) => {
