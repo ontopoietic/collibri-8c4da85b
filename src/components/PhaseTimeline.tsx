@@ -89,7 +89,8 @@ export const PhaseTimeline = ({
                       "relative h-12 rounded-lg transition-all duration-300 group",
                       daysPassed >= 30 
                         ? "cursor-pointer hover:scale-[1.02]" 
-                        : "cursor-not-allowed opacity-50"
+                        : "cursor-not-allowed opacity-50",
+                      daysPassed >= 65 && "opacity-60"
                     )}
                     style={{ width: "33.33%" }}
                   >
@@ -122,22 +123,19 @@ export const PhaseTimeline = ({
                 <TooltipTrigger asChild>
                   <div
                     className={cn(
-                      "relative h-12 rounded-lg transition-all duration-300 group cursor-default",
+                      "relative h-12 rounded-lg transition-all duration-300 cursor-default",
                       overallProgressPercentage > 33.33 && overallProgressPercentage < 38.89 && "ring-2 ring-primary/50"
                     )}
                     style={{ width: "5.56%" }}
                   >
-                    <div className="absolute inset-0 bg-variant/20 rounded-lg group-hover:bg-variant/30 transition-all duration-300">
+                    <div className="absolute inset-0 bg-variant/20 rounded-lg hover:bg-variant/30 transition-all duration-300">
                       <div
                         className="h-full bg-variant transition-all duration-500 rounded-lg"
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-3.5 w-3.5 text-foreground opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 pointer-events-none">
-                        <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card px-3 py-1.5 rounded shadow-xl border border-border">Variant Selection</span>
-                      </div>
+                      <CheckSquare className="h-3.5 w-3.5 text-foreground" />
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -158,7 +156,8 @@ export const PhaseTimeline = ({
                       "relative h-12 rounded-lg transition-all duration-300 group",
                       daysPassed >= 65 
                         ? "cursor-pointer hover:scale-[1.02]" 
-                        : "cursor-not-allowed opacity-50"
+                        : "cursor-not-allowed opacity-50",
+                      daysPassed >= 90 && "opacity-60"
                     )}
                     style={{ width: "27.78%" }}
                   >
@@ -191,22 +190,19 @@ export const PhaseTimeline = ({
                 <TooltipTrigger asChild>
                   <div
                     className={cn(
-                      "relative h-12 rounded-lg transition-all duration-300 group cursor-default",
+                      "relative h-12 rounded-lg transition-all duration-300 cursor-default",
                       overallProgressPercentage > 66.67 && overallProgressPercentage < 72.23 && "ring-2 ring-primary/50"
                     )}
                     style={{ width: "5.56%" }}
                   >
-                    <div className="absolute inset-0 bg-variant/20 rounded-lg group-hover:bg-variant/30 transition-all duration-300">
+                    <div className="absolute inset-0 bg-variant/20 rounded-lg hover:bg-variant/30 transition-all duration-300">
                       <div
                         className="h-full bg-variant transition-all duration-500 rounded-lg"
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-3.5 w-3.5 text-foreground opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 pointer-events-none">
-                        <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card px-3 py-1.5 rounded shadow-xl border border-border">Variant Selection</span>
-                      </div>
+                      <CheckSquare className="h-3.5 w-3.5 text-foreground" />
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -257,12 +253,12 @@ export const PhaseTimeline = ({
 
           {/* Date/Day Indicators */}
           <div className="relative text-xs text-muted-foreground mt-2">
-            <div className="absolute" style={{ left: "0%" }}>Day 1</div>
-            <div className="absolute" style={{ left: "33.33%", transform: "translateX(-50%)" }}>Day 30</div>
-            <div className="absolute" style={{ left: "38.89%", transform: "translateX(-50%)" }}>Day 35</div>
-            <div className="absolute" style={{ left: "66.67%", transform: "translateX(-50%)" }}>Day 60</div>
-            <div className="absolute" style={{ left: "72.23%", transform: "translateX(-50%)" }}>Day 65</div>
-            <div className="absolute" style={{ left: "100%", transform: "translateX(-100%)" }}>Day 90</div>
+            <div className="absolute whitespace-nowrap" style={{ left: "0%" }}>Day 1</div>
+            <div className="absolute whitespace-nowrap" style={{ left: "33.33%", transform: "translateX(-50%)" }}>Day 30</div>
+            <div className="absolute whitespace-nowrap" style={{ left: "38.89%", transform: "translateX(-50%)" }}>Day 35</div>
+            <div className="absolute whitespace-nowrap" style={{ left: "66.67%", transform: "translateX(-50%)" }}>Day 60</div>
+            <div className="absolute whitespace-nowrap" style={{ left: "72.23%", transform: "translateX(-50%)" }}>Day 65</div>
+            <div className="absolute whitespace-nowrap" style={{ left: "100%", transform: "translateX(-100%)" }}>Day 90</div>
           </div>
 
           {/* Simulation Status and Slider */}
