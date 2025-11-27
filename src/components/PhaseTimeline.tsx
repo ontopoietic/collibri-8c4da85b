@@ -88,7 +88,7 @@ export const PhaseTimeline = ({
                     className={cn(
                       "relative h-12 rounded-lg transition-all duration-300 group",
                       daysPassed >= 30 
-                        ? "cursor-pointer hover:scale-[1.02]" 
+                        ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
                       daysPassed >= 35 && "opacity-60"
                     )}
@@ -155,7 +155,7 @@ export const PhaseTimeline = ({
                     className={cn(
                       "relative h-12 rounded-lg transition-all duration-300 group",
                       daysPassed >= 65 
-                        ? "cursor-pointer hover:scale-[1.02]" 
+                        ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
                       daysPassed >= 65 && "opacity-60"
                     )}
