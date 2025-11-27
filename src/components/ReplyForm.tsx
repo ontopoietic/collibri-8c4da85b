@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { CategoryBadge } from "./CategoryBadge";
-import { Check, ChevronsUpDown, AlertCircle, Lightbulb, ThumbsUp, GitBranch } from "lucide-react";
+import { Check, ChevronsUpDown, AlertCircle, Lightbulb, ThumbsUp, GitBranch, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ReplyFormProps {
@@ -54,7 +54,7 @@ const categoryConfig = {
   },
   "pro-argument": {
     label: "Pro-Argument",
-    icon: ThumbsUp,
+    icon: Plus,
     description: "Support with reasoning",
   },
   variant: {
