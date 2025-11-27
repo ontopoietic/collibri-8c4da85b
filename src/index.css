@@ -55,6 +55,9 @@ All colors MUST be HSL.
     --concern-type: 255 8% 89%;
     --concern-type-foreground: 218 13% 48%;
 
+    --problem: 45 95% 85%;
+    --problem-foreground: 45 60% 35%;
+
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;
 
@@ -139,6 +142,9 @@ All colors MUST be HSL.
 
     --concern-type: 255 8% 89%;
     --concern-type-foreground: 218 13% 48%;
+
+    --problem: 45 95% 85%;
+    --problem-foreground: 45 60% 35%;
 
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;

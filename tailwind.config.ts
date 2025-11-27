@@ -97,6 +97,10 @@ export default {
 				DEFAULT: 'hsl(var(--concern-type))',
 				foreground: 'hsl(var(--concern-type-foreground))'
 			},
+			problem: {
+				DEFAULT: 'hsl(var(--problem))',
+				foreground: 'hsl(var(--problem-foreground))'
+			},
 			school: {
 				DEFAULT: 'hsl(var(--school))',
 				foreground: 'hsl(var(--school-foreground))'

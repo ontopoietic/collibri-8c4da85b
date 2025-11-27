@@ -10,7 +10,7 @@ const typeConfig = {
   problem: {
     label: "Problem",
     icon: AlertTriangle,
-    className: "bg-concern-type text-concern-type-foreground hover:bg-concern-type/90",
+    className: "bg-problem text-problem-foreground hover:bg-problem/90",
   },
   proposal: {
     label: "Proposal",
