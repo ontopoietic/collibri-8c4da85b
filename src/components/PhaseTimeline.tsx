@@ -1,6 +1,6 @@
 import { Phase } from "@/types/concern";
 import { cn } from "@/lib/utils";
-import { Calendar, Trophy, Users, UsersRound, School } from "lucide-react";
+import { Calendar, Trophy, User, Users, School } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
 import {
@@ -105,7 +105,7 @@ export const PhaseTimeline = ({
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full gap-2 px-4">
-                      <Users className="h-4 w-4 text-foreground" />
+                      <User className="h-4 w-4 text-foreground" />
                       <span className="text-sm font-semibold text-foreground">Class Level</span>
                     </div>
                   </button>
@@ -127,14 +127,14 @@ export const PhaseTimeline = ({
                     )}
                     style={{ width: "5.56%" }}
                   >
-                    <div className="absolute inset-0 bg-muted/50 rounded-lg group-hover:bg-muted/70 transition-all duration-300">
+                    <div className="absolute inset-0 bg-variant/20 rounded-lg group-hover:bg-variant/30 transition-all duration-300">
                       <div
-                        className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-lg"
+                        className="h-full bg-variant transition-all duration-500 rounded-lg"
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-[10px] font-medium text-foreground whitespace-nowrap">Variant Selection</span>
+                      <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card/95 px-2 py-1 rounded">Variant Selection</span>
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -171,7 +171,7 @@ export const PhaseTimeline = ({
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full gap-2 px-4">
-                      <UsersRound className="h-4 w-4 text-foreground" />
+                      <Users className="h-4 w-4 text-foreground" />
                       <span className="text-sm font-semibold text-foreground">Grade Level</span>
                     </div>
                   </button>
@@ -193,14 +193,14 @@ export const PhaseTimeline = ({
                     )}
                     style={{ width: "5.56%" }}
                   >
-                    <div className="absolute inset-0 bg-muted/50 rounded-lg group-hover:bg-muted/70 transition-all duration-300">
+                    <div className="absolute inset-0 bg-variant/20 rounded-lg group-hover:bg-variant/30 transition-all duration-300">
                       <div
-                        className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-lg"
+                        className="h-full bg-variant transition-all duration-500 rounded-lg"
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-[10px] font-medium text-foreground whitespace-nowrap">Variant Selection</span>
+                      <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card/95 px-2 py-1 rounded">Variant Selection</span>
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -247,6 +247,16 @@ export const PhaseTimeline = ({
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+          </div>
+
+          {/* Date/Day Indicators */}
+          <div className="flex justify-between text-xs text-muted-foreground mt-2 px-1">
+            <span>Day 1</span>
+            <span>Day 30</span>
+            <span>Day 35</span>
+            <span>Day 60</span>
+            <span>Day 65</span>
+            <span>Day 90</span>
           </div>
 
           {/* Simulation Status and Slider */}
