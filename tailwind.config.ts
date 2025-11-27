@@ -99,7 +99,8 @@ export default {
 			},
 			endorse: {
 				DEFAULT: 'hsl(var(--endorse))',
-				foreground: 'hsl(var(--endorse-foreground))'
+				foreground: 'hsl(var(--endorse-foreground))',
+				hover: 'hsl(var(--endorse-hover))'
 			},
 			object: {
 				DEFAULT: 'hsl(var(--object))',
