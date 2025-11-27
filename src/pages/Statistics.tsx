@@ -338,12 +338,12 @@ const Statistics = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="concerns" stroke="hsl(var(--primary))" name="Concerns" />
-                  <Line type="monotone" dataKey="objections" stroke="hsl(var(--destructive))" name="Objections" />
-                  <Line type="monotone" dataKey="proposals" stroke="hsl(var(--proposal))" name="Proposals" />
-                  <Line type="monotone" dataKey="proArguments" stroke="hsl(var(--pro-argument))" name="Pro-Arguments" />
-                  <Line type="monotone" dataKey="variants" stroke="hsl(var(--accent))" name="Variants" />
-                  <Line type="monotone" dataKey="questions" stroke="hsl(var(--muted-foreground))" name="Questions" />
+                  <Line type="monotone" dataKey="concerns" stroke="hsl(var(--primary))" strokeWidth={3} name="Concerns" />
+                  <Line type="monotone" dataKey="objections" stroke="hsl(var(--destructive))" strokeWidth={3} name="Objections" />
+                  <Line type="monotone" dataKey="proposals" stroke="hsl(var(--proposal))" strokeWidth={3} name="Proposals" />
+                  <Line type="monotone" dataKey="proArguments" stroke="hsl(var(--pro-argument))" strokeWidth={3} name="Pro-Arguments" />
+                  <Line type="monotone" dataKey="variants" stroke="hsl(var(--accent))" strokeWidth={3} name="Variants" />
+                  <Line type="monotone" dataKey="questions" stroke="hsl(var(--muted-foreground))" strokeWidth={3} name="Questions" />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
