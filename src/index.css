@@ -17,7 +17,7 @@ All colors MUST be HSL.
     --popover: 245 20% 20%;
     --popover-foreground: 240 10% 92%;
 
-    --primary: 15 45% 50%;
+    --primary: 16 82% 53%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 245 15% 25%;
@@ -34,12 +34,12 @@ All colors MUST be HSL.
 
     --border: 245 15% 28%;
     --input: 245 15% 28%;
-    --ring: 15 45% 50%;
+    --ring: 16 82% 53%;
 
     --radius: 1rem;
 
     /* Category colors */
-    --objection: 15 55% 50%;
+    --objection: 16 82% 53%;
     --objection-foreground: 0 0% 100%;
     
     --proposal: 145 40% 45%;
@@ -48,7 +48,7 @@ All colors MUST be HSL.
     --pro-argument: 215 50% 50%;
     --pro-argument-foreground: 0 0% 100%;
     
-    --variant: 270 45% 55%;
+    --variant: 267 98% 64%;
     --variant-foreground: 0 0% 100%;
 
     --sidebar-background: 245 25% 15%;
@@ -71,7 +71,7 @@ All colors MUST be HSL.
     --popover: 245 25% 18%;
     --popover-foreground: 240 10% 95%;
 
-    --primary: 15 50% 52%;
+    --primary: 16 82% 53%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 245 20% 22%;
@@ -88,9 +88,9 @@ All colors MUST be HSL.
 
     --border: 245 20% 30%;
     --input: 245 20% 30%;
-    --ring: 15 50% 52%;
+    --ring: 16 82% 53%;
     
-    --objection: 15 60% 55%;
+    --objection: 16 82% 53%;
     --objection-foreground: 0 0% 100%;
     
     --proposal: 145 45% 48%;
@@ -99,7 +99,7 @@ All colors MUST be HSL.
     --pro-argument: 215 55% 55%;
     --pro-argument-foreground: 0 0% 100%;
     
-    --variant: 270 50% 58%;
+    --variant: 267 98% 64%;
     --variant-foreground: 0 0% 100%;
 
     --sidebar-background: 245 30% 12%;
