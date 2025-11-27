@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,26 +9,26 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 228 12% 16%;
+    --background: 228 11.9048% 16.4706%;
     --foreground: 240 10% 92%;
 
-    --card: 245 20% 20%;
-    --card-foreground: 240 10% 92%;
+    --card: 223 12.8571% 27.451%;
+    --card-foreground: 228 14.6341% 32.1569%;
 
     --popover: 245 20% 20%;
     --popover-foreground: 240 10% 92%;
 
     --primary: 8 100% 68%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 228 14.6341% 32.1569%;
 
-    --secondary: 245 15% 25%;
-    --secondary-foreground: 240 10% 92%;
+    --secondary: 215 25% 26.6667%;
+    --secondary-foreground: 215 19.3182% 34.5098%;
 
     --muted: 245 15% 25%;
     --muted-foreground: 240 8% 65%;
 
     --accent: 320 70% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 215 16.318% 46.8627%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
@@ -36,18 +37,18 @@ All colors MUST be HSL.
     --input: 245 15% 28%;
     --ring: 8 100% 68%;
 
-    --radius: 1rem;
+    --radius: 2.25rem;
 
     /* Category colors */
     --objection: 8 100% 68%;
     --objection-foreground: 0 0% 100%;
-    
+
     --proposal: 145 40% 45%;
     --proposal-foreground: 0 0% 100%;
-    
+
     --pro-argument: 215 50% 50%;
     --pro-argument-foreground: 0 0% 100%;
-    
+
     --variant: 267 98% 64%;
     --variant-foreground: 0 0% 100%;
 
@@ -62,6 +63,11 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 10% 92%;
     --sidebar-border: 245 15% 28%;
     --sidebar-ring: 8 100% 68%;
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --shadow-sm: 0px 1px 28.25px 5px hsla(214, 30%, 91%, 0.5);
+    --shadow: 0px 1px 56.5px 5px hsla(214, 30%, 91%, 0.5);
+    --shadow-md: 0px 1px 84.75px 5px hsla(214, 30%, 91%, 0.5);
+    --shadow-lg: 0px 1px 141.25px 5px hsla(214, 30%, 91%, 0.5);
   }
 
   .dark {
@@ -92,16 +98,16 @@ All colors MUST be HSL.
     --border: 245 20% 30%;
     --input: 245 20% 30%;
     --ring: 8 100% 68%;
-    
+
     --objection: 8 100% 68%;
     --objection-foreground: 0 0% 100%;
-    
+
     --proposal: 145 45% 48%;
     --proposal-foreground: 0 0% 100%;
-    
+
     --pro-argument: 215 55% 55%;
     --pro-argument-foreground: 0 0% 100%;
-    
+
     --variant: 267 98% 64%;
     --variant-foreground: 0 0% 100%;
 
@@ -116,6 +122,12 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 10% 95%;
     --sidebar-border: 245 20% 30%;
     --sidebar-ring: 8 100% 68%;
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --radius: 2.25rem;
+    --shadow-sm: 0px 1px 28.25px 5px hsla(214, 30%, 91%, 0.5);
+    --shadow: 0px 1px 56.5px 5px hsla(214, 30%, 91%, 0.5);
+    --shadow-md: 0px 1px 84.75px 5px hsla(214, 30%, 91%, 0.5);
+    --shadow-lg: 0px 1px 141.25px 5px hsla(214, 30%, 91%, 0.5);
   }
 }
 
@@ -126,5 +138,17 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* ---break---
+*/
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
