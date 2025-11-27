@@ -4,6 +4,7 @@ import { AlertCircle, Lightbulb, ThumbsUp, GitBranch, HelpCircle } from "lucide-
 
 interface CategoryBadgeProps {
   category: ReplyCategory;
+  isAnswerToQuestion?: boolean;
 }
 
 const categoryConfig = {
@@ -34,14 +35,17 @@ const categoryConfig = {
   },
 };
 
-export const CategoryBadge = ({ category }: CategoryBadgeProps) => {
+export const CategoryBadge = ({ category, isAnswerToQuestion }: CategoryBadgeProps) => {
   const config = categoryConfig[category];
   const Icon = config.icon;
+  
+  // Override label for pro-argument when it's an answer to a question
+  const label = isAnswerToQuestion && category === "pro-argument" ? "Answer" : config.label;
 
   return (
     <Badge className={config.className}>
       <Icon className="mr-1 h-3 w-3" />
-      {config.label}
+      {label}
     </Badge>
   );
 };
