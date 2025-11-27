@@ -106,6 +106,10 @@ export default {
 				DEFAULT: 'hsl(var(--object))',
 				foreground: 'hsl(var(--object-foreground))'
 			},
+			vote: {
+				DEFAULT: 'hsl(var(--vote))',
+				foreground: 'hsl(var(--vote-foreground))'
+			},
 			question: {
 				DEFAULT: 'hsl(var(--question))',
 				foreground: 'hsl(var(--question-foreground))'

@@ -63,6 +63,9 @@ All colors MUST be HSL.
     --object: 9 95% 72%;
     --object-foreground: 0 0% 100%;
     
+    --vote: 145 45% 55%;
+    --vote-foreground: 0 0% 100%;
+    
     --question: 220 100% 91%;
     --question-foreground: 231 34% 25%;
     
@@ -141,6 +144,9 @@ All colors MUST be HSL.
     
     --object: 9 95% 72%;
     --object-foreground: 0 0% 100%;
+    
+    --vote: 145 45% 55%;
+    --vote-foreground: 0 0% 100%;
     
     --question: 220 100% 91%;
     --question-foreground: 231 34% 25%;
