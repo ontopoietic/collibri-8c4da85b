@@ -1,6 +1,6 @@
 import { Phase } from "@/types/concern";
 import { cn } from "@/lib/utils";
-import { Calendar, Trophy, User, Users, School } from "lucide-react";
+import { Calendar, Trophy, User, Users, School, Vote } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
 import {
@@ -133,8 +133,9 @@ export const PhaseTimeline = ({
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
                       />
                     </div>
-                    <div className="relative flex items-center justify-center h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
-                      <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card/95 px-2 py-1 rounded shadow-lg">Variant Selection</span>
+                    <div className="relative flex items-center justify-center h-full gap-1.5">
+                      <Vote className="h-3 w-3 text-foreground opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card/95 px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">Variant Selection</span>
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -199,8 +200,9 @@ export const PhaseTimeline = ({
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
                       />
                     </div>
-                    <div className="relative flex items-center justify-center h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
-                      <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card/95 px-2 py-1 rounded shadow-lg">Variant Selection</span>
+                    <div className="relative flex items-center justify-center h-full gap-1.5">
+                      <Vote className="h-3 w-3 text-foreground opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="text-xs font-semibold text-foreground whitespace-nowrap bg-card/95 px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">Variant Selection</span>
                     </div>
                   </div>
                 </TooltipTrigger>
