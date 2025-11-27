@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Calendar, Trophy, User, Users, School, CheckSquare } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Tooltip,
   TooltipContent,
@@ -40,6 +41,7 @@ export const PhaseTimeline = ({
   persistedDay = null
 }: PhaseTimelineProps) => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const currentIndex = phases.findIndex((p) => p.key === currentPhase);
   const today = new Date();
   const actualDaysPassed = Math.floor((today.getTime() - phaseStartDate.getTime()) / (1000 * 60 * 60 * 24));
@@ -80,13 +82,13 @@ export const PhaseTimeline = ({
   const isInInterim = daysIntoCurrentPhase < 5;
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 h-full flex flex-col">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-foreground">
+    <div className="bg-card border border-border rounded-lg p-4 md:p-6 h-full flex flex-col">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
+        <h3 className="text-base md:text-lg font-semibold text-foreground">
           Timeline Overview
         </h3>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Calendar className="h-4 w-4" />
+        <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
+          <Calendar className="h-3 w-3 md:h-4 md:w-4" />
           <span className="font-medium">
             {isSimulating 
               ? `Day ${daysPassed + 1} of ${phaseDurationDays}` 
@@ -107,7 +109,8 @@ export const PhaseTimeline = ({
                     onClick={() => daysPassed >= 30 && onPhaseClick("class")}
                     disabled={daysPassed < 30}
                     className={cn(
-                      "relative h-12 rounded-lg transition-all duration-300 group",
+                      "relative rounded-lg transition-all duration-300 group",
+                      isMobile ? "h-14" : "h-12",
                       daysPassed >= 30 
                         ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
@@ -126,9 +129,9 @@ export const PhaseTimeline = ({
                         style={{ width: `${Math.min(100, (overallProgressPercentage / 33.33) * 100)}%` }}
                       />
                     </div>
-                    <div className="relative flex items-center justify-center h-full gap-2 px-4">
-                      <User className="h-4 w-4 text-foreground" />
-                      <span className="text-sm font-semibold text-foreground">Class Level</span>
+                    <div className="relative flex items-center justify-center h-full gap-1 md:gap-2 px-2 md:px-4">
+                      <User className="h-3 w-3 md:h-4 md:w-4 text-foreground flex-shrink-0" />
+                      <span className="text-xs md:text-sm font-semibold text-foreground truncate">Class</span>
                     </div>
                   </button>
                 </TooltipTrigger>
@@ -144,7 +147,8 @@ export const PhaseTimeline = ({
                 <TooltipTrigger asChild>
                   <div
                     className={cn(
-                      "relative h-12 rounded-lg transition-all duration-300 cursor-default",
+                      "relative rounded-lg transition-all duration-300 cursor-default",
+                      isMobile ? "h-14" : "h-12",
                       overallProgressPercentage > 33.33 && overallProgressPercentage < 38.89 && "ring-2 ring-primary/50"
                     )}
                     style={{ width: "5.56%" }}
@@ -156,7 +160,7 @@ export const PhaseTimeline = ({
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-3.5 w-3.5 text-foreground" />
+                      <CheckSquare className="h-3 w-3 md:h-3.5 md:w-3.5 text-foreground" />
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -174,7 +178,8 @@ export const PhaseTimeline = ({
                     onClick={() => daysPassed >= 65 && onPhaseClick("grade")}
                     disabled={daysPassed < 65}
                     className={cn(
-                      "relative h-12 rounded-lg transition-all duration-300 group",
+                      "relative rounded-lg transition-all duration-300 group",
+                      isMobile ? "h-14" : "h-12",
                       daysPassed >= 65 
                         ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
@@ -193,9 +198,9 @@ export const PhaseTimeline = ({
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 38.89) / 27.78) * 100))}%` }}
                       />
                     </div>
-                    <div className="relative flex items-center justify-center h-full gap-2 px-4">
-                      <Users className="h-4 w-4 text-foreground" />
-                      <span className="text-sm font-semibold text-foreground">Grade Level</span>
+                    <div className="relative flex items-center justify-center h-full gap-1 md:gap-2 px-2 md:px-4">
+                      <Users className="h-3 w-3 md:h-4 md:w-4 text-foreground flex-shrink-0" />
+                      <span className="text-xs md:text-sm font-semibold text-foreground truncate">Grade</span>
                     </div>
                   </button>
                 </TooltipTrigger>
@@ -211,7 +216,8 @@ export const PhaseTimeline = ({
                 <TooltipTrigger asChild>
                   <div
                     className={cn(
-                      "relative h-12 rounded-lg transition-all duration-300 cursor-default",
+                      "relative rounded-lg transition-all duration-300 cursor-default",
+                      isMobile ? "h-14" : "h-12",
                       overallProgressPercentage > 66.67 && overallProgressPercentage < 72.23 && "ring-2 ring-primary/50"
                     )}
                     style={{ width: "5.56%" }}
@@ -223,7 +229,7 @@ export const PhaseTimeline = ({
                       />
                     </div>
                     <div className="relative flex items-center justify-center h-full">
-                      <CheckSquare className="h-3.5 w-3.5 text-foreground" />
+                      <CheckSquare className="h-3 w-3 md:h-3.5 md:w-3.5 text-foreground" />
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -241,7 +247,8 @@ export const PhaseTimeline = ({
                     onClick={() => daysPassed >= 90 && onPhaseClick("school")}
                     disabled={daysPassed < 90}
                     className={cn(
-                      "relative h-12 rounded-lg transition-all duration-300 group",
+                      "relative rounded-lg transition-all duration-300 group",
+                      isMobile ? "h-14" : "h-12",
                       daysPassed >= 90
                         ? "cursor-pointer hover:scale-[1.02]"
                         : "cursor-not-allowed opacity-50",
@@ -260,9 +267,9 @@ export const PhaseTimeline = ({
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 72.23) / 27.77) * 100))}%` }}
                       />
                     </div>
-                    <div className="relative flex items-center justify-center h-full gap-2 px-4">
-                      <School className="h-4 w-4 text-foreground" />
-                      <span className="text-sm font-semibold text-foreground">School Level</span>
+                    <div className="relative flex items-center justify-center h-full gap-1 md:gap-2 px-2 md:px-4">
+                      <School className="h-3 w-3 md:h-4 md:w-4 text-foreground flex-shrink-0" />
+                      <span className="text-xs md:text-sm font-semibold text-foreground truncate">School</span>
                     </div>
                   </button>
                 </TooltipTrigger>
@@ -274,18 +281,20 @@ export const PhaseTimeline = ({
           </div>
 
           {/* Date/Day Indicators */}
-          <div className="relative text-xs text-muted-foreground mt-2">
-            <div className="absolute whitespace-nowrap" style={{ left: "0%" }}>Day 1</div>
-            <div className="absolute whitespace-nowrap" style={{ left: "33.33%", transform: "translateX(-50%)" }}>Day 30</div>
-            <div className="absolute whitespace-nowrap" style={{ left: "38.89%", transform: "translateX(-50%)" }}>Day 35</div>
-            <div className="absolute whitespace-nowrap" style={{ left: "66.67%", transform: "translateX(-50%)" }}>Day 60</div>
-            <div className="absolute whitespace-nowrap" style={{ left: "72.23%", transform: "translateX(-50%)" }}>Day 65</div>
-            <div className="absolute whitespace-nowrap" style={{ left: "100%", transform: "translateX(-100%)" }}>Day 90</div>
-          </div>
+          {!isMobile && (
+            <div className="relative text-xs text-muted-foreground mt-2">
+              <div className="absolute whitespace-nowrap" style={{ left: "0%" }}>Day 1</div>
+              <div className="absolute whitespace-nowrap" style={{ left: "33.33%", transform: "translateX(-50%)" }}>Day 30</div>
+              <div className="absolute whitespace-nowrap" style={{ left: "38.89%", transform: "translateX(-50%)" }}>Day 35</div>
+              <div className="absolute whitespace-nowrap" style={{ left: "66.67%", transform: "translateX(-50%)" }}>Day 60</div>
+              <div className="absolute whitespace-nowrap" style={{ left: "72.23%", transform: "translateX(-50%)" }}>Day 65</div>
+              <div className="absolute whitespace-nowrap" style={{ left: "100%", transform: "translateX(-100%)" }}>Day 90</div>
+            </div>
+          )}
 
           {/* Simulation Status and Slider */}
           {isSimulating && (
-            <div className="mt-10 space-y-3">
+            <div className={cn("space-y-3", isMobile ? "mt-8" : "mt-10")}>
               <Slider
                 value={[sliderValue]}
                 onValueChange={(value) => onSliderChange?.(value[0])}
