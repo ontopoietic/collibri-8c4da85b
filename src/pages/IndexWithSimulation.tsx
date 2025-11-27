@@ -95,15 +95,27 @@ const Index = () => {
     setIsSimulating(!isSimulating);
   };
 
-  // Calculate if we're in the interims phase (first 5 days of any phase)
-  const dayIntoPhase = useMemo(() => {
+  // Determine which variant selection phase we're in (if any)
+  const variantVotingPhase = useMemo(() => {
     const simulatedDays = (simulationProgress / 100) * totalDuration;
-    if (simulatedDays < 30) return simulatedDays + 1; // Class phase (1-30)
-    if (simulatedDays < 60) return (simulatedDays - 30) + 1; // Grade phase (1-30)
-    return (simulatedDays - 60) + 1; // School phase (1-30)
+    
+    // Class voting: days 30-35
+    if (simulatedDays >= 30 && simulatedDays < 35) {
+      return { phase: "class" as Phase, dayIntoVoting: simulatedDays - 30 + 1 };
+    }
+    // Grade voting: days 60-65
+    if (simulatedDays >= 60 && simulatedDays < 65) {
+      return { phase: "grade" as Phase, dayIntoVoting: simulatedDays - 60 + 1 };
+    }
+    // School voting: days 90-95
+    if (simulatedDays >= 90 && simulatedDays < 95) {
+      return { phase: "school" as Phase, dayIntoVoting: simulatedDays - 90 + 1 };
+    }
+    
+    return null;
   }, [simulationProgress, totalDuration]);
 
-  const isInterimsPhase = isSimulating && dayIntoPhase <= 5;
+  const isInterimsPhase = isSimulating && variantVotingPhase !== null;
 
   const getPreviousPhase = (): Phase | null => {
     if (currentPhase === "grade") return "class";
@@ -433,12 +445,12 @@ const Index = () => {
           />
         </div>
         
-        {isInterimsPhase && getPreviousPhase() ? (
+        {isInterimsPhase && variantVotingPhase ? (
           <div className="mb-8">
             <VariantVoting 
-              concerns={simulatedConcerns.filter(c => c.phase === getPreviousPhase())} 
+              concerns={simulatedConcerns.filter(c => c.phase === variantVotingPhase.phase)} 
               onVote={handleVariantVote}
-              dayIntoPhase={Math.floor(dayIntoPhase)}
+              dayIntoPhase={Math.floor(variantVotingPhase.dayIntoVoting)}
               interimDuration={5}
             />
           </div>
