@@ -295,7 +295,7 @@ const Index = () => {
         <div className="max-w-6xl mx-auto px-4 py-4 md:py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 md:gap-3">
-              <img src={collibriLogo} alt="Collibri" className="h-8 w-8 md:h-10 md:w-10" />
+              <img src={collibriLogo} alt="Collibri" className="h-10 w-10 md:h-12 md:w-12" />
               <h1 className="text-xl md:text-3xl font-bold text-foreground">Collibri</h1>
             </div>
             

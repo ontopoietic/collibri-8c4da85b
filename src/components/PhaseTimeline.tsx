@@ -240,7 +240,7 @@ export const PhaseTimeline = ({
             </div>
                 
                 {/* Arrow indicator */}
-                <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0 mt-7" />
+                <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0 self-start mt-[34px]" />
                 
             {/* Variant Selection Section - Smaller with desktop styling */}
             <div className="w-24">
@@ -251,7 +251,7 @@ export const PhaseTimeline = ({
                 <CheckSquare className="h-4 w-4 text-white" />
                 <span className="text-xs font-medium text-white">Selection</span>
               </div>
-              <Progress value={votingProgress} className="h-2 mb-1" />
+              <Progress value={votingProgress} className="h-2 mb-1 [&>div]:bg-[#A8BDFF]" />
               <span className="text-[10px] text-muted-foreground">
                 {isViewingCompletedPhase ? "Done" : isInVoting ? `Day ${Math.floor(votingDaysIn) + 1}/5` : isVotingComplete ? "Done" : "Soon"}
               </span>
@@ -377,7 +377,7 @@ export const PhaseTimeline = ({
                       </span>
                     </div>
                     
-                    <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-7" />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0 self-start mt-[34px]" />
                     
                     {/* Selection */}
                     <div className="w-24">
@@ -388,7 +388,7 @@ export const PhaseTimeline = ({
                         <CheckSquare className="h-4 w-4 text-white" />
                         <span className="text-xs font-medium text-white">Selection</span>
                       </div>
-                      <Progress value={phaseVotingProgress} className="h-2 mb-1" />
+                      <Progress value={phaseVotingProgress} className="h-2 mb-1 [&>div]:bg-[#A8BDFF]" />
                       <span className="text-[10px] text-muted-foreground">
                         {isCompleted ? "Done" : 
                          phaseIsInVoting ? `Day ${Math.floor(phaseVotingDaysIn) + 1}/5` : 
