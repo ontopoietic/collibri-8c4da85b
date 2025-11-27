@@ -300,7 +300,7 @@ export const PhaseTimeline = ({
 
           {/* Simulation Status and Slider */}
           {isSimulating && (
-            <div className={cn("space-y-3", isMobile ? "mt-8" : "mt-10")}>
+            <div className={cn("space-y-3", isMobile ? "mt-12" : "mt-14")}>
               <Slider
                 value={[sliderValue]}
                 onValueChange={(value) => onSliderChange?.(value[0])}
