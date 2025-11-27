@@ -114,7 +114,7 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-3">
               <Button
-                variant="outline"
+                variant="secondary-action"
                 onClick={() => navigate("/notifications")}
                 className="gap-2"
               >
@@ -122,7 +122,7 @@ const Index = () => {
                 Notifications
               </Button>
               <Button
-                variant="outline"
+                variant="statistics"
                 onClick={() => navigate("/statistics")}
                 className="gap-2"
               >

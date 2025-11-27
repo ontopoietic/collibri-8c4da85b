@@ -55,6 +55,25 @@ All colors MUST be HSL.
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;
 
+    /* Action button colors */
+    --endorse: 231 34% 25%;
+    --endorse-foreground: 0 0% 100%;
+    
+    --object: 9 95% 72%;
+    --object-foreground: 0 0% 100%;
+    
+    --question: 220 100% 91%;
+    --question-foreground: 231 34% 25%;
+    
+    --statistics: 328 90% 42%;
+    --statistics-foreground: 0 0% 100%;
+    
+    --new-concern: 16 80% 53%;
+    --new-concern-foreground: 0 0% 100%;
+    
+    --secondary-action: 222 15% 74%;
+    --secondary-action-foreground: 231 34% 25%;
+
     --sidebar-background: 245 25% 15%;
     --sidebar-foreground: 240 10% 92%;
     --sidebar-primary: 8 100% 68%;
@@ -113,6 +132,25 @@ All colors MUST be HSL.
 
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;
+
+    /* Action button colors */
+    --endorse: 231 34% 25%;
+    --endorse-foreground: 0 0% 100%;
+    
+    --object: 9 95% 72%;
+    --object-foreground: 0 0% 100%;
+    
+    --question: 220 100% 91%;
+    --question-foreground: 231 34% 25%;
+    
+    --statistics: 328 90% 42%;
+    --statistics-foreground: 0 0% 100%;
+    
+    --new-concern: 16 80% 53%;
+    --new-concern-foreground: 0 0% 100%;
+    
+    --secondary-action: 222 15% 74%;
+    --secondary-action-foreground: 231 34% 25%;
 
     --sidebar-background: 245 30% 12%;
     --sidebar-foreground: 240 10% 95%;

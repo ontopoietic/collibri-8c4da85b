@@ -292,7 +292,7 @@ const Index = () => {
             {!isMobile && (
               <div className="flex items-center gap-2">
                 <Button
-                  variant={isSimulating ? "default" : "outline"}
+                  variant={isSimulating ? "default" : "secondary-action"}
                   onClick={handleSimulationToggle}
                   className="gap-2"
                 >
@@ -301,7 +301,7 @@ const Index = () => {
                 </Button>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className="gap-2">
+                    <Button variant="secondary-action" className="gap-2">
                       <ChartNoAxesCombined className="h-4 w-4" />
                       <span className="hidden lg:inline">My Quota</span>
                     </Button>
@@ -311,7 +311,7 @@ const Index = () => {
                   </PopoverContent>
                 </Popover>
                 <Button
-                  variant="outline"
+                  variant="secondary-action"
                   onClick={() => navigate("/notifications")}
                   className="gap-2"
                 >
@@ -319,7 +319,7 @@ const Index = () => {
                   <span className="hidden lg:inline">Notifications</span>
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="statistics"
                   onClick={() => navigate("/statistics")}
                   className="gap-2"
                 >
@@ -344,7 +344,7 @@ const Index = () => {
                   </SheetHeader>
                   <div className="flex flex-col gap-4 mt-6">
                     <Button
-                      variant={isSimulating ? "default" : "outline"}
+                      variant={isSimulating ? "default" : "secondary-action"}
                       onClick={() => {
                         handleSimulationToggle();
                         setMobileMenuOpen(false);
@@ -364,7 +364,7 @@ const Index = () => {
                     </div>
 
                     <Button
-                      variant="outline"
+                      variant="secondary-action"
                       onClick={() => {
                         navigate("/notifications");
                         setMobileMenuOpen(false);
@@ -376,7 +376,7 @@ const Index = () => {
                     </Button>
                     
                     <Button
-                      variant="outline"
+                      variant="statistics"
                       onClick={() => {
                         navigate("/statistics");
                         setMobileMenuOpen(false);

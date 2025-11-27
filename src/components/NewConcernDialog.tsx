@@ -65,7 +65,7 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="lg" className="gap-2">
+        <Button size="lg" className="gap-2 bg-new-concern text-new-concern-foreground hover:bg-new-concern">
           <Plus className="h-5 w-5" />
           New Concern
         </Button>
