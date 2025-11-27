@@ -230,11 +230,11 @@ export const PhaseTimeline = ({
                     <div className={cn(
                       "absolute inset-0 rounded-lg transition-all duration-300",
                       daysPassed >= 90 
-                        ? "bg-primary/20 group-hover:bg-primary/30" 
+                        ? "bg-school/20 group-hover:bg-school/30" 
                         : "bg-muted"
                     )}>
                       <div
-                        className="h-full bg-primary transition-all duration-500 rounded-lg"
+                        className="h-full bg-school transition-all duration-500 rounded-lg"
                         style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 72.23) / 27.77) * 100))}%` }}
                       />
                     </div>

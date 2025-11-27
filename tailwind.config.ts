@@ -66,6 +66,10 @@ export default {
           DEFAULT: "hsl(var(--variant))",
           foreground: "hsl(var(--variant-foreground))",
         },
+        school: {
+          DEFAULT: "hsl(var(--school))",
+          foreground: "hsl(var(--school-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
