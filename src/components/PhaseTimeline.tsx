@@ -75,186 +75,178 @@ export const PhaseTimeline = ({
       </div>
 
       <div className="space-y-6 flex-1">
-        {/* Timeline */}
+        {/* New Redesigned Timeline */}
         <div className="space-y-4">
-          <div className="relative h-32">
-            {/* All labels positioned at the top */}
-            <div className="absolute top-0 left-0 right-0 flex gap-1">
-              {/* Class Phase Label */}
-              <div className="flex justify-center" style={{ width: "33.33%" }}>
-                <div className="flex flex-col items-center gap-0">
-                  <div
-                    className={cn(
-                      "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
-                      currentPhase === "class"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-card border border-border text-foreground"
-                    )}
-                  >
-                    <Users className="h-4 w-4" />
-                    <span>Class</span>
-                  </div>
-                  <div className={cn("w-0.5 h-8", currentPhase === "class" ? "bg-primary" : "bg-border")} />
-                </div>
-              </div>
-              
-              {/* Class Leaderboard Button */}
-              <div className="flex justify-center items-start" style={{ width: "0%" }}>
-                <div className="flex flex-col items-center gap-0 -ml-4">
+          <div className="flex gap-1 items-center">
+            {/* Class Phase Button */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <button
-                    onClick={() => onPhaseClick("class")}
+                    onClick={() => daysPassed >= 30 && onPhaseClick("class")}
                     disabled={daysPassed < 30}
                     className={cn(
-                      "p-1.5 rounded-md border shadow-sm transition-colors flex-shrink-0",
-                      daysPassed >= 30
-                        ? "bg-card border-border hover:bg-accent cursor-pointer"
-                        : "bg-muted border-muted-foreground/20 cursor-not-allowed opacity-50"
+                      "relative h-12 rounded-lg transition-all duration-300 group",
+                      daysPassed >= 30 
+                        ? "cursor-pointer hover:scale-[1.02]" 
+                        : "cursor-not-allowed opacity-50"
                     )}
-                    aria-label="View class leaderboard"
+                    style={{ width: "33.33%" }}
                   >
-                    <Trophy className="h-3 w-3 text-primary" />
+                    <div className={cn(
+                      "absolute inset-0 rounded-lg transition-all duration-300",
+                      daysPassed >= 30 
+                        ? "bg-primary/20 group-hover:bg-primary/30" 
+                        : "bg-muted"
+                    )}>
+                      <div
+                        className="h-full bg-primary transition-all duration-500 rounded-lg"
+                        style={{ width: `${Math.min(100, (overallProgressPercentage / 33.33) * 100)}%` }}
+                      />
+                    </div>
+                    <div className="relative flex items-center justify-center h-full gap-2 px-4">
+                      <Users className="h-4 w-4 text-foreground" />
+                      <span className="text-sm font-semibold text-foreground">Class Level</span>
+                    </div>
                   </button>
-                  <div className="w-0.5 h-8 bg-border" />
-                </div>
-              </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{daysPassed >= 30 ? "View Class Leaderboard" : "Available after 30 days"}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
 
-              {/* Grade Voting Label */}
-              <div className="flex justify-center" style={{ width: "5.56%" }}>
-                <div className="flex flex-col items-center gap-0">
-                  <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
-                    Variant Voting
-                  </div>
-                  <div className="w-0.5 h-8 bg-border" />
-                </div>
-              </div>
-
-              {/* Grade Phase Label */}
-              <div className="flex justify-center" style={{ width: "27.78%" }}>
-                <div className="flex flex-col items-center gap-0">
+            {/* Grade Voting Phase */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <div
                     className={cn(
-                      "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
-                      currentPhase === "grade"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-card border border-border text-foreground"
+                      "relative h-12 rounded-lg transition-all duration-300 group cursor-default",
+                      overallProgressPercentage > 33.33 && overallProgressPercentage < 38.89 && "ring-2 ring-primary/50"
                     )}
+                    style={{ width: "5.56%" }}
                   >
-                    <UsersRound className="h-4 w-4" />
-                    <span>Grade</span>
+                    <div className="absolute inset-0 bg-muted/50 rounded-lg group-hover:bg-muted/70 transition-all duration-300">
+                      <div
+                        className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-lg"
+                        style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
+                      />
+                    </div>
+                    <div className="relative flex items-center justify-center h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="text-[10px] font-medium text-foreground whitespace-nowrap">Variant Selection</span>
+                    </div>
                   </div>
-                  <div className={cn("w-0.5 h-8", currentPhase === "grade" ? "bg-primary" : "bg-border")} />
-                </div>
-              </div>
-              
-              {/* Grade Leaderboard Button */}
-              <div className="flex justify-center items-start" style={{ width: "0%" }}>
-                <div className="flex flex-col items-center gap-0 -ml-4">
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Variant Selection Phase (5 days)</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {/* Grade Phase Button */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <button
-                    onClick={() => onPhaseClick("grade")}
+                    onClick={() => daysPassed >= 65 && onPhaseClick("grade")}
                     disabled={daysPassed < 65}
                     className={cn(
-                      "p-1.5 rounded-md border shadow-sm transition-colors flex-shrink-0",
-                      daysPassed >= 65
-                        ? "bg-card border-border hover:bg-accent cursor-pointer"
-                        : "bg-muted border-muted-foreground/20 cursor-not-allowed opacity-50"
+                      "relative h-12 rounded-lg transition-all duration-300 group",
+                      daysPassed >= 65 
+                        ? "cursor-pointer hover:scale-[1.02]" 
+                        : "cursor-not-allowed opacity-50"
                     )}
-                    aria-label="View grade leaderboard"
+                    style={{ width: "27.78%" }}
                   >
-                    <Trophy className="h-3 w-3 text-primary" />
+                    <div className={cn(
+                      "absolute inset-0 rounded-lg transition-all duration-300",
+                      daysPassed >= 65 
+                        ? "bg-primary/20 group-hover:bg-primary/30" 
+                        : "bg-muted"
+                    )}>
+                      <div
+                        className="h-full bg-primary transition-all duration-500 rounded-lg"
+                        style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 38.89) / 27.78) * 100))}%` }}
+                      />
+                    </div>
+                    <div className="relative flex items-center justify-center h-full gap-2 px-4">
+                      <UsersRound className="h-4 w-4 text-foreground" />
+                      <span className="text-sm font-semibold text-foreground">Grade Level</span>
+                    </div>
                   </button>
-                  <div className="w-0.5 h-8 bg-border" />
-                </div>
-              </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{daysPassed >= 65 ? "View Grade Leaderboard" : "Available after 65 days"}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
 
-              {/* School Voting Label */}
-              <div className="flex justify-center" style={{ width: "5.56%" }}>
-                <div className="flex flex-col items-center gap-0">
-                  <div className="px-2 py-0.5 rounded-md text-[10px] font-medium text-muted-foreground bg-muted/50 border border-border whitespace-nowrap shadow-sm">
-                    Variant Voting
-                  </div>
-                  <div className="w-0.5 h-8 bg-border" />
-                </div>
-              </div>
-
-              {/* School Phase Label */}
-              <div className="flex justify-center" style={{ width: "27.77%" }}>
-                <div className="flex flex-col items-center gap-0">
+            {/* School Voting Phase */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <div
                     className={cn(
-                      "px-3 py-1.5 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 whitespace-nowrap",
-                      currentPhase === "school"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-card border border-border text-foreground"
+                      "relative h-12 rounded-lg transition-all duration-300 group cursor-default",
+                      overallProgressPercentage > 66.67 && overallProgressPercentage < 72.23 && "ring-2 ring-primary/50"
                     )}
+                    style={{ width: "5.56%" }}
                   >
-                    <School className="h-4 w-4" />
-                    <span>School</span>
+                    <div className="absolute inset-0 bg-muted/50 rounded-lg group-hover:bg-muted/70 transition-all duration-300">
+                      <div
+                        className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-lg"
+                        style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
+                      />
+                    </div>
+                    <div className="relative flex items-center justify-center h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="text-[10px] font-medium text-foreground whitespace-nowrap">Variant Selection</span>
+                    </div>
                   </div>
-                  <div className={cn("w-0.5 h-8", currentPhase === "school" ? "bg-primary" : "bg-border")} />
-                </div>
-              </div>
-              
-              {/* School Leaderboard Button */}
-              <div className="flex justify-center items-start" style={{ width: "0%" }}>
-                <div className="flex flex-col items-center gap-0 -ml-4">
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Variant Selection Phase (5 days)</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {/* School Phase Button */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <button
-                    onClick={() => onPhaseClick("school")}
+                    onClick={() => daysPassed >= 90 && onPhaseClick("school")}
                     disabled={daysPassed < 90}
                     className={cn(
-                      "p-1.5 rounded-md border shadow-sm transition-colors flex-shrink-0",
-                      daysPassed >= 90
-                        ? "bg-card border-border hover:bg-accent cursor-pointer"
-                        : "bg-muted border-muted-foreground/20 cursor-not-allowed opacity-50"
+                      "relative h-12 rounded-lg transition-all duration-300 group",
+                      daysPassed >= 90 
+                        ? "cursor-pointer hover:scale-[1.02]" 
+                        : "cursor-not-allowed opacity-50"
                     )}
-                    aria-label="View school leaderboard"
+                    style={{ width: "27.77%" }}
                   >
-                    <Trophy className="h-3 w-3 text-primary" />
+                    <div className={cn(
+                      "absolute inset-0 rounded-lg transition-all duration-300",
+                      daysPassed >= 90 
+                        ? "bg-primary/20 group-hover:bg-primary/30" 
+                        : "bg-muted"
+                    )}>
+                      <div
+                        className="h-full bg-primary transition-all duration-500 rounded-lg"
+                        style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 72.23) / 27.77) * 100))}%` }}
+                      />
+                    </div>
+                    <div className="relative flex items-center justify-center h-full gap-2 px-4">
+                      <School className="h-4 w-4 text-foreground" />
+                      <span className="text-sm font-semibold text-foreground">School Level</span>
+                    </div>
                   </button>
-                  <div className="w-0.5 h-8 bg-border" />
-                </div>
-              </div>
-            </div>
-
-            {/* Timeline bar positioned below labels */}
-            <div className="absolute top-10 left-0 right-0 flex items-center">
-              <div className="flex-1 flex h-3 gap-1">
-                {/* Class Phase */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "33.33%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.min(100, (overallProgressPercentage / 33.33) * 100)}%` }}
-                  />
-                </div>
-                {/* Grade Voting */}
-                <div className="relative bg-muted/50 rounded-full overflow-hidden" style={{ width: "5.56%" }}>
-                  <div
-                    className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%` }}
-                  />
-                </div>
-                {/* Grade Phase */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.78%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 38.89) / 27.78) * 100))}%` }}
-                  />
-                </div>
-                {/* School Voting */}
-                <div className="relative bg-muted/50 rounded-full overflow-hidden" style={{ width: "5.56%" }}>
-                  <div
-                    className="h-full bg-muted-foreground/40 transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%` }}
-                  />
-                </div>
-                {/* School Phase */}
-                <div className="relative bg-muted rounded-full overflow-hidden" style={{ width: "27.77%" }}>
-                  <div
-                    className="h-full bg-primary transition-all duration-500 rounded-full"
-                    style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 72.23) / 27.77) * 100))}%` }}
-                  />
-                </div>
-              </div>
-            </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{daysPassed >= 90 ? "View School Leaderboard" : "Available after 90 days"}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
           {/* Simulation Status and Slider */}
