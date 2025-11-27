@@ -182,8 +182,8 @@ export const PhaseTimeline = ({
           <h3 className="text-base md:text-lg font-semibold text-foreground">
             Current Interval
           </h3>
-          {/* Simulation button on mobile */}
-          {isMobile && onSimulationToggle && (
+          {/* Simulation button next to title on all screen sizes */}
+          {onSimulationToggle && (
             <Button
               variant={isSimulating ? "default" : "secondary-action"}
               onClick={onSimulationToggle}
@@ -221,41 +221,41 @@ export const PhaseTimeline = ({
                 </div>
               )}
               <div className="flex items-center gap-3">
-                {/* Deliberation Phase Section */}
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <displayedPhase.icon className={cn(
-                      "h-4 w-4",
-                      isViewingCompletedPhase ? "text-muted-foreground" : "text-primary"
-                    )} />
-                    <span className={cn(
-                      "text-sm font-bold",
-                      isViewingCompletedPhase ? "text-muted-foreground" : "text-foreground"
-                    )}>{displayedPhase.label}</span>
-                  </div>
-                  <Progress value={deliberationProgress} className="h-2 mb-1" />
-                  <span className="text-xs text-muted-foreground">
-                    {isViewingCompletedPhase ? "Complete" : isInDeliberation ? `Day ${Math.floor(deliberationDaysIn) + 1} of 30` : "Complete"}
-                  </span>
-                </div>
+            {/* Deliberation Phase Section */}
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2 h-7">
+                <displayedPhase.icon className={cn(
+                  "h-4 w-4",
+                  isViewingCompletedPhase ? "text-muted-foreground" : "text-primary"
+                )} />
+                <span className={cn(
+                  "text-sm font-bold",
+                  isViewingCompletedPhase ? "text-muted-foreground" : "text-foreground"
+                )}>{displayedPhase.label}</span>
+              </div>
+              <Progress value={deliberationProgress} className="h-2 mb-1" />
+              <span className="text-xs text-muted-foreground">
+                {isViewingCompletedPhase ? "Complete" : isInDeliberation ? `Day ${Math.floor(deliberationDaysIn) + 1} of 30` : "Complete"}
+              </span>
+            </div>
                 
                 {/* Arrow indicator */}
                 <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0" />
                 
-                {/* Variant Selection Section - Smaller with desktop styling */}
-                <div className="w-20">
-                  <div 
-                    className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md"
-                    style={{ backgroundColor: '#3B3C4C' }}
-                  >
-                    <CheckSquare className="h-3 w-3 text-white" />
-                    <span className="text-xs font-medium text-white">Selection</span>
-                  </div>
-                  <Progress value={votingProgress} className="h-2 mb-1" />
-                  <span className="text-[10px] text-muted-foreground">
-                    {isViewingCompletedPhase ? "Done" : isInVoting ? `Day ${Math.floor(votingDaysIn) + 1}/5` : isVotingComplete ? "Done" : "Soon"}
-                  </span>
-                </div>
+            {/* Variant Selection Section - Smaller with desktop styling */}
+            <div className="w-24">
+              <div 
+                className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md h-7"
+                style={{ backgroundColor: '#3B3C4C' }}
+              >
+                <CheckSquare className="h-4 w-4 text-white" />
+                <span className="text-xs font-medium text-white">Selection</span>
+              </div>
+              <Progress value={votingProgress} className="h-2 mb-1" />
+              <span className="text-[10px] text-muted-foreground">
+                {isViewingCompletedPhase ? "Done" : isInVoting ? `Day ${Math.floor(votingDaysIn) + 1}/5` : isVotingComplete ? "Done" : "Soon"}
+              </span>
+            </div>
               </div>
             </div>
             
@@ -302,239 +302,104 @@ export const PhaseTimeline = ({
             </div>
           </div>
         ) : !isMobile ? (
-          /* Desktop/Tablet View - Scrollable Timeline */
-          <ScrollArea className="w-full">
-            <div className="min-w-[500px]">
-              <div className="space-y-4">
-                <div className="flex gap-1 items-center">
-                  {/* Class Phase Button - 30 days = 31.58% */}
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          onClick={() => daysPassed >= 30 && onPhaseClick("class")}
-                          disabled={daysPassed < 30}
-                          className={cn(
-                            "relative rounded-lg transition-all duration-300 group",
-                            "h-8 sm:h-10 md:h-12 lg:h-14",
-                            daysPassed >= 30 
-                              ? "cursor-pointer hover:opacity-100" 
-                              : "cursor-not-allowed opacity-50",
-                            daysPassed < 30 || daysPassed >= 35 ? "opacity-60" : ""
-                          )}
-                          style={{ width: "31.58%" }}
-                        >
-                          <div className={cn(
-                            "absolute inset-0 rounded-lg transition-all duration-300",
-                            daysPassed >= 30 
-                              ? "bg-primary/20 group-hover:bg-primary/30" 
-                              : "bg-muted"
-                          )}>
-                            <div
-                              className="h-full bg-primary transition-all duration-500 rounded-lg"
-                              style={{ width: `${Math.min(100, (overallProgressPercentage / 31.58) * 100)}%` }}
-                            />
-                          </div>
-                          <div className="relative flex items-center justify-center h-full gap-1 md:gap-2 px-2 md:px-4">
-                            <User className="h-3 w-3 md:h-4 md:w-4 text-foreground flex-shrink-0" />
-                            <span className="text-xs md:text-sm font-semibold text-foreground truncate">Class</span>
-                          </div>
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{daysPassed >= 30 ? "View Class Leaderboard" : "Available when phase is complete"}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  {/* Class Voting Phase - 5 days = 5.26% */}
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div
-                          className={cn(
-                            "relative rounded-lg transition-all duration-300 cursor-default",
-                            "h-8 sm:h-10 md:h-12 lg:h-14"
-                          )}
-                          style={{ width: "5.26%" }}
-                        >
-                          <div className="absolute inset-0 rounded-lg overflow-hidden transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
-                            <div
-                              className="h-full transition-all duration-500"
-                              style={{ 
-                                width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 31.58) / 5.26) * 100))}%`,
-                                backgroundColor: '#2A2B37'
-                              }}
-                            />
-                          </div>
-                          <div className="relative flex items-center justify-center h-full">
-                            <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" color="white" />
-                          </div>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Variant Selection Phase (5 days)</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  {/* Grade Phase Button - 25 days = 26.32% */}
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          onClick={() => daysPassed >= 60 && onPhaseClick("grade")}
-                          disabled={daysPassed < 60}
-                          className={cn(
-                            "relative rounded-lg transition-all duration-300 group",
-                            "h-8 sm:h-10 md:h-12 lg:h-14",
-                            daysPassed >= 60 
-                              ? "cursor-pointer hover:opacity-100" 
-                              : "cursor-not-allowed opacity-50",
-                            daysPassed < 35 || daysPassed >= 65 ? "opacity-60" : ""
-                          )}
-                          style={{ width: "26.32%" }}
-                        >
-                          <div className={cn(
-                            "absolute inset-0 rounded-lg transition-all duration-300",
-                            daysPassed >= 60 
-                              ? "bg-primary/20 group-hover:bg-primary/30" 
-                              : "bg-muted"
-                          )}>
-                            <div
-                              className="h-full bg-primary transition-all duration-500 rounded-lg"
-                              style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 36.84) / 26.32) * 100))}%` }}
-                            />
-                          </div>
-                          <div className="relative flex items-center justify-center h-full gap-1 md:gap-2 px-2 md:px-4">
-                            <Users className="h-3 w-3 md:h-4 md:w-4 text-foreground flex-shrink-0" />
-                            <span className="text-xs md:text-sm font-semibold text-foreground truncate">Grade</span>
-                          </div>
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{daysPassed >= 60 ? "View Grade Leaderboard" : "Available when phase is complete"}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  {/* Grade Voting Phase - 5 days = 5.26% */}
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div
-                          className={cn(
-                            "relative rounded-lg transition-all duration-300 cursor-default",
-                            "h-8 sm:h-10 md:h-12 lg:h-14"
-                          )}
-                          style={{ width: "5.26%" }}
-                        >
-                          <div className="absolute inset-0 rounded-lg overflow-hidden transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
-                            <div
-                              className="h-full transition-all duration-500"
-                              style={{ 
-                                width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 63.16) / 5.26) * 100))}%`,
-                                backgroundColor: '#2A2B37'
-                              }}
-                            />
-                          </div>
-                          <div className="relative flex items-center justify-center h-full">
-                            <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" color="white" />
-                          </div>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Variant Selection Phase (5 days)</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  {/* School Phase Button - 25 days = 26.32% */}
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          onClick={() => daysPassed >= 90 && onPhaseClick("school")}
-                          disabled={daysPassed < 90}
-                          className={cn(
-                            "relative rounded-lg transition-all duration-300 group",
-                            "h-8 sm:h-10 md:h-12 lg:h-14",
-                            daysPassed >= 90
-                              ? "cursor-pointer hover:scale-[1.02]"
-                              : "cursor-not-allowed opacity-50",
-                            daysPassed < 65 || daysPassed >= 95 ? "opacity-60" : ""
-                          )}
-                          style={{ width: "26.32%" }}
-                        >
-                          <div className={cn(
-                            "absolute inset-0 rounded-lg transition-all duration-300",
-                            daysPassed >= 90 
-                              ? "bg-school/20 group-hover:bg-school/30" 
-                              : "bg-muted"
-                          )}>
-                            <div
-                              className="h-full bg-school transition-all duration-500 rounded-lg"
-                              style={{ width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 68.42) / 26.32) * 100))}%` }}
-                            />
-                          </div>
-                          <div className="relative flex items-center justify-center h-full gap-1 md:gap-2 px-2 md:px-4">
-                            <School className="h-3 w-3 md:h-4 md:w-4 text-foreground flex-shrink-0" />
-                            <span className="text-xs md:text-sm font-semibold text-foreground truncate">School</span>
-                          </div>
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{daysPassed >= 90 ? "View School Leaderboard" : "Available when phase is complete"}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  {/* School Voting Phase - 5 days = 5.26% */}
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div
-                          className={cn(
-                            "relative rounded-lg transition-all duration-300 cursor-default",
-                            "h-8 sm:h-10 md:h-12 lg:h-14"
-                          )}
-                          style={{ width: "5.26%" }}
-                        >
-                          <div className="absolute inset-0 rounded-lg overflow-hidden transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
-                            <div
-                              className="h-full transition-all duration-500"
-                              style={{ 
-                                width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 94.74) / 5.26) * 100))}%`,
-                                backgroundColor: '#2A2B37'
-                              }}
-                            />
-                          </div>
-                          <div className="relative flex items-center justify-center h-full">
-                            <CheckSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" color="white" />
-                          </div>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Final Selection Phase (5 days)</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+          /* Desktop View - 3 Phase Cards */
+          <div className="grid grid-cols-3 gap-4">
+            {mainPhases.map((phase) => {
+              const isCompleted = daysPassed >= phase.votingEnd;
+              const isCurrent = daysPassed >= phase.deliberationStart && daysPassed < phase.votingEnd;
+              const isUpcoming = daysPassed < phase.deliberationStart;
+              
+              // Calculate progress for this specific phase
+              const deliberationDuration = phase.deliberationEnd - phase.deliberationStart;
+              const votingDuration = phase.votingEnd - phase.deliberationEnd;
+              
+              let phaseDeliberationProgress = 0;
+              let phaseVotingProgress = 0;
+              let phaseIsInDeliberation = false;
+              let phaseIsInVoting = false;
+              let phaseDeliberationDaysIn = 0;
+              let phaseVotingDaysIn = 0;
+              
+              if (isCompleted) {
+                phaseDeliberationProgress = 100;
+                phaseVotingProgress = 100;
+              } else if (isCurrent) {
+                if (daysPassed < phase.deliberationEnd) {
+                  phaseIsInDeliberation = true;
+                  phaseDeliberationDaysIn = daysPassed - phase.deliberationStart;
+                  phaseDeliberationProgress = (phaseDeliberationDaysIn / deliberationDuration) * 100;
+                } else {
+                  phaseDeliberationProgress = 100;
+                  phaseIsInVoting = true;
+                  phaseVotingDaysIn = daysPassed - phase.deliberationEnd;
+                  phaseVotingProgress = (phaseVotingDaysIn / votingDuration) * 100;
+                }
+              }
+              
+              return (
+                <div 
+                  key={phase.key}
+                  className={cn(
+                    "rounded-xl p-4 border transition-all",
+                    isCompleted ? "bg-muted/50 border-muted-foreground/20 cursor-pointer hover:shadow-md" :
+                    isCurrent ? "bg-primary/10 border-primary/20" :
+                    "bg-muted/30 border-border opacity-60"
+                  )}
+                  onClick={() => isCompleted && onPhaseClick(phase.key)}
+                >
+                  {/* Completed badge */}
+                  {isCompleted && (
+                    <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground mb-2">
+                      <CheckCircle2 className="h-3 w-3" />
+                      <span>Complete</span>
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center gap-3">
+                    {/* Deliberation */}
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2 h-7">
+                        <phase.icon className={cn(
+                          "h-4 w-4",
+                          isCompleted ? "text-muted-foreground" : 
+                          isCurrent ? "text-primary" : "text-muted-foreground"
+                        )} />
+                        <span className={cn(
+                          "text-sm font-bold",
+                          isCompleted || !isCurrent ? "text-muted-foreground" : "text-foreground"
+                        )}>{phase.label}</span>
+                      </div>
+                      <Progress value={phaseDeliberationProgress} className="h-2 mb-1" />
+                      <span className="text-xs text-muted-foreground">
+                        {isCompleted ? "Complete" : 
+                         phaseIsInDeliberation ? `Day ${Math.floor(phaseDeliberationDaysIn) + 1} of 30` : 
+                         isCurrent ? "Complete" : "Upcoming"}
+                      </span>
+                    </div>
+                    
+                    <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                    
+                    {/* Selection */}
+                    <div className="w-24">
+                      <div 
+                        className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md h-7"
+                        style={{ backgroundColor: '#3B3C4C' }}
+                      >
+                        <CheckSquare className="h-4 w-4 text-white" />
+                        <span className="text-xs font-medium text-white">Selection</span>
+                      </div>
+                      <Progress value={phaseVotingProgress} className="h-2 mb-1" />
+                      <span className="text-[10px] text-muted-foreground">
+                        {isCompleted ? "Done" : 
+                         phaseIsInVoting ? `Day ${Math.floor(phaseVotingDaysIn) + 1}/5` : 
+                         phaseDeliberationProgress === 100 ? "Done" : "Soon"}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Date/Day Indicators */}
-                <div className="relative h-6 text-xs text-muted-foreground mt-2">
-                  <div className="absolute whitespace-nowrap" style={{ left: "0%" }}>Day 1</div>
-                  <div className="absolute whitespace-nowrap" style={{ left: "31.58%", transform: "translateX(-50%)" }}>Day 30</div>
-                  <div className="absolute whitespace-nowrap" style={{ left: "36.84%", transform: "translateX(-50%)" }}>Day 35</div>
-                  <div className="absolute whitespace-nowrap" style={{ left: "63.16%", transform: "translateX(-50%)" }}>Day 60</div>
-                  <div className="absolute whitespace-nowrap" style={{ left: "68.42%", transform: "translateX(-50%)" }}>Day 65</div>
-                  <div className="absolute whitespace-nowrap" style={{ left: "94.74%", transform: "translateX(-50%)" }}>Day 90</div>
-                  <div className="absolute whitespace-nowrap" style={{ left: "100%" }}>Day 95</div>
-                </div>
-              </div>
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+              );
+            })}
+          </div>
         ) : null}
       </div>
 
