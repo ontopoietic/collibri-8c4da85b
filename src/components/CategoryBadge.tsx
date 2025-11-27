@@ -18,7 +18,7 @@ const categoryConfig = {
     className: "bg-proposal text-proposal-foreground hover:bg-proposal/90",
   },
   "pro-argument": {
-    label: "Pro-Argument",
+    label: "Answer",
     icon: ThumbsUp,
     className: "bg-pro-argument text-pro-argument-foreground hover:bg-pro-argument/90",
   },
