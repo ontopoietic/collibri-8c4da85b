@@ -182,8 +182,8 @@ export const PhaseTimeline = ({
           <h3 className="text-base md:text-lg font-semibold text-foreground">
             Current Interval
           </h3>
-          {/* Simulation button on all screen sizes */}
-          {onSimulationToggle && (
+          {/* Simulation button on mobile */}
+          {isMobile && onSimulationToggle && (
             <Button
               variant={isSimulating ? "default" : "secondary-action"}
               onClick={onSimulationToggle}
