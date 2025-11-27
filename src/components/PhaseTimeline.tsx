@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Phase } from "@/types/concern";
 import { cn } from "@/lib/utils";
-import { Calendar, Trophy, User, Users, School, CheckSquare, ChevronRight, Play, Pause } from "lucide-react";
+import { Calendar, Trophy, User, Users, School, CheckSquare, ChevronRight, Play, Pause, CheckCircle2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -85,6 +86,7 @@ export const PhaseTimeline = ({
 }: PhaseTimelineProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const [viewedPhase, setViewedPhase] = useState<Phase | null>(null);
   const currentIndex = phases.findIndex((p) => p.key === currentPhase);
   const today = new Date();
   const actualDaysPassed = Math.floor((today.getTime() - phaseStartDate.getTime()) / (1000 * 60 * 60 * 24));
@@ -101,6 +103,13 @@ export const PhaseTimeline = ({
   
   // Find current main phase for mobile view
   const currentMainPhase = mainPhases.find(p => daysPassed >= p.deliberationStart && daysPassed < p.votingEnd);
+  
+  // Display the viewed phase if user clicked on a completed phase dot, otherwise show current
+  const displayedPhase = viewedPhase 
+    ? mainPhases.find(p => p.key === viewedPhase) 
+    : currentMainPhase;
+  
+  const isViewingCompletedPhase = viewedPhase && displayedPhase && daysPassed >= displayedPhase.votingEnd;
 
   // Calculate progress for mobile combined view
   let deliberationProgress = 0;
@@ -111,22 +120,27 @@ export const PhaseTimeline = ({
   let votingDaysIn = 0;
   let isVotingComplete = false;
 
-  if (currentMainPhase) {
-    const deliberationDuration = currentMainPhase.deliberationEnd - currentMainPhase.deliberationStart;
-    const votingDuration = currentMainPhase.votingEnd - currentMainPhase.deliberationEnd;
+  if (displayedPhase) {
+    const deliberationDuration = displayedPhase.deliberationEnd - displayedPhase.deliberationStart;
+    const votingDuration = displayedPhase.votingEnd - displayedPhase.deliberationEnd;
     
-    if (daysPassed < currentMainPhase.deliberationEnd) {
+    if (isViewingCompletedPhase) {
+      // Viewing a completed phase - show 100% for both
+      deliberationProgress = 100;
+      votingProgress = 100;
+      isVotingComplete = true;
+    } else if (daysPassed < displayedPhase.deliberationEnd) {
       // In deliberation phase
       isInDeliberation = true;
-      deliberationDaysIn = daysPassed - currentMainPhase.deliberationStart;
+      deliberationDaysIn = Math.floor(daysPassed - displayedPhase.deliberationStart);
       deliberationProgress = (deliberationDaysIn / deliberationDuration) * 100;
       votingProgress = 0;
     } else {
       // In voting phase or completed
       deliberationProgress = 100;
-      isInVoting = daysPassed < currentMainPhase.votingEnd;
-      isVotingComplete = daysPassed >= currentMainPhase.votingEnd;
-      votingDaysIn = daysPassed - currentMainPhase.deliberationEnd;
+      isInVoting = daysPassed < displayedPhase.votingEnd;
+      isVotingComplete = daysPassed >= displayedPhase.votingEnd;
+      votingDaysIn = Math.floor(daysPassed - displayedPhase.deliberationEnd);
       votingProgress = isInVoting ? (votingDaysIn / votingDuration) * 100 : 100;
     }
   }
@@ -185,20 +199,37 @@ export const PhaseTimeline = ({
 
       <div className="space-y-6 flex-1">
         {/* Mobile View - Combined Phase + Voting Display */}
-        {isMobile && currentMainPhase ? (
+        {isMobile && displayedPhase ? (
           <div className="space-y-4">
             {/* Current Phase Card - Shows deliberation + voting together */}
-            <div className="bg-primary/10 rounded-xl p-4 border border-primary/20">
+            <div className={cn(
+              "rounded-xl p-4 border relative",
+              isViewingCompletedPhase 
+                ? "bg-muted/50 border-muted-foreground/20" 
+                : "bg-primary/10 border-primary/20"
+            )}>
+              {isViewingCompletedPhase && (
+                <div className="absolute top-2 right-2 flex items-center gap-1 text-xs font-medium text-muted-foreground bg-background/80 rounded-full px-2 py-1">
+                  <CheckCircle2 className="h-3 w-3" />
+                  <span>Complete</span>
+                </div>
+              )}
               <div className="flex items-center gap-3">
                 {/* Deliberation Phase Section */}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <currentMainPhase.icon className="h-4 w-4 text-primary" />
-                    <span className="text-sm font-bold text-foreground">{currentMainPhase.label}</span>
+                    <displayedPhase.icon className={cn(
+                      "h-4 w-4",
+                      isViewingCompletedPhase ? "text-muted-foreground" : "text-primary"
+                    )} />
+                    <span className={cn(
+                      "text-sm font-bold",
+                      isViewingCompletedPhase ? "text-muted-foreground" : "text-foreground"
+                    )}>{displayedPhase.label}</span>
                   </div>
                   <Progress value={deliberationProgress} className="h-2 mb-1" />
                   <span className="text-xs text-muted-foreground">
-                    {isInDeliberation ? `Day ${deliberationDaysIn + 1} of 30` : "Complete"}
+                    {isViewingCompletedPhase ? "Complete" : isInDeliberation ? `Day ${Math.floor(deliberationDaysIn) + 1} of 30` : "Complete"}
                   </span>
                 </div>
                 
@@ -213,7 +244,7 @@ export const PhaseTimeline = ({
                   </div>
                   <Progress value={votingProgress} className="h-2 mb-1" />
                   <span className="text-xs text-muted-foreground">
-                    {isInVoting ? `Day ${votingDaysIn + 1} of 5` : isVotingComplete ? "Complete" : "Upcoming"}
+                    {isViewingCompletedPhase ? "Complete" : isInVoting ? `Day ${Math.floor(votingDaysIn) + 1} of 5` : isVotingComplete ? "Complete" : "Upcoming"}
                   </span>
                 </div>
               </div>
@@ -224,14 +255,29 @@ export const PhaseTimeline = ({
               {mainPhases.map((phase) => {
                 const isCompleted = daysPassed >= phase.votingEnd;
                 const isCurrent = daysPassed >= phase.deliberationStart && daysPassed < phase.votingEnd;
+                const isViewing = viewedPhase === phase.key;
                 
                 return (
                   <button
                     key={phase.key}
-                    onClick={() => isCompleted && onPhaseClick(phase.key)}
+                    onClick={() => {
+                      if (isCompleted) {
+                        // Toggle: if clicking the same phase, reset to current view
+                        if (isViewing) {
+                          setViewedPhase(null);
+                        } else {
+                          setViewedPhase(phase.key);
+                        }
+                      }
+                      // Also trigger the leaderboard toggle
+                      if (isCompleted) {
+                        onPhaseClick(phase.key);
+                      }
+                    }}
                     className={cn(
                       "w-4 h-4 rounded-full transition-all",
-                      isCurrent && "ring-2 ring-primary ring-offset-2 ring-offset-card",
+                      isCurrent && !isViewing && "ring-2 ring-primary ring-offset-2 ring-offset-card",
+                      isViewing && "ring-2 ring-foreground ring-offset-2 ring-offset-card",
                       isCompleted ? "bg-primary cursor-pointer hover:scale-110" : "bg-muted cursor-default"
                     )}
                     aria-label={`${phase.label} phase${isCurrent ? " (current)" : ""}${isCompleted ? " (completed)" : ""}`}
