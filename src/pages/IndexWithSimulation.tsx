@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined } from "lucide-react";
+import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Menu } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -23,9 +23,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [concerns, setConcerns] = useState<Concern[]>(mockConcerns);
   const [activeTab, setActiveTab] = useState<"all" | "problems" | "proposals">("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -33,6 +42,7 @@ const Index = () => {
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [leaderboardPhase, setLeaderboardPhase] = useState<Phase>("class");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   // Simulation state
   const [isSimulating, setIsSimulating] = useState(false);
@@ -270,51 +280,121 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+      <header className="bg-card border-b border-border sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 py-4 md:py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <img src={collibriLogo} alt="Collibri" className="h-10 w-10" />
-              <h1 className="text-3xl font-bold text-foreground">Collibri</h1>
+            <div className="flex items-center gap-2 md:gap-3">
+              <img src={collibriLogo} alt="Collibri" className="h-8 w-8 md:h-10 md:w-10" />
+              <h1 className="text-xl md:text-3xl font-bold text-foreground">Collibri</h1>
             </div>
-            <div className="flex items-center gap-3">
-              <Button
-                variant={isSimulating ? "default" : "outline"}
-                onClick={handleSimulationToggle}
-                className="gap-2"
-              >
-                {isSimulating ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                {isSimulating ? "Stop Simulation" : "Simulate Timeline"}
-              </Button>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className="gap-2">
-                    <ChartNoAxesCombined className="h-4 w-4" />
-                    My Quota
+            
+            {/* Desktop Navigation */}
+            {!isMobile && (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant={isSimulating ? "default" : "outline"}
+                  onClick={handleSimulationToggle}
+                  className="gap-2"
+                >
+                  {isSimulating ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                  <span className="hidden lg:inline">{isSimulating ? "Stop Simulation" : "Simulate Timeline"}</span>
+                </Button>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="gap-2">
+                      <ChartNoAxesCombined className="h-4 w-4" />
+                      <span className="hidden lg:inline">My Quota</span>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[500px] p-0" align="end">
+                    <QuotaDisplay quota={simulatedQuota} />
+                  </PopoverContent>
+                </Popover>
+                <Button
+                  variant="outline"
+                  onClick={() => navigate("/notifications")}
+                  className="gap-2"
+                >
+                  <Bell className="h-4 w-4" />
+                  <span className="hidden lg:inline">Notifications</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => navigate("/statistics")}
+                  className="gap-2"
+                >
+                  <BarChart3 className="h-4 w-4" />
+                  <span className="hidden lg:inline">Statistics</span>
+                </Button>
+                <NewConcernDialog onSubmit={handleNewConcern} />
+              </div>
+            )}
+
+            {/* Mobile Menu */}
+            {isMobile && (
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Menu className="h-5 w-5" />
                   </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[500px] p-0" align="end">
-                  <QuotaDisplay quota={simulatedQuota} />
-                </PopoverContent>
-              </Popover>
-              <Button
-                variant="outline"
-                onClick={() => navigate("/notifications")}
-                className="gap-2"
-              >
-                <Bell className="h-4 w-4" />
-                Notifications
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => navigate("/statistics")}
-                className="gap-2"
-              >
-                <BarChart3 className="h-4 w-4" />
-                Statistics
-              </Button>
-              <NewConcernDialog onSubmit={handleNewConcern} />
-            </div>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[300px]">
+                  <SheetHeader>
+                    <SheetTitle>Menu</SheetTitle>
+                  </SheetHeader>
+                  <div className="flex flex-col gap-4 mt-6">
+                    <Button
+                      variant={isSimulating ? "default" : "outline"}
+                      onClick={() => {
+                        handleSimulationToggle();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="gap-2 w-full justify-start"
+                    >
+                      {isSimulating ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                      {isSimulating ? "Stop Simulation" : "Simulate Timeline"}
+                    </Button>
+                    
+                    <div className="border border-border rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-2 text-sm font-medium">
+                        <ChartNoAxesCombined className="h-4 w-4" />
+                        <span>My Quota</span>
+                      </div>
+                      <QuotaDisplay quota={simulatedQuota} />
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        navigate("/notifications");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="gap-2 w-full justify-start"
+                    >
+                      <Bell className="h-4 w-4" />
+                      Notifications
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        navigate("/statistics");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="gap-2 w-full justify-start"
+                    >
+                      <BarChart3 className="h-4 w-4" />
+                      Statistics
+                    </Button>
+                    
+                    <NewConcernDialog onSubmit={(type, title, desc, level) => {
+                      handleNewConcern(type, title, desc, level);
+                      setMobileMenuOpen(false);
+                    }} />
+                  </div>
+                </SheetContent>
+              </Sheet>
+            )}
           </div>
         </div>
       </header>
