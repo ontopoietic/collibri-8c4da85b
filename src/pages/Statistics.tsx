@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, MessageSquare, ThumbsUp, FileText } from "lucide-react";
 import { mockConcerns } from "@/data/mockData";
 import { Phase } from "@/types/concern";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import {
   BarChart,
   Bar,
@@ -233,7 +234,7 @@ const Statistics = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <Button
           variant="ghost"
@@ -489,6 +490,9 @@ const Statistics = () => {
           </Card>
         </div>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav />
     </div>
   );
 };
