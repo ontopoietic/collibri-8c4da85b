@@ -15,6 +15,7 @@ interface ReplyThreadProps {
   availableReplies?: Reply[];
   openFormId?: string | null;
   onFormToggle?: (replyId: string | null) => void;
+  parentCategory?: ReplyCategory;
 }
 
 const getAllRepliesFlat = (replies: Reply[]): Reply[] => {
@@ -36,13 +37,15 @@ const ReplyItem = ({
   onReply, 
   availableReplies,
   openFormId,
-  onFormToggle
+  onFormToggle,
+  parentCategory
 }: { 
   reply: Reply; 
   onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
   availableReplies: Reply[];
   openFormId?: string | null;
   onFormToggle?: (replyId: string | null) => void;
+  parentCategory?: ReplyCategory;
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
@@ -69,7 +72,10 @@ const ReplyItem = ({
       <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2 flex-wrap">
-                <CategoryBadge category={reply.category} />
+                <CategoryBadge 
+                  category={reply.category} 
+                  isAnswerToQuestion={parentCategory === "question"}
+                />
                 {reply.aspects && reply.aspects.length > 0 && (
                   <AspectBadges aspects={reply.aspects} />
                 )}
@@ -184,6 +190,7 @@ const ReplyItem = ({
                   availableReplies={availableReplies}
                   openFormId={openFormId}
                   onFormToggle={onFormToggle}
+                  parentCategory={reply.category}
                 />
               </div>
             )}
@@ -192,7 +199,7 @@ const ReplyItem = ({
   );
 };
 
-export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle }: ReplyThreadProps) => {
+export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle, parentCategory }: ReplyThreadProps) => {
   const [localOpenFormId, setLocalOpenFormId] = useState<string | null>(null);
   
   if (replies.length === 0) return null;
@@ -214,6 +221,7 @@ export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, on
           availableReplies={allReplies}
           openFormId={activeFormId}
           onFormToggle={handleFormToggle}
+          parentCategory={parentCategory}
         />
       ))}
     </div>
