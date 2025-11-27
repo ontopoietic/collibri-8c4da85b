@@ -10,7 +10,7 @@ const aspectConfig = {
   problem: {
     label: "Problem",
     icon: AlertTriangle,
-    className: "bg-destructive/10 text-destructive border-destructive/20",
+    className: "bg-transparent text-problem-aspect border-problem-aspect",
   },
   proposal: {
     label: "Proposal",

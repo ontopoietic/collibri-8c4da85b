@@ -101,6 +101,10 @@ export default {
 				DEFAULT: 'hsl(var(--problem))',
 				foreground: 'hsl(var(--problem-foreground))'
 			},
+			'problem-aspect': {
+				DEFAULT: 'hsl(var(--problem-aspect))',
+				foreground: 'hsl(var(--problem-aspect-foreground))'
+			},
 			school: {
 				DEFAULT: 'hsl(var(--school))',
 				foreground: 'hsl(var(--school-foreground))'
