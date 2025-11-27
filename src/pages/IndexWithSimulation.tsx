@@ -196,8 +196,13 @@ const Index = () => {
   };
 
   const handlePhaseClick = (phase: Phase) => {
-    setLeaderboardPhase(phase);
-    setShowLeaderboard(true);
+    // Toggle: if already viewing this phase's leaderboard, go back to forum
+    if (showLeaderboard && leaderboardPhase === phase) {
+      setShowLeaderboard(false);
+    } else {
+      setLeaderboardPhase(phase);
+      setShowLeaderboard(true);
+    }
   };
 
   const handleVariantVote = (concernId: string, variantId: string) => {
