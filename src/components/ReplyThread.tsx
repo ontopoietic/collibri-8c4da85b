@@ -125,16 +125,16 @@ const ReplyItem = ({
             <div className="flex items-center gap-2 flex-wrap">
               <VoteButton initialVotes={reply.votes} />
               <Button
-                variant="outline"
+                variant="endorse"
                 size="sm"
                 onClick={() => handleFormOpen('endorse')}
-                className="gap-1 text-xs"
+                className="gap-1 text-xs bg-endorse text-endorse-foreground hover:bg-endorse"
               >
                 <ThumbsUp className="h-3 w-3" />
                 Endorse
               </Button>
               <Button
-                variant="outline"
+                variant="object"
                 size="sm"
                 onClick={() => handleFormOpen('object')}
                 className="gap-1 text-xs"

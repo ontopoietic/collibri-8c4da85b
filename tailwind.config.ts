@@ -93,11 +93,35 @@ export default {
   				DEFAULT: 'hsl(var(--variant))',
   				foreground: 'hsl(var(--variant-foreground))'
   			},
-  			school: {
-  				DEFAULT: 'hsl(var(--school))',
-  				foreground: 'hsl(var(--school-foreground))'
-  			},
-  			sidebar: {
+			school: {
+				DEFAULT: 'hsl(var(--school))',
+				foreground: 'hsl(var(--school-foreground))'
+			},
+			endorse: {
+				DEFAULT: 'hsl(var(--endorse))',
+				foreground: 'hsl(var(--endorse-foreground))'
+			},
+			object: {
+				DEFAULT: 'hsl(var(--object))',
+				foreground: 'hsl(var(--object-foreground))'
+			},
+			question: {
+				DEFAULT: 'hsl(var(--question))',
+				foreground: 'hsl(var(--question-foreground))'
+			},
+			statistics: {
+				DEFAULT: 'hsl(var(--statistics))',
+				foreground: 'hsl(var(--statistics-foreground))'
+			},
+			'new-concern': {
+				DEFAULT: 'hsl(var(--new-concern))',
+				foreground: 'hsl(var(--new-concern-foreground))'
+			},
+			'secondary-action': {
+				DEFAULT: 'hsl(var(--secondary-action))',
+				foreground: 'hsl(var(--secondary-action-foreground))'
+			},
+			sidebar: {
   				DEFAULT: 'hsl(var(--sidebar-background))',
   				foreground: 'hsl(var(--sidebar-foreground))',
   				primary: 'hsl(var(--sidebar-primary))',

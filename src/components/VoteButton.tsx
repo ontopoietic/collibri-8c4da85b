@@ -51,10 +51,10 @@ export const VoteButton = ({
 
   return (
     <Button
-      variant={hasVoted ? "default" : "outline"}
+      variant={hasVoted ? "vote" : "vote"}
       size="sm"
       onClick={handleVote}
-      className="gap-1"
+      className={`gap-1 ${hasVoted ? 'bg-accent text-accent-foreground hover:bg-accent' : ''}`}
     >
       <ChevronUp className="h-4 w-4" />
       <span className="font-semibold">{votes}</span>

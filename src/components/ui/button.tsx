@@ -15,6 +15,13 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        endorse: "border border-input bg-background hover:bg-endorse hover:text-endorse-foreground",
+        object: "border border-input bg-background hover:bg-object hover:text-object-foreground",
+        vote: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        question: "border border-input bg-background hover:bg-question hover:text-question-foreground",
+        statistics: "border border-input bg-background hover:bg-statistics hover:text-statistics-foreground",
+        "new-concern": "border border-input bg-background hover:bg-new-concern hover:text-new-concern-foreground",
+        "secondary-action": "border border-input bg-background hover:bg-secondary-action hover:text-secondary-action-foreground",
       },
       size: {
         default: "h-10 px-4 py-2",

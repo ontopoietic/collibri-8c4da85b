@@ -338,19 +338,19 @@ const ConcernDetail = () => {
               }}
             />
             <Button
-              variant="default"
+              variant="endorse"
               onClick={() => {
                 setReplyType('endorse');
                 setShowReplyForm(true);
                 setReplyToId(null);
               }}
-              className="gap-2"
+              className="gap-2 bg-endorse text-endorse-foreground hover:bg-endorse"
             >
               <ThumbsUp className="h-4 w-4" />
               Endorse
             </Button>
             <Button
-              variant="outline"
+              variant="object"
               onClick={() => {
                 setReplyType('object');
                 setShowReplyForm(true);
@@ -362,7 +362,7 @@ const ConcernDetail = () => {
               Object
             </Button>
             <Button
-              variant="ghost"
+              variant="question"
               size="sm"
               onClick={() => {
                 setReplyType('question');
