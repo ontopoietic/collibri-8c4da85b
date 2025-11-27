@@ -10,17 +10,17 @@ const typeConfig = {
   problem: {
     label: "Problem",
     icon: AlertTriangle,
-    className: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+    className: "bg-concern-type text-concern-type-foreground hover:bg-concern-type/90",
   },
   proposal: {
     label: "Proposal",
     icon: Lightbulb,
-    className: "bg-proposal text-proposal-foreground hover:bg-proposal/90",
+    className: "bg-concern-type text-concern-type-foreground hover:bg-concern-type/90",
   },
   "counter-proposal": {
     label: "Counter-Proposal",
     icon: GitCompare,
-    className: "bg-primary text-primary-foreground hover:bg-primary/90",
+    className: "bg-concern-type text-concern-type-foreground hover:bg-concern-type/90",
   },
 };
 
