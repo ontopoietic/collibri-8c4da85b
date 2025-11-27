@@ -51,6 +51,9 @@ All colors MUST be HSL.
     --variant: 267 98% 64%;
     --variant-foreground: 0 0% 100%;
 
+    --school: 8 100% 68%;
+    --school-foreground: 0 0% 100%;
+
     --sidebar-background: 245 25% 15%;
     --sidebar-foreground: 240 10% 92%;
     --sidebar-primary: 15 45% 50%;
@@ -101,6 +104,9 @@ All colors MUST be HSL.
     
     --variant: 267 98% 64%;
     --variant-foreground: 0 0% 100%;
+
+    --school: 8 100% 68%;
+    --school-foreground: 0 0% 100%;
 
     --sidebar-background: 245 30% 12%;
     --sidebar-foreground: 240 10% 95%;
