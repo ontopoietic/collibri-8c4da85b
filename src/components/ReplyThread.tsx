@@ -110,7 +110,7 @@ const ReplyItem = ({
               </div>
             )}
 
-            {reply.counterProposal && (
+            {reply.counterProposal && reply.category === "objection" && (
               <div className="bg-primary/5 border border-primary/20 p-3 rounded-md space-y-2">
                 <p className="text-xs font-medium text-primary">Counter-Proposal:</p>
                 <p className="text-sm text-foreground">{reply.counterProposal.text}</p>
