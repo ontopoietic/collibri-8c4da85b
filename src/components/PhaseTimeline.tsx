@@ -221,8 +221,8 @@ export const PhaseTimeline = ({
                     disabled={daysPassed < 90}
                     className={cn(
                       "relative h-12 rounded-lg transition-all duration-300 group",
-                      daysPassed >= 90 
-                        ? "cursor-pointer hover:scale-[1.02]" 
+                      daysPassed >= 65
+                        ? "cursor-pointer hover:scale-[1.02]"
                         : "cursor-not-allowed opacity-50"
                     )}
                     style={{ width: "27.77%" }}
