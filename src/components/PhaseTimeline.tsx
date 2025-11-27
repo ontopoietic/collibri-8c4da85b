@@ -48,7 +48,7 @@ export const PhaseTimeline = ({
   
   // Use slider value when simulating, persisted day when available, otherwise use actual days
   const daysPassed = isSimulating 
-    ? Math.floor((sliderValue / 100) * phaseDurationDays)
+    ? Math.min(Math.floor((sliderValue / 100) * phaseDurationDays), phaseDurationDays - 1)
     : persistedDay !== null 
       ? persistedDay
       : actualDaysPassed;
@@ -155,7 +155,7 @@ export const PhaseTimeline = ({
                   >
                     <div className="absolute inset-0 rounded-lg transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
                       <div
-                        className="h-full transition-all duration-500"
+                        className="h-full rounded-lg transition-all duration-500"
                         style={{ 
                           width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 33.33) / 5.56) * 100))}%`,
                           backgroundColor: '#2A2B37'
@@ -227,7 +227,7 @@ export const PhaseTimeline = ({
                   >
                     <div className="absolute inset-0 rounded-lg transition-all duration-300" style={{ backgroundColor: '#3B3C4C' }}>
                       <div
-                        className="h-full transition-all duration-500"
+                        className="h-full rounded-lg transition-all duration-500"
                         style={{ 
                           width: `${Math.max(0, Math.min(100, ((overallProgressPercentage - 66.67) / 5.56) * 100))}%`,
                           backgroundColor: '#2A2B37'
