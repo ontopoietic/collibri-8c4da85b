@@ -56,8 +56,9 @@ All colors MUST be HSL.
     --school-foreground: 0 0% 100%;
 
     /* Action button colors */
-    --endorse: 231 34% 25%;
+    --endorse: 220 13% 16%;
     --endorse-foreground: 0 0% 100%;
+    --endorse-hover: 229 35% 25%;
     
     --object: 9 95% 72%;
     --object-foreground: 0 0% 100%;
@@ -134,8 +135,9 @@ All colors MUST be HSL.
     --school-foreground: 0 0% 100%;
 
     /* Action button colors */
-    --endorse: 231 34% 25%;
+    --endorse: 220 13% 16%;
     --endorse-foreground: 0 0% 100%;
+    --endorse-hover: 229 35% 25%;
     
     --object: 9 95% 72%;
     --object-foreground: 0 0% 100%;

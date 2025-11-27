@@ -344,7 +344,7 @@ const ConcernDetail = () => {
                 setShowReplyForm(true);
                 setReplyToId(null);
               }}
-              className="gap-2 bg-endorse text-endorse-foreground hover:bg-endorse"
+              className="gap-2 bg-endorse text-endorse-foreground hover:bg-endorse-hover"
             >
               <ThumbsUp className="h-4 w-4" />
               Endorse

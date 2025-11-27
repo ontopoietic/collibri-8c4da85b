@@ -128,7 +128,7 @@ const ReplyItem = ({
                 variant="endorse"
                 size="sm"
                 onClick={() => handleFormOpen('endorse')}
-                className="gap-1 text-xs bg-endorse text-endorse-foreground hover:bg-endorse"
+                className="gap-1 text-xs bg-endorse text-endorse-foreground hover:bg-endorse-hover"
               >
                 <ThumbsUp className="h-3 w-3" />
                 Endorse
