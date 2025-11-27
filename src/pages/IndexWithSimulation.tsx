@@ -516,8 +516,6 @@ const Index = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Concerns</SelectItem>
-                    <SelectItem value="problems">Problems</SelectItem>
-                    <SelectItem value="proposals">Proposals</SelectItem>
                     <SelectItem value="my-posts">My Concerns</SelectItem>
                     <SelectItem value="followed">Followed</SelectItem>
                     <SelectItem value="unnoticed">Unnoticed</SelectItem>
