@@ -13,7 +13,7 @@ const categoryConfig = {
     className: "bg-objection text-objection-foreground hover:bg-objection/90",
   },
   proposal: {
-    label: "Proposal",
+    label: "Answer",
     icon: Lightbulb,
     className: "bg-proposal text-proposal-foreground hover:bg-proposal/90",
   },
