@@ -40,17 +40,17 @@ All colors MUST be HSL.
     --radius: 2.25rem;
 
     /* Category colors */
-    --objection: 8 100% 68%;
-    --objection-foreground: 0 0% 100%;
+    --objection: 255 8% 89%;
+    --objection-foreground: 240 10% 20%;
 
-    --proposal: 145 40% 45%;
-    --proposal-foreground: 0 0% 100%;
+    --proposal: 255 8% 89%;
+    --proposal-foreground: 240 10% 20%;
 
-    --pro-argument: 215 50% 50%;
-    --pro-argument-foreground: 0 0% 100%;
+    --pro-argument: 255 8% 89%;
+    --pro-argument-foreground: 240 10% 20%;
 
-    --variant: 267 98% 64%;
-    --variant-foreground: 0 0% 100%;
+    --variant: 255 8% 89%;
+    --variant-foreground: 240 10% 20%;
 
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;
@@ -122,17 +122,17 @@ All colors MUST be HSL.
     --input: 245 20% 30%;
     --ring: 8 100% 68%;
 
-    --objection: 8 100% 68%;
-    --objection-foreground: 0 0% 100%;
+    --objection: 255 8% 89%;
+    --objection-foreground: 240 10% 20%;
 
-    --proposal: 145 45% 48%;
-    --proposal-foreground: 0 0% 100%;
+    --proposal: 255 8% 89%;
+    --proposal-foreground: 240 10% 20%;
 
-    --pro-argument: 215 55% 55%;
-    --pro-argument-foreground: 0 0% 100%;
+    --pro-argument: 255 8% 89%;
+    --pro-argument-foreground: 240 10% 20%;
 
-    --variant: 267 98% 64%;
-    --variant-foreground: 0 0% 100%;
+    --variant: 255 8% 89%;
+    --variant-foreground: 240 10% 20%;
 
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;

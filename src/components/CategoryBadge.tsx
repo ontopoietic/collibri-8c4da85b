@@ -31,7 +31,7 @@ const categoryConfig = {
   question: {
     label: "Question",
     icon: HelpCircle,
-    className: "bg-blue-500 text-white hover:bg-blue-600",
+    className: "bg-pro-argument text-pro-argument-foreground hover:bg-pro-argument/90",
   },
 };
 
