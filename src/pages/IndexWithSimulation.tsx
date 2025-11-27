@@ -31,6 +31,8 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed">("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [leaderboardPhase, setLeaderboardPhase] = useState<Phase>("class");
   
   // Simulation state
   const [isSimulating, setIsSimulating] = useState(false);
@@ -166,7 +168,8 @@ const Index = () => {
   };
 
   const handlePhaseClick = (phase: Phase) => {
-    navigate(`/leaderboard/${phase}`);
+    setLeaderboardPhase(phase);
+    setShowLeaderboard(true);
   };
 
   const handleVariantVote = (concernId: string, variantId: string) => {
@@ -187,6 +190,11 @@ const Index = () => {
   };
 
   const phaseConcerns = simulatedConcerns.filter((c) => c.phase === currentPhase);
+
+  // Leaderboard data
+  const leaderboardConcerns = simulatedConcerns
+    .filter((c) => c.phase === leaderboardPhase)
+    .sort((a, b) => b.votes - a.votes);
 
   // Helper function to search through replies recursively
   const searchInReplies = (replies: Reply[], query: string): boolean => {
@@ -299,6 +307,78 @@ const Index = () => {
               dayIntoPhase={Math.floor(dayIntoPhase)}
               interimDuration={5}
             />
+          </div>
+        ) : showLeaderboard ? (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-3xl font-bold text-foreground">
+                {leaderboardPhase === "class" ? "Class" : leaderboardPhase === "grade" ? "Grade" : "School"} Phase Leaderboard
+              </h2>
+              <Button
+                variant="outline"
+                onClick={() => setShowLeaderboard(false)}
+              >
+                Back to Forum
+              </Button>
+            </div>
+            <p className="text-muted-foreground">
+              Top concerns ranked by community votes
+            </p>
+
+            <div className="space-y-4">
+              {leaderboardConcerns.map((concern, index) => {
+                const isTopThree = index < 3;
+                const getMedalIcon = (index: number) => {
+                  if (index === 0) return <span className="text-4xl">🏆</span>;
+                  if (index === 1) return <span className="text-4xl">🥈</span>;
+                  if (index === 2) return <span className="text-4xl">🥉</span>;
+                  return null;
+                };
+
+                return (
+                  <div
+                    key={concern.id}
+                    className={`bg-card rounded-lg p-6 shadow-sm transition-all hover:shadow-lg cursor-pointer ${
+                      isTopThree ? "border-2 border-primary bg-primary/5" : "border border-border"
+                    }`}
+                    onClick={() => navigate(`/concern/${concern.id}`)}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex flex-col items-center gap-1 min-w-[60px]">
+                        {getMedalIcon(index) || (
+                          <div className="text-2xl font-bold text-muted-foreground">
+                            #{index + 1}
+                          </div>
+                        )}
+                        <div className="text-sm text-muted-foreground">
+                          {concern.votes} votes
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-semibold mb-2">{concern.title}</h3>
+                        <p className="text-muted-foreground line-clamp-2 mb-3">
+                          {concern.description}
+                        </p>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <span>{concern.replies.length} replies</span>
+                          <span>
+                            {new Date(concern.timestamp).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {leaderboardConcerns.length === 0 && (
+                <div className="text-center py-16">
+                  <p className="text-muted-foreground text-lg">
+                    No concerns in this phase yet.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         ) : (
           <>

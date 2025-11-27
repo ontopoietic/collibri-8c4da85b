@@ -88,17 +88,6 @@ const Leaderboard = () => {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <TypeBadge type={concern.type} />
-                        {concern.aspects && concern.aspects.length > 0 && (
-                          <AspectBadges aspects={concern.aspects} />
-                        )}
-                        {concern.group && (
-                          <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground">
-                            {concern.group}
-                          </span>
-                        )}
-                      </div>
                       <CardTitle className="text-xl mb-2">{concern.title}</CardTitle>
                       <p className="text-muted-foreground line-clamp-2">
                         {concern.description}
