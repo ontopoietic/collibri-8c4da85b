@@ -236,7 +236,7 @@ const ConcernDetail = () => {
           className="mb-6 gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Forum
+          {navigationHistory.length <= 1 || (navigationHistory.length > 1 && navigationHistory[navigationHistory.length - 2] === "/") ? "Back to Forum" : "Back"}
         </Button>
 
         <div className="bg-card rounded-lg p-8 shadow-sm space-y-6">
