@@ -37,6 +37,7 @@ const Index = () => {
   // Simulation state
   const [isSimulating, setIsSimulating] = useState(false);
   const [simulationProgress, setSimulationProgress] = useState(100); // 0-100%
+  const [persistedSimulationDay, setPersistedSimulationDay] = useState<number | null>(null);
 
   // Calculate the simulated "current time" and phase based on slider
   const now = new Date();
@@ -55,8 +56,35 @@ const Index = () => {
     return "school";
   };
 
-  const simulatedCurrentTime = isSimulating ? getSimulatedTime(simulationProgress) : now;
-  const currentPhase: Phase = isSimulating ? getSimulatedPhase(simulationProgress) : "school";
+  // Use persisted day if available, otherwise use current time
+  const effectiveTime = persistedSimulationDay !== null
+    ? new Date(allPhasesStartDate.getTime() + persistedSimulationDay * 24 * 60 * 60 * 1000)
+    : now;
+
+  const simulatedCurrentTime = isSimulating ? getSimulatedTime(simulationProgress) : effectiveTime;
+  
+  const getCurrentPhase = (): Phase => {
+    const daysPassed = isSimulating 
+      ? (simulationProgress / 100) * totalDuration
+      : persistedSimulationDay !== null 
+        ? persistedSimulationDay 
+        : Math.floor((now.getTime() - allPhasesStartDate.getTime()) / (1000 * 60 * 60 * 24));
+    
+    if (daysPassed < 30) return "class";
+    if (daysPassed < 60) return "grade";
+    return "school";
+  };
+  
+  const currentPhase: Phase = getCurrentPhase();
+
+  const handleSimulationToggle = () => {
+    if (isSimulating) {
+      // Exiting simulation - persist the current simulated day
+      const simulatedDays = (simulationProgress / 100) * totalDuration;
+      setPersistedSimulationDay(simulatedDays);
+    }
+    setIsSimulating(!isSimulating);
+  };
 
   // Calculate if we're in the interims phase (first 5 days of any phase)
   const dayIntoPhase = useMemo(() => {
@@ -247,7 +275,7 @@ const Index = () => {
             <div className="flex items-center gap-3">
               <Button
                 variant={isSimulating ? "default" : "outline"}
-                onClick={() => setIsSimulating(!isSimulating)}
+                onClick={handleSimulationToggle}
                 className="gap-2"
               >
                 {isSimulating ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
