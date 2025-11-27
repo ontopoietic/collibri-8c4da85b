@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 245 25% 15%;
+    --background: 228 12% 16%;
     --foreground: 240 10% 92%;
 
     --card: 245 20% 20%;
@@ -17,7 +17,7 @@ All colors MUST be HSL.
     --popover: 245 20% 20%;
     --popover-foreground: 240 10% 92%;
 
-    --primary: 16 82% 53%;
+    --primary: 8 100% 68%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 245 15% 25%;
@@ -34,12 +34,12 @@ All colors MUST be HSL.
 
     --border: 245 15% 28%;
     --input: 245 15% 28%;
-    --ring: 16 82% 53%;
+    --ring: 8 100% 68%;
 
     --radius: 1rem;
 
     /* Category colors */
-    --objection: 16 82% 53%;
+    --objection: 8 100% 68%;
     --objection-foreground: 0 0% 100%;
     
     --proposal: 145 40% 45%;
@@ -62,7 +62,7 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 245 30% 12%;
+    --background: 228 12% 16%;
     --foreground: 240 10% 95%;
 
     --card: 245 25% 18%;
@@ -71,7 +71,7 @@ All colors MUST be HSL.
     --popover: 245 25% 18%;
     --popover-foreground: 240 10% 95%;
 
-    --primary: 16 82% 53%;
+    --primary: 8 100% 68%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 245 20% 22%;
@@ -88,9 +88,9 @@ All colors MUST be HSL.
 
     --border: 245 20% 30%;
     --input: 245 20% 30%;
-    --ring: 16 82% 53%;
+    --ring: 8 100% 68%;
     
-    --objection: 16 82% 53%;
+    --objection: 8 100% 68%;
     --objection-foreground: 0 0% 100%;
     
     --proposal: 145 45% 48%;
@@ -119,6 +119,9 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply text-foreground font-sans;
+    background: linear-gradient(180deg, #F07360 0%, #25272F 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 }
