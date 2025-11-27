@@ -57,7 +57,7 @@ export const PhaseTimeline = ({
   // Calculate which phase we're in and its progress
   const currentPhaseDayStart = currentIndex * 30;
   const daysIntoCurrentPhase = Math.max(0, Math.min(30, daysPassed - currentPhaseDayStart));
-  const daysRemaining = Math.max(0, 30 - daysIntoCurrentPhase);
+  const daysRemaining = Math.max(0, Math.round(30 - daysIntoCurrentPhase));
   
   // Check if in interim phase (first 5 days)
   const isInInterim = daysIntoCurrentPhase < 5;
@@ -94,7 +94,7 @@ export const PhaseTimeline = ({
                       daysPassed >= 30 
                         ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
-                      daysPassed >= 35 && "opacity-60"
+                      (daysPassed >= 35 || daysPassed < 0) && "opacity-60"
                     )}
                     style={{ width: "33.33%" }}
                   >
@@ -161,7 +161,7 @@ export const PhaseTimeline = ({
                       daysPassed >= 65 
                         ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
-                      daysPassed >= 65 && "opacity-60"
+                      (daysPassed < 35 || daysPassed >= 65) && "opacity-60"
                     )}
                     style={{ width: "27.78%" }}
                   >
@@ -227,7 +227,8 @@ export const PhaseTimeline = ({
                       "relative h-12 rounded-lg transition-all duration-300 group",
                       daysPassed >= 65
                         ? "cursor-pointer hover:scale-[1.02]"
-                        : "cursor-not-allowed opacity-50"
+                        : "cursor-not-allowed opacity-50",
+                      daysPassed < 65 && "opacity-60"
                     )}
                     style={{ width: "27.77%" }}
                   >
