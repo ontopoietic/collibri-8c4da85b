@@ -8,7 +8,7 @@ import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, MessageSquare, AlertCircle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink } from "lucide-react";
+import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -23,8 +23,8 @@ import {
 const typeConfig = {
   problem: {
     label: "Problem",
-    icon: AlertCircle,
-    className: "bg-destructive/10 text-destructive border-destructive/20",
+    icon: AlertTriangle,
+    className: "bg-transparent text-problem-aspect border-problem-aspect",
   },
   proposal: {
     label: "Proposal",
