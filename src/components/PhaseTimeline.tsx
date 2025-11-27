@@ -180,10 +180,10 @@ export const PhaseTimeline = ({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
         <div className="flex items-center justify-between w-full sm:w-auto gap-2">
           <h3 className="text-base md:text-lg font-semibold text-foreground">
-            Timeline Overview
+            Current Interval
           </h3>
-          {/* Simulation button on mobile */}
-          {isMobile && onSimulationToggle && (
+          {/* Simulation button on all screen sizes */}
+          {onSimulationToggle && (
             <Button
               variant={isSimulating ? "default" : "secondary-action"}
               onClick={onSimulationToggle}
@@ -251,7 +251,7 @@ export const PhaseTimeline = ({
                     <CheckSquare className="h-3 w-3 text-white" />
                     <span className="text-xs font-medium text-white">Selection</span>
                   </div>
-                  <Progress value={votingProgress} className="h-1.5 mb-1" />
+                  <Progress value={votingProgress} className="h-2 mb-1" />
                   <span className="text-[10px] text-muted-foreground">
                     {isViewingCompletedPhase ? "Done" : isInVoting ? `Day ${Math.floor(votingDaysIn) + 1}/5` : isVotingComplete ? "Done" : "Soon"}
                   </span>
