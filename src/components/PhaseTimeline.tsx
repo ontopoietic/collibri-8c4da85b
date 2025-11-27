@@ -54,12 +54,29 @@ export const PhaseTimeline = ({
   // Calculate overall progress percentage (0-100% across all 90 days)
   const overallProgressPercentage = (daysPassed / phaseDurationDays) * 100;
   
-  // Calculate which phase we're in and its progress
-  const currentPhaseDayStart = currentIndex * 30;
-  const daysIntoCurrentPhase = Math.max(0, Math.min(30, daysPassed - currentPhaseDayStart));
-  const daysRemaining = Math.max(0, Math.round(30 - daysIntoCurrentPhase));
+  // Determine which phase we're currently in based on day
+  const isInClassPhase = daysPassed >= 0 && daysPassed < 30;
+  const isInClassVoting = daysPassed >= 30 && daysPassed < 35;
+  const isInGradePhase = daysPassed >= 35 && daysPassed < 60;
+  const isInGradeVoting = daysPassed >= 60 && daysPassed < 65;
+  const isInSchoolPhase = daysPassed >= 65 && daysPassed <= 90;
+  
+  // Calculate days until next phase
+  let daysUntilText = "";
+  if (isInClassPhase || isInClassVoting) {
+    const daysUntilGrade = 35 - daysPassed;
+    daysUntilText = `${daysUntilGrade} days until Grade Level`;
+  } else if (isInGradePhase || isInGradeVoting) {
+    const daysUntilSchool = 65 - daysPassed;
+    daysUntilText = `${daysUntilSchool} days until School Level`;
+  } else if (isInSchoolPhase) {
+    const daysRemaining = 90 - daysPassed;
+    daysUntilText = `${daysRemaining} days left in School Level`;
+  }
   
   // Check if in interim phase (first 5 days)
+  const currentPhaseDayStart = currentIndex * 30;
+  const daysIntoCurrentPhase = Math.max(0, Math.min(30, daysPassed - currentPhaseDayStart));
   const isInInterim = daysIntoCurrentPhase < 5;
 
   return (
@@ -73,7 +90,7 @@ export const PhaseTimeline = ({
           <span className="font-medium">
             {isSimulating 
               ? `Day ${daysPassed + 1} of ${phaseDurationDays}` 
-              : `${daysRemaining} days left in ${phases[currentIndex].label}`}
+              : daysUntilText}
           </span>
         </div>
       </div>
@@ -94,7 +111,7 @@ export const PhaseTimeline = ({
                       daysPassed >= 30 
                         ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
-                      (daysPassed >= 35 || daysPassed < 0) && "opacity-60"
+                      !isInClassPhase && !isInClassVoting && "opacity-60"
                     )}
                     style={{ width: "33.33%" }}
                   >
@@ -161,7 +178,7 @@ export const PhaseTimeline = ({
                       daysPassed >= 65 
                         ? "cursor-pointer hover:opacity-100" 
                         : "cursor-not-allowed opacity-50",
-                      (daysPassed < 35 || daysPassed >= 65) && "opacity-60"
+                      !isInGradePhase && !isInGradeVoting && "opacity-60"
                     )}
                     style={{ width: "27.78%" }}
                   >
@@ -225,10 +242,10 @@ export const PhaseTimeline = ({
                     disabled={daysPassed < 90}
                     className={cn(
                       "relative h-12 rounded-lg transition-all duration-300 group",
-                      daysPassed >= 65
+                      daysPassed >= 90
                         ? "cursor-pointer hover:scale-[1.02]"
                         : "cursor-not-allowed opacity-50",
-                      daysPassed < 65 && "opacity-60"
+                      !isInSchoolPhase && "opacity-60"
                     )}
                     style={{ width: "27.77%" }}
                   >
@@ -269,12 +286,6 @@ export const PhaseTimeline = ({
           {/* Simulation Status and Slider */}
           {isSimulating && (
             <div className="mt-6 space-y-3">
-              <div className="text-xs text-muted-foreground text-center">
-                Simulating: Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} (
-                  {phases[currentIndex].label}
-                  {isInInterim && currentPhase !== "class" ? " - Variant Voting" : ""}
-                )
-              </div>
               <Slider
                 value={[sliderValue]}
                 onValueChange={(value) => onSliderChange?.(value[0])}
@@ -283,6 +294,12 @@ export const PhaseTimeline = ({
                 step={1}
                 className="w-full"
               />
+              <div className="text-xs text-muted-foreground text-center">
+                Simulating: Day {Math.min(daysPassed + 1, phaseDurationDays)} of {phaseDurationDays} (
+                  {phases[currentIndex].label}
+                  {isInInterim && currentPhase !== "class" ? " - Variant Voting" : ""}
+                )
+              </div>
             </div>
           )}
         </div>
