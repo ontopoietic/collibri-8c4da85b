@@ -56,12 +56,12 @@ All colors MUST be HSL.
 
     --sidebar-background: 245 25% 15%;
     --sidebar-foreground: 240 10% 92%;
-    --sidebar-primary: 15 45% 50%;
+    --sidebar-primary: 8 100% 68%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 245 15% 25%;
     --sidebar-accent-foreground: 240 10% 92%;
     --sidebar-border: 245 15% 28%;
-    --sidebar-ring: 15 45% 50%;
+    --sidebar-ring: 8 100% 68%;
   }
 
   .dark {
@@ -110,12 +110,12 @@ All colors MUST be HSL.
 
     --sidebar-background: 245 30% 12%;
     --sidebar-foreground: 240 10% 95%;
-    --sidebar-primary: 15 50% 52%;
+    --sidebar-primary: 8 100% 68%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 245 20% 22%;
     --sidebar-accent-foreground: 240 10% 95%;
     --sidebar-border: 245 20% 30%;
-    --sidebar-ring: 15 50% 52%;
+    --sidebar-ring: 8 100% 68%;
   }
 }
 
