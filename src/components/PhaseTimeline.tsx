@@ -148,8 +148,7 @@ export const PhaseTimeline = ({
                   <div
                     className={cn(
                       "relative rounded-lg transition-all duration-300 cursor-default",
-                      "h-8 sm:h-10 md:h-12 lg:h-14",
-                      overallProgressPercentage > 33.33 && overallProgressPercentage < 38.89 && "ring-2 ring-primary/50"
+                      "h-8 sm:h-10 md:h-12 lg:h-14"
                     )}
                     style={{ width: "5.56%" }}
                   >
@@ -220,8 +219,7 @@ export const PhaseTimeline = ({
                   <div
                     className={cn(
                       "relative rounded-lg transition-all duration-300 cursor-default",
-                      "h-8 sm:h-10 md:h-12 lg:h-14",
-                      overallProgressPercentage > 66.67 && overallProgressPercentage < 72.23 && "ring-2 ring-primary/50"
+                      "h-8 sm:h-10 md:h-12 lg:h-14"
                     )}
                     style={{ width: "5.56%" }}
                   >
