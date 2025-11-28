@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { UserQuota } from "@/types/concern";
-import { AlertCircle, Lightbulb, ThumbsUp, HelpCircle, Scale, ThumbsDown, Flag } from "lucide-react";
+import { AlertCircle, Lightbulb, ThumbsUp, GitBranch, Flag } from "lucide-react";
 
 interface QuotaDisplayProps {
   quota: UserQuota;
@@ -24,7 +24,7 @@ const QuotaItem = ({
       <div className="flex items-center justify-between text-sm">
         <div className="flex items-center gap-2">
           <config.icon className={`${isLarge ? 'h-5 w-5' : 'h-4 w-4'} ${config.color}`} />
-          <span className={`font-medium ${isLarge ? 'text-base' : ''}`}>{config.label}</span>
+          <span className={`font-medium text-foreground ${isLarge ? 'text-base' : ''}`}>{config.label}</span>
         </div>
         <span className={`font-semibold ${isLarge ? 'text-base' : ''} ${isLow ? "text-destructive" : "text-muted-foreground"}`}>
           {quotaData.used}/{quotaData.total}
@@ -68,24 +68,20 @@ export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
         {/* Third row: Objections, Pro-Arguments */}
         <div className="grid grid-cols-2 gap-6 pb-6 border-b border-border">
           <QuotaItem
-            config={{ label: "Objections", icon: ThumbsDown, color: "text-orange-600" }}
+            config={{ label: "Objections", icon: AlertCircle, color: "text-objection" }}
             quotaData={quota.objections}
           />
           <QuotaItem
-            config={{ label: "Pro-Arguments", icon: Flag, color: "text-green-600" }}
+            config={{ label: "Pro-Arguments", icon: Flag, color: "text-pro-argument" }}
             quotaData={quota.proArguments}
           />
         </div>
 
-        {/* Fourth row: Variants, Questions */}
+        {/* Fourth row: Variants */}
         <div className="grid grid-cols-2 gap-6">
           <QuotaItem
-            config={{ label: "Variants", icon: Scale, color: "text-muted-foreground" }}
+            config={{ label: "Variants", icon: GitBranch, color: "text-variant" }}
             quotaData={quota.variants}
-          />
-          <QuotaItem
-            config={{ label: "Questions", icon: HelpCircle, color: "text-blue-600" }}
-            quotaData={quota.questions}
           />
         </div>
       </div>
