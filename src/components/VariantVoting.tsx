@@ -64,7 +64,7 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
     <>
       <div className="space-y-6">
         <div className="text-center space-y-3">
-          <h2 className="text-2xl font-bold">Variant Voting Phase</h2>
+          <h2 className="text-2xl font-bold text-foreground">Variant Voting Phase</h2>
           <p className="text-muted-foreground">
             Vote for your preferred version of each top concern from the previous phase
           </p>
@@ -99,7 +99,7 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
 
             return (
               <Card key={concern.id} className="p-6 flex flex-col">
-                <h3 className="font-semibold mb-1">{concern.title}</h3>
+                <h3 className="font-semibold mb-1 text-foreground">{concern.title}</h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   {concern.votes} votes from previous phase
                 </p>
@@ -134,8 +134,8 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
                           {voted && (
                             <div className="mt-2 space-y-1">
                               <div className="flex items-center justify-between text-xs">
-                                <span className="font-medium">{variant.votes} votes</span>
-                                <span className="text-muted-foreground">
+                                <span className="font-medium text-foreground">{variant.votes} votes</span>
+                                <span className="text-foreground/80">
                                   {Math.round((variant.votes / totalVotes) * 100)}%
                                 </span>
                               </div>
