@@ -56,6 +56,10 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
     return Math.max(...variants.map(v => v.votes), 1);
   };
 
+  const getTotalVotes = (variants: ConcernVariant[]) => {
+    return Math.max(variants.reduce((sum, v) => sum + v.votes, 0), 1);
+  };
+
   return (
     <>
       <div className="space-y-6">
@@ -90,6 +94,7 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
           {topConcerns.map((concern) => {
             const variants = getSortedVariants(concern);
             const maxVotes = getMaxVotes(variants);
+            const totalVotes = getTotalVotes(variants);
             const voted = hasVoted(concern.id);
 
             return (
@@ -105,12 +110,12 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
                       key={variant.id}
                       className="group relative"
                     >
-                      <div className="flex items-start gap-3 p-3 rounded-lg border hover:bg-accent/50 transition-colors">
+                      <div className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors">
                         {!voted && (
                           <Checkbox
                             checked={isSelected(concern.id, variant.id)}
                             onCheckedChange={() => handleVariantSelect(concern.id, variant.id)}
-                            className="mt-1"
+                            className="flex-shrink-0"
                           />
                         )}
                         <div className="flex-1 min-w-0">
@@ -118,10 +123,10 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
                             onClick={() => setSelectedForDetail({concern, variant})}
                             className="text-left w-full"
                           >
-                            <p className="text-sm font-medium line-clamp-1">
+                            <p className="text-sm font-semibold text-foreground line-clamp-1">
                               {variant.title}
                             </p>
-                            <p className="text-xs text-muted-foreground line-clamp-1">
+                            <p className="text-xs text-foreground/70 line-clamp-1">
                               {variant.text}
                             </p>
                           </button>
@@ -131,13 +136,13 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
                               <div className="flex items-center justify-between text-xs">
                                 <span className="font-medium">{variant.votes} votes</span>
                                 <span className="text-muted-foreground">
-                                  {Math.round((variant.votes / maxVotes) * 100)}%
+                                  {Math.round((variant.votes / totalVotes) * 100)}%
                                 </span>
                               </div>
                               <div className="h-2 bg-muted rounded-full overflow-hidden">
                                 <div
                                   className="h-full bg-primary transition-all duration-500"
-                                  style={{ width: `${(variant.votes / maxVotes) * 100}%` }}
+                                  style={{ width: `${(variant.votes / totalVotes) * 100}%` }}
                                 />
                               </div>
                             </div>
