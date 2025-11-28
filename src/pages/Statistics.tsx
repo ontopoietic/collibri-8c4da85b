@@ -450,7 +450,7 @@ const Statistics = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="posts" stackId="a" fill="hsl(var(--primary))" name="Posts" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="posts" stackId="a" fill="hsl(var(--primary))" name="Posts" radius={[0, 0, 0, 0]} />
                   <Bar dataKey="votes" stackId="a" fill="hsl(var(--proposal))" name="Votes" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
