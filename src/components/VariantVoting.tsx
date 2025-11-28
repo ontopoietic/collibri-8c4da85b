@@ -108,28 +108,25 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
                   {variants.map((variant) => (
                     <div
                       key={variant.id}
-                      className="group relative"
+                      className="group relative cursor-pointer"
+                      onClick={() => setSelectedForDetail({concern, variant})}
                     >
                       <div className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors">
                         {!voted && (
                           <Checkbox
                             checked={isSelected(concern.id, variant.id)}
                             onCheckedChange={() => handleVariantSelect(concern.id, variant.id)}
-                            className="flex-shrink-0"
+                            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                            className="flex-shrink-0 h-5 w-5"
                           />
                         )}
                         <div className="flex-1 min-w-0">
-                          <button
-                            onClick={() => setSelectedForDetail({concern, variant})}
-                            className="text-left w-full"
-                          >
-                            <p className="text-sm font-semibold text-foreground line-clamp-1">
-                              {variant.title}
-                            </p>
-                            <p className="text-xs text-foreground/70 line-clamp-1">
-                              {variant.text}
-                            </p>
-                          </button>
+                          <p className="text-sm font-semibold text-foreground line-clamp-1">
+                            {variant.title}
+                          </p>
+                          <p className="text-xs text-foreground/70 line-clamp-1">
+                            {variant.text}
+                          </p>
                           
                           {voted && (
                             <div className="mt-2 space-y-1">
