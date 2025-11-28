@@ -142,13 +142,12 @@ const Statistics = () => {
     proposals: number;
     proArguments: number;
     variants: number;
-    questions: number;
   }>();
   
   displayConcerns.forEach((c) => {
     const date = new Date(c.timestamp).toLocaleDateString();
     if (!engagementByDate.has(date)) {
-      engagementByDate.set(date, { concerns: 0, objections: 0, proposals: 0, proArguments: 0, variants: 0, questions: 0 });
+      engagementByDate.set(date, { concerns: 0, objections: 0, proposals: 0, proArguments: 0, variants: 0 });
     }
     const entry = engagementByDate.get(date)!;
     entry.concerns++;
@@ -159,7 +158,6 @@ const Statistics = () => {
       else if (reply.category === "proposal") entry.proposals++;
       else if (reply.category === "pro-argument") entry.proArguments++;
       else if (reply.category === "variant") entry.variants++;
-      else if (reply.category === "question") entry.questions++;
     });
   });
 
@@ -185,10 +183,6 @@ const Statistics = () => {
       name: "Variants",
       votes: allReplies.filter((r) => r.category === "variant").reduce((sum, r) => sum + r.votes, 0),
     },
-    {
-      name: "Questions",
-      votes: allReplies.filter((r) => r.category === "question").reduce((sum, r) => sum + r.votes, 0),
-    },
   ].filter(item => item.votes > 0);
 
   // Reply type ratios
@@ -196,7 +190,6 @@ const Statistics = () => {
   const proArgumentCount = allReplies.filter((r) => r.category === "pro-argument").length;
   const proposalCount = allReplies.filter((r) => r.category === "proposal").length;
   const variantCount = allReplies.filter((r) => r.category === "variant").length;
-  const questionCount = allReplies.filter((r) => r.category === "question").length;
 
   const replyRatios = [
     {
@@ -230,7 +223,6 @@ const Statistics = () => {
     "Proposals": "hsl(var(--proposal))",
     "Pro-Arguments": "hsl(var(--pro-argument))",
     "Variants": "hsl(var(--variant))",
-    "Questions": "hsl(var(--muted-foreground))",
   };
 
   return (
@@ -287,41 +279,41 @@ const Statistics = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Concerns</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground">Total Concerns</CardTitle>
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalConcerns}</div>
+              <div className="text-2xl font-bold text-foreground">{totalConcerns}</div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Replies</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground">Total Replies</CardTitle>
               <MessageSquare className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalReplies}</div>
+              <div className="text-2xl font-bold text-foreground">{totalReplies}</div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Concern Votes</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground">Concern Votes</CardTitle>
               <ThumbsUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalVotes}</div>
+              <div className="text-2xl font-bold text-foreground">{totalVotes}</div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Reply Votes</CardTitle>
+              <CardTitle className="text-sm font-medium text-foreground">Reply Votes</CardTitle>
               <ThumbsUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalReplyVotes}</div>
+              <div className="text-2xl font-bold text-foreground">{totalReplyVotes}</div>
             </CardContent>
           </Card>
         </div>
@@ -329,7 +321,7 @@ const Statistics = () => {
         <div className="grid grid-cols-1 gap-6 mb-6">
           <Card>
             <CardHeader>
-              <CardTitle>Participation Timeline</CardTitle>
+              <CardTitle className="text-foreground">Participation Timeline</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={400}>
@@ -343,8 +335,7 @@ const Statistics = () => {
                   <Line type="monotone" dataKey="objections" stroke="hsl(var(--destructive))" strokeWidth={3} name="Objections" />
                   <Line type="monotone" dataKey="proposals" stroke="hsl(var(--proposal))" strokeWidth={3} name="Proposals" />
                   <Line type="monotone" dataKey="proArguments" stroke="hsl(var(--pro-argument))" strokeWidth={3} name="Pro-Arguments" />
-                  <Line type="monotone" dataKey="variants" stroke="hsl(var(--accent))" strokeWidth={3} name="Variants" />
-                  <Line type="monotone" dataKey="questions" stroke="hsl(var(--muted-foreground))" strokeWidth={3} name="Questions" />
+                  <Line type="monotone" dataKey="variants" stroke="hsl(var(--variant))" strokeWidth={3} name="Variants" />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -354,7 +345,7 @@ const Statistics = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <Card>
             <CardHeader>
-              <CardTitle>Concern Types Distribution</CardTitle>
+              <CardTitle className="text-foreground">Concern Types Distribution</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -382,7 +373,7 @@ const Statistics = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Reply Categories Distribution</CardTitle>
+              <CardTitle className="text-foreground">Reply Categories Distribution</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -403,7 +394,7 @@ const Statistics = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Vote Distribution by Categories</CardTitle>
+              <CardTitle className="text-foreground">Vote Distribution by Categories</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -431,14 +422,14 @@ const Statistics = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Reply Type Ratios</CardTitle>
+              <CardTitle className="text-foreground">Reply Type Ratios</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {replyRatios.map((ratio, index) => (
                   <div key={index} className="flex justify-between items-center p-3 bg-muted rounded-lg">
-                    <span className="text-sm font-medium">{ratio.name}</span>
-                    <span className="text-lg font-bold text-primary">{ratio.ratio}</span>
+                    <span className="text-sm font-medium text-foreground">{ratio.name}</span>
+                    <span className="text-lg font-bold text-foreground">{ratio.ratio}</span>
                   </div>
                 ))}
               </div>
@@ -449,7 +440,7 @@ const Statistics = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Activity by Grade</CardTitle>
+              <CardTitle className="text-foreground">Activity by Grade</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -468,7 +459,7 @@ const Statistics = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Active Users Timeline</CardTitle>
+              <CardTitle className="text-foreground">Active Users Timeline</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
