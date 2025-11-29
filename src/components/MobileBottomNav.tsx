@@ -118,8 +118,8 @@ export const MobileBottomNav = ({
           onClick={onNewConcern}
           className="flex-col h-auto py-2 gap-1 relative"
         >
-          <div className="rounded-full bg-new-concern p-1.5">
-            <Plus className="h-5 w-5 text-new-concern-foreground" />
+          <div className="rounded-full border border-new-concern p-1.5">
+            <Plus className="h-5 w-5 text-new-concern" />
           </div>
         </Button>
       </div>

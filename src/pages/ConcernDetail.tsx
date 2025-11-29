@@ -14,6 +14,7 @@ import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/con
 import { mockConcerns } from "@/data/mockData";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -344,25 +345,35 @@ const ConcernDetail = () => {
             {!isMobile && (
               <>
                 <Button
-                  variant="endorse"
+                  variant={showReplyForm && replyType === 'endorse' ? 'endorse' : 'endorse'}
                   onClick={() => {
                     setReplyType('endorse');
-                    setShowReplyForm(true);
+                    setShowReplyForm(!(showReplyForm && replyType === 'endorse'));
                     setReplyToId(null);
                   }}
-                  className="gap-2 bg-endorse text-endorse-foreground hover:bg-endorse-hover"
+                  className={cn(
+                    "gap-2",
+                    showReplyForm && replyType === 'endorse'
+                      ? "bg-endorse-hover text-endorse-foreground"
+                      : "bg-endorse text-endorse-foreground hover:bg-endorse-hover"
+                  )}
                 >
                   <ThumbsUp className="h-4 w-4" />
                   Endorse
                 </Button>
                 <Button
-                  variant="object"
+                  variant={showReplyForm && replyType === 'object' ? 'object' : 'object'}
                   onClick={() => {
                     setReplyType('object');
-                    setShowReplyForm(true);
+                    setShowReplyForm(!(showReplyForm && replyType === 'object'));
                     setReplyToId(null);
                   }}
-                  className="gap-2"
+                  className={cn(
+                    "gap-2",
+                    showReplyForm && replyType === 'object'
+                      ? "bg-object hover:bg-object"
+                      : ""
+                  )}
                 >
                   <ThumbsDown className="h-4 w-4" />
                   Object
@@ -372,10 +383,15 @@ const ConcernDetail = () => {
                   size="sm"
                   onClick={() => {
                     setReplyType('question');
-                    setShowReplyForm(true);
+                    setShowReplyForm(!(showReplyForm && replyType === 'question'));
                     setReplyToId(null);
                   }}
-                  className="gap-2"
+                  className={cn(
+                    "gap-2",
+                    showReplyForm && replyType === 'question'
+                      ? "bg-question hover:bg-question"
+                      : ""
+                  )}
                 >
                   <HelpCircle className="h-4 w-4" />
                   Ask Question

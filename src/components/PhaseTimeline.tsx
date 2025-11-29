@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import useEmblaCarousel from 'embla-carousel-react';
 import {
   Tooltip,
   TooltipContent,
@@ -87,6 +88,8 @@ export const PhaseTimeline = ({
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [viewedPhase, setViewedPhase] = useState<Phase | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
+  const [selectedCarouselIndex, setSelectedCarouselIndex] = useState(0);
   const currentIndex = phases.findIndex((p) => p.key === currentPhase);
   const today = new Date();
   const actualDaysPassed = Math.floor((today.getTime() - phaseStartDate.getTime()) / (1000 * 60 * 60 * 24));
@@ -106,6 +109,15 @@ export const PhaseTimeline = ({
   useEffect(() => {
     setViewedPhase(null);
   }, [currentMainPhaseKey]);
+  
+  // Update carousel selected index when embla changes
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.on('select', () => {
+        setSelectedCarouselIndex(emblaApi.selectedScrollSnap());
+      });
+    }
+  }, [emblaApi]);
     
   // Calculate overall progress percentage (0-100% across all 95 days)
   const overallProgressPercentage = (daysPassed / phaseDurationDays) * 100;
@@ -207,61 +219,98 @@ export const PhaseTimeline = ({
         {/* Mobile View - Combined Phase + Voting Display */}
         {isMobile && displayedPhase ? (
           <div className="space-y-4">
-            {/* Current Phase Card - Shows deliberation + voting together */}
-            <div className={cn(
-              "rounded-xl p-4 border relative",
-              isViewingCompletedPhase 
-                ? "bg-muted/50 border-muted-foreground/20" 
-                : "bg-primary/10 border-primary/20"
-            )}>
-              {isViewingCompletedPhase && (
-                <div className="absolute top-2 right-2 flex items-center gap-1 text-xs font-medium text-muted-foreground bg-background/80 rounded-full px-2 py-1">
-                  <CheckCircle2 className="h-3 w-3" />
-                  <span>Complete</span>
-                </div>
-              )}
-              <div className="flex items-center gap-3">
-            {/* Deliberation Phase Section */}
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2 h-7">
-                <displayedPhase.icon className={cn(
-                  "h-4 w-4",
-                  isViewingCompletedPhase ? "text-muted-foreground" : "text-primary"
-                )} />
-                <span className={cn(
-                  "text-sm font-bold",
-                  isViewingCompletedPhase ? "text-muted-foreground" : "text-foreground"
-                )}>{displayedPhase.label}</span>
-              </div>
-              <Progress value={deliberationProgress} className="h-2 mb-1" />
-              <span className="text-xs text-muted-foreground">
-                {isViewingCompletedPhase ? "Complete" : isInDeliberation ? `Day ${Math.floor(deliberationDaysIn) + 1} of 30` : "Complete"}
-              </span>
-            </div>
-                
-                {/* Arrow indicator */}
-                <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0 self-start mt-[34px]" />
-                
-            {/* Variant Selection Section - Smaller with desktop styling */}
-            <div className="w-24">
-              <div 
-                className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md h-7"
-                style={{ backgroundColor: '#3B3C4C' }}
-              >
-                <CheckSquare className="h-4 w-4 text-white" />
-                <span className="text-xs font-medium text-white">Selection</span>
-              </div>
-              <Progress value={votingProgress} className="h-2 mb-1 [&>div]:bg-[#A8BDFF]" />
-              <span className="text-[10px] text-muted-foreground">
-                {isViewingCompletedPhase ? "Done" : isInVoting ? `Day ${Math.floor(votingDaysIn) + 1}/5` : isVotingComplete ? "Done" : "Soon"}
-              </span>
-            </div>
+            {/* Current Phase Card - Swipeable Carousel */}
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex">
+                {mainPhases.map((phase) => {
+                  const isCompleted = daysPassed >= phase.votingEnd;
+                  const isCurrent = daysPassed >= phase.deliberationStart && daysPassed < phase.votingEnd;
+                  const isViewing = viewedPhase === phase.key;
+                  const isDisplayed = viewedPhase ? phase.key === viewedPhase : isCurrent;
+                  
+                  if (!isDisplayed && !isCurrent && !isCompleted) return null;
+                  
+                  // Calculate progress for this specific phase
+                  const deliberationDuration = phase.deliberationEnd - phase.deliberationStart;
+                  const votingDuration = phase.votingEnd - phase.deliberationEnd;
+                  
+                  let phaseDeliberationProgress = 0;
+                  let phaseVotingProgress = 0;
+                  let phaseIsInDeliberation = false;
+                  let phaseIsInVoting = false;
+                  let phaseDeliberationDaysIn = 0;
+                  let phaseVotingDaysIn = 0;
+                  let phaseIsVotingComplete = false;
+                  
+                  if (isCompleted || isViewing) {
+                    phaseDeliberationProgress = 100;
+                    phaseVotingProgress = 100;
+                    phaseIsVotingComplete = true;
+                  } else if (isCurrent) {
+                    if (daysPassed < phase.deliberationEnd) {
+                      phaseIsInDeliberation = true;
+                      phaseDeliberationDaysIn = daysPassed - phase.deliberationStart;
+                      phaseDeliberationProgress = (phaseDeliberationDaysIn / deliberationDuration) * 100;
+                    } else {
+                      phaseDeliberationProgress = 100;
+                      phaseIsInVoting = true;
+                      phaseVotingDaysIn = daysPassed - phase.deliberationEnd;
+                      phaseVotingProgress = (phaseVotingDaysIn / votingDuration) * 100;
+                    }
+                  }
+                  
+                  return (
+                    <div key={phase.key} className="flex-[0_0_100%] min-w-0 px-1">
+                      <div className={cn(
+                        "rounded-xl p-4 border",
+                        isCompleted || isViewing
+                          ? "bg-muted/50 border-muted-foreground/20" 
+                          : "bg-primary/10 border-primary/20"
+                      )}>
+                        <div className="flex items-center gap-3">
+                          {/* Deliberation Phase Section */}
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2 h-7">
+                              <phase.icon className={cn(
+                                "h-4 w-4",
+                                isCompleted || isViewing ? "text-muted-foreground" : "text-primary"
+                              )} />
+                              <span className={cn(
+                                "text-sm font-bold",
+                                isCompleted || isViewing ? "text-muted-foreground" : "text-foreground"
+                              )}>{phase.label}</span>
+                            </div>
+                            <Progress value={phaseDeliberationProgress} className="h-2 mb-1" />
+                            <span className="text-xs text-muted-foreground">
+                              {isCompleted || isViewing ? "Complete" : phaseIsInDeliberation ? `Day ${Math.floor(phaseDeliberationDaysIn) + 1} of 30` : "Complete"}
+                            </span>
+                          </div>
+                          
+                          {/* Arrow indicator */}
+                          <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0 self-start mt-[34px]" />
+                          
+                          {/* Variant Selection Section */}
+                          <div className="w-24">
+                            <div className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md h-7 bg-muted border border-border">
+                              <CheckSquare className="h-4 w-4 text-foreground" />
+                              <span className="text-xs font-medium text-foreground">Review</span>
+                            </div>
+                            <Progress value={phaseVotingProgress} className="h-2 mb-1 [&>div]:bg-[#A8BDFF]" />
+                            <span className="text-[10px] text-muted-foreground">
+                              {isCompleted || isViewing ? "Done" : phaseIsInVoting ? `Day ${Math.floor(phaseVotingDaysIn) + 1}/5` : phaseIsVotingComplete ? "Done" : "Soon"}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             
             {/* Three Dots Navigation - Only for main phases */}
             <div className="flex justify-center items-center gap-4">
-              {mainPhases.map((phase) => {
+              {mainPhases.map((phase, index) => {
                 const isCompleted = daysPassed >= phase.votingEnd;
                 const isCurrent = daysPassed >= phase.deliberationStart && daysPassed < phase.votingEnd;
                 const isViewing = viewedPhase === phase.key;
@@ -270,22 +319,22 @@ export const PhaseTimeline = ({
                   <button
                     key={phase.key}
                     onClick={() => {
-                      // Allow clicking current phase to reset to live view
+                      // Scroll carousel to this phase
+                      emblaApi?.scrollTo(index);
+                      // Update viewed phase state
                       if (isCurrent || isViewing) {
                         setViewedPhase(null);
                       } else if (isCompleted) {
                         setViewedPhase(phase.key);
                       }
-                      // Also trigger the leaderboard toggle for completed phases
+                      // Trigger leaderboard for completed phases
                       if (isCompleted) {
                         onPhaseClick(phase.key);
                       }
                     }}
                     className={cn(
                       "w-4 h-4 rounded-full transition-all",
-                      isCurrent && !isViewing && "ring-2 ring-primary ring-offset-2 ring-offset-card",
-                      isViewing && "ring-2 ring-foreground ring-offset-2 ring-offset-card",
-                      // Make current phase clickable too
+                      selectedCarouselIndex === index && "ring-2 ring-primary ring-offset-2 ring-offset-card",
                       (isCompleted || isCurrent) ? "bg-primary cursor-pointer hover:scale-110" : "bg-muted cursor-default"
                     )}
                     aria-label={`${phase.label} phase${isCurrent ? " (current)" : ""}${isCompleted ? " (completed)" : ""}`}
@@ -294,12 +343,6 @@ export const PhaseTimeline = ({
               })}
             </div>
             
-            {/* Phase Labels */}
-            <div className="flex justify-between text-xs text-muted-foreground px-4">
-              <span>Class</span>
-              <span>Grade</span>
-              <span>School</span>
-            </div>
           </div>
         ) : !isMobile ? (
           /* Desktop View - 3 Phase Cards */
@@ -345,7 +388,13 @@ export const PhaseTimeline = ({
                     isCurrent ? "bg-primary/10 border-primary/20" :
                     "bg-muted/30 border-border opacity-60"
                   )}
-                  onClick={() => isCompleted && onPhaseClick(phase.key)}
+                  onClick={() => {
+                    // Allow clicking if phase is completed OR if we're in the school-voting phase
+                    const isInSchoolVoting = daysPassed >= 90 && daysPassed < 95;
+                    if (isCompleted || (phase.key === 'school' && isInSchoolVoting)) {
+                      onPhaseClick(phase.key);
+                    }
+                  }}
                 >
                   {/* Status badge - always reserve space for consistent alignment */}
                   <div className="h-5 mb-2 flex items-center">
@@ -389,12 +438,9 @@ export const PhaseTimeline = ({
                     
                     {/* Selection */}
                     <div className="w-24">
-                      <div 
-                        className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md h-7"
-                        style={{ backgroundColor: '#3B3C4C' }}
-                      >
-                        <CheckSquare className="h-4 w-4 text-white" />
-                        <span className="text-xs font-medium text-white">Selection</span>
+                      <div className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md h-7 bg-muted border border-border">
+                        <CheckSquare className="h-4 w-4 text-foreground" />
+                        <span className="text-xs font-medium text-foreground">Review</span>
                       </div>
                       <Progress value={phaseVotingProgress} className="h-2 mb-1 [&>div]:bg-[#A8BDFF]" />
                       <span className="text-[10px] text-muted-foreground">

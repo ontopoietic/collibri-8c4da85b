@@ -8,6 +8,8 @@ import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, ThumbsUp, ThumbsDo
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import { ReplyForm } from "./ReplyForm";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 interface ReplyThreadProps {
   replies: Reply[];
@@ -47,6 +49,7 @@ const ReplyItem = ({
   onFormToggle?: (replyId: string | null) => void;
   parentCategory?: ReplyCategory;
 }) => {
+  const isMobile = useIsMobile();
   const [isExpanded, setIsExpanded] = useState(true);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
   const hasReplies = reply.replies.length > 0;
@@ -68,7 +71,7 @@ const ReplyItem = ({
   };
 
   return (
-    <div id={`reply-${reply.id}`} className="pl-6 border-l-2 border-border">
+    <div id={`reply-${reply.id}`} className={cn("pl-6", !isMobile && "border-l-2 border-border")}>
       <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2 flex-wrap">
