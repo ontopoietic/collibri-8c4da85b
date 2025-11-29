@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Network, AlertTriangle, Lightbulb } from "lucide-react";
+import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Network, AlertTriangle, Lightbulb, Filter, ArrowUpDown, Check } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -24,9 +24,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -331,6 +338,28 @@ const Index = () => {
               <h1 className="text-xl md:text-3xl font-bold text-foreground">Collibri</h1>
             </div>
             
+            {/* Mobile Header Icons */}
+            {isMobile && (
+              <div className="flex items-center gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <ChartNoAxesCombined className="h-5 w-5" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[350px] p-0" align="end">
+                    <QuotaDisplay quota={simulatedQuota} />
+                  </PopoverContent>
+                </Popover>
+                <Button variant="ghost" size="icon" onClick={() => navigate("/notifications")}>
+                  <Bell className="h-5 w-5" />
+                </Button>
+                <Button variant="ghost" size="icon" onClick={() => navigate("/graph")}>
+                  <Network className="h-5 w-5" />
+                </Button>
+              </div>
+            )}
+
             {/* Desktop Navigation */}
             {!isMobile && (
               <div className="flex items-center gap-2">
@@ -480,38 +509,102 @@ const Index = () => {
                 {currentPhase === "class" ? "Class" : currentPhase === "grade" ? "Grade" : "School"} Phase Concerns
               </h2>
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search concerns..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
-                  />
+              {isMobile ? (
+                <div className="flex gap-2 items-center">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search concerns..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                  
+                  {/* Filter Dropdown */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="icon">
+                        <Filter className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => setFilterBy("all")}>
+                        {filterBy === "all" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(filterBy !== "all" && "ml-6")}>All Concerns</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setFilterBy("my-posts")}>
+                        {filterBy === "my-posts" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(filterBy !== "my-posts" && "ml-6")}>My Concerns</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setFilterBy("followed")}>
+                        {filterBy === "followed" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(filterBy !== "followed" && "ml-6")}>Followed</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setFilterBy("unnoticed")}>
+                        {filterBy === "unnoticed" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(filterBy !== "unnoticed" && "ml-6")}>Unnoticed</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  
+                  {/* Sort Dropdown */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="icon">
+                        <ArrowUpDown className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => setSortBy("newest")}>
+                        {sortBy === "newest" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(sortBy !== "newest" && "ml-6")}>Newest</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setSortBy("oldest")}>
+                        {sortBy === "oldest" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(sortBy !== "oldest" && "ml-6")}>Oldest</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setSortBy("popularity")}>
+                        {sortBy === "popularity" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(sortBy !== "popularity" && "ml-6")}>Popularity</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-                <Select value={filterBy} onValueChange={(value: any) => setFilterBy(value)}>
-                  <SelectTrigger className="w-full sm:w-[180px]">
-                    <SelectValue placeholder="Filter by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Concerns</SelectItem>
-                    <SelectItem value="my-posts">My Concerns</SelectItem>
-                    <SelectItem value="followed">Followed</SelectItem>
-                    <SelectItem value="unnoticed">Unnoticed</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
-                  <SelectTrigger className="w-full sm:w-[180px]">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="newest">Newest</SelectItem>
-                    <SelectItem value="oldest">Oldest</SelectItem>
-                    <SelectItem value="popularity">Popularity</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              ) : (
+                <>
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search concerns..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                  <Select value={filterBy} onValueChange={(value: any) => setFilterBy(value)}>
+                    <SelectTrigger className="w-full sm:w-[180px]">
+                      <SelectValue placeholder="Filter by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Concerns</SelectItem>
+                      <SelectItem value="my-posts">My Concerns</SelectItem>
+                      <SelectItem value="followed">Followed</SelectItem>
+                      <SelectItem value="unnoticed">Unnoticed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                    <SelectTrigger className="w-full sm:w-[180px]">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="newest">Newest</SelectItem>
+                      <SelectItem value="oldest">Oldest</SelectItem>
+                      <SelectItem value="popularity">Popularity</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </>
+              )}
             </div>
 
             <div className="space-y-4">
@@ -542,23 +635,29 @@ const Index = () => {
             <DialogTitle>New Concern</DialogTitle>
           </DialogHeader>
           <div className="space-y-6">
-            {/* Problem Section */}
+            {/* Problem Section - Styled like NewConcernDialog */}
             <div className="space-y-4">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={isProblem}
-                  onChange={(e) => setIsProblem(e.target.checked)}
-                  className="h-4 w-4"
-                />
+              <button
+                type="button"
+                onClick={() => setIsProblem(!isProblem)}
+                className={cn(
+                  "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all w-full text-left",
+                  isProblem
+                    ? "border-problem bg-problem/5"
+                    : "border-border bg-card hover:bg-muted/50"
+                )}
+              >
                 <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-problem-aspect" />
+                  <AlertTriangle className="h-5 w-5 text-problem" />
                   <span className="font-medium">I want to describe a Problem</span>
                 </div>
-              </label>
+                <span className="text-xs text-muted-foreground">
+                  Share an issue that needs attention
+                </span>
+              </button>
               
               {isProblem && (
-                <div className="pl-7 space-y-3">
+                <div className="space-y-3 pl-2">
                   <Input
                     placeholder="Problem Title"
                     value={problemTitle}
@@ -574,23 +673,29 @@ const Index = () => {
               )}
             </div>
 
-            {/* Solution Section */}
+            {/* Solution Section - Styled like NewConcernDialog */}
             <div className="space-y-4">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={isSolution}
-                  onChange={(e) => setIsSolution(e.target.checked)}
-                  className="h-4 w-4"
-                />
+              <button
+                type="button"
+                onClick={() => setIsSolution(!isSolution)}
+                className={cn(
+                  "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all w-full text-left",
+                  isSolution
+                    ? "border-proposal bg-proposal/5"
+                    : "border-border bg-card hover:bg-muted/50"
+                )}
+              >
                 <div className="flex items-center gap-2">
                   <Lightbulb className="h-5 w-5 text-proposal" />
                   <span className="font-medium">I want to propose a Solution</span>
                 </div>
-              </label>
+                <span className="text-xs text-muted-foreground">
+                  Suggest an improvement or change
+                </span>
+              </button>
               
               {isSolution && (
-                <div className="pl-7 space-y-3">
+                <div className="space-y-3 pl-2">
                   <Input
                     placeholder="Solution Title"
                     value={solutionTitle}

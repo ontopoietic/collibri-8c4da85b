@@ -47,7 +47,7 @@ export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
         {/* First row: Votes */}
         <div className="pb-6 border-b border-border">
           <QuotaItem 
-            config={{ label: "Votes", icon: ThumbsUp, color: "text-primary" }}
+            config={{ label: "Votes", icon: ThumbsUp, color: "text-vote" }}
             quotaData={quota.votes}
             isLarge={true}
           />
