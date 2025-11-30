@@ -626,7 +626,10 @@ const Index = () => {
       </main>
 
       {/* Mobile Bottom Navigation */}
-      <MobileBottomNav onNewConcern={() => setShowNewConcernDialog(true)} />
+      <MobileBottomNav 
+        onNewConcern={() => setShowNewConcernDialog(true)} 
+        isNewConcernOpen={showNewConcernDialog}
+      />
 
       {/* New Concern Dialog for Mobile */}
       <Dialog open={showNewConcernDialog} onOpenChange={setShowNewConcernDialog}>

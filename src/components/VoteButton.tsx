@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 interface VoteButtonProps {
   initialVotes: number;
@@ -54,7 +55,12 @@ export const VoteButton = ({
       variant="vote"
       size="sm"
       onClick={handleVote}
-      className={`gap-1 ${hasVoted ? 'bg-vote text-vote-foreground hover:bg-vote' : ''}`}
+      className={cn(
+        "gap-1",
+        hasVoted 
+          ? "bg-vote text-vote-foreground hover:bg-vote" 
+          : "bg-background text-foreground hover:bg-vote hover:text-vote-foreground"
+      )}
     >
       <ChevronUp className="h-4 w-4" />
       <span className="font-semibold">{votes}</span>
