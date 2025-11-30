@@ -240,7 +240,7 @@ const ConcernDetail = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-8">
         <Button
           variant="ghost"
           onClick={handleBackNavigation}
@@ -250,7 +250,7 @@ const ConcernDetail = () => {
           {navigationHistory.length <= 1 || (navigationHistory.length > 1 && navigationHistory[navigationHistory.length - 2] === "/") ? "Back to Forum" : "Back"}
         </Button>
 
-        <div className="bg-card rounded-lg p-8 shadow-sm space-y-6">
+        <div className="bg-card rounded-lg p-4 sm:p-8 shadow-sm space-y-6">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-2 flex-wrap">
               {concern.aspects && concern.aspects.length > 0 ? (
@@ -360,8 +360,8 @@ const ConcernDetail = () => {
                   className={cn(
                     "gap-2",
                     showReplyForm && replyType === 'endorse'
-                      ? "bg-endorse-hover text-endorse-foreground"
-                      : "bg-endorse text-endorse-foreground hover:bg-endorse-hover"
+                      ? "bg-endorse text-endorse-foreground border-endorse"
+                      : ""
                   )}
                 >
                   <ThumbsUp className="h-4 w-4" />
@@ -377,7 +377,7 @@ const ConcernDetail = () => {
                   className={cn(
                     "gap-2",
                     showReplyForm && replyType === 'object'
-                      ? "bg-object hover:bg-object"
+                      ? "bg-object text-object-foreground border-object"
                       : ""
                   )}
                 >
