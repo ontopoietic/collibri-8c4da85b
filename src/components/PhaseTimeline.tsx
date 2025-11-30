@@ -88,7 +88,12 @@ export const PhaseTimeline = ({
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [viewedPhase, setViewedPhase] = useState<Phase | null>(null);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: false, 
+    align: 'start',
+    dragFree: false,
+    containScroll: 'trimSnaps'
+  });
   const [selectedCarouselIndex, setSelectedCarouselIndex] = useState(0);
   const currentIndex = phases.findIndex((p) => p.key === currentPhase);
   const today = new Date();
@@ -185,6 +190,10 @@ export const PhaseTimeline = ({
   } else if (daysPassed < 95) {
     daysUntilNextPhase = 95 - daysPassed;
     nextPhaseName = "Completion";
+  } else {
+    // Day 95+ - all phases complete
+    daysUntilNextPhase = 0;
+    nextPhaseName = "";
   }
 
   return (
@@ -220,7 +229,7 @@ export const PhaseTimeline = ({
         {isMobile && displayedPhase ? (
           <div className="space-y-4">
             {/* Current Phase Card - Swipeable Carousel */}
-            <div className="overflow-hidden" ref={emblaRef}>
+            <div className="overflow-hidden touch-pan-x" ref={emblaRef}>
               <div className="flex">
                 {mainPhases.map((phase) => {
                   const isCompleted = daysPassed >= phase.votingEnd;
@@ -327,8 +336,8 @@ export const PhaseTimeline = ({
                       } else if (isCompleted) {
                         setViewedPhase(phase.key);
                       }
-                      // Trigger leaderboard for completed phases
-                      if (isCompleted) {
+                      // Trigger leaderboard for completed phases or at day 95+
+                      if (isCompleted || daysPassed >= 95) {
                         onPhaseClick(phase.key);
                       }
                     }}
@@ -389,9 +398,8 @@ export const PhaseTimeline = ({
                     "bg-muted/30 border-border opacity-60"
                   )}
                   onClick={() => {
-                    // Allow clicking if phase is completed OR if we're in the school-voting phase
-                    const isInSchoolVoting = daysPassed >= 90 && daysPassed < 95;
-                    if (isCompleted || (phase.key === 'school' && isInSchoolVoting)) {
+                    // Allow clicking if phase is completed OR if we're at day 95+
+                    if (isCompleted || daysPassed >= 95) {
                       onPhaseClick(phase.key);
                     }
                   }}

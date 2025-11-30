@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { UserQuota } from "@/types/concern";
-import { AlertCircle, Lightbulb, ThumbsUp, GitBranch, Flag } from "lucide-react";
+import { AlertCircle, Lightbulb, ThumbsUp, GitBranch, Flag, HelpCircle } from "lucide-react";
 
 interface QuotaDisplayProps {
   quota: UserQuota;
@@ -77,11 +77,15 @@ export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
           />
         </div>
 
-        {/* Fourth row: Variants */}
+        {/* Fourth row: Variants, Questions */}
         <div className="grid grid-cols-2 gap-6">
           <QuotaItem
             config={{ label: "Variants", icon: GitBranch, color: "text-variant" }}
             quotaData={quota.variants}
+          />
+          <QuotaItem
+            config={{ label: "Questions", icon: HelpCircle, color: "text-question" }}
+            quotaData={quota.questions}
           />
         </div>
       </div>
