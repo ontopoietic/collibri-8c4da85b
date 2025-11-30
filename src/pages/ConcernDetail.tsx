@@ -8,7 +8,7 @@ import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink } from "lucide-react";
+import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink, Filter, ArrowUpDown, Check } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -22,6 +22,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const typeConfig = {
   problem: {
@@ -275,9 +281,9 @@ const ConcernDetail = () => {
           )}
 
           {(concern.referencedOriginalPostId || concern.referencedObjectionId) && (
-            <div className="bg-muted p-4 rounded-lg space-y-3">
+            <div className="bg-muted p-4 rounded-lg space-y-3 overflow-hidden">
               <p className="text-sm font-medium">References:</p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 max-w-full">
                 {concern.referencedOriginalPostId && (() => {
                   const content = getReferencedContent(concern.referencedOriginalPostId);
                   if (!content) return null;
@@ -291,12 +297,12 @@ const ConcernDetail = () => {
                       {content.type === 'concern' ? (
                         <>
                           <span className="text-xs font-medium">Original:</span>
-                          <span className="max-w-[200px] truncate">{content.title}</span>
+                          <span className="max-w-[150px] sm:max-w-[200px] truncate">{content.title}</span>
                         </>
                       ) : (
                         <>
                           <CategoryBadge category={content.category} />
-                          <span className="max-w-[200px] truncate">{content.text}</span>
+                          <span className="max-w-[150px] sm:max-w-[200px] truncate">{content.text}</span>
                         </>
                       )}
                       <ExternalLink className="h-3 w-3" />
@@ -316,12 +322,12 @@ const ConcernDetail = () => {
                       {content.type === 'concern' ? (
                         <>
                           <span className="text-xs font-medium">Objection:</span>
-                          <span className="max-w-[200px] truncate">{content.title}</span>
+                          <span className="max-w-[150px] sm:max-w-[200px] truncate">{content.title}</span>
                         </>
                       ) : (
                         <>
                           <CategoryBadge category={content.category} />
-                          <span className="max-w-[200px] truncate">{content.text}</span>
+                          <span className="max-w-[150px] sm:max-w-[200px] truncate">{content.text}</span>
                         </>
                       )}
                       <ExternalLink className="h-3 w-3" />
@@ -432,28 +438,85 @@ const ConcernDetail = () => {
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-bold text-foreground">Responses</h2>
                   <div className="flex gap-2">
-                    <Select value={filterCategory} onValueChange={(value: any) => setFilterCategory(value)}>
-                      <SelectTrigger className="w-[160px]">
-                        <SelectValue placeholder="Filter" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Categories</SelectItem>
-                        <SelectItem value="objection">Objections</SelectItem>
-                        <SelectItem value="proposal">Proposals</SelectItem>
-                        <SelectItem value="pro-argument">Pro-Arguments</SelectItem>
-                        <SelectItem value="variant">Variants</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
-                      <SelectTrigger className="w-[140px]">
-                        <SelectValue placeholder="Sort" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="newest">Newest</SelectItem>
-                        <SelectItem value="oldest">Oldest</SelectItem>
-                        <SelectItem value="popularity">Popularity</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {isMobile ? (
+                      <>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="icon">
+                              <Filter className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => setFilterCategory("all")}>
+                              {filterCategory === "all" && <Check className="h-4 w-4 mr-2" />}
+                              <span className={cn(filterCategory !== "all" && "ml-6")}>All Categories</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilterCategory("objection")}>
+                              {filterCategory === "objection" && <Check className="h-4 w-4 mr-2" />}
+                              <span className={cn(filterCategory !== "objection" && "ml-6")}>Objections</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilterCategory("proposal")}>
+                              {filterCategory === "proposal" && <Check className="h-4 w-4 mr-2" />}
+                              <span className={cn(filterCategory !== "proposal" && "ml-6")}>Proposals</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilterCategory("pro-argument")}>
+                              {filterCategory === "pro-argument" && <Check className="h-4 w-4 mr-2" />}
+                              <span className={cn(filterCategory !== "pro-argument" && "ml-6")}>Pro-Arguments</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilterCategory("variant")}>
+                              {filterCategory === "variant" && <Check className="h-4 w-4 mr-2" />}
+                              <span className={cn(filterCategory !== "variant" && "ml-6")}>Variants</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="icon">
+                              <ArrowUpDown className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => setSortBy("newest")}>
+                              {sortBy === "newest" && <Check className="h-4 w-4 mr-2" />}
+                              <span className={cn(sortBy !== "newest" && "ml-6")}>Newest</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setSortBy("oldest")}>
+                              {sortBy === "oldest" && <Check className="h-4 w-4 mr-2" />}
+                              <span className={cn(sortBy !== "oldest" && "ml-6")}>Oldest</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setSortBy("popularity")}>
+                              {sortBy === "popularity" && <Check className="h-4 w-4 mr-2" />}
+                              <span className={cn(sortBy !== "popularity" && "ml-6")}>Popularity</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </>
+                    ) : (
+                      <>
+                        <Select value={filterCategory} onValueChange={(value: any) => setFilterCategory(value)}>
+                          <SelectTrigger className="w-[160px]">
+                            <SelectValue placeholder="Filter" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">All Categories</SelectItem>
+                            <SelectItem value="objection">Objections</SelectItem>
+                            <SelectItem value="proposal">Proposals</SelectItem>
+                            <SelectItem value="pro-argument">Pro-Arguments</SelectItem>
+                            <SelectItem value="variant">Variants</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                          <SelectTrigger className="w-[140px]">
+                            <SelectValue placeholder="Sort" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="newest">Newest</SelectItem>
+                            <SelectItem value="oldest">Oldest</SelectItem>
+                            <SelectItem value="popularity">Popularity</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </>
+                    )}
                   </div>
                 </div>
                 {regularReplies.length > 0 ? (

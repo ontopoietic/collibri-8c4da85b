@@ -2,10 +2,12 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, BarChart3, Plus, ThumbsUp, ThumbsDown, HelpCircle } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 interface MobileBottomNavProps {
   // Main navigation context
   onNewConcern?: () => void;
+  isNewConcernOpen?: boolean;
   
   // Concern detail context
   concernDetailMode?: boolean;
@@ -18,6 +20,7 @@ interface MobileBottomNavProps {
 
 export const MobileBottomNav = ({
   onNewConcern,
+  isNewConcernOpen = false,
   concernDetailMode = false,
   activeAction = null,
   onEndorse,
@@ -118,8 +121,18 @@ export const MobileBottomNav = ({
           onClick={onNewConcern}
           className="flex-col h-auto py-2 gap-1 relative"
         >
-          <div className="rounded-full border border-new-concern p-1.5">
-            <Plus className="h-5 w-5 text-new-concern" />
+          <div className={cn(
+            "rounded-full p-1.5 transition-colors",
+            isNewConcernOpen 
+              ? "bg-new-concern" 
+              : "bg-transparent"
+          )}>
+            <Plus className={cn(
+              "h-5 w-5",
+              isNewConcernOpen 
+                ? "text-new-concern-foreground" 
+                : "text-new-concern"
+            )} />
           </div>
         </Button>
       </div>
