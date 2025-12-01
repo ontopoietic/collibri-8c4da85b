@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { MessageSquare, BarChart3, Plus, ThumbsUp, ThumbsDown, HelpCircle } from "lucide-react";
+import { MessageSquare, BarChart3, Plus, ThumbsUp, ThumbsDown, HelpCircle, Trophy } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { Phase } from "@/types/concern";
 
 interface MobileBottomNavProps {
   // Main navigation context
   onNewConcern?: () => void;
   isNewConcernOpen?: boolean;
+  currentPhase?: Phase;
+  onViewLeaderboard?: () => void;
   
   // Concern detail context
   concernDetailMode?: boolean;
@@ -21,6 +24,8 @@ interface MobileBottomNavProps {
 export const MobileBottomNav = ({
   onNewConcern,
   isNewConcernOpen = false,
+  currentPhase,
+  onViewLeaderboard,
   concernDetailMode = false,
   activeAction = null,
   onEndorse,
@@ -115,26 +120,37 @@ export const MobileBottomNav = ({
           {isStatisticsActive && <span className="text-sm font-medium">Statistics</span>}
         </Button>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onNewConcern}
-          className="flex-col h-auto py-2 gap-1 relative"
-        >
-          <div className={cn(
-            "rounded-full p-1.5 transition-colors",
-            isNewConcernOpen 
-              ? "bg-new-concern" 
-              : "bg-transparent"
-          )}>
-            <Plus className={cn(
-              "h-5 w-5",
+        {currentPhase === 'class' ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onNewConcern}
+            className="flex-col h-auto py-2 gap-1 relative"
+          >
+            <div className={cn(
+              "rounded-full p-1.5 transition-colors",
               isNewConcernOpen 
-                ? "text-new-concern-foreground" 
-                : "text-new-concern"
-            )} />
-          </div>
-        </Button>
+                ? "bg-new-concern" 
+                : "bg-transparent"
+            )}>
+              <Plus className={cn(
+                "h-5 w-5",
+                isNewConcernOpen 
+                  ? "text-new-concern-foreground" 
+                  : "text-new-concern"
+              )} />
+            </div>
+          </Button>
+        ) : (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onViewLeaderboard}
+            className="flex-col h-auto py-2 gap-1"
+          >
+            <Trophy className="h-5 w-5 text-yellow-500" />
+          </Button>
+        )}
       </div>
     </div>
   );

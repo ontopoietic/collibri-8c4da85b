@@ -24,10 +24,21 @@ const Leaderboard = () => {
   
   const phases: Phase[] = ["class", "grade", "school"];
 
-  const getMedalIcon = (index: number) => {
+  const getWinnerCount = (phase: Phase) => {
+    switch (phase) {
+      case 'class': return 3;
+      case 'grade': return 2;
+      case 'school': return 3;
+      default: return 3;
+    }
+  };
+
+  const getMedalIcon = (index: number, currentPhase: Phase) => {
+    const winnerCount = getWinnerCount(currentPhase);
+    if (index >= winnerCount) return null;
     if (index === 0) return <Trophy className="h-6 w-6 text-yellow-500" />;
     if (index === 1) return <Medal className="h-6 w-6 text-gray-400" />;
-    if (index === 2) return <Medal className="h-6 w-6 text-amber-700" />;
+    if (index === 2 && winnerCount === 3) return <Medal className="h-6 w-6 text-amber-700" />;
     return null;
   };
 
@@ -64,21 +75,22 @@ const Leaderboard = () => {
 
         <div className="space-y-4">
           {phaseConcerns.map((concern, index) => {
-            const isTopThree = index < 3;
+            const winnerCount = getWinnerCount(phase as Phase);
+            const isTopWinner = index < winnerCount;
 
             return (
               <Card
                 key={concern.id}
                 className={cn(
                   "transition-all hover:shadow-lg cursor-pointer",
-                  isTopThree && "border-2 border-primary bg-primary/5"
+                  isTopWinner && "border-2 border-primary bg-primary/5"
                 )}
                 onClick={() => navigate(`/concern/${concern.id}`)}
               >
                 <CardHeader>
                   <div className="flex items-start gap-4">
                     <div className="flex flex-col items-center gap-1 min-w-[60px]">
-                      {getMedalIcon(index) || (
+                      {getMedalIcon(index, phase as Phase) || (
                         <div className="text-2xl font-bold text-muted-foreground">
                           #{index + 1}
                         </div>
