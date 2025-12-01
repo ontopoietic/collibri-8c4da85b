@@ -435,7 +435,7 @@ const ConcernDetail = () => {
               </TabsList>
 
               <TabsContent value="responses" className="space-y-4 mt-6">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between flex-wrap gap-4">
                   <h2 className="text-2xl font-bold text-foreground">Responses</h2>
                   <div className="flex gap-2">
                     {isMobile ? (

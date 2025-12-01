@@ -249,7 +249,7 @@ export const ReplyForm = ({
         </div>
       )}
 
-      {category && (
+      {category && replyType !== 'question' && (
         <div className="space-y-2">
           <label className="text-sm font-medium">
             Title {category === 'proposal' ? '' : '(optional)'}

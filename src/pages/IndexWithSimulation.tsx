@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Network, AlertTriangle, Lightbulb, Filter, ArrowUpDown, Check } from "lucide-react";
+import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Network, AlertTriangle, Lightbulb, Filter, ArrowUpDown, Check, Trophy } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -398,7 +398,21 @@ const Index = () => {
                   <Network className="h-4 w-4" />
                   <span className="hidden lg:inline">Graph</span>
                 </Button>
-                <NewConcernDialog onSubmit={handleNewConcern} />
+                {currentPhase === 'class' ? (
+                  <NewConcernDialog onSubmit={handleNewConcern} />
+                ) : (
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      const prevPhase = getPreviousPhase();
+                      if (prevPhase) navigate(`/leaderboard/${prevPhase}`);
+                    }}
+                    className="gap-2"
+                  >
+                    <Trophy className="h-4 w-4" />
+                    <span className="hidden lg:inline">Leaderboard</span>
+                  </Button>
+                )}
               </div>
             )}
 
@@ -629,6 +643,11 @@ const Index = () => {
       <MobileBottomNav 
         onNewConcern={() => setShowNewConcernDialog(true)} 
         isNewConcernOpen={showNewConcernDialog}
+        currentPhase={currentPhase}
+        onViewLeaderboard={() => {
+          const prevPhase = getPreviousPhase();
+          if (prevPhase) navigate(`/leaderboard/${prevPhase}`);
+        }}
       />
 
       {/* New Concern Dialog for Mobile */}

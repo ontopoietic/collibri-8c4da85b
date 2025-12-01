@@ -57,6 +57,10 @@ export interface Concern {
   variants?: ConcernVariant[];
   selectedVariantId?: string;
   aspects?: ConcernAspect[];
+  isWinner?: boolean;
+  promotedFrom?: Phase;
+  originalGroup?: string;
+  winnerRank?: number;
 }
 
 export interface UserQuota {
