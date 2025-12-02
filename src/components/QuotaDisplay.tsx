@@ -40,7 +40,7 @@ const QuotaItem = ({
 
 export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
   return (
-    <Card className="p-6 bg-card border border-border">
+    <Card className="p-6 bg-card border border-border min-w-[340px]">
       <h3 className="text-lg font-semibold mb-6 text-foreground">Your Phase Quota</h3>
       
       <div className="space-y-6">
