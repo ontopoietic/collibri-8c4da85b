@@ -586,7 +586,7 @@ const Index = () => {
                   </DropdownMenu>
                 </div>
               ) : (
-                <>
+                <div className="flex flex-col sm:flex-row gap-4">
                   <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
@@ -596,28 +596,30 @@ const Index = () => {
                       className="pl-10"
                     />
                   </div>
-                  <Select value={filterBy} onValueChange={(value: any) => setFilterBy(value)}>
-                    <SelectTrigger className="w-full sm:w-[180px]">
-                      <SelectValue placeholder="Filter by" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Concerns</SelectItem>
-                      <SelectItem value="my-posts">My Concerns</SelectItem>
-                      <SelectItem value="followed">Followed</SelectItem>
-                      <SelectItem value="unnoticed">Unnoticed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
-                    <SelectTrigger className="w-full sm:w-[180px]">
-                      <SelectValue placeholder="Sort by" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="newest">Newest</SelectItem>
-                      <SelectItem value="oldest">Oldest</SelectItem>
-                      <SelectItem value="popularity">Popularity</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </>
+                  <div className="flex gap-2">
+                    <Select value={filterBy} onValueChange={(value: any) => setFilterBy(value)}>
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue placeholder="Filter by" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Concerns</SelectItem>
+                        <SelectItem value="my-posts">My Concerns</SelectItem>
+                        <SelectItem value="followed">Followed</SelectItem>
+                        <SelectItem value="unnoticed">Unnoticed</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue placeholder="Sort by" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="newest">Newest</SelectItem>
+                        <SelectItem value="oldest">Oldest</SelectItem>
+                        <SelectItem value="popularity">Popularity</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
               )}
             </div>
 
