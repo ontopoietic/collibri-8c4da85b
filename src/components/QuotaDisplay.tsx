@@ -1,47 +1,52 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { UserQuota } from "@/types/concern";
+import { UserQuota, Phase } from "@/types/concern";
 import { AlertCircle, Lightbulb, ThumbsUp, GitBranch, Flag, HelpCircle } from "lucide-react";
 
 interface QuotaDisplayProps {
   quota: UserQuota;
+  currentPhase?: Phase;
 }
 
 const QuotaItem = ({ 
   config, 
   quotaData, 
-  isLarge = false 
+  isLarge = false,
+  disabled = false
 }: { 
   config: { label: string; icon: any; color: string }; 
   quotaData: { used: number; total: number };
   isLarge?: boolean;
+  disabled?: boolean;
 }) => {
   const percentage = (quotaData.used / quotaData.total) * 100;
   const isLow = quotaData.used >= quotaData.total;
   
   return (
-    <div className={`space-y-2 ${isLarge ? 'py-2' : ''}`}>
+    <div className={`space-y-2 ${isLarge ? 'py-2' : ''} ${disabled ? 'opacity-40' : ''}`}>
       <div className="flex items-center justify-between text-sm">
         <div className="flex items-center gap-2">
-          <config.icon className={`${isLarge ? 'h-5 w-5' : 'h-4 w-4'} ${config.color}`} />
-          <span className={`font-medium text-foreground whitespace-nowrap ${isLarge ? 'text-base' : ''}`}>{config.label}</span>
+          <config.icon className={`${isLarge ? 'h-5 w-5' : 'h-4 w-4'} ${disabled ? 'text-muted-foreground' : config.color}`} />
+          <span className={`font-medium whitespace-nowrap ${isLarge ? 'text-base' : ''} ${disabled ? 'text-muted-foreground' : 'text-foreground'}`}>{config.label}</span>
         </div>
-        <span className={`font-semibold ${isLarge ? 'text-base' : ''} ${isLow ? "text-destructive" : "text-muted-foreground"}`}>
+        <span className={`font-semibold ${isLarge ? 'text-base' : ''} ${disabled ? 'text-muted-foreground' : isLow ? "text-destructive" : "text-muted-foreground"}`}>
           {quotaData.used}/{quotaData.total}
         </span>
       </div>
       <Progress 
         value={percentage} 
-        className={isLarge ? 'h-3' : 'h-2'}
+        className={`${isLarge ? 'h-3' : 'h-2'} ${disabled ? '[&>div]:bg-muted-foreground' : ''}`}
       />
     </div>
   );
 };
 
-export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
+export const QuotaDisplay = ({ quota, currentPhase = "class" }: QuotaDisplayProps) => {
+  const isConcernsDisabled = currentPhase === "grade" || currentPhase === "school";
+  
   return (
-    <Card className="p-6 bg-card border border-border min-w-[380px] mx-auto">
-      <h3 className="text-lg font-semibold mb-6 text-foreground">Your Phase Quota</h3>
+    <Card className="p-6 bg-card border border-border min-w-[400px] mx-auto">
+      <h3 className="text-lg font-semibold mb-6 text-foreground text-center">Your Phase Quota</h3>
       
       <div className="space-y-6">
         {/* First row: Votes */}
@@ -58,6 +63,7 @@ export const QuotaDisplay = ({ quota }: QuotaDisplayProps) => {
           <QuotaItem
             config={{ label: "Concerns", icon: AlertCircle, color: "text-destructive" }}
             quotaData={quota.concerns}
+            disabled={isConcernsDisabled}
           />
           <QuotaItem
             config={{ label: "Proposals", icon: Lightbulb, color: "text-proposal" }}

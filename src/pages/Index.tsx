@@ -148,7 +148,7 @@ const Index = () => {
             <PhaseTimeline currentPhase={currentPhase} onPhaseClick={handlePhaseClick} />
           </div>
           <div className="lg:col-span-1 flex flex-col">
-            <QuotaDisplay quota={userQuota} />
+            <QuotaDisplay quota={userQuota} currentPhase={currentPhase} />
           </div>
         </div>
         

@@ -348,7 +348,7 @@ const Index = () => {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[350px] p-0" align="end">
-                    <QuotaDisplay quota={simulatedQuota} />
+                    <QuotaDisplay quota={simulatedQuota} currentPhase={currentPhase} />
                   </PopoverContent>
                 </Popover>
                 <Button variant="ghost" size="icon" onClick={() => navigate("/notifications")}>
@@ -371,7 +371,7 @@ const Index = () => {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[500px] p-0" align="end">
-                    <QuotaDisplay quota={simulatedQuota} />
+                    <QuotaDisplay quota={simulatedQuota} currentPhase={currentPhase} />
                   </PopoverContent>
                 </Popover>
                 <Button
