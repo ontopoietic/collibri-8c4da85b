@@ -24,7 +24,7 @@ const QuotaItem = ({
       <div className="flex items-center justify-between text-sm">
         <div className="flex items-center gap-2">
           <config.icon className={`${isLarge ? 'h-5 w-5' : 'h-4 w-4'} ${config.color}`} />
-          <span className={`font-medium text-foreground ${isLarge ? 'text-base' : ''}`}>{config.label}</span>
+          <span className={`font-medium text-foreground whitespace-nowrap ${isLarge ? 'text-base' : ''}`}>{config.label}</span>
         </div>
         <span className={`font-semibold ${isLarge ? 'text-base' : ''} ${isLow ? "text-destructive" : "text-muted-foreground"}`}>
           {quotaData.used}/{quotaData.total}
