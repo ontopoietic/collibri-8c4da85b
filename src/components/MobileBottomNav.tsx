@@ -23,7 +23,7 @@ interface MobileBottomNavProps {
 
 const GlassOverlay = () => (
   <div 
-    className="absolute -top-8 left-0 right-0 bottom-0 backdrop-blur-md"
+    className="absolute -top-16 left-0 right-0 bottom-0 backdrop-blur-md"
     style={{
       maskImage: 'linear-gradient(to top, black 40%, transparent 100%)',
       WebkitMaskImage: 'linear-gradient(to top, black 40%, transparent 100%)',
@@ -66,7 +66,7 @@ export const MobileBottomNav = ({
             onClick={onEndorse}
             className={activeAction === 'endorse' 
               ? "gap-1.5 bg-endorse text-endorse-foreground hover:bg-endorse-hover rounded-full px-4" 
-              : "flex-col h-auto py-2 gap-1"
+              : "flex-col h-auto py-2 gap-1 text-white"
             }
           >
             <ThumbsUp className="h-5 w-5" />
@@ -79,7 +79,7 @@ export const MobileBottomNav = ({
             onClick={onObject}
             className={activeAction === 'object' 
               ? "gap-1.5 bg-object text-object-foreground hover:bg-object rounded-full px-4" 
-              : "flex-col h-auto py-2 gap-1"
+              : "flex-col h-auto py-2 gap-1 text-white"
             }
           >
             <ThumbsDown className="h-5 w-5" />
@@ -92,7 +92,7 @@ export const MobileBottomNav = ({
             onClick={onVote}
             className={activeAction === 'vote' 
               ? "gap-1.5 bg-vote text-vote-foreground hover:bg-vote rounded-full px-4" 
-              : "flex-col h-auto py-2 gap-1"
+              : "flex-col h-auto py-2 gap-1 text-white"
             }
           >
             <HelpCircle className="h-5 w-5" />
@@ -114,7 +114,7 @@ export const MobileBottomNav = ({
           onClick={() => navigate('/')}
           className={isForumActive 
             ? "gap-1.5 bg-primary text-primary-foreground hover:bg-primary rounded-full px-4" 
-            : "flex-col h-auto py-2 gap-1"
+            : "flex-col h-auto py-2 gap-1 text-white"
           }
         >
           <MessageSquare className="h-5 w-5" />
@@ -127,7 +127,7 @@ export const MobileBottomNav = ({
           onClick={() => navigate('/statistics')}
           className={isStatisticsActive 
             ? "gap-1.5 bg-statistics text-statistics-foreground hover:bg-statistics rounded-full px-4" 
-            : "flex-col h-auto py-2 gap-1"
+            : "flex-col h-auto py-2 gap-1 text-white"
           }
         >
           <BarChart3 className="h-5 w-5" />
@@ -143,14 +143,14 @@ export const MobileBottomNav = ({
               "h-auto py-2 gap-1.5",
               isNewConcernOpen 
                 ? "bg-new-concern rounded-full px-4 flex-row" 
-                : "flex-col"
+                : "flex-col text-white"
             )}
           >
             <Plus className={cn(
               "h-5 w-5",
               isNewConcernOpen 
                 ? "text-new-concern-foreground" 
-                : "text-foreground"
+                : "text-white"
             )} />
             {isNewConcernOpen && <span className="text-sm font-medium text-new-concern-foreground">New</span>}
           </Button>
@@ -162,17 +162,17 @@ export const MobileBottomNav = ({
             className={cn(
               "h-auto py-2 gap-1.5",
               isLeaderboardActive 
-                ? "bg-yellow-500 rounded-full px-4 flex-row" 
-                : "flex-col"
+                ? "bg-amber-600 rounded-full px-4 flex-row" 
+                : "flex-col text-white"
             )}
           >
             <Trophy className={cn(
               "h-5 w-5",
               isLeaderboardActive 
-                ? "text-yellow-950" 
-                : "text-foreground"
+                ? "text-white" 
+                : "text-white"
             )} />
-            {isLeaderboardActive && <span className="text-sm font-medium text-yellow-950">Leaders</span>}
+            {isLeaderboardActive && <span className="text-sm font-medium text-white">Leaders</span>}
           </Button>
         )}
       </div>
