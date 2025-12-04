@@ -21,6 +21,17 @@ interface MobileBottomNavProps {
   onAskQuestion?: () => void;
 }
 
+const GlassOverlay = () => (
+  <div 
+    className="absolute inset-0 backdrop-blur-md"
+    style={{
+      maskImage: 'linear-gradient(to top, black 60%, transparent 100%)',
+      WebkitMaskImage: 'linear-gradient(to top, black 60%, transparent 100%)',
+      background: 'linear-gradient(to top, hsl(var(--card) / 0.8) 40%, transparent 100%)'
+    }}
+  />
+);
+
 export const MobileBottomNav = ({
   onNewConcern,
   isNewConcernOpen = false,
@@ -46,8 +57,9 @@ export const MobileBottomNav = ({
   if (concernDetailMode) {
     // Concern detail context: show action buttons
     return (
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-t border-border">
-        <div className="flex items-center justify-around px-4 py-3 gap-2">
+      <div className="fixed bottom-0 left-0 right-0 z-50">
+        <GlassOverlay />
+        <div className="relative flex items-center justify-around px-4 py-3 gap-2">
           <Button
             variant={activeAction === 'endorse' ? 'endorse' : 'ghost'}
             size="sm"
@@ -93,8 +105,9 @@ export const MobileBottomNav = ({
 
   // Main navigation context: show forum, statistics, new concern
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-t border-border">
-      <div className="flex items-center justify-around px-4 py-3 gap-2">
+    <div className="fixed bottom-0 left-0 right-0 z-50">
+      <GlassOverlay />
+      <div className="relative flex items-center justify-around px-4 py-3 gap-2">
         <Button
           variant={isForumActive ? 'default' : 'ghost'}
           size="sm"
