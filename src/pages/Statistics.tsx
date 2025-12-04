@@ -483,7 +483,10 @@ const Statistics = () => {
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <MobileBottomNav />
+      <MobileBottomNav 
+        currentPhase="school"
+        onViewLeaderboard={() => navigate('/leaderboard/school')}
+      />
     </div>
   );
 };

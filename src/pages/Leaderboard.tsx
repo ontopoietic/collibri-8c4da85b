@@ -7,6 +7,7 @@ import { Phase } from "@/types/concern";
 import { TypeBadge } from "@/components/TypeBadge";
 import { AspectBadges } from "@/components/AspectBadges";
 import { cn } from "@/lib/utils";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 
 const Leaderboard = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Leaderboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <div className="max-w-6xl mx-auto px-4 py-8">
         <Button
           variant="ghost"
@@ -126,6 +127,12 @@ const Leaderboard = () => {
           )}
         </div>
       </div>
+      
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav 
+        currentPhase={phase as Phase}
+        onViewLeaderboard={() => {}}
+      />
     </div>
   );
 };

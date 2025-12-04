@@ -269,9 +269,18 @@ export const PhaseTimeline = ({
                   }
                   
                   return (
-                    <div key={phase.key} className="flex-[0_0_100%] min-w-0 px-1">
+                    <div 
+                      key={phase.key} 
+                      className="flex-[0_0_100%] min-w-0 px-1"
+                      onClick={() => {
+                        if (isCompleted || daysPassed >= 95) {
+                          onPhaseClick(phase.key);
+                        }
+                      }}
+                    >
                       <div className={cn(
                         "rounded-xl p-4 border",
+                        (isCompleted || daysPassed >= 95) && "cursor-pointer hover:shadow-md transition-shadow",
                         isCompleted || isViewing
                           ? "bg-muted/50 border-muted-foreground/20" 
                           : "bg-primary/10 border-primary/20"
