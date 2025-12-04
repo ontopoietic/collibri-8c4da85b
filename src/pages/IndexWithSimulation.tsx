@@ -347,7 +347,7 @@ const Index = () => {
                       <ChartNoAxesCombined className="h-5 w-5" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[350px] p-0" align="end">
+                  <PopoverContent className="w-auto max-w-[calc(100vw-2rem)] p-0" align="end" withOverlay>
                     <QuotaDisplay quota={simulatedQuota} currentPhase={currentPhase} />
                   </PopoverContent>
                 </Popover>
@@ -370,7 +370,7 @@ const Index = () => {
                       <span className="hidden lg:inline">My Quota</span>
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[500px] p-0" align="end">
+                  <PopoverContent className="w-auto p-0" align="end" withOverlay>
                     <QuotaDisplay quota={simulatedQuota} currentPhase={currentPhase} />
                   </PopoverContent>
                 </Popover>

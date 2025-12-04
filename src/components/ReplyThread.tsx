@@ -71,7 +71,7 @@ const ReplyItem = ({
   };
 
   return (
-    <div id={`reply-${reply.id}`} className={cn("pl-6", !isMobile && "border-l-2 border-border")}>
+    <div id={`reply-${reply.id}`} className="max-w-3xl mx-auto">
       <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2 flex-wrap">
@@ -137,7 +137,12 @@ const ReplyItem = ({
                 variant="endorse"
                 size="sm"
                 onClick={() => handleFormOpen('endorse')}
-                className="gap-1 text-xs bg-endorse text-endorse-foreground hover:bg-endorse-hover"
+                className={cn(
+                  "gap-1 text-xs",
+                  showReplyForm && replyType === 'endorse'
+                    ? "bg-endorse-hover text-endorse-foreground"
+                    : ""
+                )}
               >
                 <ThumbsUp className="h-3 w-3" />
                 Endorse
@@ -146,7 +151,12 @@ const ReplyItem = ({
                 variant="object"
                 size="sm"
                 onClick={() => handleFormOpen('object')}
-                className="gap-1 text-xs"
+                className={cn(
+                  "gap-1 text-xs",
+                  showReplyForm && replyType === 'object'
+                    ? "bg-object text-object-foreground"
+                    : ""
+                )}
               >
                 <ThumbsDown className="h-3 w-3" />
                 Object
