@@ -10,17 +10,17 @@ const levelConfig = {
   class: {
     label: "Class",
     icon: Users,
-    className: "bg-blue-500/10 text-blue-600 border-blue-500/20 dark:text-blue-400",
+    className: "bg-muted/50 text-muted-foreground border-border",
   },
   school: {
     label: "School",
     icon: School,
-    className: "bg-green-500/10 text-green-600 border-green-500/20 dark:text-green-400",
+    className: "bg-muted/50 text-muted-foreground border-border",
   },
   ministries: {
     label: "Ministries",
     icon: Building2,
-    className: "bg-purple-500/10 text-purple-600 border-purple-500/20 dark:text-purple-400",
+    className: "bg-muted/50 text-muted-foreground border-border",
   },
 };
 
