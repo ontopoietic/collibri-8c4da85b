@@ -15,6 +15,7 @@ import { mockConcerns } from "@/data/mockData";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { GlassOverlay } from "@/components/GlassOverlay";
 import {
   Select,
   SelectContent,
@@ -241,8 +242,9 @@ const ConcernDetail = () => {
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
       {/* Sticky back button */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border/50">
-        <div className="max-w-4xl mx-auto px-2 sm:px-4 py-3">
+      <div className="sticky top-0 z-10">
+        <GlassOverlay direction="down" />
+        <div className="relative max-w-4xl mx-auto px-2 sm:px-4 py-3">
           <Button
             variant="ghost"
             onClick={handleBackNavigation}
