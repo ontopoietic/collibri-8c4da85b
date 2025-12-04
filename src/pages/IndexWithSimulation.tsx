@@ -41,7 +41,7 @@ import { cn } from "@/lib/utils";
 const Index = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const { isAdmin } = useAdmin();
+  const { isAdmin, adminModeEnabled } = useAdmin();
   const [concerns, setConcerns] = useState<Concern[]>(mockConcerns);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed" | "problems" | "proposals">("all");
@@ -369,7 +369,7 @@ const Index = () => {
               <div className="flex items-center gap-2">
                 {isAdmin && (
                   <>
-                    <AdminPanel />
+                    {adminModeEnabled && <AdminPanel />}
                     <AdminModeToggle />
                   </>
                 )}
