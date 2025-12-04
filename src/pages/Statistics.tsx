@@ -239,7 +239,7 @@ const Statistics = () => {
 
         <h1 className="text-4xl font-bold mb-4 text-foreground">Platform Statistics</h1>
         
-        <div className="flex gap-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-8">
           <Button
             variant={viewMode === "interval" ? "default" : "outline"}
             onClick={() => setViewMode("interval")}
@@ -377,12 +377,12 @@ const Statistics = () => {
             <CardHeader>
               <CardTitle className="text-foreground">Reply Categories Distribution</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-2 sm:px-6">
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={replyCategoryData}>
+                <BarChart data={replyCategoryData} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
+                  <XAxis dataKey="name" tick={{ fontSize: 11 }} />
+                  <YAxis width={35} tick={{ fontSize: 11 }} />
                   <Tooltip />
                   <Bar dataKey="count" radius={[8, 8, 0, 0]}>
                     {replyCategoryData.map((entry, index) => (
@@ -444,14 +444,14 @@ const Statistics = () => {
             <CardHeader>
               <CardTitle className="text-foreground">Activity by Grade</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-2 sm:px-6">
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={gradeActivity}>
+                <BarChart data={gradeActivity} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="grade" />
-                  <YAxis />
+                  <XAxis dataKey="grade" tick={{ fontSize: 11 }} />
+                  <YAxis width={35} tick={{ fontSize: 11 }} />
                   <Tooltip />
-                  <Legend />
+                  <Legend wrapperStyle={{ fontSize: 12 }} />
                   <Bar dataKey="posts" stackId="a" fill="hsl(var(--primary))" name="Posts" radius={[0, 0, 0, 0]} />
                   <Bar dataKey="votes" stackId="a" fill="hsl(var(--proposal))" name="Votes" radius={[8, 8, 0, 0]} />
                 </BarChart>
@@ -463,12 +463,12 @@ const Statistics = () => {
             <CardHeader>
               <CardTitle className="text-foreground">Active Users Timeline</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-2 sm:px-6">
               <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={activeUsersTimeline}>
+                <LineChart data={activeUsersTimeline} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
+                  <XAxis dataKey="date" tick={{ fontSize: 11 }} />
+                  <YAxis width={35} tick={{ fontSize: 11 }} />
                   <Tooltip />
                   <Line 
                     type="monotone" 
