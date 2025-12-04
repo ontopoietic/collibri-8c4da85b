@@ -103,7 +103,7 @@ export const MobileBottomNav = ({
           size="sm"
           onClick={() => navigate('/')}
           className={isForumActive 
-            ? "gap-1.5 bg-primary text-primary-foreground hover:bg-primary rounded-full px-4" 
+            ? "gap-1.5 bg-primary text-white hover:bg-primary rounded-full px-4" 
             : "flex-col h-auto py-2 gap-1 text-white"
           }
         >
