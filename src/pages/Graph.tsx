@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
+import { GlassOverlay } from "@/components/GlassOverlay";
 
 interface GraphNode extends d3.SimulationNodeDatum {
   id: string;
@@ -251,8 +252,9 @@ const Graph = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 py-3 sm:py-6">
+      <header className="sticky top-0 z-50">
+        <GlassOverlay direction="down" />
+        <div className="relative max-w-6xl mx-auto px-4 py-3 sm:py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3">
               <img src={collibriLogo} alt="Collibri" className="h-8 w-8 sm:h-10 sm:w-10" />

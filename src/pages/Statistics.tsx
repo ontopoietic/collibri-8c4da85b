@@ -323,21 +323,23 @@ const Statistics = () => {
             <CardHeader>
               <CardTitle className="text-foreground">Participation Timeline</CardTitle>
             </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={engagementData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="concerns" stroke="hsl(var(--primary))" strokeWidth={3} name="Concerns" />
-                  <Line type="monotone" dataKey="objections" stroke="hsl(var(--destructive))" strokeWidth={3} name="Objections" />
-                  <Line type="monotone" dataKey="proposals" stroke="hsl(var(--proposal))" strokeWidth={3} name="Proposals" />
-                  <Line type="monotone" dataKey="proArguments" stroke="hsl(var(--pro-argument))" strokeWidth={3} name="Pro-Arguments" />
-                  <Line type="monotone" dataKey="variants" stroke="hsl(var(--variant))" strokeWidth={3} name="Variants" />
-                </LineChart>
-              </ResponsiveContainer>
+            <CardContent className="px-2 sm:px-6">
+              <div className="w-full h-[250px] sm:h-[300px] lg:h-[400px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={engagementData} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" tick={{ fontSize: 11 }} />
+                    <YAxis width={35} tick={{ fontSize: 11 }} />
+                    <Tooltip />
+                    <Legend wrapperStyle={{ fontSize: 12 }} />
+                    <Line type="monotone" dataKey="concerns" stroke="hsl(var(--primary))" strokeWidth={2} name="Concerns" />
+                    <Line type="monotone" dataKey="objections" stroke="hsl(var(--destructive))" strokeWidth={2} name="Objections" />
+                    <Line type="monotone" dataKey="proposals" stroke="hsl(var(--proposal))" strokeWidth={2} name="Proposals" />
+                    <Line type="monotone" dataKey="proArguments" stroke="hsl(var(--pro-argument))" strokeWidth={2} name="Pro-Arguments" />
+                    <Line type="monotone" dataKey="variants" stroke="hsl(var(--variant))" strokeWidth={2} name="Variants" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
         </div>
