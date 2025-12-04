@@ -23,11 +23,11 @@ interface MobileBottomNavProps {
 
 const GlassOverlay = () => (
   <div 
-    className="absolute inset-0 backdrop-blur-md"
+    className="absolute -top-8 left-0 right-0 bottom-0 backdrop-blur-md"
     style={{
-      maskImage: 'linear-gradient(to top, black 60%, transparent 100%)',
-      WebkitMaskImage: 'linear-gradient(to top, black 60%, transparent 100%)',
-      background: 'linear-gradient(to top, hsl(var(--card) / 0.8) 40%, transparent 100%)'
+      maskImage: 'linear-gradient(to top, black 40%, transparent 100%)',
+      WebkitMaskImage: 'linear-gradient(to top, black 40%, transparent 100%)',
+      background: 'linear-gradient(to top, hsl(var(--card) / 0.5) 30%, transparent 100%)'
     }}
   />
 );
