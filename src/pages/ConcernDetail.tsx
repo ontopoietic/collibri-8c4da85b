@@ -8,7 +8,7 @@ import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink, Filter, ArrowUpDown, Check } from "lucide-react";
+import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink, Filter, ArrowUpDown, Check, Trash2, User } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -16,6 +16,7 @@ import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { GlassOverlay } from "@/components/GlassOverlay";
+import { useAdmin } from "@/contexts/AdminContext";
 import {
   Select,
   SelectContent,
@@ -53,6 +54,7 @@ const ConcernDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useIsMobile();
+  const { adminModeEnabled } = useAdmin();
   const [navigationHistory, setNavigationHistory] = useState<string[]>([]);
 
   useEffect(() => {
@@ -277,6 +279,18 @@ const ConcernDetail = () => {
             </span>
           </div>
 
+          {adminModeEnabled && concern.authorName && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 px-2 py-1 rounded-md w-fit">
+              <User className="h-3.5 w-3.5" />
+              <span>{concern.authorName}</span>
+              {concern.authorClass && (
+                <Badge variant="outline" className="text-xs px-1.5 py-0">
+                  {concern.authorClass.toUpperCase()}
+                </Badge>
+              )}
+            </div>
+          )}
+
           <div>
             <h1 className="text-3xl font-bold mb-4 text-foreground">{concern.title}</h1>
             <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
@@ -413,6 +427,20 @@ const ConcernDetail = () => {
                   Ask Question
                 </Button>
               </>
+            )}
+            {adminModeEnabled && (
+              <Button
+                variant="destructive"
+                size="sm"
+                className="gap-2 ml-auto"
+                onClick={() => {
+                  console.log("Delete concern:", concern.id);
+                  // In production, this would call an API to delete the concern
+                }}
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete
+              </Button>
             )}
           </div>
 
