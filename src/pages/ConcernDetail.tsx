@@ -351,7 +351,7 @@ const ConcernDetail = () => {
             {!isMobile && (
               <>
                 <Button
-                  variant={showReplyForm && replyType === 'endorse' ? 'endorse' : 'endorse'}
+                  variant="endorse"
                   onClick={() => {
                     setReplyType('endorse');
                     setShowReplyForm(!(showReplyForm && replyType === 'endorse'));
@@ -360,7 +360,7 @@ const ConcernDetail = () => {
                   className={cn(
                     "gap-2",
                     showReplyForm && replyType === 'endorse'
-                      ? "bg-endorse text-endorse-foreground border-endorse"
+                      ? "bg-endorse-hover text-endorse-foreground"
                       : ""
                   )}
                 >
@@ -368,7 +368,7 @@ const ConcernDetail = () => {
                   Endorse
                 </Button>
                 <Button
-                  variant={showReplyForm && replyType === 'object' ? 'object' : 'object'}
+                  variant="object"
                   onClick={() => {
                     setReplyType('object');
                     setShowReplyForm(!(showReplyForm && replyType === 'object'));
@@ -377,7 +377,7 @@ const ConcernDetail = () => {
                   className={cn(
                     "gap-2",
                     showReplyForm && replyType === 'object'
-                      ? "bg-object text-object-foreground border-object"
+                      ? "bg-object text-object-foreground"
                       : ""
                   )}
                 >
