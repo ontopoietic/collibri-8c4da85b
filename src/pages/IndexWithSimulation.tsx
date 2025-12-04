@@ -12,6 +12,9 @@ import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Network, Ale
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
+import { AdminPanel } from "@/components/AdminPanel";
+import { AdminModeToggle } from "@/components/AdminModeToggle";
+import { useAdmin } from "@/contexts/AdminContext";
 import {
   Select,
   SelectContent,
@@ -38,6 +41,7 @@ import { cn } from "@/lib/utils";
 const Index = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { isAdmin } = useAdmin();
   const [concerns, setConcerns] = useState<Concern[]>(mockConcerns);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed" | "problems" | "proposals">("all");
@@ -363,6 +367,12 @@ const Index = () => {
             {/* Desktop Navigation */}
             {!isMobile && (
               <div className="flex items-center gap-2">
+                {isAdmin && (
+                  <>
+                    <AdminPanel />
+                    <AdminModeToggle />
+                  </>
+                )}
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="secondary-action" className="gap-2">
