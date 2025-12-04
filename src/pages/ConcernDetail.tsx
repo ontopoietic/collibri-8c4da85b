@@ -240,15 +240,21 @@ const ConcernDetail = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
+      {/* Sticky back button */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border/50">
+        <div className="max-w-4xl mx-auto px-2 sm:px-4 py-3">
+          <Button
+            variant="ghost"
+            onClick={handleBackNavigation}
+            className="gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            {navigationHistory.length <= 1 || (navigationHistory.length > 1 && navigationHistory[navigationHistory.length - 2] === "/") ? "Back to Forum" : "Back"}
+          </Button>
+        </div>
+      </div>
+
       <div className="max-w-4xl mx-auto px-2 sm:px-4 py-8">
-        <Button
-          variant="ghost"
-          onClick={handleBackNavigation}
-          className="mb-6 gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {navigationHistory.length <= 1 || (navigationHistory.length > 1 && navigationHistory[navigationHistory.length - 2] === "/") ? "Back to Forum" : "Back"}
-        </Button>
 
         <div className="bg-card rounded-lg p-4 sm:p-8 shadow-sm space-y-6">
           <div className="flex items-start justify-between gap-4">
