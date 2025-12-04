@@ -23,19 +23,19 @@ const QuotaItem = ({
   const isLow = quotaData.used >= quotaData.total;
   
   return (
-    <div className={`space-y-2 ${isLarge ? 'py-2' : ''} ${disabled ? 'opacity-40' : ''}`}>
-      <div className="flex items-center justify-between text-sm">
-        <div className="flex items-center gap-2">
-          <config.icon className={`${isLarge ? 'h-5 w-5' : 'h-4 w-4'} ${disabled ? 'text-muted-foreground' : config.color}`} />
-          <span className={`font-medium whitespace-nowrap ${isLarge ? 'text-base' : ''} ${disabled ? 'text-muted-foreground' : 'text-foreground'}`}>{config.label}</span>
+    <div className={`space-y-1.5 sm:space-y-2 ${isLarge ? 'py-2' : ''} ${disabled ? 'opacity-40' : ''}`}>
+      <div className="flex items-center justify-between text-xs sm:text-sm gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <config.icon className={`${isLarge ? 'h-4 w-4 sm:h-5 sm:w-5' : 'h-3.5 w-3.5 sm:h-4 sm:w-4'} ${disabled ? 'text-muted-foreground' : config.color}`} />
+          <span className={`font-medium whitespace-nowrap ${isLarge ? 'text-sm sm:text-base' : ''} ${disabled ? 'text-muted-foreground' : 'text-foreground'}`}>{config.label}</span>
         </div>
-        <span className={`font-semibold ${isLarge ? 'text-base' : ''} ${disabled ? 'text-muted-foreground' : isLow ? "text-destructive" : "text-muted-foreground"}`}>
+        <span className={`font-semibold ${isLarge ? 'text-sm sm:text-base' : ''} ${disabled ? 'text-muted-foreground' : isLow ? "text-destructive" : "text-muted-foreground"}`}>
           {quotaData.used}/{quotaData.total}
         </span>
       </div>
       <Progress 
         value={percentage} 
-        className={`${isLarge ? 'h-3' : 'h-2'} ${disabled ? '[&>div]:bg-muted-foreground' : ''}`}
+        className={`${isLarge ? 'h-2.5 sm:h-3' : 'h-1.5 sm:h-2'} ${disabled ? '[&>div]:bg-muted-foreground' : ''}`}
       />
     </div>
   );
@@ -45,12 +45,12 @@ export const QuotaDisplay = ({ quota, currentPhase = "class" }: QuotaDisplayProp
   const isConcernsDisabled = currentPhase === "grade" || currentPhase === "school";
   
   return (
-    <Card className="p-6 bg-card border border-border w-full max-w-[400px] mx-auto">
-      <h3 className="text-lg font-semibold mb-6 text-foreground text-center">Your Phase Quota</h3>
+    <Card className="p-4 sm:p-6 bg-card border border-border w-full max-w-[340px] sm:max-w-[400px] mx-auto">
+      <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-foreground text-center">Your Phase Quota</h3>
       
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* First row: Votes */}
-        <div className="pb-6 border-b border-border">
+        <div className="pb-4 sm:pb-6 border-b border-border">
           <QuotaItem 
             config={{ label: "Votes", icon: ThumbsUp, color: "text-vote" }}
             quotaData={quota.votes}
@@ -59,7 +59,7 @@ export const QuotaDisplay = ({ quota, currentPhase = "class" }: QuotaDisplayProp
         </div>
 
         {/* Second row: Concerns, Proposals */}
-        <div className="grid grid-cols-2 gap-6 pb-6 border-b border-border">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-6 border-b border-border">
           <QuotaItem
             config={{ label: "Concerns", icon: AlertCircle, color: "text-destructive" }}
             quotaData={quota.concerns}
@@ -72,19 +72,19 @@ export const QuotaDisplay = ({ quota, currentPhase = "class" }: QuotaDisplayProp
         </div>
 
         {/* Third row: Objections, Pro-Arguments */}
-        <div className="grid grid-cols-2 gap-6 pb-6 border-b border-border">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-6 border-b border-border">
           <QuotaItem
             config={{ label: "Objections", icon: AlertCircle, color: "text-objection" }}
             quotaData={quota.objections}
           />
           <QuotaItem
-            config={{ label: "Pro-Arguments", icon: Flag, color: "text-pro-argument" }}
+            config={{ label: "Pro-Args", icon: Flag, color: "text-pro-argument" }}
             quotaData={quota.proArguments}
           />
         </div>
 
         {/* Fourth row: Variants, Questions */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6">
           <QuotaItem
             config={{ label: "Variants", icon: GitBranch, color: "text-variant" }}
             quotaData={quota.variants}
