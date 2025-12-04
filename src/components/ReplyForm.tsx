@@ -325,6 +325,7 @@ export const ReplyForm = ({
                       <SelectValue placeholder="Select solution level" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="class">Class</SelectItem>
                       <SelectItem value="school">School</SelectItem>
                       <SelectItem value="ministries">Ministries</SelectItem>
                     </SelectContent>

@@ -9,6 +9,7 @@ import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink, Filter, ArrowUpDown, Check, Trash2, User } from "lucide-react";
+import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -297,10 +298,9 @@ const ConcernDetail = () => {
           </div>
 
           {concern.solutionLevel && (
-            <div className="bg-muted p-3 rounded-lg">
-              <p className="text-sm font-medium">
-                Solution Level: <Badge variant="outline">{concern.solutionLevel === "school" ? "School" : "Ministries"}</Badge>
-              </p>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Solution Level:</span>
+              <SolutionLevelBadge level={concern.solutionLevel} />
             </div>
           )}
 
