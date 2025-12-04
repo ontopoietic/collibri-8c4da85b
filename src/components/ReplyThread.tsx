@@ -80,17 +80,7 @@ const ReplyItem = ({
 
   return (
     <div id={`reply-${reply.id}`}>
-      <div className="bg-card rounded-lg p-4 space-y-3 transition-all relative">
-            {adminModeEnabled && (
-              <Button
-                variant="destructive"
-                size="icon"
-                className="absolute top-2 right-2 h-7 w-7"
-                onClick={handleDelete}
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-              </Button>
-            )}
+      <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2 flex-wrap">
                 <CategoryBadge 
@@ -101,7 +91,7 @@ const ReplyItem = ({
                   <AspectBadges aspects={reply.aspects} />
                 )}
               </div>
-              <span className={cn("text-xs text-muted-foreground", adminModeEnabled && "mr-8")}>
+              <span className="text-xs text-muted-foreground">
                 {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
               </span>
             </div>
@@ -209,6 +199,17 @@ const ReplyItem = ({
                       Show Replies ({reply.replies.length})
                     </>
                   )}
+                </Button>
+              )}
+              {adminModeEnabled && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  className="gap-1 text-xs ml-auto"
+                  onClick={handleDelete}
+                >
+                  <Trash2 className="h-3 w-3" />
+                  Delete
                 </Button>
               )}
             </div>
