@@ -28,12 +28,36 @@ export interface QuotaConfig {
   questions: number;
 }
 
+export interface PhaseTimingConfig {
+  classDuration: number;
+  classVotingDuration: number;
+  gradeDuration: number;
+  gradeVotingDuration: number;
+  schoolDuration: number;
+  finalSelectionDuration: number;
+}
+
+export interface WinnerConfig {
+  classToGradeWinners: number;
+  gradeToSchoolWinners: number;
+  finalSchoolWinners: number;
+}
+
+export interface VariantVotingConfig {
+  votingDurationDays: number;
+  topConcernsForVoting: number;
+  votesPerUser: number;
+}
+
 export interface AdminConfig {
   quotas: {
     class: QuotaConfig;
     grade: QuotaConfig;
     school: QuotaConfig;
   };
+  phaseTiming: PhaseTimingConfig;
+  winners: WinnerConfig;
+  variantVoting: VariantVotingConfig;
 }
 
 export interface Reply {
