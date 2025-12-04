@@ -10,6 +10,7 @@ import { BarChart3, Bell, Search, Network } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
+import { GlassOverlay } from "@/components/GlassOverlay";
 import {
   Select,
   SelectContent,
@@ -104,8 +105,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+      <header className="sticky top-0 z-50">
+        <GlassOverlay direction="down" />
+        <div className="relative max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img src={collibriLogo} alt="Collibri" className="h-10 w-10" />
