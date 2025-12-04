@@ -4,12 +4,13 @@ import { AspectBadges } from "./AspectBadges";
 import { VoteButton } from "./VoteButton";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, ThumbsUp, ThumbsDown } from "lucide-react";
+import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, ThumbsUp, ThumbsDown, Trash2, User } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import { ReplyForm } from "./ReplyForm";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { useAdmin } from "@/contexts/AdminContext";
 
 interface ReplyThreadProps {
   replies: Reply[];
@@ -50,10 +51,17 @@ const ReplyItem = ({
   parentCategory?: ReplyCategory;
 }) => {
   const isMobile = useIsMobile();
+  const { adminModeEnabled } = useAdmin();
   const [isExpanded, setIsExpanded] = useState(true);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
   const hasReplies = reply.replies.length > 0;
   const showReplyForm = openFormId === reply.id;
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log("Delete reply:", reply.id);
+    // In production, this would call an API to delete the reply
+  };
 
   const handleReplySubmit = (
     category: ReplyCategory,
@@ -72,7 +80,17 @@ const ReplyItem = ({
 
   return (
     <div id={`reply-${reply.id}`}>
-      <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
+      <div className="bg-card rounded-lg p-4 space-y-3 transition-all relative">
+            {adminModeEnabled && (
+              <Button
+                variant="destructive"
+                size="icon"
+                className="absolute top-2 right-2 h-7 w-7"
+                onClick={handleDelete}
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
+            )}
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2 flex-wrap">
                 <CategoryBadge 
@@ -83,10 +101,22 @@ const ReplyItem = ({
                   <AspectBadges aspects={reply.aspects} />
                 )}
               </div>
-              <span className="text-xs text-muted-foreground">
+              <span className={cn("text-xs text-muted-foreground", adminModeEnabled && "mr-8")}>
                 {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
               </span>
             </div>
+
+            {adminModeEnabled && reply.authorName && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 px-2 py-1 rounded-md w-fit">
+                <User className="h-3.5 w-3.5" />
+                <span>{reply.authorName}</span>
+                {reply.authorClass && (
+                  <Badge variant="outline" className="text-xs px-1.5 py-0">
+                    {reply.authorClass.toUpperCase()}
+                  </Badge>
+                )}
+              </div>
+            )}
             
             <p className="text-foreground leading-relaxed">{reply.text}</p>
             

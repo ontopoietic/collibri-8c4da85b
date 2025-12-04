@@ -11,6 +11,31 @@ export interface ReplyReference {
   category: ReplyCategory;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  class: string; // e.g., "6a", "6b", "7c"
+  role: 'student' | 'admin';
+}
+
+export interface QuotaConfig {
+  concerns: number;
+  votes: number;
+  variants: number;
+  proposals: number;
+  proArguments: number;
+  objections: number;
+  questions: number;
+}
+
+export interface AdminConfig {
+  quotas: {
+    class: QuotaConfig;
+    grade: QuotaConfig;
+    school: QuotaConfig;
+  };
+}
+
 export interface Reply {
   id: string;
   category: ReplyCategory;
@@ -25,6 +50,9 @@ export interface Reply {
     solutionLevel?: SolutionLevel;
   };
   aspects?: ConcernAspect[];
+  authorId?: string;
+  authorName?: string;
+  authorClass?: string;
 }
 
 export type Phase = "class" | "grade" | "school";
@@ -61,6 +89,9 @@ export interface Concern {
   promotedFrom?: Phase;
   originalGroup?: string;
   winnerRank?: number;
+  authorId?: string;
+  authorName?: string;
+  authorClass?: string;
 }
 
 export interface UserQuota {
