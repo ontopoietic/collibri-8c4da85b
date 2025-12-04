@@ -71,7 +71,7 @@ const ReplyItem = ({
   };
 
   return (
-    <div id={`reply-${reply.id}`} className="max-w-3xl mx-auto">
+    <div id={`reply-${reply.id}`}>
       <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2 flex-wrap">

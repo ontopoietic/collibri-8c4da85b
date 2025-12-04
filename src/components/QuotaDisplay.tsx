@@ -45,7 +45,7 @@ export const QuotaDisplay = ({ quota, currentPhase = "class" }: QuotaDisplayProp
   const isConcernsDisabled = currentPhase === "grade" || currentPhase === "school";
   
   return (
-    <Card className="p-6 bg-card border border-border min-w-[400px] mx-auto">
+    <Card className="p-6 bg-card border border-border w-full max-w-[400px] mx-auto">
       <h3 className="text-lg font-semibold mb-6 text-foreground text-center">Your Phase Quota</h3>
       
       <div className="space-y-6">

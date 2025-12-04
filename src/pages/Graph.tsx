@@ -4,7 +4,8 @@ import * as d3 from "d3";
 import { mockConcerns } from "@/data/mockData";
 import { Concern, Reply } from "@/types/concern";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 
 interface GraphNode extends d3.SimulationNodeDatum {
@@ -31,6 +32,7 @@ const Graph = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; label: string } | null>(null);
   const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight - 88 });
+  const [legendOpen, setLegendOpen] = useState(window.innerWidth > 768);
 
   useEffect(() => {
     const handleResize = () => {
@@ -269,38 +271,45 @@ const Graph = () => {
       </header>
 
       <main className="relative w-full" style={{ height: "calc(100vh - 88px)" }}>
-        <div className="absolute top-4 left-4 bg-card border border-border rounded-lg p-4 z-10 shadow-lg">
-          <h3 className="font-semibold mb-2 text-foreground">Legend</h3>
-          <div className="space-y-2 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-[#dc2626]"></div>
-              <span>Problems</span>
+        <Collapsible open={legendOpen} onOpenChange={setLegendOpen} className="absolute top-4 left-4 bg-card border border-border rounded-lg z-10 shadow-lg">
+          <CollapsibleTrigger asChild>
+            <Button variant="ghost" className="w-full flex items-center justify-between p-4 hover:bg-transparent">
+              <span className="font-semibold text-foreground">Legend</span>
+              {legendOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="px-4 pb-4">
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#dc2626]"></div>
+                <span>Problems</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#f59e0b]"></div>
+                <span>Proposals</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#8b5cf6]"></div>
+                <span>Counter-Proposals / Variants</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#ef4444]"></div>
+                <span>Objections</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#22c55e]"></div>
+                <span>Pro-Arguments</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#3b82f6]"></div>
+                <span>Questions</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-[#f59e0b]"></div>
-              <span>Proposals</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-[#8b5cf6]"></div>
-              <span>Counter-Proposals / Variants</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-[#ef4444]"></div>
-              <span>Objections</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-[#22c55e]"></div>
-              <span>Pro-Arguments</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-[#3b82f6]"></div>
-              <span>Questions</span>
-            </div>
-          </div>
-          <p className="text-xs text-muted-foreground mt-4">
-            Drag nodes to rearrange. Scroll to zoom. Click to view concern.
-          </p>
-        </div>
+            <p className="text-xs text-muted-foreground mt-4">
+              Drag nodes to rearrange. Scroll to zoom. Click to view concern.
+            </p>
+          </CollapsibleContent>
+        </Collapsible>
 
         <svg
           ref={svgRef}
