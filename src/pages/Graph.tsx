@@ -252,11 +252,11 @@ const Graph = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-card border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+        <div className="max-w-6xl mx-auto px-4 py-3 sm:py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <img src={collibriLogo} alt="Collibri" className="h-10 w-10" />
-              <h1 className="text-3xl font-bold text-foreground">Concern Network</h1>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <img src={collibriLogo} alt="Collibri" className="h-8 w-8 sm:h-10 sm:w-10" />
+              <h1 className="text-xl sm:text-3xl font-bold text-foreground">Concern Network</h1>
             </div>
             <Button
               variant="outline"
@@ -264,7 +264,7 @@ const Graph = () => {
               className="gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to Forum
+              <span className="hidden sm:inline">Back to Forum</span>
             </Button>
           </div>
         </div>

@@ -104,7 +104,7 @@ const Notifications = () => {
           className="mb-6 gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Feed
+          <span className="hidden sm:inline">Back to Feed</span>
         </Button>
 
         <div className="space-y-6">

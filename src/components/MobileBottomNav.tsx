@@ -41,6 +41,7 @@ export const MobileBottomNav = ({
 
   const isForumActive = location.pathname === '/';
   const isStatisticsActive = location.pathname === '/statistics';
+  const isLeaderboardActive = location.pathname.startsWith('/leaderboard');
 
   if (concernDetailMode) {
     // Concern detail context: show action buttons
@@ -125,30 +126,40 @@ export const MobileBottomNav = ({
             variant="ghost"
             size="sm"
             onClick={onNewConcern}
-            className="flex-col h-auto py-2 gap-1 relative"
-          >
-            <div className={cn(
-              "rounded-full p-1.5 transition-colors",
+            className={cn(
+              "h-auto py-2 gap-1.5",
               isNewConcernOpen 
-                ? "bg-new-concern" 
-                : "bg-transparent"
-            )}>
-              <Plus className={cn(
-                "h-5 w-5",
-                isNewConcernOpen 
-                  ? "text-new-concern-foreground" 
-                  : "text-new-concern"
-              )} />
-            </div>
+                ? "bg-new-concern rounded-full px-4 flex-row" 
+                : "flex-col"
+            )}
+          >
+            <Plus className={cn(
+              "h-5 w-5",
+              isNewConcernOpen 
+                ? "text-new-concern-foreground" 
+                : "text-foreground"
+            )} />
+            {isNewConcernOpen && <span className="text-sm font-medium text-new-concern-foreground">New</span>}
           </Button>
         ) : (
           <Button
             variant="ghost"
             size="sm"
             onClick={onViewLeaderboard}
-            className="flex-col h-auto py-2 gap-1"
+            className={cn(
+              "h-auto py-2 gap-1.5",
+              isLeaderboardActive 
+                ? "bg-yellow-500 rounded-full px-4 flex-row" 
+                : "flex-col"
+            )}
           >
-            <Trophy className="h-5 w-5 text-yellow-500" />
+            <Trophy className={cn(
+              "h-5 w-5",
+              isLeaderboardActive 
+                ? "text-yellow-950" 
+                : "text-foreground"
+            )} />
+            {isLeaderboardActive && <span className="text-sm font-medium text-yellow-950">Leaders</span>}
           </Button>
         )}
       </div>
