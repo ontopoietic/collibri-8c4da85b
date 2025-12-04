@@ -746,6 +746,7 @@ const Index = () => {
                       <SelectValue placeholder="Solution Level" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="class">Class</SelectItem>
                       <SelectItem value="school">School</SelectItem>
                       <SelectItem value="ministries">Ministries</SelectItem>
                     </SelectContent>

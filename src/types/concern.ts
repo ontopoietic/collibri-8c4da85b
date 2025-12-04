@@ -3,7 +3,7 @@ export type ConcernAspect = "problem" | "proposal";
 
 export type ReplyCategory = "objection" | "proposal" | "pro-argument" | "variant" | "question";
 
-export type SolutionLevel = "school" | "ministries";
+export type SolutionLevel = "class" | "school" | "ministries";
 
 export interface ReplyReference {
   id: string;
