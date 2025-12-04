@@ -249,7 +249,9 @@ const ConcernDetail = () => {
             className="gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            {navigationHistory.length <= 1 || (navigationHistory.length > 1 && navigationHistory[navigationHistory.length - 2] === "/") ? "Back to Forum" : "Back"}
+            <span className="hidden sm:inline">
+              {navigationHistory.length <= 1 || (navigationHistory.length > 1 && navigationHistory[navigationHistory.length - 2] === "/") ? "Back to Forum" : "Back"}
+            </span>
           </Button>
         </div>
       </div>

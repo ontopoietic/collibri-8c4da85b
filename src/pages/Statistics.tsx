@@ -234,7 +234,7 @@ const Statistics = () => {
           className="mb-6 gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Feed
+          <span className="hidden sm:inline">Back to Feed</span>
         </Button>
 
         <h1 className="text-4xl font-bold mb-4 text-foreground">Platform Statistics</h1>

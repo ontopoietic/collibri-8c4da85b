@@ -64,7 +64,12 @@ export const mockConcerns: Concern[] = [
     ],
     replies: [
       createReply("r1", "objection", "I think the main issue is timing, not quality. Food is hot when served.", 8, 84.5),
-      createReply("r2", "pro-argument", "Absolutely agree! I've noticed many students skip lunch because of this.", 12, 84.2),
+      createReply("r2", "pro-argument", "Absolutely agree! I've noticed many students skip lunch because of this.", 12, 84.2, [
+        createReply("r2a", "question", "Do we have data on how many students actually skip lunch?", 3, 84, [
+          createReply("r2a1", "pro-argument", "The student council did a survey - about 30% regularly skip cafeteria meals.", 5, 83.8)
+        ]),
+        createReply("r2b", "proposal", "We could propose bringing healthier options like fresh salads and sandwiches.", 4, 83.9)
+      ]),
       createReply("r3", "proposal", "We could propose a student feedback system where we vote on menu items weekly.", 15, 83.8, [], undefined, {
         text: "Create a monthly rotating menu based on student preferences collected through surveys.",
         solutionLevel: "school"
@@ -312,7 +317,11 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r13", "pro-argument", "Definitely! Sometimes I have 4 major assignments due the same week.", 18, 55.5),
+      createReply("r13", "pro-argument", "Definitely! Sometimes I have 4 major assignments due the same week.", 18, 55.5, [
+        createReply("r13a", "objection", "But some subjects genuinely require more practice to master.", 5, 55.2, [
+          createReply("r13a1", "variant", "Maybe we need smarter homework, not less homework - quality over quantity.", 8, 55)
+        ])
+      ]),
       createReply("r14", "objection", "Teachers don't coordinate because they have their own curriculum requirements.", 12, 55, [], undefined, {
         text: "Establish a shared digital calendar where teachers can see all assignment deadlines and coordinate better.",
         solutionLevel: "school"
