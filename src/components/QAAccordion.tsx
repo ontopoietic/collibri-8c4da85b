@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ChevronRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -14,47 +14,35 @@ interface QAAccordionProps {
 }
 
 const QAAccordion = ({ questions }: QAAccordionProps) => {
-  const [openItems, setOpenItems] = useState<string[]>([]);
-
-  const toggleItem = (id: string) => {
-    setOpenItems(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
-    );
-  };
-
-  const isOpen = (id: string) => openItems.includes(id);
-
   return (
-    <Accordion type="multiple" value={openItems} onValueChange={setOpenItems} className="space-y-2">
+    <Accordion type="multiple" className="space-y-2">
       {questions.map((question) => (
         <AccordionItem 
           key={question.id} 
           value={question.id}
           className="border border-border rounded-lg overflow-hidden"
         >
-          {/* Custom trigger - entire row clickable */}
-          <button
-            onClick={() => toggleItem(question.id)}
-            className="w-full flex items-center gap-3 p-4 text-left hover:bg-muted/50 transition-colors"
-          >
-            <ChevronRight 
+          <AccordionPrimitive.Header className="flex">
+            <AccordionPrimitive.Trigger
               className={cn(
-                "h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200",
-                isOpen(question.id) && "rotate-90"
+                "w-full flex items-center gap-3 p-4 text-left hover:bg-muted/50 transition-colors",
+                "[&[data-state=open]>svg]:rotate-90"
               )}
-            />
-            <span className="flex-1 font-medium text-foreground">
-              {question.text}
-            </span>
-            <span className="text-sm text-muted-foreground shrink-0">
-              {formatDistanceToNow(question.timestamp, { addSuffix: true })}
-            </span>
-          </button>
+            >
+              <ChevronRight 
+                className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200"
+              />
+              <span className="flex-1 font-medium text-foreground">
+                {question.text}
+              </span>
+              <span className="text-sm text-muted-foreground shrink-0">
+                {formatDistanceToNow(question.timestamp, { addSuffix: true })}
+              </span>
+            </AccordionPrimitive.Trigger>
+          </AccordionPrimitive.Header>
 
           <AccordionContent className="px-4 pb-4 pt-0">
-            {question.replies.length > 0 ? (
+            {question.replies?.length > 0 ? (
               <div className="space-y-3 pl-8">
                 {question.replies.map((answer) => (
                   <div 
