@@ -6,17 +6,23 @@ const typeConfig = {
   problem: {
     label: "Problem",
     icon: AlertTriangle,
-    className: "text-problem-aspect",
+    iconColor: "text-problem-aspect",
+    bgColor: "bg-problem-aspect/10",
+    borderColor: "border-problem-aspect/30",
   },
   proposal: {
     label: "Proposal",
     icon: Lightbulb,
-    className: "text-proposal",
+    iconColor: "text-proposal",
+    bgColor: "bg-proposal/10",
+    borderColor: "border-proposal/30",
   },
   "counter-proposal": {
     label: "Counter-Proposal",
     icon: Scale,
-    className: "text-primary",
+    iconColor: "text-primary",
+    bgColor: "bg-primary/10",
+    borderColor: "border-primary/30",
   },
 };
 
@@ -35,12 +41,18 @@ export const TypeIconPrefix = ({ type, size = "md" }: TypeIconPrefixProps) => {
     lg: "h-6 w-6",
   };
 
+  const containerSizes = {
+    sm: "p-1",
+    md: "p-1.5",
+    lg: "p-2",
+  };
+
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className="inline-flex items-center">
-            <Icon className={`${sizeClasses[size]} ${config.className} flex-shrink-0`} />
+          <span className={`inline-flex items-center justify-center rounded-full border flex-shrink-0 ${containerSizes[size]} ${config.bgColor} ${config.borderColor}`}>
+            <Icon className={`${sizeClasses[size]} ${config.iconColor}`} />
           </span>
         </TooltipTrigger>
         <TooltipContent>
