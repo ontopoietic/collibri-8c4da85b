@@ -5,9 +5,8 @@ import { mockConcerns } from "@/data/mockData";
 import { Concern, Reply } from "@/types/concern";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
-import collibriLogo from "@/assets/collibri-logo.png";
-import { GlassOverlay } from "@/components/GlassOverlay";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { NavigationHeader } from "@/components/NavigationHeader";
 
 interface GraphNode extends d3.SimulationNodeDatum {
   id: string;
@@ -32,12 +31,12 @@ const Graph = () => {
   const navigate = useNavigate();
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; label: string } | null>(null);
-  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight - 88 });
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight - 120 });
   const [legendOpen, setLegendOpen] = useState(window.innerWidth > 768);
 
   useEffect(() => {
     const handleResize = () => {
-      setDimensions({ width: window.innerWidth, height: window.innerHeight - 88 });
+      setDimensions({ width: window.innerWidth, height: window.innerHeight - 120 });
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -252,27 +251,9 @@ const Graph = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50">
-        <GlassOverlay direction="down" />
-        <div className="relative max-w-6xl mx-auto px-4 py-3 sm:py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <img src={collibriLogo} alt="Collibri" className="h-8 w-8 sm:h-10 sm:w-10" />
-              <h1 className="text-xl sm:text-3xl font-bold text-foreground">Concern Network</h1>
-            </div>
-            <Button
-              variant="outline"
-              onClick={() => navigate("/")}
-              className="gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back to Forum</span>
-            </Button>
-          </div>
-        </div>
-      </header>
+      <NavigationHeader />
 
-      <main className="relative w-full" style={{ height: "calc(100vh - 88px)" }}>
+      <main className="relative w-full" style={{ height: "calc(100vh - 120px)" }}>
         <Collapsible open={legendOpen} onOpenChange={setLegendOpen} className="absolute top-4 left-4 bg-card border border-border rounded-lg z-10 shadow-lg">
           <CollapsibleTrigger asChild>
             <Button variant="ghost" className="w-full flex items-center justify-between p-4 hover:bg-transparent">

@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, MessageSquare, ThumbsUp, FileText } from "lucide-react";
+import { MessageSquare, ThumbsUp, FileText } from "lucide-react";
 import { mockConcerns } from "@/data/mockData";
 import { Phase } from "@/types/concern";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { NavigationHeader } from "@/components/NavigationHeader";
 import {
   BarChart,
   Bar,
@@ -341,15 +342,9 @@ const Statistics = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
+      <NavigationHeader />
+      
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/")}
-          className="mb-6 gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span className="hidden sm:inline">Back to Feed</span>
-        </Button>
 
         <h1 className="text-4xl font-bold mb-4 text-foreground">Platform Statistics</h1>
         
