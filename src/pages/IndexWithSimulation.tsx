@@ -527,7 +527,19 @@ const Index = () => {
         {isInterimsPhase && variantVotingPhase ? (
           <div className="mb-8">
             <VariantVoting 
-              concerns={simulatedConcerns.filter(c => c.phase === variantVotingPhase.phase)} 
+              concerns={simulatedConcerns.filter(c => {
+                if (variantVotingPhase.phase === "class") {
+                  // Only show winners from the user's class (Class 10A)
+                  return c.phase === "class" && c.group === "Class 10A" && c.isWinner;
+                }
+                if (variantVotingPhase.phase === "grade") {
+                  return c.phase === "grade" && c.isWinner;
+                }
+                if (variantVotingPhase.phase === "school") {
+                  return c.phase === "school" && c.isWinner;
+                }
+                return false;
+              })}
               onVote={handleVariantVote}
               dayIntoPhase={Math.floor(variantVotingPhase.dayIntoVoting)}
               interimDuration={5}

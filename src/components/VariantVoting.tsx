@@ -19,10 +19,10 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
   const [votedConcerns, setVotedConcerns] = useState<Set<string>>(new Set());
   const [selectedForDetail, setSelectedForDetail] = useState<{concern: Concern, variant: ConcernVariant} | null>(null);
 
-  // Get top 3 concerns from previous phase with variants
+  // Get top 3 winners from previous phase with variants (sorted by winnerRank for stability)
   const topConcerns = concerns
-    .filter((c) => c.variants && c.variants.length > 0)
-    .sort((a, b) => b.votes - a.votes)
+    .filter((c) => c.variants && c.variants.length > 0 && c.isWinner)
+    .sort((a, b) => (a.winnerRank || 99) - (b.winnerRank || 99))
     .slice(0, 3);
 
   const handleVariantSelect = (concernId: string, variantId: string) => {
