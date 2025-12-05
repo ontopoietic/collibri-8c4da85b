@@ -115,7 +115,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10a-1-2",
         title: "Structured Class Meetings with Rotating Facilitators",
-        text: "Weekly 15-minute meetings with rotating student facilitators and a digital suggestion box for anonymous submissions.",
+        text: "Students lack a regular forum to voice concerns and participate in class decisions. We propose holding weekly 15-minute class meetings with rotating student facilitators and a digital suggestion box for anonymous submissions, ensuring everyone has a voice in class matters.",
         votes: 14,
       },
     ],
@@ -150,7 +150,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10a-2-2",
         title: "Comprehensive Climate Control Fix",
-        text: "Request maintenance audit of HVAC system, install thermometers in each classroom, and create a reporting system for temperature issues.",
+        text: "Our classroom temperatures fluctuate between too hot in summer and too cold in winter due to faulty HVAC systems. We propose a maintenance audit, installing thermometers in each classroom, and creating a reporting system so issues can be tracked and resolved quickly.",
         votes: 12,
       },
     ],
@@ -184,7 +184,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10a-3-2",
         title: "Community Book Exchange Program",
-        text: "Create a library corner with a book drive, digital catalog for tracking, and monthly reading recommendations from students.",
+        text: "Our classroom lacks accessible reading materials for free time. We propose creating a classroom library corner with a book drive where students bring books from home, a digital catalog for tracking, and monthly reading recommendations from students.",
         votes: 10,
       },
     ],
@@ -295,7 +295,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10b-1-2",
         title: "Flexible Seating with Rotation",
-        text: "Implement U-shaped seating for better visibility, with weekly rotation so no one is stuck in bad spots permanently.",
+        text: "Our current row-by-row classroom seating creates difficulties: students in back corners can't see the board well, and group work is awkward. We propose implementing U-shaped seating for better visibility and weekly seat rotation so no one is stuck in disadvantaged positions.",
         votes: 11,
       },
     ],
@@ -330,7 +330,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10b-2-2",
         title: "Structured Work Time with Zones",
-        text: "Create designated quiet zones and discussion areas, with clear time blocks for silent work and collaborative time.",
+        text: "During independent work time, some students chat loudly, making it hard for others to concentrate. We propose creating designated quiet zones and discussion areas in the classroom, with clear time blocks for silent work and collaborative time.",
         votes: 9,
       },
     ],
@@ -364,7 +364,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10b-3-2",
         title: "Integrated Assignment Management System",
-        text: "School-wide digital calendar integrated with existing platforms, mandatory for all teachers, with student notification options.",
+        text: "Students struggle to track homework deadlines across multiple classes, often resulting in multiple assignments due the same day. We propose a school-wide digital calendar integrated with existing platforms, mandatory for all teachers, with notification options for students.",
         votes: 8,
       },
     ],
@@ -439,7 +439,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10c-1-2",
         title: "Lab Equipment Restoration Program",
-        text: "Request emergency funding for essential repairs, create prioritized equipment list, and explore grant opportunities for science education.",
+        text: "Many science lab instruments are broken or missing parts, forcing students to share equipment excessively and making experiments difficult to complete. We propose requesting emergency funding for essential repairs, creating a prioritized equipment list, and exploring grant opportunities for science education.",
         votes: 13,
       },
     ],
@@ -474,7 +474,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10c-2-2",
         title: "Structured Extension System",
-        text: "Allow 2 extensions per semester per student, with 24-48 hour grace period for documented emergencies or teacher approval.",
+        text: "Students sometimes need extra time on assignments due to unexpected circumstances but face penalties for late submissions. We propose allowing 2 extensions per semester per student, with a 24-48 hour grace period for documented emergencies or teacher approval, balancing flexibility with accountability.",
         votes: 10,
       },
     ],
@@ -508,7 +508,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10c-3-2",
         title: "Cafeteria Efficiency Improvement",
-        text: "Stagger lunch times by grade, add grab-and-go options, and consider adding a second serving line to reduce wait times.",
+        text: "The lunch line is so long that students only have 10 minutes to actually eat before the next class, causing many to skip meals. We propose staggering lunch times by grade, adding grab-and-go options, and considering a second serving line to reduce wait times.",
         votes: 9,
       },
     ],
@@ -589,7 +589,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-g10-1-2",
         title: "Comprehensive Cafeteria Improvement",
-        text: "Implement a student feedback system, extend lunch breaks, add fresh salad options, and ensure food stays hot with better warming equipment.",
+        text: "The cafeteria food is often cold and lacks variety, with limited healthy options causing many students to skip lunch. We propose implementing a student feedback system for menu choices, extending lunch breaks, adding fresh salad options, and installing better warming equipment to keep food hot.",
         votes: 28,
       },
     ],
@@ -643,7 +643,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-g10-2-2",
         title: "Hybrid Digital System with School Support",
-        text: "Implement digital submissions with extended library hours for students without home internet, plus offline submission options.",
+        text: "Paper-based assignment submission creates waste and makes tracking difficult, but not all students have reliable internet at home. We propose implementing digital submissions while extending library hours for students without home internet access, plus maintaining offline submission options for equity.",
         votes: 26,
       },
     ],
