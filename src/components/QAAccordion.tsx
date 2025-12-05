@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Reply } from "@/types/concern";
+import { useAdmin } from "@/contexts/AdminContext";
 
 interface QAAccordionProps {
   questions: Reply[];
@@ -10,6 +11,7 @@ interface QAAccordionProps {
 
 const QAAccordion = ({ questions }: QAAccordionProps) => {
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+  const { adminModeEnabled } = useAdmin();
 
   const toggleItem = (id: string) => {
     setOpenItems(prev => {
@@ -39,7 +41,12 @@ const QAAccordion = ({ questions }: QAAccordionProps) => {
           >
             <button
               onClick={() => toggleItem(question.id)}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-muted/50 transition-colors"
+              className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
+                isOpen 
+                  ? "bg-accent" 
+                  : "hover:bg-muted/50"
+              )}
             >
               <ChevronRight 
                 className={cn(
@@ -56,9 +63,9 @@ const QAAccordion = ({ questions }: QAAccordionProps) => {
             </button>
 
             {isOpen && (
-              <div className="px-4 pb-4 pt-0">
+              <div className="border-t border-border bg-card px-4 py-3">
                 {question.replies && question.replies.length > 0 ? (
-                  <div className="space-y-3 pl-8">
+                  <div className="space-y-3">
                     {question.replies.map((answer) => (
                       <div 
                         key={answer.id}
@@ -66,7 +73,7 @@ const QAAccordion = ({ questions }: QAAccordionProps) => {
                       >
                         <p className="text-foreground">{answer.text}</p>
                         <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
-                          {answer.authorName && (
+                          {adminModeEnabled && answer.authorName && (
                             <>
                               <span>{answer.authorName}</span>
                               <span>•</span>
@@ -78,7 +85,7 @@ const QAAccordion = ({ questions }: QAAccordionProps) => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-muted-foreground text-sm pl-8">No answers yet.</p>
+                  <p className="text-muted-foreground text-sm">No answers yet.</p>
                 )}
               </div>
             )}
