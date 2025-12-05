@@ -232,12 +232,13 @@ const Statistics = () => {
 
   // Weekly aggregated data for full interval view
   const getWeeklyAggregatedData = () => {
-    if (sortedEngagementEntries.length === 0) return [];
-    
-    const startDate = new Date(sortedEngagementEntries[0][0]);
+    // Use the actual timeline range directly
+    const startDate = new Date(timelineRange.start);
     startDate.setHours(0, 0, 0, 0);
     
-    const endDate = new Date(sortedEngagementEntries[sortedEngagementEntries.length - 1][0]);
+    const endDate = new Date(timelineRange.end);
+    endDate.setHours(0, 0, 0, 0);
+    
     const totalDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
     const totalWeeks = Math.ceil(totalDays / 7);
     
@@ -262,18 +263,18 @@ const Statistics = () => {
       });
     }
     
-    // Aggregate daily data into weeks
-    sortedEngagementEntries.forEach(([dateStr, data]) => {
-      const date = new Date(dateStr);
-      const daysSinceStart = Math.floor((date.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
-      const weekIndex = Math.floor(daysSinceStart / 7);
-      
-      if (weekIndex >= 0 && weekIndex < weeklyData.length) {
-        weeklyData[weekIndex].concerns += data.concerns;
-        weeklyData[weekIndex].objections += data.objections;
-        weeklyData[weekIndex].proposals += data.proposals;
-        weeklyData[weekIndex].proArguments += data.proArguments;
-        weeklyData[weekIndex].variants += data.variants;
+    // Aggregate daily data into weeks using fullDateRange for consistent parsing
+    fullDateRange.forEach((dateStr, index) => {
+      const data = engagementByDate.get(dateStr);
+      if (data) {
+        const weekIndex = Math.floor(index / 7);
+        if (weekIndex >= 0 && weekIndex < weeklyData.length) {
+          weeklyData[weekIndex].concerns += data.concerns;
+          weeklyData[weekIndex].objections += data.objections;
+          weeklyData[weekIndex].proposals += data.proposals;
+          weeklyData[weekIndex].proArguments += data.proArguments;
+          weeklyData[weekIndex].variants += data.variants;
+        }
       }
     });
     
