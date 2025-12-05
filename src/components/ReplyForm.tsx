@@ -86,7 +86,8 @@ export const ReplyForm = ({
   const [counterProposalText, setCounterProposalText] = useState("");
   const [postCounterAsConcern, setPostCounterAsConcern] = useState(false);
   const [counterProposalSolutionLevel, setCounterProposalSolutionLevel] = useState<SolutionLevel | "">("");
-  const [variantSolutionLevel, setVariantSolutionLevel] = useState<SolutionLevel | "">(""); 
+  const [variantSolutionLevel, setVariantSolutionLevel] = useState<SolutionLevel | "">("");
+  const [proposalSolutionLevel, setProposalSolutionLevel] = useState<SolutionLevel | "">("");
 
   const isProposalType = parentConcernType === "proposal" || parentConcernType === "counter-proposal";
 
@@ -129,12 +130,19 @@ export const ReplyForm = ({
           }
         : undefined;
       
+      // Determine solution level to pass based on category
+      const solutionLevelToPass = category === "variant" && variantSolutionLevel 
+        ? variantSolutionLevel as SolutionLevel 
+        : category === "proposal" && proposalSolutionLevel 
+          ? proposalSolutionLevel as SolutionLevel 
+          : undefined;
+
       onSubmit(
         category as ReplyCategory,
         text,
         selectedReplies.length > 0 ? selectedReplies : undefined,
         counterProposal,
-        category === "variant" && variantSolutionLevel ? variantSolutionLevel as SolutionLevel : undefined
+        solutionLevelToPass
       );
       setCategory("");
       setTitle("");
@@ -145,6 +153,7 @@ export const ReplyForm = ({
       setPostCounterAsConcern(false);
       setCounterProposalSolutionLevel("");
       setVariantSolutionLevel("");
+      setProposalSolutionLevel("");
     }
   };
 
@@ -295,6 +304,25 @@ export const ReplyForm = ({
           >
             <SelectTrigger>
               <SelectValue placeholder="Same as original" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="class">Class</SelectItem>
+              <SelectItem value="school">School</SelectItem>
+              <SelectItem value="ministries">Ministries</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {category === "proposal" && (
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">Where can this be solved?</Label>
+          <Select 
+            value={proposalSolutionLevel} 
+            onValueChange={(value) => setProposalSolutionLevel(value as SolutionLevel)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select solution level" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="class">Class</SelectItem>
