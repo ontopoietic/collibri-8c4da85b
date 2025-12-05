@@ -19,6 +19,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { GlassOverlay } from "@/components/GlassOverlay";
 import { useAdmin } from "@/contexts/AdminContext";
+import QAAccordion from "@/components/QAAccordion";
 import {
   Select,
   SelectContent,
@@ -590,17 +591,7 @@ const ConcernDetail = () => {
                   </Select>
                 </div>
                 {questions.length > 0 ? (
-                  <ReplyThread
-                    replies={questions}
-                    onReply={(parentId, type = 'question') => {
-                      setReplyToId(parentId);
-                      setReplyType(type);
-                      setShowReplyForm(true);
-                    }}
-                    availableReplies={availableReplies}
-                    parentCategory="question"
-                    concernType={concern.type}
-                  />
+                  <QAAccordion questions={questions} />
                 ) : (
                   <p className="text-muted-foreground text-center py-8">No questions yet. Ask the first question!</p>
                 )}
