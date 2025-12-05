@@ -454,6 +454,7 @@ const ConcernDetail = () => {
               replyType={replyType}
               originalText={replyToTarget?.text ?? concern.description}
               availableReplies={availableReplies}
+              parentConcernType={concern.type}
             />
           )}
         </div>
@@ -566,6 +567,7 @@ const ConcernDetail = () => {
                       setShowReplyForm(true);
                     }}
                     availableReplies={availableReplies}
+                    concernType={concern.type}
                   />
                 ) : (
                   <p className="text-muted-foreground text-center py-8">No responses yet. Be the first to respond!</p>
@@ -595,6 +597,7 @@ const ConcernDetail = () => {
                       setShowReplyForm(true);
                     }}
                     availableReplies={availableReplies}
+                    concernType={concern.type}
                   />
                 ) : (
                   <p className="text-muted-foreground text-center py-8">No questions yet. Ask the first question!</p>

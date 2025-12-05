@@ -19,6 +19,7 @@ interface ReplyThreadProps {
   openFormId?: string | null;
   onFormToggle?: (replyId: string | null) => void;
   parentCategory?: ReplyCategory;
+  concernType?: "problem" | "proposal" | "counter-proposal";
 }
 
 const getAllRepliesFlat = (replies: Reply[]): Reply[] => {
@@ -41,7 +42,8 @@ const ReplyItem = ({
   availableReplies,
   openFormId,
   onFormToggle,
-  parentCategory
+  parentCategory,
+  concernType
 }: { 
   reply: Reply; 
   onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
@@ -49,6 +51,7 @@ const ReplyItem = ({
   openFormId?: string | null;
   onFormToggle?: (replyId: string | null) => void;
   parentCategory?: ReplyCategory;
+  concernType?: "problem" | "proposal" | "counter-proposal";
 }) => {
   const isMobile = useIsMobile();
   const { adminModeEnabled } = useAdmin();
@@ -227,6 +230,7 @@ const ReplyItem = ({
                   replyType={replyType}
                   originalText={reply.text}
                   availableReplies={availableReplies}
+                  parentConcernType={concernType}
                 />
               </div>
             )}
@@ -240,6 +244,7 @@ const ReplyItem = ({
                   openFormId={openFormId}
                   onFormToggle={onFormToggle}
                   parentCategory={reply.category}
+                  concernType={concernType}
                 />
               </div>
             )}
@@ -248,7 +253,7 @@ const ReplyItem = ({
   );
 };
 
-export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle, parentCategory }: ReplyThreadProps) => {
+export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle, parentCategory, concernType }: ReplyThreadProps) => {
   const [localOpenFormId, setLocalOpenFormId] = useState<string | null>(null);
   
   if (replies.length === 0) return null;
@@ -271,6 +276,7 @@ export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, on
           openFormId={activeFormId}
           onFormToggle={handleFormToggle}
           parentCategory={parentCategory}
+          concernType={concernType}
         />
       ))}
     </div>
