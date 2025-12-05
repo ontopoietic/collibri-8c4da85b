@@ -47,7 +47,7 @@ const Leaderboard = () => {
       <NavigationHeader currentPhase={phase as Phase} />
       
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-2 text-foreground">
+        <h1 className="text-4xl font-bold mb-2 text-white">
           {phaseLabels[phase as Phase]} Leaderboard
         </h1>
         <p className="text-muted-foreground mb-4">
@@ -60,6 +60,7 @@ const Leaderboard = () => {
               key={p}
               variant={p === phase ? "default" : "outline"}
               onClick={() => navigate(`/leaderboard/${p}`)}
+              className={p === phase ? "text-white" : ""}
             >
               {phaseLabels[p]}
             </Button>
