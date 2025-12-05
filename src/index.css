@@ -210,15 +210,3 @@ All colors MUST be HSL.
     @apply bg-background text-foreground font-sans;
   }
 }
-
-/* ---break---
-*/
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
