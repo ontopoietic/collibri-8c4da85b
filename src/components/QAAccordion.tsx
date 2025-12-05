@@ -41,12 +41,7 @@ const QAAccordion = ({ questions }: QAAccordionProps) => {
           >
             <button
               onClick={() => toggleItem(question.id)}
-              className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
-                isOpen 
-                  ? "bg-accent" 
-                  : "hover:bg-muted/50"
-              )}
+              className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/50"
             >
               <ChevronRight 
                 className={cn(
