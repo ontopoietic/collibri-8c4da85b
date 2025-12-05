@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Bell, ChartNoAxesCombined, Network, Trophy, User, UserCircle, Settings, LogOut, FileText, MessageSquare, HelpCircle } from "lucide-react";
+import { BarChart3, Bell, Gauge, Network, Trophy, User, UserCircle, Settings, LogOut, FileText, MessageSquare, HelpCircle, Home } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
 import { AdminPanel } from "@/components/AdminPanel";
@@ -43,10 +43,15 @@ export const NavigationHeader = ({
   const { isAdmin, adminModeEnabled } = useAdmin();
   
   const pathname = location.pathname;
+  const isOnForum = pathname === "/";
   const isOnLeaderboard = pathname.startsWith("/leaderboard");
   const isOnStatistics = pathname === "/statistics";
   const isOnGraph = pathname === "/graph";
   const isOnNotifications = pathname === "/notifications";
+
+  // Icon button accent color
+  const iconButtonClass = "hover:bg-[#B3B9C7]/20 hover:text-[#B3B9C7]";
+  const iconButtonActiveClass = "bg-[#B3B9C7]/20 text-[#B3B9C7]";
 
   const defaultQuota: UserQuota = quota || {
     concerns: { used: 0, total: 3 },
@@ -76,8 +81,12 @@ export const NavigationHeader = ({
             <div className="flex items-center gap-2">
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <ChartNoAxesCombined className="h-5 w-5" />
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className={iconButtonClass}
+                  >
+                    <Gauge className="h-5 w-5" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto max-w-[calc(100vw-2rem)] p-0" align="end" withOverlay>
@@ -88,7 +97,7 @@ export const NavigationHeader = ({
                 variant="ghost" 
                 size="icon" 
                 onClick={() => navigate("/notifications")}
-                className={cn(isOnNotifications && "bg-muted")}
+                className={cn(iconButtonClass, isOnNotifications && iconButtonActiveClass)}
               >
                 <Bell className="h-5 w-5" />
               </Button>
@@ -102,7 +111,11 @@ export const NavigationHeader = ({
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className={iconButtonClass}
+                  >
                     <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -150,17 +163,19 @@ export const NavigationHeader = ({
               {showNewConcernButton && onNewConcern && currentPhase === 'class' && (
                 <NewConcernDialog onSubmit={onNewConcern} />
               )}
+              {/* Forum */}
               <Button
-                variant="leaderboard"
-                onClick={() => navigate(`/leaderboard/${currentPhase}`)}
+                variant="default"
+                onClick={() => navigate("/")}
                 className={cn(
                   "gap-2",
-                  isOnLeaderboard && "bg-leaderboard text-leaderboard-foreground hover:bg-leaderboard/90"
+                  isOnForum && "bg-primary text-primary-foreground hover:bg-primary/90"
                 )}
               >
-                <Trophy className="h-4 w-4" />
-                <span className="hidden lg:inline">Leaderboard</span>
+                <Home className="h-4 w-4" />
+                <span className="hidden lg:inline">Forum</span>
               </Button>
+              {/* Statistics */}
               <Button
                 variant="statistics"
                 onClick={() => navigate("/statistics")}
@@ -172,6 +187,19 @@ export const NavigationHeader = ({
                 <BarChart3 className="h-4 w-4" />
                 <span className="hidden lg:inline">Statistics</span>
               </Button>
+              {/* Leaderboard */}
+              <Button
+                variant="leaderboard"
+                onClick={() => navigate(`/leaderboard/${currentPhase}`)}
+                className={cn(
+                  "gap-2",
+                  isOnLeaderboard && "bg-leaderboard text-leaderboard-foreground hover:bg-leaderboard/90"
+                )}
+              >
+                <Trophy className="h-4 w-4" />
+                <span className="hidden lg:inline">Leaderboard</span>
+              </Button>
+              {/* Graph */}
               <Button
                 variant="secondary-action"
                 onClick={() => navigate("/graph")}
@@ -183,28 +211,38 @@ export const NavigationHeader = ({
                 <Network className="h-4 w-4" />
                 <span className="hidden lg:inline">Graph</span>
               </Button>
+              {/* My Quota - Icon only */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="secondary-action" className="gap-2">
-                    <ChartNoAxesCombined className="h-4 w-4" />
-                    <span className="hidden lg:inline">My Quota</span>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className={iconButtonClass}
+                  >
+                    <Gauge className="h-4 w-4" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="end" withOverlay>
                   <QuotaDisplay quota={defaultQuota} currentPhase={currentPhase} />
                 </PopoverContent>
               </Popover>
+              {/* Notifications */}
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate("/notifications")}
-                className={cn(isOnNotifications && "bg-muted")}
+                className={cn(iconButtonClass, isOnNotifications && iconButtonActiveClass)}
               >
                 <Bell className="h-4 w-4" />
               </Button>
+              {/* Profile */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className={iconButtonClass}
+                  >
                     <User className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
