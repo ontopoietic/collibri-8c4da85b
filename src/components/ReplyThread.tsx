@@ -166,34 +166,28 @@ const ReplyItem = ({
               {reply.category !== "question" && parentCategory !== "question" && (
                 <>
                   <VoteButton initialVotes={reply.votes} />
-                  <Button
-                    variant="endorse"
-                    size="sm"
+                  <button
                     onClick={() => handleFormOpen('endorse')}
                     className={cn(
-                      "gap-1 text-xs",
+                      "p-2 rounded-md transition-colors",
                       showReplyForm && replyType === 'endorse'
                         ? "bg-endorse-hover text-endorse-foreground"
-                        : ""
+                        : "text-muted-foreground hover:text-endorse-hover"
                     )}
                   >
-                    <ThumbsUp className="h-3 w-3" />
-                    Endorse
-                  </Button>
-                  <Button
-                    variant="object"
-                    size="sm"
+                    <ThumbsUp className="h-4 w-4" />
+                  </button>
+                  <button
                     onClick={() => handleFormOpen('object')}
                     className={cn(
-                      "gap-1 text-xs",
+                      "p-2 rounded-md transition-colors",
                       showReplyForm && replyType === 'object'
                         ? "bg-object text-object-foreground"
-                        : ""
+                        : "text-muted-foreground hover:text-object"
                     )}
                   >
-                    <ThumbsDown className="h-3 w-3" />
-                    Object
-                  </Button>
+                    <ThumbsDown className="h-4 w-4" />
+                  </button>
                 </>
               )}
               {hasReplies && (
