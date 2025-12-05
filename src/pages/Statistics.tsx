@@ -247,7 +247,7 @@ const Statistics = () => {
     
     for (let w = 1; w <= totalWeeks; w++) {
       weeklyData.push({
-        weekLabel: `Week ${w}`,
+        weekLabel: `${w}`,
         concerns: 0,
         objections: 0,
         proposals: 0,
@@ -357,6 +357,8 @@ const Statistics = () => {
           <Button
             variant={viewMode === "interval" ? "default" : "outline"}
             onClick={() => setViewMode("interval")}
+            className={viewMode === "interval" ? "" : "hover:bg-[#CC0A71]/10 hover:text-[#CC0A71] hover:border-[#CC0A71]"}
+            style={viewMode === "interval" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71' } : undefined}
           >
             Interval
           </Button>
@@ -366,6 +368,8 @@ const Statistics = () => {
               setViewMode("phase");
               setSelectedPhase("class");
             }}
+            className={viewMode === "phase" && selectedPhase === "class" ? "" : "hover:bg-[#CC0A71]/10 hover:text-[#CC0A71] hover:border-[#CC0A71]"}
+            style={viewMode === "phase" && selectedPhase === "class" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71' } : undefined}
           >
             Class
           </Button>
@@ -375,6 +379,8 @@ const Statistics = () => {
               setViewMode("phase");
               setSelectedPhase("grade");
             }}
+            className={viewMode === "phase" && selectedPhase === "grade" ? "" : "hover:bg-[#CC0A71]/10 hover:text-[#CC0A71] hover:border-[#CC0A71]"}
+            style={viewMode === "phase" && selectedPhase === "grade" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71' } : undefined}
           >
             Grade
           </Button>
@@ -384,6 +390,8 @@ const Statistics = () => {
               setViewMode("phase");
               setSelectedPhase("school");
             }}
+            className={viewMode === "phase" && selectedPhase === "school" ? "" : "hover:bg-[#CC0A71]/10 hover:text-[#CC0A71] hover:border-[#CC0A71]"}
+            style={viewMode === "phase" && selectedPhase === "school" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71' } : undefined}
           >
             School
           </Button>
@@ -434,7 +442,9 @@ const Statistics = () => {
         <div className="grid grid-cols-1 gap-6 mb-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-foreground">Participation Timeline</CardTitle>
+              <CardTitle className="text-foreground">
+                {viewMode === "interval" ? "Weekly Participation" : "Daily Participation"}
+              </CardTitle>
             </CardHeader>
             <CardContent className="px-2 sm:px-6">
               <div className="w-full h-[250px] sm:h-[300px] lg:h-[400px]">
