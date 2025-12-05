@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { GlassOverlay } from "@/components/GlassOverlay";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
@@ -334,8 +335,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card border-b border-border sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4 md:py-6">
+      <header className="sticky top-0 z-50">
+        <GlassOverlay direction="down" />
+        <div className="relative max-w-6xl mx-auto px-4 py-4 md:py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 md:gap-3">
               <img src={collibriLogo} alt="Collibri" className="h-10 w-10 md:h-12 md:w-12" />
