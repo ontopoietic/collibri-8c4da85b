@@ -165,11 +165,11 @@ export const NavigationHeader = ({
               )}
               {/* Forum */}
               <Button
-                variant="default"
+                variant={isOnForum ? "default" : "outline"}
                 onClick={() => navigate("/")}
                 className={cn(
                   "gap-2",
-                  isOnForum && "bg-primary text-primary-foreground hover:bg-primary/90"
+                  isOnForum && "bg-primary text-white hover:bg-primary/90"
                 )}
               >
                 <Home className="h-4 w-4" />
