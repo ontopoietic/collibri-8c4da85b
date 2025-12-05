@@ -93,6 +93,7 @@ export const mockConcerns: Concern[] = [
   {
     id: "c10a-1",
     type: "problem",
+    aspects: ["problem", "proposal"],
     title: "Weekly Class Meetings for Student Voice",
     description: "Hold regular 15-minute class meetings where students can discuss concerns and vote on class-level decisions together.",
     votes: 18,
@@ -200,8 +201,9 @@ export const mockConcerns: Concern[] = [
   {
     id: "c10a-4",
     type: "problem",
+    aspects: ["problem", "proposal"],
     title: "Group Project Assignment Fairness",
-    description: "Group projects often result in unequal workload distribution, with some students doing most of the work.",
+    description: "Group projects often result in unequal workload distribution, with some students doing most of the work. We propose implementing peer evaluation forms.",
     votes: 12,
     timestamp: daysAgo(82),
     phase: "class",
@@ -383,8 +385,9 @@ export const mockConcerns: Concern[] = [
   {
     id: "c10b-4",
     type: "problem",
+    aspects: ["problem", "proposal"],
     title: "Late Bus Arrivals",
-    description: "School buses frequently arrive late, causing students to miss the start of first period.",
+    description: "School buses frequently arrive late, causing students to miss the start of first period. We propose implementing GPS tracking and earlier departure times.",
     votes: 10,
     timestamp: daysAgo(79),
     phase: "class",

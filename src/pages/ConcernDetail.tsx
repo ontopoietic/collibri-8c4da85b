@@ -189,7 +189,7 @@ const ConcernDetail = () => {
     }
   };
 
-  // Handle scroll to reply on mount if specified
+  // Handle scroll to reply on mount if specified, otherwise scroll to top
   useEffect(() => {
     const state = location.state as { scrollToReply?: string } | undefined;
     if (state?.scrollToReply) {
@@ -203,8 +203,10 @@ const ConcernDetail = () => {
           }, 2000);
         }
       }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
-  }, [location.state]);
+  }, [id, location.state]);
 
   const handleReply = (
     category: ReplyCategory,
@@ -296,10 +298,7 @@ const ConcernDetail = () => {
           )}
 
           <div>
-            <div className="flex items-start gap-3 mb-4">
-              <TypeIconPrefix type={concern.type} size="lg" />
-              <h1 className="text-3xl font-bold text-foreground">{concern.title}</h1>
-            </div>
+            <h1 className="text-3xl font-bold text-foreground mb-4">{concern.title}</h1>
             <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
           </div>
 
