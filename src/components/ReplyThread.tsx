@@ -88,10 +88,6 @@ const ReplyItem = ({
       <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2 flex-wrap">
-                <CategoryBadge 
-                  category={reply.category} 
-                  isAnswerToQuestion={parentCategory === "question"}
-                />
                 {reply.category === "proposal" && reply.solutionLevel && (
                   <SolutionLevelBadge level={reply.solutionLevel} />
                 )}
