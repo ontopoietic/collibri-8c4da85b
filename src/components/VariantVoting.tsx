@@ -90,7 +90,11 @@ export const VariantVoting = ({ concerns, onVote, dayIntoPhase = 1, interimDurat
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 ${
+          topConcerns.length === 2 
+            ? "md:grid-cols-2 max-w-3xl mx-auto" 
+            : "md:grid-cols-3"
+        }`}>
           {topConcerns.map((concern) => {
             const variants = getSortedVariants(concern);
             const maxVotes = getMaxVotes(variants);
