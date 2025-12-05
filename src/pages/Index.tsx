@@ -122,6 +122,7 @@ const Index = () => {
                 <Bell className="h-4 w-4" />
                 Notifications
               </Button>
+              <NewConcernDialog onSubmit={handleNewConcern} />
               <Button
                 variant="statistics"
                 onClick={() => navigate("/statistics")}
@@ -138,7 +139,6 @@ const Index = () => {
                 <Network className="h-4 w-4" />
                 Graph
               </Button>
-              <NewConcernDialog onSubmit={handleNewConcern} />
             </div>
           </div>
         </div>
