@@ -1,6 +1,7 @@
 import { Reply, ReplyCategory, ReplyReference, SolutionLevel } from "@/types/concern";
 import { CategoryBadge } from "./CategoryBadge";
 import { AspectBadges } from "./AspectBadges";
+import { SolutionLevelBadge } from "./SolutionLevelBadge";
 import { VoteButton } from "./VoteButton";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -90,6 +91,12 @@ const ReplyItem = ({
                   category={reply.category} 
                   isAnswerToQuestion={parentCategory === "question"}
                 />
+                {reply.category === "proposal" && reply.solutionLevel && (
+                  <SolutionLevelBadge level={reply.solutionLevel} />
+                )}
+                {reply.category === "proposal" && reply.counterProposal?.solutionLevel && !reply.solutionLevel && (
+                  <SolutionLevelBadge level={reply.counterProposal.solutionLevel} />
+                )}
                 {reply.aspects && reply.aspects.length > 0 && (
                   <AspectBadges aspects={reply.aspects} />
                 )}

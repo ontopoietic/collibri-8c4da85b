@@ -73,6 +73,7 @@ export interface Reply {
     postedAsConcern?: boolean;
     solutionLevel?: SolutionLevel;
   };
+  solutionLevel?: SolutionLevel;
   aspects?: ConcernAspect[];
   authorId?: string;
   authorName?: string;
