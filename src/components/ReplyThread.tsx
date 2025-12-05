@@ -152,35 +152,40 @@ const ReplyItem = ({
             )}
             
             <div className="flex items-center gap-2 flex-wrap">
-              <VoteButton initialVotes={reply.votes} />
-              <Button
-                variant="endorse"
-                size="sm"
-                onClick={() => handleFormOpen('endorse')}
-                className={cn(
-                  "gap-1 text-xs",
-                  showReplyForm && replyType === 'endorse'
-                    ? "bg-endorse-hover text-endorse-foreground"
-                    : ""
-                )}
-              >
-                <ThumbsUp className="h-3 w-3" />
-                Endorse
-              </Button>
-              <Button
-                variant="object"
-                size="sm"
-                onClick={() => handleFormOpen('object')}
-                className={cn(
-                  "gap-1 text-xs",
-                  showReplyForm && replyType === 'object'
-                    ? "bg-object text-object-foreground"
-                    : ""
-                )}
-              >
-                <ThumbsDown className="h-3 w-3" />
-                Object
-              </Button>
+              {/* Hide voting buttons for questions and answers to questions */}
+              {reply.category !== "question" && parentCategory !== "question" && (
+                <>
+                  <VoteButton initialVotes={reply.votes} />
+                  <Button
+                    variant="endorse"
+                    size="sm"
+                    onClick={() => handleFormOpen('endorse')}
+                    className={cn(
+                      "gap-1 text-xs",
+                      showReplyForm && replyType === 'endorse'
+                        ? "bg-endorse-hover text-endorse-foreground"
+                        : ""
+                    )}
+                  >
+                    <ThumbsUp className="h-3 w-3" />
+                    Endorse
+                  </Button>
+                  <Button
+                    variant="object"
+                    size="sm"
+                    onClick={() => handleFormOpen('object')}
+                    className={cn(
+                      "gap-1 text-xs",
+                      showReplyForm && replyType === 'object'
+                        ? "bg-object text-object-foreground"
+                        : ""
+                    )}
+                  >
+                    <ThumbsDown className="h-3 w-3" />
+                    Object
+                  </Button>
+                </>
+              )}
               {hasReplies && (
                 <Button
                   variant="ghost"
