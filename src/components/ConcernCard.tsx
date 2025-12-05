@@ -1,9 +1,10 @@
 import { Concern } from "@/types/concern";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { AspectBadges } from "@/components/AspectBadges";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
-import { MessageSquare, AlertTriangle, Lightbulb, Scale, ThumbsUp, User } from "lucide-react";
+import { TypeIconPrefix } from "@/components/TypeIconPrefix";
+import { MessageSquare, ThumbsUp, User } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useAdmin } from "@/contexts/AdminContext";
@@ -12,29 +13,10 @@ interface ConcernCardProps {
   concern: Concern;
 }
 
-const typeConfig = {
-  problem: {
-    label: "Problem",
-    icon: AlertTriangle,
-    className: "bg-transparent text-problem-aspect border-problem-aspect",
-  },
-  proposal: {
-    label: "Proposal",
-    icon: Lightbulb,
-    className: "bg-proposal/10 text-proposal border-proposal/20",
-  },
-  "counter-proposal": {
-    label: "Counter-Proposal",
-    icon: Scale,
-    className: "bg-primary/10 text-primary border-primary/20",
-  },
-};
 
 export const ConcernCard = ({ concern }: ConcernCardProps) => {
   const navigate = useNavigate();
   const { adminModeEnabled } = useAdmin();
-  const config = typeConfig[concern.type];
-  const Icon = config.icon;
   const totalReplies = concern.replies.reduce((acc, reply) => {
     const countReplies = (r: typeof reply): number => {
       return 1 + r.replies.reduce((sum, child) => sum + countReplies(child), 0);
@@ -48,24 +30,19 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
       onClick={() => navigate(`/concern/${concern.id}`)}
     >
       <div className="space-y-4">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-center gap-2 flex-wrap">
-              {concern.aspects && concern.aspects.length > 0 ? (
-                <AspectBadges aspects={concern.aspects} />
-              ) : (
-                <Badge variant="outline" className={config.className}>
-                  <Icon className="mr-1 h-3 w-3" />
-                  {config.label}
-                </Badge>
-              )}
-              {concern.solutionLevel && (
-                <SolutionLevelBadge level={concern.solutionLevel} />
-              )}
-            </div>
-            <span className="text-xs text-muted-foreground">
-              {formatDistanceToNow(concern.timestamp, { addSuffix: true })}
-            </span>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-center gap-2 flex-wrap">
+            {concern.aspects && concern.aspects.length > 0 && (
+              <AspectBadges aspects={concern.aspects} />
+            )}
+            {concern.solutionLevel && (
+              <SolutionLevelBadge level={concern.solutionLevel} />
+            )}
           </div>
+          <span className="text-xs text-muted-foreground">
+            {formatDistanceToNow(concern.timestamp, { addSuffix: true })}
+          </span>
+        </div>
 
         {adminModeEnabled && concern.authorName && (
           <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 px-2 py-1 rounded-md w-fit">
@@ -80,7 +57,10 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
         )}
 
         <div>
-          <h3 className="text-xl font-semibold mb-2 text-foreground">{concern.title}</h3>
+          <div className="flex items-start gap-2 mb-2">
+            <TypeIconPrefix type={concern.type} />
+            <h3 className="text-xl font-semibold text-foreground">{concern.title}</h3>
+          </div>
           <p className="text-muted-foreground line-clamp-3">{concern.description}</p>
         </div>
 

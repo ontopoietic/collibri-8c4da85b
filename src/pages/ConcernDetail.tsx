@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink, Filter, ArrowUpDown, Check, Trash2, User } from "lucide-react";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
+import { TypeIconPrefix } from "@/components/TypeIconPrefix";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -295,7 +296,10 @@ const ConcernDetail = () => {
           )}
 
           <div>
-            <h1 className="text-3xl font-bold mb-4 text-foreground">{concern.title}</h1>
+            <div className="flex items-start gap-3 mb-4">
+              <TypeIconPrefix type={concern.type} size="lg" />
+              <h1 className="text-3xl font-bold text-foreground">{concern.title}</h1>
+            </div>
             <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
           </div>
 

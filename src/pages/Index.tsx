@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search, Network } from "lucide-react";
+import { BarChart3, Bell, Search, Network, ListFilter, User, Heart, EyeOff, Clock, ArrowUp, TrendingUp } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -246,10 +246,30 @@ const Index = () => {
                 <SelectValue placeholder="Filter by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Concerns</SelectItem>
-                <SelectItem value="my-posts">My Concerns</SelectItem>
-                <SelectItem value="followed">Followed</SelectItem>
-                <SelectItem value="unnoticed">Unnoticed</SelectItem>
+                <SelectItem value="all">
+                  <span className="flex items-center gap-2">
+                    <ListFilter className="h-4 w-4" />
+                    All Concerns
+                  </span>
+                </SelectItem>
+                <SelectItem value="my-posts">
+                  <span className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    My Concerns
+                  </span>
+                </SelectItem>
+                <SelectItem value="followed">
+                  <span className="flex items-center gap-2">
+                    <Heart className="h-4 w-4" />
+                    Followed
+                  </span>
+                </SelectItem>
+                <SelectItem value="unnoticed">
+                  <span className="flex items-center gap-2">
+                    <EyeOff className="h-4 w-4" />
+                    Unnoticed
+                  </span>
+                </SelectItem>
               </SelectContent>
             </Select>
             <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
@@ -257,9 +277,24 @@ const Index = () => {
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="newest">Newest</SelectItem>
-                <SelectItem value="oldest">Oldest</SelectItem>
-                <SelectItem value="popularity">Popularity</SelectItem>
+                <SelectItem value="newest">
+                  <span className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    Newest
+                  </span>
+                </SelectItem>
+                <SelectItem value="oldest">
+                  <span className="flex items-center gap-2">
+                    <ArrowUp className="h-4 w-4" />
+                    Oldest
+                  </span>
+                </SelectItem>
+                <SelectItem value="popularity">
+                  <span className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4" />
+                    Popularity
+                  </span>
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>

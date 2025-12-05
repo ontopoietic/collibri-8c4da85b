@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { Search, Play, Pause, AlertTriangle, Lightbulb, Filter, ArrowUpDown, Check } from "lucide-react";
+import { Search, Play, Pause, AlertTriangle, Lightbulb, Filter, ArrowUpDown, Check, ListFilter, User, Heart, EyeOff, Clock, ArrowUp, TrendingUp, Users, School, Building2 } from "lucide-react";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { useAdmin } from "@/contexts/AdminContext";
@@ -386,37 +386,45 @@ const Index = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => setFilterBy("all")}>
-                        {filterBy === "all" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(filterBy !== "all" && "ml-6")}>All Concerns</span>
+                        <ListFilter className="h-4 w-4 mr-2" />
+                        All Concerns
+                        {filterBy === "all" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setFilterBy("my-posts")}>
-                        {filterBy === "my-posts" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(filterBy !== "my-posts" && "ml-6")}>My Concerns</span>
+                        <User className="h-4 w-4 mr-2" />
+                        My Concerns
+                        {filterBy === "my-posts" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setFilterBy("followed")}>
-                        {filterBy === "followed" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(filterBy !== "followed" && "ml-6")}>Followed</span>
+                        <Heart className="h-4 w-4 mr-2" />
+                        Followed
+                        {filterBy === "followed" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setFilterBy("unnoticed")}>
-                        {filterBy === "unnoticed" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(filterBy !== "unnoticed" && "ml-6")}>Unnoticed</span>
+                        <EyeOff className="h-4 w-4 mr-2" />
+                        Unnoticed
+                        {filterBy === "unnoticed" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={() => setSolutionLevelFilter("all")}>
-                        {solutionLevelFilter === "all" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(solutionLevelFilter !== "all" && "ml-6")}>All Levels</span>
+                        <ListFilter className="h-4 w-4 mr-2" />
+                        All Levels
+                        {solutionLevelFilter === "all" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setSolutionLevelFilter("class")}>
-                        {solutionLevelFilter === "class" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(solutionLevelFilter !== "class" && "ml-6")}>Class Level</span>
+                        <Users className="h-4 w-4 mr-2" />
+                        Class Level
+                        {solutionLevelFilter === "class" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setSolutionLevelFilter("school")}>
-                        {solutionLevelFilter === "school" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(solutionLevelFilter !== "school" && "ml-6")}>School Level</span>
+                        <School className="h-4 w-4 mr-2" />
+                        School Level
+                        {solutionLevelFilter === "school" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setSolutionLevelFilter("ministries")}>
-                        {solutionLevelFilter === "ministries" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(solutionLevelFilter !== "ministries" && "ml-6")}>Ministry Level</span>
+                        <Building2 className="h-4 w-4 mr-2" />
+                        Ministry Level
+                        {solutionLevelFilter === "ministries" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -430,16 +438,19 @@ const Index = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => setSortBy("newest")}>
-                        {sortBy === "newest" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(sortBy !== "newest" && "ml-6")}>Newest</span>
+                        <Clock className="h-4 w-4 mr-2" />
+                        Newest
+                        {sortBy === "newest" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setSortBy("oldest")}>
-                        {sortBy === "oldest" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(sortBy !== "oldest" && "ml-6")}>Oldest</span>
+                        <ArrowUp className="h-4 w-4 mr-2" />
+                        Oldest
+                        {sortBy === "oldest" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setSortBy("popularity")}>
-                        {sortBy === "popularity" && <Check className="h-4 w-4 mr-2" />}
-                        <span className={cn(sortBy !== "popularity" && "ml-6")}>Popularity</span>
+                        <TrendingUp className="h-4 w-4 mr-2" />
+                        Popularity
+                        {sortBy === "popularity" && <Check className="h-4 w-4 ml-auto" />}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -461,10 +472,30 @@ const Index = () => {
                         <SelectValue placeholder="Filter by" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">All Concerns</SelectItem>
-                        <SelectItem value="my-posts">My Concerns</SelectItem>
-                        <SelectItem value="followed">Followed</SelectItem>
-                        <SelectItem value="unnoticed">Unnoticed</SelectItem>
+                        <SelectItem value="all">
+                          <span className="flex items-center gap-2">
+                            <ListFilter className="h-4 w-4" />
+                            All Concerns
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="my-posts">
+                          <span className="flex items-center gap-2">
+                            <User className="h-4 w-4" />
+                            My Concerns
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="followed">
+                          <span className="flex items-center gap-2">
+                            <Heart className="h-4 w-4" />
+                            Followed
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="unnoticed">
+                          <span className="flex items-center gap-2">
+                            <EyeOff className="h-4 w-4" />
+                            Unnoticed
+                          </span>
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
@@ -472,9 +503,24 @@ const Index = () => {
                         <SelectValue placeholder="Sort by" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="newest">Newest</SelectItem>
-                        <SelectItem value="oldest">Oldest</SelectItem>
-                        <SelectItem value="popularity">Popularity</SelectItem>
+                        <SelectItem value="newest">
+                          <span className="flex items-center gap-2">
+                            <Clock className="h-4 w-4" />
+                            Newest
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="oldest">
+                          <span className="flex items-center gap-2">
+                            <ArrowUp className="h-4 w-4" />
+                            Oldest
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="popularity">
+                          <span className="flex items-center gap-2">
+                            <TrendingUp className="h-4 w-4" />
+                            Popularity
+                          </span>
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <Select value={solutionLevelFilter} onValueChange={(value: any) => setSolutionLevelFilter(value)}>
@@ -482,10 +528,30 @@ const Index = () => {
                         <SelectValue placeholder="Solution Level" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">All Levels</SelectItem>
-                        <SelectItem value="class">Class Level</SelectItem>
-                        <SelectItem value="school">School Level</SelectItem>
-                        <SelectItem value="ministries">Ministry Level</SelectItem>
+                        <SelectItem value="all">
+                          <span className="flex items-center gap-2">
+                            <ListFilter className="h-4 w-4" />
+                            All Levels
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="class">
+                          <span className="flex items-center gap-2">
+                            <Users className="h-4 w-4" />
+                            Class Level
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="school">
+                          <span className="flex items-center gap-2">
+                            <School className="h-4 w-4" />
+                            School Level
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="ministries">
+                          <span className="flex items-center gap-2">
+                            <Building2 className="h-4 w-4" />
+                            Ministry Level
+                          </span>
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
