@@ -50,6 +50,7 @@ const Index = () => {
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [leaderboardPhase, setLeaderboardPhase] = useState<Phase>("class");
+  const [solutionLevelFilter, setSolutionLevelFilter] = useState<"all" | SolutionLevel>("all");
   const [showNewConcernDialog, setShowNewConcernDialog] = useState(false);
   
   // Mobile concern form state
@@ -310,6 +311,9 @@ const Index = () => {
       if (filterBy === "problems" && concern.type !== "problem") return false;
       if (filterBy === "proposals" && concern.type !== "proposal" && concern.type !== "counter-proposal") return false;
       
+      // Solution level filter
+      if (solutionLevelFilter !== "all" && concern.solutionLevel !== solutionLevelFilter) return false;
+      
       // Search filter - now includes replies
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -396,12 +400,17 @@ const Index = () => {
                   <NewConcernDialog onSubmit={handleNewConcern} />
                 ) : (
                   <Button
-                    variant="leaderboard"
+                    variant="ghost"
                     onClick={() => {
                       const prevPhase = getPreviousPhase();
                       if (prevPhase) navigate(`/leaderboard/${prevPhase}`);
                     }}
-                    className="gap-2 rounded-full"
+                    className={cn(
+                      "gap-2",
+                      showLeaderboard 
+                        ? "bg-leaderboard text-leaderboard-foreground hover:bg-leaderboard/90 rounded-full" 
+                        : ""
+                    )}
                   >
                     <Trophy className="h-4 w-4" />
                     <span className="hidden lg:inline">Leaderboard</span>
@@ -606,6 +615,23 @@ const Index = () => {
                         {filterBy === "unnoticed" && <Check className="h-4 w-4 mr-2" />}
                         <span className={cn(filterBy !== "unnoticed" && "ml-6")}>Unnoticed</span>
                       </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => setSolutionLevelFilter("all")}>
+                        {solutionLevelFilter === "all" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(solutionLevelFilter !== "all" && "ml-6")}>All Levels</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setSolutionLevelFilter("class")}>
+                        {solutionLevelFilter === "class" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(solutionLevelFilter !== "class" && "ml-6")}>Class Level</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setSolutionLevelFilter("school")}>
+                        {solutionLevelFilter === "school" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(solutionLevelFilter !== "school" && "ml-6")}>School Level</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setSolutionLevelFilter("ministries")}>
+                        {solutionLevelFilter === "ministries" && <Check className="h-4 w-4 mr-2" />}
+                        <span className={cn(solutionLevelFilter !== "ministries" && "ml-6")}>Ministry Level</span>
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                   
@@ -663,6 +689,17 @@ const Index = () => {
                         <SelectItem value="newest">Newest</SelectItem>
                         <SelectItem value="oldest">Oldest</SelectItem>
                         <SelectItem value="popularity">Popularity</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select value={solutionLevelFilter} onValueChange={(value: any) => setSolutionLevelFilter(value)}>
+                      <SelectTrigger className="w-[150px]">
+                        <SelectValue placeholder="Solution Level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Levels</SelectItem>
+                        <SelectItem value="class">Class Level</SelectItem>
+                        <SelectItem value="school">School Level</SelectItem>
+                        <SelectItem value="ministries">Ministry Level</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
