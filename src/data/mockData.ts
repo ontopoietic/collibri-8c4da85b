@@ -68,192 +68,54 @@ const createReply = (
   };
 };
 
+// ============================================
+// TIMELINE:
+// - Class Phase: Days 65-95 (concerns created here)
+// - Grade Phase: Days 30-65 (winners from class advance)
+// - School Phase: Days 0-30 (winners from grade advance)
+// 
+// PROGRESSION:
+// - All concerns START in class phase
+// - 3 winners per class advance to grade phase
+// - 2 winners per grade advance to school phase
+// - 3 final winners selected school-wide
+// 
+// VOTES RESET each phase
+// REPLIES ACCUMULATE throughout phases
+// ============================================
+
 export const mockConcerns: Concern[] = [
   // ============================================
-  // CLASS PHASE CONCERNS (10 total)
-  // Top 3 by votes will advance to grade phase
+  // CLASS PHASE CONCERNS - Class 10A
+  // Created days 65-95, voted on, top 3 advance
+  // Replies: 2-6 each (class-level discussion only)
   // ============================================
   {
-    id: "1",
+    id: "c10a-1",
     type: "problem",
-    title: "Cafeteria Food Quality Issues",
-    description: "The food served in our cafeteria is often cold and lacks variety. Students are frequently complaining about limited healthy options.",
-    votes: 34,
-    timestamp: daysAgo(85),
-    phase: "class",
-    group: "Class 10A",
-    solutionLevel: "school",
-    isWinner: true,
-    winnerRank: 1,
-    authorId: "u1",
-    authorName: "Emma Schmidt",
-    authorClass: "6a",
-    variants: [
-      {
-        id: "v1-1",
-        title: "Cafeteria Food Quality Issues",
-        text: "The food served in our cafeteria is often cold and lacks variety. Students are frequently complaining about limited healthy options.",
-        votes: 12,
-      },
-      {
-        id: "v1-2",
-        title: "Cafeteria Food Quality and Timing Concerns",
-        text: "The food served in our cafeteria is often cold and lacks variety, but we should also consider extending lunch break times to reduce crowding. This addresses both timing and variety concerns.",
-        votes: 18,
-      },
-      {
-        id: "v1-3",
-        title: "Comprehensive Cafeteria Service Improvement",
-        text: "The food served in our cafeteria is often cold and lacks variety. We propose a student feedback system for menu items and extended lunch breaks to improve both quality and timing issues.",
-        votes: 24,
-      },
-    ],
-    replies: [
-      createReply("r1", "objection", "I think the main issue is timing, not quality. Food is hot when served.", 8, 84.5, [], undefined, undefined, undefined, mockUsers[1]),
-      createReply("r2", "pro-argument", "Absolutely agree! I've noticed many students skip lunch because of this.", 12, 84.2, [
-        createReply("r2a", "question", "Do we have data on how many students actually skip lunch?", 3, 84, [
-          createReply("r2a1", "pro-argument", "The student council did a survey - about 30% regularly skip cafeteria meals.", 5, 83.8, [], undefined, undefined, undefined, mockUsers[3])
-        ], undefined, undefined, undefined, mockUsers[2]),
-        createReply("r2b", "proposal", "We could propose bringing healthier options like fresh salads and sandwiches.", 4, 83.9, [], undefined, undefined, undefined, mockUsers[4])
-      ], undefined, undefined, undefined, mockUsers[5]),
-      createReply("r3", "proposal", "We could propose a student feedback system where we vote on menu items weekly.", 15, 83.8, [], undefined, {
-        text: "Create a monthly rotating menu based on student preferences collected through surveys.",
-        solutionLevel: "school"
-      }, undefined, mockUsers[6]),
-      createReply("r4", "variant", "The food served in our cafeteria is often cold and lacks variety, but we should also consider extending lunch break times to reduce crowding. This synthesis addresses both timing and variety concerns.", 10, 83.5, [], [
-        { id: "r1", text: "I think the main issue is timing, not quality.", category: "objection" },
-        { id: "r2", text: "Absolutely agree! I've noticed many students skip lunch.", category: "pro-argument" }
-      ], undefined, undefined, mockUsers[7]),
-      createReply("r4a", "question", "How many students actually eat in the cafeteria versus bringing their own lunch? Maybe the issue isn't as widespread as we think?", 5, 83.2, [
-        createReply("r4a1", "pro-argument", "Good point! According to the student council survey, about 75% of students regularly use the cafeteria, so this affects most of us.", 3, 82.8, [], undefined, undefined, undefined, mockUsers[8])
-      ], undefined, undefined, undefined, mockUsers[9]),
-    ],
-  },
-  {
-    id: "2",
-    type: "proposal",
-    title: "Implement Digital Assignment Submission",
-    description: "We should move to a fully digital assignment submission system to reduce paper waste and make tracking easier.",
-    votes: 28,
-    timestamp: daysAgo(82),
-    phase: "class",
-    group: "Class 10A",
-    solutionLevel: "school",
-    isWinner: true,
-    winnerRank: 2,
-    authorId: "u10",
-    authorName: "Jonas Bauer",
-    authorClass: "6c",
-    variants: [
-      {
-        id: "v2-1",
-        title: "Implement Digital Assignment Submission",
-        text: "We should move to a fully digital assignment submission system to reduce paper waste and make tracking easier.",
-        votes: 8,
-      },
-      {
-        id: "v2-2",
-        title: "Hybrid Digital and Physical Assignment System",
-        text: "We should move to a hybrid assignment submission system with offline access capabilities, combining digital efficiency with accessibility for all students who may not have reliable internet.",
-        votes: 14,
-      },
-      {
-        id: "v2-3",
-        title: "Digital Assignment System with Extended Access",
-        text: "Implement a fully digital assignment submission system using free platforms like Google Classroom, with extended library hours for students who need school computers for submissions.",
-        votes: 22,
-      },
-    ],
-    replies: [
-      createReply("r5", "pro-argument", "This would help the environment and make it easier to keep track of deadlines.", 9, 81.5, [], undefined, undefined, undefined, mockUsers[11]),
-      createReply("r6", "objection", "Not all students have reliable internet access at home. This could be unfair.", 14, 81, [], undefined, {
-        text: "Implement a hybrid system where students can use school computers during extended library hours for digital submissions.",
-        postedAsConcern: true,
-        solutionLevel: "school"
-      }, undefined, mockUsers[12]),
-      createReply("r7", "pro-argument", "Digital submissions also allow teachers to provide faster feedback.", 7, 80.5, [], undefined, undefined, undefined, mockUsers[13]),
-      createReply("r8", "variant", "We should move to a fully digital assignment submission system with offline access capabilities, combining digital efficiency with accessibility for all students.", 11, 80, [], [
-        { id: "r6", text: "Not all students have reliable internet access.", category: "objection" },
-        { id: "r5", text: "This would help the environment.", category: "pro-argument" }
-      ], undefined, undefined, mockUsers[14]),
-      createReply("r8a", "question", "What platform would we use for this? Are there any free options that work well for schools?", 4, 79.5, [
-        createReply("r8a1", "proposal", "Google Classroom is free and most students already have accounts. It integrates with Google Drive for easy file management.", 6, 79, [], undefined, undefined, undefined, mockUsers[15])
-      ], undefined, undefined, undefined, mockUsers[16]),
-    ],
-  },
-  {
-    id: "3",
-    type: "problem",
-    title: "Limited Access to Sports Equipment",
-    description: "Our class doesn't have enough sports equipment for PE lessons, leading to long waiting times and reduced activity.",
-    votes: 22,
-    timestamp: daysAgo(78),
-    phase: "class",
-    group: "Class 10A",
-    solutionLevel: "school",
-    isWinner: true,
-    winnerRank: 3,
-    authorId: "u17",
-    authorName: "Sarah Zimmermann",
-    authorClass: "7b",
-    variants: [
-      {
-        id: "v3-1",
-        title: "Limited Access to Sports Equipment",
-        text: "Our class doesn't have enough sports equipment for PE lessons, leading to long waiting times and reduced activity.",
-        votes: 7,
-      },
-      {
-        id: "v3-2",
-        title: "Sports Equipment and Class Size Issues",
-        text: "Our class doesn't have enough sports equipment for PE lessons, but the real issue is that PE classes are too large. We need smaller groups and better equipment distribution.",
-        votes: 11,
-      },
-      {
-        id: "v3-3",
-        title: "Comprehensive PE Equipment Solution",
-        text: "Our class doesn't have enough sports equipment for PE lessons. We propose organizing equipment-sharing schedules between classes, purchasing multi-use items, and applying for budget allocation for additional equipment.",
-        votes: 16,
-      },
-    ],
-    replies: [
-      createReply("r9", "pro-argument", "Yes! Half the class just stands around waiting for their turn.", 8, 77.5, [], undefined, undefined, undefined, mockUsers[18]),
-      createReply("r10", "proposal", "We could create a rotation system and extend PE class time.", 6, 77, [], undefined, {
-        text: "Apply for school budget allocation to purchase additional sports equipment and storage facilities.",
-        solutionLevel: "school"
-      }, undefined, mockUsers[19]),
-      createReply("r11", "objection", "The real issue is that PE classes are too large. We need smaller groups.", 10, 76.5, [], undefined, undefined, undefined, mockUsers[20]),
-      createReply("r12", "variant", "Our class doesn't have enough sports equipment for PE lessons, but organizing equipment-sharing schedules between classes and purchasing multi-use items could help maximize what we have.", 7, 76, [], [
-        { id: "r10", text: "We could create a rotation system.", category: "proposal" },
-        { id: "r11", text: "PE classes are too large.", category: "objection" }
-      ], undefined, undefined, mockUsers[21]),
-    ],
-  },
-  {
-    id: "3a",
-    type: "proposal",
     title: "Weekly Class Meetings for Student Voice",
     description: "Hold regular 15-minute class meetings where students can discuss concerns and vote on class-level decisions together.",
     votes: 18,
-    timestamp: daysAgo(74),
+    timestamp: daysAgo(90),
     phase: "class",
     group: "Class 10A",
     solutionLevel: "class",
-    authorId: "u22",
-    authorName: "Leon Werner",
-    authorClass: "7c",
+    authorId: "u1",
+    authorName: "Emma Schmidt",
+    authorClass: "6a",
     replies: [
-      createReply("r12a", "pro-argument", "This would make everyone feel more involved in class decisions.", 6, 73.5, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r12b", "objection", "Taking time from lessons might affect our curriculum coverage.", 4, 73, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-c10a-1-1", "pro-argument", "This would make everyone feel more involved in class decisions.", 6, 89, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-c10a-1-2", "objection", "Taking time from lessons might affect our curriculum coverage.", 4, 88, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-c10a-1-3", "proposal", "We could do it during homeroom instead of cutting into lesson time.", 5, 87, [], undefined, undefined, undefined, mockUsers[2]),
     ],
   },
   {
-    id: "3b",
+    id: "c10a-2",
     type: "problem",
     title: "Classroom Temperature Control Issues",
     description: "Our classroom is too hot in summer and too cold in winter. The heating and AC systems don't work properly.",
     votes: 16,
-    timestamp: daysAgo(70),
+    timestamp: daysAgo(88),
     phase: "class",
     group: "Class 10A",
     solutionLevel: "school",
@@ -261,17 +123,17 @@ export const mockConcerns: Concern[] = [
     authorName: "Liam Müller",
     authorClass: "6a",
     replies: [
-      createReply("r12c", "pro-argument", "It's hard to concentrate when you're freezing or sweating.", 7, 69.5, [], undefined, undefined, undefined, mockUsers[2]),
-      createReply("r12d", "proposal", "Request maintenance to fix the thermostat and check the HVAC system.", 5, 69, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-c10a-2-1", "pro-argument", "It's hard to concentrate when you're freezing or sweating.", 7, 87, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-c10a-2-2", "proposal", "Request maintenance to fix the thermostat and check the HVAC system.", 5, 86, [], undefined, undefined, undefined, mockUsers[3]),
     ],
   },
   {
-    id: "3c",
+    id: "c10a-3",
     type: "proposal",
     title: "Class Library Corner",
     description: "Create a small library corner in our classroom with books students can borrow and exchange freely.",
     votes: 14,
-    timestamp: daysAgo(66),
+    timestamp: daysAgo(85),
     phase: "class",
     group: "Class 10A",
     solutionLevel: "class",
@@ -279,17 +141,17 @@ export const mockConcerns: Concern[] = [
     authorName: "Sophie Weber",
     authorClass: "6a",
     replies: [
-      createReply("r12e", "pro-argument", "This would encourage more reading during free time.", 5, 65.5, [], undefined, undefined, undefined, mockUsers[4]),
-      createReply("r12f", "proposal", "We could do a book drive where everyone brings books from home.", 6, 65, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-c10a-3-1", "pro-argument", "This would encourage more reading during free time.", 5, 84, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-c10a-3-2", "proposal", "We could do a book drive where everyone brings books from home.", 6, 83, [], undefined, undefined, undefined, mockUsers[5]),
     ],
   },
   {
-    id: "3d",
+    id: "c10a-4",
     type: "problem",
     title: "Group Project Assignment Fairness",
     description: "Group projects often result in unequal workload distribution, with some students doing most of the work.",
     votes: 12,
-    timestamp: daysAgo(62),
+    timestamp: daysAgo(82),
     phase: "class",
     group: "Class 10A",
     solutionLevel: "class",
@@ -297,17 +159,17 @@ export const mockConcerns: Concern[] = [
     authorName: "Noah Fischer",
     authorClass: "6a",
     replies: [
-      createReply("r12g", "pro-argument", "I always end up doing everything while others get the same grade.", 4, 61.5, [], undefined, undefined, undefined, mockUsers[6]),
-      createReply("r12h", "proposal", "Teachers should require individual contribution logs for group projects.", 7, 61, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-c10a-4-1", "pro-argument", "I always end up doing everything while others get the same grade.", 4, 81, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-c10a-4-2", "proposal", "Teachers should require individual contribution logs for group projects.", 7, 80, [], undefined, undefined, undefined, mockUsers[7]),
     ],
   },
   {
-    id: "3e",
+    id: "c10a-5",
     type: "problem",
     title: "Lack of Storage Space for Personal Items",
     description: "We don't have enough locker space or shelves for our bags and sports equipment during the day.",
     votes: 9,
-    timestamp: daysAgo(59),
+    timestamp: daysAgo(78),
     phase: "class",
     group: "Class 10A",
     solutionLevel: "class",
@@ -315,17 +177,17 @@ export const mockConcerns: Concern[] = [
     authorName: "Mia Wagner",
     authorClass: "6b",
     replies: [
-      createReply("r12i", "pro-argument", "Our bags are piled up and things get lost or damaged.", 3, 58.5, [], undefined, undefined, undefined, mockUsers[8]),
-      createReply("r12j", "proposal", "Install additional hooks and shelves along the classroom walls.", 4, 58, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-c10a-5-1", "pro-argument", "Our bags are piled up and things get lost or damaged.", 3, 77, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-c10a-5-2", "proposal", "Install additional hooks and shelves along the classroom walls.", 4, 76, [], undefined, undefined, undefined, mockUsers[9]),
     ],
   },
   {
-    id: "3f",
+    id: "c10a-6",
     type: "problem",
     title: "Insufficient Time Between Classes",
     description: "Only 5 minutes between classes isn't enough to get to lockers, use bathroom, and reach the next classroom across campus.",
     votes: 8,
-    timestamp: daysAgo(56),
+    timestamp: daysAgo(75),
     phase: "class",
     group: "Class 10A",
     solutionLevel: "school",
@@ -333,17 +195,17 @@ export const mockConcerns: Concern[] = [
     authorName: "Elias Becker",
     authorClass: "6b",
     replies: [
-      createReply("r12k", "pro-argument", "I'm always late to my next class because my locker is far away.", 3, 55.5, [], undefined, undefined, undefined, mockUsers[10]),
-      createReply("r12l", "proposal", "Extend breaks to 7-8 minutes or create a passing period schedule.", 5, 55, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-c10a-6-1", "pro-argument", "I'm always late to my next class because my locker is far away.", 3, 74, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-c10a-6-2", "proposal", "Extend breaks to 7-8 minutes or create a passing period schedule.", 5, 73, [], undefined, undefined, undefined, mockUsers[11]),
     ],
   },
   {
-    id: "3g",
+    id: "c10a-7",
     type: "proposal",
     title: "Student Tutoring Exchange Program",
     description: "Create a peer tutoring system where students who excel in a subject can help classmates who struggle, earning community service hours.",
     votes: 7,
-    timestamp: daysAgo(53),
+    timestamp: daysAgo(72),
     phase: "class",
     group: "Class 10A",
     solutionLevel: "school",
@@ -351,388 +213,538 @@ export const mockConcerns: Concern[] = [
     authorName: "Hannah Hoffmann",
     authorClass: "6b",
     replies: [
-      createReply("r12m", "pro-argument", "Learning from peers often feels less intimidating than asking teachers.", 4, 52.5, [], undefined, undefined, undefined, mockUsers[12]),
-      createReply("r12n", "proposal", "Match students by learning style and schedule to make pairing effective.", 3, 52, [], undefined, undefined, undefined, mockUsers[13]),
-    ],
-  },
-  // New class-level concerns
-  {
-    id: "12",
-    type: "problem",
-    title: "Classroom Seating Arrangement Issues",
-    description: "Our current row-by-row seating makes group work difficult and some students can't see the board well from back corners.",
-    votes: 11,
-    timestamp: daysAgo(50),
-    phase: "class",
-    group: "Class 10A",
-    solutionLevel: "class",
-    authorId: "u8",
-    authorName: "Felix Schulz",
-    authorClass: "6b",
-    replies: [
-      createReply("r40", "pro-argument", "I sit in the back corner and literally can't read the board during math.", 5, 49.5, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r41", "proposal", "Try U-shaped seating so everyone can see each other and the board.", 7, 49, [
-        createReply("r41a", "objection", "U-shape takes more floor space, might not fit all desks.", 3, 48.5, [], undefined, undefined, undefined, mockUsers[2])
-      ], undefined, undefined, undefined, mockUsers[1]),
-      createReply("r42", "proposal", "Rotate seating weekly so no one is stuck in bad spots permanently.", 4, 48, [], undefined, undefined, undefined, mockUsers[3]),
-    ],
-  },
-  {
-    id: "13",
-    type: "problem",
-    title: "Class Noise During Independent Work",
-    description: "When we have independent work time, some students chat loudly, making it hard for others to concentrate.",
-    votes: 10,
-    timestamp: daysAgo(47),
-    phase: "class",
-    group: "Class 10A",
-    solutionLevel: "class",
-    authorId: "u9",
-    authorName: "Lea Koch",
-    authorClass: "6c",
-    replies: [
-      createReply("r43", "pro-argument", "I need quiet to focus and the constant talking is really distracting.", 6, 46.5, [], undefined, undefined, undefined, mockUsers[4]),
-      createReply("r44", "proposal", "Create quiet zones in the classroom for students who need silence.", 5, 46, [], undefined, undefined, undefined, mockUsers[5]),
-      createReply("r45", "objection", "Some students learn better by discussing problems with classmates.", 4, 45.5, [
-        createReply("r45a", "variant", "Maybe have designated discussion time and quiet time, not mixed together.", 6, 45, [], undefined, undefined, undefined, mockUsers[7])
-      ], undefined, undefined, undefined, mockUsers[6]),
-    ],
-  },
-  // New ministry-level concerns
-  {
-    id: "14",
-    type: "problem",
-    title: "Curriculum Content Feels Outdated",
-    description: "Much of what we learn in textbooks is outdated. Topics like digital literacy, climate science, and modern history are barely covered.",
-    votes: 14,
-    timestamp: daysAgo(44),
-    phase: "class",
-    group: "Class 10A",
-    solutionLevel: "ministries",
-    authorId: "u11",
-    authorName: "Anna Richter",
-    authorClass: "6c",
-    replies: [
-      createReply("r46", "pro-argument", "Our history book stops at 2005! So much has happened since then.", 8, 43.5, [], undefined, undefined, undefined, mockUsers[8]),
-      createReply("r47", "pro-argument", "We learned nothing about coding or AI even though it affects every career now.", 9, 43, [], undefined, undefined, undefined, mockUsers[9]),
-      createReply("r48", "objection", "Teachers can only teach what the ministry approves. It's not their fault.", 5, 42.5, [
-        createReply("r48a", "proposal", "That's why we should petition the ministry through proper student council channels.", 6, 42, [], undefined, undefined, undefined, mockUsers[11])
-      ], undefined, undefined, undefined, mockUsers[10]),
-      createReply("r49", "question", "How often does the ministry actually update the curriculum?", 4, 41.5, [
-        createReply("r49a", "pro-argument", "I heard it's only every 10-15 years for major updates. Way too slow!", 5, 41, [], undefined, undefined, undefined, mockUsers[13])
-      ], undefined, undefined, undefined, mockUsers[12]),
-    ],
-  },
-  {
-    id: "15",
-    type: "problem",
-    title: "Standardized Testing Pressure",
-    description: "The focus on standardized tests means teachers rush through material and we don't actually learn deeply - just memorize for the test.",
-    votes: 13,
-    timestamp: daysAgo(41),
-    phase: "class",
-    group: "Class 10A",
-    solutionLevel: "ministries",
-    authorId: "u14",
-    authorName: "Maximilian Schröder",
-    authorClass: "7a",
-    replies: [
-      createReply("r50", "pro-argument", "I forget everything right after the test because I only memorized, didn't understand.", 7, 40.5, [], undefined, undefined, undefined, mockUsers[14]),
-      createReply("r51", "pro-argument", "Teachers literally say 'this won't be on the test' so we skip important topics.", 8, 40, [], undefined, undefined, undefined, mockUsers[15]),
-      createReply("r52", "objection", "Tests are needed to compare students fairly across different schools.", 4, 39.5, [
-        createReply("r52a", "variant", "Maybe there are better ways to assess learning than one-time high-stakes tests.", 6, 39, [], undefined, undefined, undefined, mockUsers[17])
-      ], undefined, undefined, undefined, mockUsers[16]),
-      createReply("r53", "proposal", "Advocate for portfolio-based assessment that shows actual learning over time.", 5, 38.5, [], undefined, {
-        text: "Petition the ministry to pilot alternative assessment methods in select schools.",
-        solutionLevel: "ministries"
-      }, undefined, mockUsers[18]),
+      createReply("r-c10a-7-1", "pro-argument", "Learning from peers often feels less intimidating than asking teachers.", 4, 71, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-c10a-7-2", "proposal", "Match students by learning style and schedule to make pairing effective.", 3, 70, [], undefined, undefined, undefined, mockUsers[13]),
     ],
   },
 
   // ============================================
-  // GRADE PHASE CONCERNS (10 total)
-  // 3 winners from class + 7 from other classes
-  // Top 2 will advance to school phase
+  // CLASS PHASE CONCERNS - Class 10B
+  // Created days 65-95
   // ============================================
   {
-    id: "4",
+    id: "c10b-1",
     type: "problem",
-    title: "Homework Overload Across Subjects",
-    description: "Students are receiving excessive homework from multiple subjects with overlapping deadlines, causing stress and burnout.",
-    votes: 56,
-    timestamp: daysAgo(56),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "school",
-    promotedFrom: "class",
-    originalGroup: "Class 10A",
-    isWinner: true,
-    winnerRank: 1,
-    authorId: "u13",
-    authorName: "Laura Wolf",
-    authorClass: "7a",
-    variants: [
-      {
-        id: "v4-1",
-        title: "Homework Overload Across Subjects",
-        text: "Students are receiving excessive homework from multiple subjects with overlapping deadlines, causing stress and burnout.",
-        votes: 15,
-      },
-      {
-        id: "v4-2",
-        title: "Homework Coordination and Cap Policy",
-        text: "Students are receiving excessive homework from multiple subjects with overlapping deadlines. We need a homework cap policy of maximum 2 hours per night and a shared calendar for teachers to coordinate.",
-        votes: 28,
-      },
-      {
-        id: "v4-3",
-        title: "Comprehensive Homework Management System",
-        text: "Students are receiving excessive homework from multiple subjects with overlapping deadlines. We propose a 2-hour homework cap, monthly grade-level teacher coordination meetings, and a shared digital calendar for assignment tracking.",
-        votes: 34,
-      },
-    ],
-    replies: [
-      createReply("r13", "pro-argument", "Definitely! Sometimes I have 4 major assignments due the same week.", 18, 55.5, [
-        createReply("r13a", "objection", "But some subjects genuinely require more practice to master.", 5, 55.2, [
-          createReply("r13a1", "variant", "Maybe we need smarter homework, not less homework - quality over quantity.", 8, 55, [], undefined, undefined, undefined, mockUsers[14])
-        ], undefined, undefined, undefined, mockUsers[15])
-      ], undefined, undefined, undefined, mockUsers[16]),
-      createReply("r14", "objection", "Teachers don't coordinate because they have their own curriculum requirements.", 12, 55, [], undefined, {
-        text: "Establish a shared digital calendar where teachers can see all assignment deadlines and coordinate better.",
-        solutionLevel: "school"
-      }, undefined, mockUsers[17]),
-      createReply("r14a", "question", "How would a homework cap actually be enforced? Would teachers be penalized for exceeding it?", 9, 54.8, [
-        createReply("r14a1", "proposal", "Teachers would self-report assignments in the shared system, and grade coordinators review it monthly. No penalties, just collaborative adjustments.", 11, 54.6, [], undefined, undefined, undefined, mockUsers[18])
-      ], undefined, undefined, undefined, mockUsers[19]),
-      createReply("r15", "proposal", "Create a homework cap policy - maximum 2 hours per night across all subjects.", 22, 54.5, [], undefined, {
-        text: "Implement a homework coordination system with grade-level teacher meetings monthly.",
-        solutionLevel: "ministries"
-      }, undefined, mockUsers[20]),
-    ],
-  },
-  {
-    id: "5",
-    type: "proposal",
-    title: "Mental Health Support Program",
-    description: "Establish regular access to school counselors and mental health resources for all students in our grade.",
-    votes: 48,
-    timestamp: daysAgo(52),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "school",
-    promotedFrom: "class",
-    originalGroup: "Class 10A",
-    isWinner: true,
-    winnerRank: 2,
-    authorId: "u21",
-    authorName: "Marie Lange",
-    authorClass: "7c",
-    variants: [
-      {
-        id: "v5-1",
-        title: "Mental Health Support Program",
-        text: "Establish regular access to school counselors and mental health resources for all students in our grade.",
-        votes: 12,
-      },
-      {
-        id: "v5-2",
-        title: "Mental Health Support with Curriculum Integration",
-        text: "Establish regular access to school counselors and mental health resources, while adding mental health education to the curriculum so everyone understands it better.",
-        votes: 20,
-      },
-      {
-        id: "v5-3",
-        title: "Comprehensive Mental Health Initiative",
-        text: "Establish regular access to school counselors and mental health resources, implement peer support training, partner with external mental health organizations, and integrate mental health education into the curriculum.",
-        votes: 31,
-      },
-    ],
-    replies: [
-      createReply("r18", "pro-argument", "This is so important! Many students struggle silently.", 16, 51.5, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r19", "pro-argument", "Mental health should be treated as seriously as physical health.", 19, 51, [], undefined, undefined, undefined, mockUsers[1]),
-    ],
-  },
-  {
-    id: "6",
-    type: "problem",
-    title: "Outdated Computer Lab Equipment",
-    description: "Computer lab machines are 8+ years old, frequently crash, and can't run modern software needed for coursework.",
-    votes: 41,
-    timestamp: daysAgo(48),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "ministries",
-    promotedFrom: "class",
-    originalGroup: "Class 10A",
-    authorId: "u2",
-    authorName: "Liam Müller",
-    authorClass: "6a",
-    variants: [
-      {
-        id: "v6-1",
-        title: "Outdated Computer Lab Equipment",
-        text: "Computer lab machines are 8+ years old, frequently crash, and can't run modern software needed for coursework.",
-        votes: 10,
-      },
-      {
-        id: "v6-2",
-        title: "Computer Lab Modernization Plan",
-        text: "Computer lab machines are 8+ years old, frequently crash, and can't run modern software needed for coursework. We propose a phased replacement plan starting with the most critical machines.",
-        votes: 18,
-      },
-    ],
-    replies: [
-      createReply("r20", "pro-argument", "I lost my entire project last week because the computer crashed.", 14, 47.5, [], undefined, undefined, undefined, mockUsers[2]),
-      createReply("r21", "proposal", "Request a budget allocation for new computers in next year's school budget.", 11, 47, [], undefined, {
-        text: "Apply for district technology grants to fund new computer equipment.",
-        solutionLevel: "ministries"
-      }, undefined, mockUsers[3]),
-    ],
-  },
-  {
-    id: "6a",
-    type: "proposal",
-    title: "Grade-Wide Study Groups",
-    description: "Organize cross-class study groups where students from different classes can collaborate on subjects they find challenging.",
-    votes: 35,
-    timestamp: daysAgo(44),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "school",
-    authorId: "u4",
-    authorName: "Noah Fischer",
-    authorClass: "6a",
-    replies: [
-      createReply("r21a", "pro-argument", "This would help us learn from students with different perspectives.", 8, 43.5, [], undefined, undefined, undefined, mockUsers[4]),
-      createReply("r21b", "objection", "Scheduling might be difficult with different class timetables.", 6, 43, [], undefined, undefined, undefined, mockUsers[5]),
-    ],
-  },
-  {
-    id: "6b",
-    type: "problem",
-    title: "Inconsistent Grading Standards",
-    description: "Different teachers grade the same quality of work differently. A B in one class might be an A in another.",
-    votes: 32,
-    timestamp: daysAgo(40),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "school",
-    authorId: "u5",
-    authorName: "Mia Wagner",
-    authorClass: "6b",
-    replies: [
-      createReply("r21c", "pro-argument", "This makes GPA comparisons unfair between students.", 10, 39.5, [], undefined, undefined, undefined, mockUsers[6]),
-      createReply("r21d", "proposal", "Create grade-level rubrics that all teachers in a subject must follow.", 12, 39, [], undefined, undefined, undefined, mockUsers[7]),
-    ],
-  },
-  {
-    id: "6c",
-    type: "problem",
-    title: "Lack of Extracurricular Variety",
-    description: "Our grade has limited extracurricular options. Most clubs are focused on academics, with few creative or recreational choices.",
-    votes: 28,
-    timestamp: daysAgo(36),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "school",
-    authorId: "u6",
-    authorName: "Elias Becker",
-    authorClass: "6b",
-    replies: [
-      createReply("r21e", "pro-argument", "Not everyone is interested in academic clubs. We need more diversity.", 7, 35.5, [], undefined, undefined, undefined, mockUsers[8]),
-      createReply("r21f", "proposal", "Survey students about what clubs they'd like and try to find volunteer advisors.", 9, 35, [], undefined, undefined, undefined, mockUsers[9]),
-    ],
-  },
-  {
-    id: "6d",
-    type: "proposal",
-    title: "Extended Library Hours",
-    description: "Keep the school library open until 6 PM on weekdays so students can study after extracurricular activities.",
-    votes: 26,
-    timestamp: daysAgo(32),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "school",
-    authorId: "u7",
-    authorName: "Hannah Hoffmann",
-    authorClass: "6b",
-    replies: [
-      createReply("r21g", "pro-argument", "This would really help students who have sports practice after school.", 8, 31.5, [], undefined, undefined, undefined, mockUsers[10]),
-      createReply("r21h", "objection", "The library staff might not be able to work extended hours.", 5, 31, [], undefined, undefined, undefined, mockUsers[11]),
-    ],
-  },
-  {
-    id: "6e",
-    type: "problem",
-    title: "Crowded Hallways During Passing Periods",
-    description: "Hallways are extremely crowded between classes, causing pushing, delays, and safety concerns.",
-    votes: 24,
-    timestamp: daysAgo(28),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "school",
+    title: "Classroom Seating Arrangement Issues",
+    description: "Our current row-by-row seating makes group work difficult and some students can't see the board well from back corners.",
+    votes: 15,
+    timestamp: daysAgo(91),
+    phase: "class",
+    group: "Class 10B",
+    solutionLevel: "class",
     authorId: "u8",
     authorName: "Felix Schulz",
     authorClass: "6b",
     replies: [
-      createReply("r21i", "pro-argument", "I've been pushed into lockers multiple times this year.", 6, 27.5, [], undefined, undefined, undefined, mockUsers[12]),
-      createReply("r21j", "proposal", "Implement one-way hallway traffic flow during passing periods.", 8, 27, [], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-c10b-1-1", "pro-argument", "I sit in the back corner and literally can't read the board during math.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-c10b-1-2", "proposal", "Try U-shaped seating so everyone can see each other and the board.", 7, 89, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-c10b-1-3", "proposal", "Rotate seating weekly so no one is stuck in bad spots permanently.", 4, 88, [], undefined, undefined, undefined, mockUsers[3]),
     ],
   },
   {
-    id: "6f",
-    type: "proposal",
-    title: "Monthly Grade Assemblies",
-    description: "Hold monthly assemblies where grade-level achievements are celebrated and important information is shared.",
-    votes: 21,
-    timestamp: daysAgo(25),
-    phase: "grade",
-    group: "Grade 10",
-    solutionLevel: "school",
+    id: "c10b-2",
+    type: "problem",
+    title: "Class Noise During Independent Work",
+    description: "When we have independent work time, some students chat loudly, making it hard for others to concentrate.",
+    votes: 13,
+    timestamp: daysAgo(87),
+    phase: "class",
+    group: "Class 10B",
+    solutionLevel: "class",
     authorId: "u9",
     authorName: "Lea Koch",
     authorClass: "6c",
     replies: [
-      createReply("r21k", "pro-argument", "This would build more community within our grade.", 5, 24.5, [], undefined, undefined, undefined, mockUsers[14]),
-      createReply("r21l", "objection", "Taking time out of classes for assemblies might not be worth it.", 4, 24, [], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-c10b-2-1", "pro-argument", "I need quiet to focus and the constant talking is really distracting.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-c10b-2-2", "proposal", "Create quiet zones in the classroom for students who need silence.", 5, 85, [], undefined, undefined, undefined, mockUsers[5]),
     ],
   },
   {
-    id: "6g",
-    type: "problem",
-    title: "Limited Access to Teachers for Help",
-    description: "Teachers are often unavailable outside of class time. Office hours are limited and usually crowded.",
-    votes: 19,
-    timestamp: daysAgo(22),
-    phase: "grade",
-    group: "Grade 10",
+    id: "c10b-3",
+    type: "proposal",
+    title: "Digital Homework Calendar",
+    description: "Create a shared digital calendar where all teachers post homework deadlines so we can plan better.",
+    votes: 11,
+    timestamp: daysAgo(83),
+    phase: "class",
+    group: "Class 10B",
     solutionLevel: "school",
     authorId: "u10",
     authorName: "Jonas Bauer",
     authorClass: "6c",
     replies: [
-      createReply("r21m", "pro-argument", "I've waited in line for 20 minutes during office hours and still didn't get help.", 7, 21.5, [], undefined, undefined, undefined, mockUsers[16]),
-      createReply("r21n", "proposal", "Create an online Q&A forum where teachers can answer questions asynchronously.", 6, 21, [], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-c10b-3-1", "pro-argument", "This would help us avoid having 4 assignments due the same day.", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-c10b-3-2", "objection", "Not all teachers will use it consistently.", 3, 81, [], undefined, undefined, undefined, mockUsers[7]),
+    ],
+  },
+  {
+    id: "c10b-4",
+    type: "problem",
+    title: "Late Bus Arrivals",
+    description: "School buses frequently arrive late, causing students to miss the start of first period.",
+    votes: 10,
+    timestamp: daysAgo(79),
+    phase: "class",
+    group: "Class 10B",
+    solutionLevel: "school",
+    authorId: "u11",
+    authorName: "Anna Richter",
+    authorClass: "6c",
+    replies: [
+      createReply("r-c10b-4-1", "pro-argument", "I've been marked tardy 5 times this month because of the bus.", 5, 78, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-c10b-4-2", "proposal", "Request earlier departure times or additional routes.", 4, 77, [], undefined, undefined, undefined, mockUsers[9]),
+    ],
+  },
+  {
+    id: "c10b-5",
+    type: "proposal",
+    title: "Classroom Plant Initiative",
+    description: "Add plants to our classroom to improve air quality and create a more pleasant learning environment.",
+    votes: 8,
+    timestamp: daysAgo(74),
+    phase: "class",
+    group: "Class 10B",
+    solutionLevel: "class",
+    authorId: "u12",
+    authorName: "Ben Klein",
+    authorClass: "6c",
+    replies: [
+      createReply("r-c10b-5-1", "pro-argument", "Studies show plants improve focus and reduce stress.", 4, 73, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-c10b-5-2", "objection", "Who will take care of them during holidays?", 2, 72, [], undefined, undefined, undefined, mockUsers[11]),
     ],
   },
 
   // ============================================
-  // SCHOOL PHASE CONCERNS (10 total)
-  // 2 winners from grade + 8 from other grades
-  // Top 3 will be implemented
+  // CLASS PHASE CONCERNS - Class 10C
+  // Created days 65-95
   // ============================================
   {
-    id: "7",
+    id: "c10c-1",
     type: "problem",
-    title: "School-Wide Sustainability Initiative",
-    description: "Our school lacks comprehensive recycling programs and environmental awareness. We need systematic changes to reduce our ecological footprint.",
-    votes: 89,
-    timestamp: daysAgo(25),
+    title: "Broken Lab Equipment",
+    description: "Many science lab instruments are broken or missing parts, making experiments difficult to complete properly.",
+    votes: 17,
+    timestamp: daysAgo(92),
+    phase: "class",
+    group: "Class 10C",
+    solutionLevel: "school",
+    authorId: "u13",
+    authorName: "Laura Wolf",
+    authorClass: "7a",
+    replies: [
+      createReply("r-c10c-1-1", "pro-argument", "We had to share one microscope between 6 students last week.", 6, 91, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-c10c-1-2", "proposal", "Request emergency funding for essential lab equipment repairs.", 8, 90, [], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-c10c-1-3", "question", "Can we fundraise to supplement the school budget?", 3, 89, [], undefined, undefined, undefined, mockUsers[14]),
+    ],
+  },
+  {
+    id: "c10c-2",
+    type: "proposal",
+    title: "Flexible Deadline Policy",
+    description: "Allow students to request 24-48 hour extensions on assignments without penalty, with teacher approval.",
+    votes: 14,
+    timestamp: daysAgo(88),
+    phase: "class",
+    group: "Class 10C",
+    solutionLevel: "school",
+    authorId: "u14",
+    authorName: "Maximilian Schröder",
+    authorClass: "7a",
+    replies: [
+      createReply("r-c10c-2-1", "pro-argument", "Life happens - sometimes we need a little extra time.", 5, 87, [], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-c10c-2-2", "objection", "This could be abused by procrastinators.", 4, 86, [], undefined, undefined, undefined, mockUsers[16]),
+    ],
+  },
+  {
+    id: "c10c-3",
+    type: "problem",
+    title: "Cafeteria Wait Times",
+    description: "The lunch line is so long that we only have 10 minutes to actually eat before the next class.",
+    votes: 12,
+    timestamp: daysAgo(84),
+    phase: "class",
+    group: "Class 10C",
+    solutionLevel: "school",
+    authorId: "u15",
+    authorName: "Julia Neumann",
+    authorClass: "7a",
+    replies: [
+      createReply("r-c10c-3-1", "pro-argument", "I often skip lunch because there's no point waiting 20 minutes.", 6, 83, [], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-c10c-3-2", "proposal", "Stagger lunch times by grade to reduce crowding.", 5, 82, [], undefined, undefined, undefined, mockUsers[18]),
+    ],
+  },
+  {
+    id: "c10c-4",
+    type: "problem",
+    title: "Inconsistent Teacher Grading",
+    description: "Different teachers grade the same quality of work differently. A B in one class might be an A in another.",
+    votes: 10,
+    timestamp: daysAgo(80),
+    phase: "class",
+    group: "Class 10C",
+    solutionLevel: "school",
+    authorId: "u16",
+    authorName: "Paul Schwarz",
+    authorClass: "7a",
+    replies: [
+      createReply("r-c10c-4-1", "pro-argument", "This makes GPA comparisons unfair between students.", 4, 79, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-c10c-4-2", "proposal", "Create standardized rubrics that all teachers must follow.", 5, 78, [], undefined, undefined, undefined, mockUsers[20]),
+    ],
+  },
+  {
+    id: "c10c-5",
+    type: "proposal",
+    title: "Study Hall Period",
+    description: "Add a dedicated study hall period where students can work on homework with teacher support available.",
+    votes: 9,
+    timestamp: daysAgo(76),
+    phase: "class",
+    group: "Class 10C",
+    solutionLevel: "school",
+    authorId: "u17",
+    authorName: "Sarah Zimmermann",
+    authorClass: "7b",
+    replies: [
+      createReply("r-c10c-5-1", "pro-argument", "This would reduce homework stress at home.", 3, 75, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-c10c-5-2", "objection", "It might cut into valuable instruction time.", 2, 74, [], undefined, undefined, undefined, mockUsers[0]),
+    ],
+  },
+
+  // ============================================
+  // GRADE PHASE CONCERNS - Grade 10
+  // Winners from Class 10A, 10B, 10C (3 each = 9 total)
+  // Days 30-65, votes RESET, replies ACCUMULATE
+  // Replies: 8-15 each (class + grade discussion)
+  // ============================================
+  
+  // Winner 1 from Class 10A - Cafeteria Food Quality (now with grade-level discussion)
+  {
+    id: "g10-1",
+    type: "problem",
+    title: "Cafeteria Food Quality Issues",
+    description: "The food served in our cafeteria is often cold and lacks variety. Students are frequently complaining about limited healthy options.",
+    votes: 45, // Reset for grade phase voting
+    timestamp: daysAgo(65), // Entered grade phase
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "school",
+    promotedFrom: "class",
+    originalGroup: "Class 10A",
+    isWinner: true,
+    winnerRank: 1,
+    authorId: "u1",
+    authorName: "Emma Schmidt",
+    authorClass: "6a",
+    variants: [
+      {
+        id: "v-g10-1-1",
+        title: "Cafeteria Food Quality Issues",
+        text: "The food served in our cafeteria is often cold and lacks variety. Students are frequently complaining about limited healthy options.",
+        votes: 12,
+      },
+      {
+        id: "v-g10-1-2",
+        title: "Comprehensive Cafeteria Improvement",
+        text: "Implement a student feedback system, extend lunch breaks, add fresh salad options, and ensure food stays hot with better warming equipment.",
+        votes: 28,
+      },
+    ],
+    replies: [
+      // Class phase replies (days 95-65)
+      createReply("r-g10-1-1", "objection", "I think the main issue is timing, not quality. Food is hot when served.", 8, 92, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-g10-1-2", "pro-argument", "Absolutely agree! I've noticed many students skip lunch because of this.", 12, 90, [
+        createReply("r-g10-1-2a", "question", "Do we have data on how many students actually skip lunch?", 3, 88, [], undefined, undefined, undefined, mockUsers[2]),
+      ], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-g10-1-3", "proposal", "We could propose a student feedback system where we vote on menu items weekly.", 15, 85, [], undefined, {
+        text: "Create a monthly rotating menu based on student preferences collected through surveys.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[6]),
+      // Grade phase replies (days 65-30)
+      createReply("r-g10-1-4", "pro-argument", "Students from 10B have the same complaints - this is a grade-wide issue!", 18, 60, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-g10-1-5", "proposal", "Let's combine our ideas: student surveys + better heating equipment + healthier options.", 22, 55, [
+        createReply("r-g10-1-5a", "pro-argument", "Class 10C supports this combined approach!", 14, 52, [], undefined, undefined, undefined, mockUsers[12]),
+      ], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-g10-1-6", "variant", "The combined proposal addresses all three classes' concerns about food quality, variety, and temperature.", 16, 48, [], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-g10-1-7", "question", "Has anyone talked to the cafeteria staff about these issues?", 8, 45, [
+        createReply("r-g10-1-7a", "pro-argument", "Yes! They said they need budget approval for better equipment.", 11, 42, [], undefined, undefined, undefined, mockUsers[16]),
+      ], undefined, undefined, undefined, mockUsers[18]),
+    ],
+  },
+
+  // Winner 2 from Class 10A - Digital Assignment Submission
+  {
+    id: "g10-2",
+    type: "proposal",
+    title: "Implement Digital Assignment Submission",
+    description: "We should move to a fully digital assignment submission system to reduce paper waste and make tracking easier.",
+    votes: 42,
+    timestamp: daysAgo(65),
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "school",
+    promotedFrom: "class",
+    originalGroup: "Class 10A",
+    isWinner: true,
+    winnerRank: 2,
+    authorId: "u10",
+    authorName: "Jonas Bauer",
+    authorClass: "6c",
+    variants: [
+      {
+        id: "v-g10-2-1",
+        title: "Digital Assignment Submission",
+        text: "Move to a fully digital assignment submission system to reduce paper waste and make tracking easier.",
+        votes: 14,
+      },
+      {
+        id: "v-g10-2-2",
+        title: "Hybrid Digital System with School Support",
+        text: "Implement digital submissions with extended library hours for students without home internet, plus offline submission options.",
+        votes: 26,
+      },
+    ],
+    replies: [
+      // Class phase replies
+      createReply("r-g10-2-1", "pro-argument", "This would help the environment and make it easier to keep track of deadlines.", 9, 90, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-g10-2-2", "objection", "Not all students have reliable internet access at home.", 14, 88, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-g10-2-3", "proposal", "Extend library hours so students can use school computers.", 11, 85, [], undefined, undefined, undefined, mockUsers[14]),
+      // Grade phase replies
+      createReply("r-g10-2-4", "pro-argument", "Class 10B already uses Google Classroom - it works great!", 16, 58, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-g10-2-5", "variant", "Combine digital submissions with extended library access for equity.", 19, 52, [
+        createReply("r-g10-2-5a", "pro-argument", "This addresses the internet access concerns perfectly.", 12, 48, [], undefined, undefined, undefined, mockUsers[10]),
+      ], undefined, undefined, undefined, mockUsers[16]),
+      createReply("r-g10-2-6", "question", "What platform should we use? Google Classroom or something else?", 8, 45, [
+        createReply("r-g10-2-6a", "proposal", "Google Classroom is free and most students already have accounts.", 15, 42, [], undefined, undefined, undefined, mockUsers[18]),
+      ], undefined, undefined, undefined, mockUsers[20]),
+      createReply("r-g10-2-7", "pro-argument", "Teachers can provide faster feedback digitally.", 10, 38, [], undefined, undefined, undefined, mockUsers[0]),
+    ],
+  },
+
+  // Winner 3 from Class 10A - Sports Equipment
+  {
+    id: "g10-3",
+    type: "problem",
+    title: "Limited Access to Sports Equipment",
+    description: "Our class doesn't have enough sports equipment for PE lessons, leading to long waiting times and reduced activity.",
+    votes: 38,
+    timestamp: daysAgo(65),
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "school",
+    promotedFrom: "class",
+    originalGroup: "Class 10A",
+    authorId: "u17",
+    authorName: "Sarah Zimmermann",
+    authorClass: "7b",
+    replies: [
+      // Class phase replies
+      createReply("r-g10-3-1", "pro-argument", "Yes! Half the class just stands around waiting for their turn.", 8, 88, [], undefined, undefined, undefined, mockUsers[18]),
+      createReply("r-g10-3-2", "proposal", "We could create a rotation system and extend PE class time.", 6, 85, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-g10-3-3", "objection", "The real issue is that PE classes are too large.", 10, 82, [], undefined, undefined, undefined, mockUsers[20]),
+      // Grade phase replies
+      createReply("r-g10-3-4", "pro-argument", "10B and 10C have the same problem - it's grade-wide!", 14, 60, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-g10-3-5", "proposal", "Request budget allocation for new equipment purchase.", 12, 55, [
+        createReply("r-g10-3-5a", "question", "How much would new equipment cost?", 5, 52, [], undefined, undefined, undefined, mockUsers[4]),
+      ], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-g10-3-6", "variant", "Combine equipment sharing between classes with new purchases.", 9, 48, [], undefined, undefined, undefined, mockUsers[8]),
+    ],
+  },
+
+  // Winner 1 from Class 10B - Seating Arrangement
+  {
+    id: "g10-4",
+    type: "problem",
+    title: "Classroom Seating Arrangement Issues",
+    description: "Current row-by-row seating makes group work difficult and some students can't see the board well from back corners.",
+    votes: 35,
+    timestamp: daysAgo(65),
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "class",
+    promotedFrom: "class",
+    originalGroup: "Class 10B",
+    authorId: "u8",
+    authorName: "Felix Schulz",
+    authorClass: "6b",
+    replies: [
+      // Class phase replies
+      createReply("r-g10-4-1", "pro-argument", "I sit in the back corner and literally can't read the board.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-g10-4-2", "proposal", "Try U-shaped seating so everyone can see.", 7, 88, [], undefined, undefined, undefined, mockUsers[1]),
+      // Grade phase replies
+      createReply("r-g10-4-3", "pro-argument", "Class 10A tried rotating seats - it helped a lot!", 11, 58, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-g10-4-4", "variant", "Combine U-shape with weekly rotation for fairness.", 14, 52, [
+        createReply("r-g10-4-4a", "pro-argument", "This is a great compromise!", 8, 48, [], undefined, undefined, undefined, mockUsers[5]),
+      ], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-g10-4-5", "proposal", "Each class can choose their preferred arrangement.", 9, 45, [], undefined, undefined, undefined, mockUsers[9]),
+    ],
+  },
+
+  // Winner 2 from Class 10B - Digital Calendar
+  {
+    id: "g10-5",
+    type: "proposal",
+    title: "Digital Homework Calendar",
+    description: "Create a shared digital calendar where all teachers post homework deadlines so we can plan better.",
+    votes: 32,
+    timestamp: daysAgo(65),
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "school",
+    promotedFrom: "class",
+    originalGroup: "Class 10B",
+    authorId: "u10",
+    authorName: "Jonas Bauer",
+    authorClass: "6c",
+    replies: [
+      // Class phase replies
+      createReply("r-g10-5-1", "pro-argument", "This would help us avoid having 4 assignments due the same day.", 4, 88, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-g10-5-2", "objection", "Not all teachers will use it consistently.", 3, 85, [], undefined, undefined, undefined, mockUsers[7]),
+      // Grade phase replies
+      createReply("r-g10-5-3", "pro-argument", "If it's mandatory for teachers, it would work!", 12, 58, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-g10-5-4", "proposal", "Integrate with existing school systems for easier adoption.", 10, 52, [
+        createReply("r-g10-5-4a", "pro-argument", "Good idea - less work for teachers.", 7, 48, [], undefined, undefined, undefined, mockUsers[13]),
+      ], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-g10-5-5", "question", "Can students also add their extracurricular commitments?", 6, 42, [], undefined, undefined, undefined, mockUsers[17]),
+    ],
+  },
+
+  // Winner 3 from Class 10B - Class Noise
+  {
+    id: "g10-6",
+    type: "problem",
+    title: "Class Noise During Independent Work",
+    description: "When we have independent work time, some students chat loudly, making it hard for others to concentrate.",
+    votes: 28,
+    timestamp: daysAgo(65),
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "class",
+    promotedFrom: "class",
+    originalGroup: "Class 10B",
+    authorId: "u9",
+    authorName: "Lea Koch",
+    authorClass: "6c",
+    replies: [
+      // Class phase replies
+      createReply("r-g10-6-1", "pro-argument", "I need quiet to focus and the constant talking is distracting.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-g10-6-2", "proposal", "Create quiet zones in the classroom.", 5, 84, [], undefined, undefined, undefined, mockUsers[5]),
+      // Grade phase replies
+      createReply("r-g10-6-3", "objection", "Some students learn better by discussing problems.", 8, 58, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-g10-6-4", "variant", "Have designated discussion time and quiet time, not mixed.", 11, 52, [
+        createReply("r-g10-6-4a", "pro-argument", "This respects both learning styles!", 7, 48, [], undefined, undefined, undefined, mockUsers[21]),
+      ], undefined, undefined, undefined, mockUsers[1]),
+    ],
+  },
+
+  // Winner 1 from Class 10C - Broken Lab Equipment
+  {
+    id: "g10-7",
+    type: "problem",
+    title: "Broken Lab Equipment",
+    description: "Many science lab instruments are broken or missing parts, making experiments difficult to complete properly.",
+    votes: 40,
+    timestamp: daysAgo(65),
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "school",
+    promotedFrom: "class",
+    originalGroup: "Class 10C",
+    authorId: "u13",
+    authorName: "Laura Wolf",
+    authorClass: "7a",
+    replies: [
+      // Class phase replies
+      createReply("r-g10-7-1", "pro-argument", "We had to share one microscope between 6 students last week.", 6, 91, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-g10-7-2", "proposal", "Request emergency funding for lab equipment repairs.", 8, 88, [], undefined, undefined, undefined, mockUsers[13]),
+      // Grade phase replies
+      createReply("r-g10-7-3", "pro-argument", "All three classes share the same labs - this affects everyone!", 15, 60, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-g10-7-4", "proposal", "Create a prioritized list of essential equipment to repair first.", 12, 55, [
+        createReply("r-g10-7-4a", "pro-argument", "Microscopes and scales should be top priority.", 9, 52, [], undefined, undefined, undefined, mockUsers[2]),
+      ], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-g10-7-5", "question", "Can we apply for science education grants?", 7, 48, [
+        createReply("r-g10-7-5a", "proposal", "The science teacher mentioned there are state grants available.", 10, 45, [], undefined, undefined, undefined, mockUsers[6]),
+      ], undefined, undefined, undefined, mockUsers[8]),
+    ],
+  },
+
+  // Winner 2 from Class 10C - Flexible Deadlines
+  {
+    id: "g10-8",
+    type: "proposal",
+    title: "Flexible Deadline Policy",
+    description: "Allow students to request 24-48 hour extensions on assignments without penalty, with teacher approval.",
+    votes: 36,
+    timestamp: daysAgo(65),
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "school",
+    promotedFrom: "class",
+    originalGroup: "Class 10C",
+    authorId: "u14",
+    authorName: "Maximilian Schröder",
+    authorClass: "7a",
+    replies: [
+      // Class phase replies
+      createReply("r-g10-8-1", "pro-argument", "Life happens - sometimes we need a little extra time.", 5, 87, [], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-g10-8-2", "objection", "This could be abused by procrastinators.", 4, 84, [], undefined, undefined, undefined, mockUsers[16]),
+      // Grade phase replies
+      createReply("r-g10-8-3", "proposal", "Limit extensions to 2 per semester per student.", 14, 58, [
+        createReply("r-g10-8-3a", "pro-argument", "This prevents abuse while still helping when needed.", 10, 55, [], undefined, undefined, undefined, mockUsers[18]),
+      ], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-g10-8-4", "variant", "Allow extensions only for documented emergencies.", 8, 50, [], undefined, undefined, undefined, mockUsers[20]),
+      createReply("r-g10-8-5", "question", "Would this apply to tests too, or just assignments?", 5, 45, [], undefined, undefined, undefined, mockUsers[0]),
+    ],
+  },
+
+  // Winner 3 from Class 10C - Cafeteria Wait Times
+  {
+    id: "g10-9",
+    type: "problem",
+    title: "Cafeteria Wait Times",
+    description: "The lunch line is so long that we only have 10 minutes to actually eat before the next class.",
+    votes: 34,
+    timestamp: daysAgo(65),
+    phase: "grade",
+    group: "Grade 10",
+    solutionLevel: "school",
+    promotedFrom: "class",
+    originalGroup: "Class 10C",
+    authorId: "u15",
+    authorName: "Julia Neumann",
+    authorClass: "7a",
+    replies: [
+      // Class phase replies
+      createReply("r-g10-9-1", "pro-argument", "I often skip lunch because there's no point waiting 20 minutes.", 6, 83, [], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-g10-9-2", "proposal", "Stagger lunch times by grade to reduce crowding.", 5, 80, [], undefined, undefined, undefined, mockUsers[18]),
+      // Grade phase replies
+      createReply("r-g10-9-3", "pro-argument", "This connects to the food quality issue - related problems!", 12, 58, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-g10-9-4", "proposal", "Add a second serving line to speed things up.", 14, 52, [
+        createReply("r-g10-9-4a", "question", "Is there physical space for another line?", 6, 48, [], undefined, undefined, undefined, mockUsers[3]),
+      ], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-g10-9-5", "variant", "Combine staggered times with a grab-and-go option for quick meals.", 10, 42, [], undefined, undefined, undefined, mockUsers[7]),
+    ],
+  },
+
+  // ============================================
+  // SCHOOL PHASE CONCERNS
+  // Winners from Grade 10, 11, 12 (2 each = 6 total)
+  // Days 0-30, votes RESET, replies ACCUMULATE
+  // Replies: 20-40+ each (class + grade + school discussion)
+  // ============================================
+
+  // MINISTRY LEVEL CONCERN - Curriculum (progressed through ALL phases)
+  {
+    id: "s-1",
+    type: "problem",
+    title: "Curriculum Content Feels Outdated",
+    description: "Much of what we learn in textbooks is outdated. Topics like digital literacy, climate science, and modern history are barely covered.",
+    votes: 85, // School phase votes
+    timestamp: daysAgo(30), // Entered school phase
     phase: "school",
     group: "Whole School",
     solutionLevel: "ministries",
     promotedFrom: "grade",
-    originalGroup: "Grade 10",
+    originalGroup: "Class 10A",
     isWinner: true,
     winnerRank: 1,
     authorId: "u11",
@@ -740,44 +752,73 @@ export const mockConcerns: Concern[] = [
     authorClass: "6c",
     variants: [
       {
-        id: "v7-1",
-        title: "School-Wide Sustainability Initiative",
-        text: "Our school lacks comprehensive recycling programs and environmental awareness. We need systematic changes to reduce our ecological footprint.",
-        votes: 20,
+        id: "v-s-1-1",
+        title: "Curriculum Content Update Request",
+        text: "Much of what we learn in textbooks is outdated. Topics like digital literacy, climate science, and modern history are barely covered.",
+        votes: 25,
       },
       {
-        id: "v7-2",
-        title: "Comprehensive Green School Program",
-        text: "Our school lacks comprehensive recycling programs and environmental awareness. We propose a Green School Program including recycling stations, energy-saving measures, and environmental education curriculum.",
-        votes: 35,
-      },
-      {
-        id: "v7-3",
-        title: "Sustainability Initiative with Student Leadership",
-        text: "Our school lacks comprehensive recycling programs and environmental awareness. We propose creating a student-led Sustainability Committee, installing recycling stations, implementing energy audits, and partnering with local environmental organizations.",
-        votes: 48,
+        id: "v-s-1-2",
+        title: "Comprehensive Curriculum Modernization Proposal",
+        text: "Create a student committee to formally petition the ministry for curriculum updates, focusing on digital literacy, climate science, modern history, and practical life skills.",
+        votes: 52,
       },
     ],
     replies: [
-      createReply("r22", "pro-argument", "Climate change affects all of us. Schools should lead by example.", 28, 24.5, [
-        createReply("r22a", "proposal", "Start with simple changes: better recycling bins, energy-efficient lighting.", 15, 24, [], undefined, undefined, undefined, mockUsers[18])
+      // Class phase replies (days 95-65)
+      createReply("r-s-1-1", "pro-argument", "Our history book stops at 2005! So much has happened since then.", 8, 92, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-s-1-2", "pro-argument", "We learned nothing about coding or AI even though it affects every career now.", 9, 90, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-s-1-3", "objection", "Teachers can only teach what the ministry approves.", 5, 88, [
+        createReply("r-s-1-3a", "proposal", "That's why we should petition the ministry through student council.", 6, 86, [], undefined, undefined, undefined, mockUsers[11]),
+      ], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-s-1-4", "question", "How often does the ministry actually update the curriculum?", 4, 85, [
+        createReply("r-s-1-4a", "pro-argument", "Only every 10-15 years for major updates. Way too slow!", 5, 83, [], undefined, undefined, undefined, mockUsers[13]),
+      ], undefined, undefined, undefined, mockUsers[12]),
+      // Grade phase replies (days 65-30)
+      createReply("r-s-1-5", "pro-argument", "Students from all Grade 10 classes agree - our books are ancient!", 16, 60, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-s-1-6", "proposal", "Form a grade-level committee to document specific outdated content.", 14, 55, [
+        createReply("r-s-1-6a", "pro-argument", "We can create a detailed report with examples.", 11, 52, [], undefined, undefined, undefined, mockUsers[2]),
+        createReply("r-s-1-6b", "proposal", "Include teacher input to strengthen our case.", 9, 50, [], undefined, undefined, undefined, mockUsers[4]),
+      ], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-1-7", "variant", "Combine curriculum update request with teacher training proposal.", 12, 48, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-s-1-8", "question", "Has any student petition ever successfully changed curriculum?", 8, 45, [
+        createReply("r-s-1-8a", "pro-argument", "Yes! In 2019, student protests led to climate education being added.", 15, 42, [], undefined, undefined, undefined, mockUsers[8]),
+      ], undefined, undefined, undefined, mockUsers[7]),
+      // School phase replies (days 30-0)
+      createReply("r-s-1-9", "pro-argument", "This affects ALL grades, not just 10th! We need school-wide support.", 28, 28, [
+        createReply("r-s-1-9a", "pro-argument", "Grade 11 strongly supports this!", 22, 26, [], undefined, undefined, undefined, mockUsers[12]),
+        createReply("r-s-1-9b", "pro-argument", "Grade 12 is in too - we wish we had modern curriculum!", 20, 24, [], undefined, undefined, undefined, mockUsers[14]),
+      ], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-s-1-10", "proposal", "Create a school-wide petition with signatures from all grades.", 32, 25, [
+        createReply("r-s-1-10a", "pro-argument", "The more signatures, the more seriously the ministry will take it.", 18, 22, [], undefined, undefined, undefined, mockUsers[16]),
+      ], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-s-1-11", "proposal", "Draft a formal letter to the ministry with specific curriculum change requests.", 25, 22, [
+        createReply("r-s-1-11a", "variant", "Include data showing what other countries teach that we don't.", 16, 20, [], undefined, undefined, undefined, mockUsers[18]),
+        createReply("r-s-1-11b", "pro-argument", "Reference recent job market studies showing skill gaps.", 14, 18, [], undefined, undefined, undefined, mockUsers[20]),
+      ], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-s-1-12", "question", "Should we involve parent associations for more impact?", 12, 18, [
+        createReply("r-s-1-12a", "pro-argument", "Parents' voices carry significant weight with the ministry!", 19, 15, [], undefined, undefined, undefined, mockUsers[0]),
       ], undefined, undefined, undefined, mockUsers[19]),
-      createReply("r23", "proposal", "Create a student-led 'Green Team' to implement and monitor sustainability initiatives.", 32, 24, [], undefined, {
-        text: "Apply for environmental grants to fund solar panels and water conservation systems.",
-        solutionLevel: "ministries"
-      }, undefined, mockUsers[20]),
-      createReply("r23a", "question", "What specific sustainability measures have other schools successfully implemented? Can we learn from their experience?", 12, 23.5, [
-        createReply("r23a1", "pro-argument", "I researched this - many schools have reduced energy costs by 30% with simple LED lighting upgrades and better thermostat management.", 18, 23, [], undefined, undefined, undefined, mockUsers[21])
-      ], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-s-1-13", "proposal", "Present our case at the next school board meeting.", 21, 15, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-s-1-14", "pro-argument", "Media coverage could amplify our message significantly.", 15, 12, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-1-15", "variant", "Create a comprehensive modernization package including curriculum, textbooks, and digital resources.", 24, 10, [
+        createReply("r-s-1-15a", "pro-argument", "This holistic approach is more likely to succeed.", 17, 8, [], undefined, undefined, undefined, mockUsers[3]),
+      ], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-s-1-16", "question", "What's the timeline for ministry decisions on curriculum changes?", 9, 8, [
+        createReply("r-s-1-16a", "pro-argument", "Usually 1-2 years, but urgent requests can be expedited.", 11, 6, [], undefined, undefined, undefined, mockUsers[5]),
+      ], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-s-1-17", "proposal", "Start with elective courses while waiting for core curriculum changes.", 18, 5, [], undefined, undefined, undefined, mockUsers[6]),
     ],
   },
+
+  // Winner from Grade 10 - Cafeteria (school-level solution)
   {
-    id: "8",
-    type: "proposal",
-    title: "Inclusive Extra-Curricular Programs",
-    description: "Expand after-school programs to include more diverse activities that cater to different interests and abilities.",
-    votes: 72,
-    timestamp: daysAgo(22),
+    id: "s-2",
+    type: "problem",
+    title: "Cafeteria Food Quality Issues",
+    description: "The food served in our cafeteria is often cold and lacks variety. Students are frequently complaining about limited healthy options.",
+    votes: 78,
+    timestamp: daysAgo(30),
     phase: "school",
     group: "Whole School",
     solutionLevel: "school",
@@ -785,175 +826,337 @@ export const mockConcerns: Concern[] = [
     originalGroup: "Grade 10",
     isWinner: true,
     winnerRank: 2,
-    authorId: "u12",
-    authorName: "Ben Klein",
-    authorClass: "6c",
+    authorId: "u1",
+    authorName: "Emma Schmidt",
+    authorClass: "6a",
     variants: [
       {
-        id: "v8-1",
-        title: "Inclusive Extra-Curricular Programs",
-        text: "Expand after-school programs to include more diverse activities that cater to different interests and abilities.",
+        id: "v-s-2-1",
+        title: "Cafeteria Food Quality Issues",
+        text: "The food served in our cafeteria is often cold and lacks variety.",
         votes: 18,
       },
       {
-        id: "v8-2",
-        title: "Diverse After-School Program Expansion",
-        text: "Expand after-school programs to include more diverse activities that cater to different interests and abilities, including arts, technology, sports, and community service options.",
-        votes: 28,
+        id: "v-s-2-2",
+        title: "School-Wide Cafeteria Improvement Initiative",
+        text: "Implement student feedback system, upgrade heating equipment, add healthy options, extend lunch period, and create a cafeteria improvement committee.",
+        votes: 48,
       },
     ],
     replies: [
-      createReply("r24", "pro-argument", "Not everyone is interested in traditional sports. We need more options.", 21, 21.5, [], undefined, undefined, undefined, mockUsers[1]),
-      createReply("r25", "proposal", "Survey all students to identify what programs they would actually attend.", 17, 21, [], undefined, undefined, undefined, mockUsers[2]),
+      // Accumulated from class and grade phases
+      createReply("r-s-2-1", "objection", "Food is hot when served - timing is the issue.", 8, 92, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-2-2", "pro-argument", "Many students skip lunch because of this.", 12, 90, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-s-2-3", "proposal", "Student feedback system for menu voting.", 15, 85, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-s-2-4", "pro-argument", "Grade-wide issue confirmed by all classes.", 18, 60, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-s-2-5", "proposal", "Combined approach: surveys + heating + healthy options.", 22, 55, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-s-2-6", "variant", "Address food, variety, and temperature together.", 16, 48, [], undefined, undefined, undefined, mockUsers[14]),
+      // School phase replies
+      createReply("r-s-2-7", "pro-argument", "This is THE most common complaint across ALL grades!", 32, 28, [
+        createReply("r-s-2-7a", "pro-argument", "Grade 11 agrees - cafeteria is a school-wide problem.", 24, 26, [], undefined, undefined, undefined, mockUsers[12]),
+        createReply("r-s-2-7b", "pro-argument", "Grade 12 too - been dealing with this for years.", 22, 24, [], undefined, undefined, undefined, mockUsers[14]),
+      ], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-s-2-8", "proposal", "Form a Cafeteria Improvement Committee with reps from each grade.", 28, 25, [
+        createReply("r-s-2-8a", "pro-argument", "Direct student involvement will ensure changes happen.", 18, 22, [], undefined, undefined, undefined, mockUsers[2]),
+      ], undefined, undefined, undefined, mockUsers[16]),
+      createReply("r-s-2-9", "proposal", "Present cost-benefit analysis to administration.", 21, 22, [
+        createReply("r-s-2-9a", "pro-argument", "Numbers speak louder than complaints.", 15, 20, [], undefined, undefined, undefined, mockUsers[4]),
+      ], undefined, undefined, undefined, mockUsers[18]),
+      createReply("r-s-2-10", "question", "Can we get a nutritionist involved?", 14, 18, [
+        createReply("r-s-2-10a", "proposal", "The health department might provide one for free.", 17, 15, [], undefined, undefined, undefined, mockUsers[6]),
+      ], undefined, undefined, undefined, mockUsers[20]),
+      createReply("r-s-2-11", "variant", "Pilot program in one grade first, then expand.", 19, 15, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-s-2-12", "pro-argument", "Better food = better learning. It's scientifically proven.", 25, 12, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-s-2-13", "proposal", "Partner with local restaurants for variety.", 16, 10, [
+        createReply("r-s-2-13a", "objection", "This might be expensive.", 8, 8, [], undefined, undefined, undefined, mockUsers[12]),
+        createReply("r-s-2-13b", "proposal", "Start with one healthy option per day.", 12, 6, [], undefined, undefined, undefined, mockUsers[14]),
+      ], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-s-2-14", "question", "What's the cafeteria budget currently?", 11, 8, [], undefined, undefined, undefined, mockUsers[16]),
+      createReply("r-s-2-15", "proposal", "Conduct school-wide survey to prioritize changes.", 20, 5, [], undefined, undefined, undefined, mockUsers[18]),
     ],
   },
+
+  // Winner from Grade 11 - Mental Health Support
   {
-    id: "9",
-    type: "problem",
-    title: "Inadequate School Security Measures",
-    description: "Current security protocols are outdated. We need better systems to ensure student safety without creating an oppressive atmosphere.",
-    votes: 65,
-    timestamp: daysAgo(18),
-    phase: "school",
-    group: "Whole School",
-    solutionLevel: "ministries",
-    isWinner: true,
-    winnerRank: 3,
-    authorId: "u13",
-    authorName: "Laura Wolf",
-    authorClass: "7a",
-    replies: [
-      createReply("r26", "pro-argument", "Safety should be a top priority, but we need balanced solutions.", 19, 17.5, [], undefined, undefined, undefined, mockUsers[3]),
-      createReply("r27", "objection", "Too much security can make school feel like a prison.", 14, 17, [], undefined, {
-        text: "Implement a visitor management system and emergency communication app without adding oppressive measures.",
-        solutionLevel: "school"
-      }, undefined, mockUsers[4]),
-    ],
-  },
-  {
-    id: "9a",
+    id: "s-3",
     type: "proposal",
-    title: "School-Wide Mental Health Days",
-    description: "Implement designated mental health days each semester where students can take a break without academic penalty.",
-    votes: 58,
-    timestamp: daysAgo(15),
-    phase: "school",
-    group: "Whole School",
-    solutionLevel: "ministries",
-    authorId: "u14",
-    authorName: "Maximilian Schröder",
-    authorClass: "7a",
-    replies: [
-      createReply("r27a", "pro-argument", "Mental health is just as important as physical health. We have sick days, why not mental health days?", 22, 14.5, [], undefined, undefined, undefined, mockUsers[5]),
-      createReply("r27b", "objection", "This could be abused by students who just want to skip school.", 11, 14, [], undefined, undefined, undefined, mockUsers[6]),
-    ],
-  },
-  {
-    id: "9b",
-    type: "problem",
-    title: "Wifi Connectivity Issues",
-    description: "School wifi is unreliable and slow, making it difficult to complete online assignments and research during school hours.",
-    votes: 52,
-    timestamp: daysAgo(12),
+    title: "Mental Health Support Program",
+    description: "Establish regular access to school counselors and mental health resources for all students.",
+    votes: 72,
+    timestamp: daysAgo(30),
     phase: "school",
     group: "Whole School",
     solutionLevel: "school",
+    promotedFrom: "grade",
+    originalGroup: "Grade 11",
+    isWinner: true,
+    winnerRank: 3,
+    authorId: "u21",
+    authorName: "Marie Lange",
+    authorClass: "7c",
+    variants: [
+      {
+        id: "v-s-3-1",
+        title: "Mental Health Support Program",
+        text: "Establish regular access to school counselors and mental health resources for all students.",
+        votes: 20,
+      },
+      {
+        id: "v-s-3-2",
+        title: "Comprehensive Mental Health Initiative",
+        text: "Implement peer support training, partner with external mental health organizations, integrate mental health education into curriculum, and hire additional counselors.",
+        votes: 42,
+      },
+    ],
+    replies: [
+      // Class phase replies
+      createReply("r-s-3-1", "pro-argument", "This is so important! Many students struggle silently.", 10, 90, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-s-3-2", "pro-argument", "Mental health should be treated as seriously as physical health.", 12, 88, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-3-3", "proposal", "Start with awareness campaigns.", 8, 85, [], undefined, undefined, undefined, mockUsers[2]),
+      // Grade phase replies
+      createReply("r-s-3-4", "pro-argument", "Grade 11 has high stress - we really need this.", 18, 58, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-s-3-5", "proposal", "Train peer supporters from each class.", 15, 55, [
+        createReply("r-s-3-5a", "pro-argument", "Peers are often first to notice when someone is struggling.", 12, 52, [], undefined, undefined, undefined, mockUsers[5]),
+      ], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-s-3-6", "question", "How many counselors do we currently have?", 7, 50, [
+        createReply("r-s-3-6a", "pro-argument", "Only 2 for 800+ students. Way understaffed.", 14, 48, [], undefined, undefined, undefined, mockUsers[7]),
+      ], undefined, undefined, undefined, mockUsers[6]),
+      // School phase replies
+      createReply("r-s-3-7", "pro-argument", "Every grade needs better mental health support!", 28, 28, [
+        createReply("r-s-3-7a", "pro-argument", "Grade 10 supports this completely.", 20, 26, [], undefined, undefined, undefined, mockUsers[9]),
+        createReply("r-s-3-7b", "pro-argument", "Grade 12 too - exam stress is real.", 22, 24, [], undefined, undefined, undefined, mockUsers[11]),
+      ], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-s-3-8", "proposal", "Partner with local mental health organizations.", 24, 25, [
+        createReply("r-s-3-8a", "pro-argument", "They often offer free school programs.", 16, 22, [], undefined, undefined, undefined, mockUsers[13]),
+      ], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-s-3-9", "proposal", "Create anonymous mental health helpline.", 21, 22, [
+        createReply("r-s-3-9a", "pro-argument", "Anonymity removes stigma barriers.", 18, 20, [], undefined, undefined, undefined, mockUsers[15]),
+      ], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-s-3-10", "variant", "Combine counseling with mental health curriculum.", 19, 18, [], undefined, undefined, undefined, mockUsers[16]),
+      createReply("r-s-3-11", "proposal", "Designate quiet spaces for stress relief.", 15, 15, [
+        createReply("r-s-3-11a", "pro-argument", "A calm room would help during stressful days.", 12, 12, [], undefined, undefined, undefined, mockUsers[18]),
+      ], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-s-3-12", "question", "Can teachers receive mental health first aid training?", 14, 12, [
+        createReply("r-s-3-12a", "proposal", "Many programs offer this training for free.", 16, 10, [], undefined, undefined, undefined, mockUsers[20]),
+      ], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-s-3-13", "pro-argument", "Investment in mental health saves money on crisis intervention.", 17, 8, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-s-3-14", "proposal", "Start with stress management workshops.", 13, 5, [], undefined, undefined, undefined, mockUsers[0]),
+    ],
+  },
+
+  // Winner from Grade 11 - WiFi Issues
+  {
+    id: "s-4",
+    type: "problem",
+    title: "WiFi Connectivity Issues",
+    description: "School wifi is unreliable and slow, making it difficult to complete online assignments and research during school hours.",
+    votes: 68,
+    timestamp: daysAgo(30),
+    phase: "school",
+    group: "Whole School",
+    solutionLevel: "school",
+    promotedFrom: "grade",
+    originalGroup: "Grade 11",
     authorId: "u15",
     authorName: "Julia Neumann",
     authorClass: "7a",
     replies: [
-      createReply("r27c", "pro-argument", "I can never load videos for class presentations because the wifi is too slow.", 15, 11.5, [], undefined, undefined, undefined, mockUsers[7]),
-      createReply("r27d", "proposal", "Upgrade network infrastructure and add more access points throughout the building.", 18, 11, [], undefined, undefined, undefined, mockUsers[8]),
+      // Class phase replies
+      createReply("r-s-4-1", "pro-argument", "I can never load videos for class presentations.", 8, 88, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-s-4-2", "proposal", "Upgrade network infrastructure with more access points.", 10, 85, [], undefined, undefined, undefined, mockUsers[8]),
+      // Grade phase replies
+      createReply("r-s-4-3", "pro-argument", "This affects every online assignment.", 14, 58, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-s-4-4", "proposal", "Add mesh WiFi system throughout building.", 12, 52, [
+        createReply("r-s-4-4a", "question", "How much would this cost?", 6, 48, [], undefined, undefined, undefined, mockUsers[11]),
+      ], undefined, undefined, undefined, mockUsers[10]),
+      // School phase replies
+      createReply("r-s-4-5", "pro-argument", "EVERY floor has dead zones!", 26, 28, [
+        createReply("r-s-4-5a", "pro-argument", "The library is worst - where we need it most.", 20, 26, [], undefined, undefined, undefined, mockUsers[13]),
+      ], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-s-4-6", "proposal", "Prioritize educational traffic over recreational.", 18, 25, [], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-s-4-7", "variant", "Install wired connections in classrooms as backup.", 15, 22, [
+        createReply("r-s-4-7a", "pro-argument", "Wired is more reliable for important work.", 12, 20, [], undefined, undefined, undefined, mockUsers[16]),
+      ], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-s-4-8", "proposal", "Apply for technology infrastructure grants.", 22, 18, [
+        createReply("r-s-4-8a", "pro-argument", "Federal programs fund school technology.", 16, 15, [], undefined, undefined, undefined, mockUsers[18]),
+      ], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-s-4-9", "question", "When was the last network upgrade?", 10, 15, [
+        createReply("r-s-4-9a", "pro-argument", "Over 5 years ago - technology has changed!", 14, 12, [], undefined, undefined, undefined, mockUsers[20]),
+      ], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-s-4-10", "proposal", "Student tech team could help identify weak spots.", 16, 10, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-s-4-11", "pro-argument", "Digital learning requires reliable internet.", 19, 8, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-s-4-12", "variant", "Phase upgrade starting with high-priority areas.", 13, 5, [], undefined, undefined, undefined, mockUsers[1]),
     ],
   },
+
+  // Winner from Grade 12 - School Security (ministry level)
   {
-    id: "9c",
-    type: "proposal",
-    title: "Student Government Transparency",
-    description: "Make student government meetings open to all students and publish meeting minutes online for transparency.",
-    votes: 45,
-    timestamp: daysAgo(10),
+    id: "s-5",
+    type: "problem",
+    title: "Inadequate School Security Measures",
+    description: "Current security protocols are outdated. We need better systems to ensure student safety without creating an oppressive atmosphere.",
+    votes: 65,
+    timestamp: daysAgo(30),
     phase: "school",
     group: "Whole School",
-    solutionLevel: "school",
-    authorId: "u16",
-    authorName: "Paul Schwarz",
+    solutionLevel: "ministries",
+    promotedFrom: "grade",
+    originalGroup: "Grade 12",
+    authorId: "u13",
+    authorName: "Laura Wolf",
     authorClass: "7a",
     replies: [
-      createReply("r27e", "pro-argument", "We should know what our representatives are discussing and deciding.", 12, 9.5, [], undefined, undefined, undefined, mockUsers[9]),
-      createReply("r27f", "proposal", "Create a dedicated website section for student government with live meeting streams.", 9, 9, [], undefined, undefined, undefined, mockUsers[10]),
+      // Class phase replies
+      createReply("r-s-5-1", "pro-argument", "Safety should be top priority, but balanced.", 8, 90, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-s-5-2", "objection", "Too much security can make school feel like a prison.", 10, 88, [], undefined, undefined, undefined, mockUsers[4]),
+      // Grade phase replies
+      createReply("r-s-5-3", "proposal", "Implement visitor management system.", 12, 55, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-s-5-4", "variant", "Focus on emergency communication, not surveillance.", 14, 50, [
+        createReply("r-s-5-4a", "pro-argument", "Emergency apps are non-invasive.", 10, 48, [], undefined, undefined, undefined, mockUsers[7]),
+      ], undefined, undefined, undefined, mockUsers[6]),
+      // School phase replies
+      createReply("r-s-5-5", "pro-argument", "Recent incidents in other schools show we need updates.", 24, 28, [
+        createReply("r-s-5-5a", "pro-argument", "Prevention is better than response.", 18, 26, [], undefined, undefined, undefined, mockUsers[9]),
+      ], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-s-5-6", "proposal", "Regular safety drills with proper training.", 20, 25, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-s-5-7", "objection", "Don't want metal detectors or bag searches.", 16, 22, [
+        createReply("r-s-5-7a", "variant", "ID badge system is less invasive.", 14, 20, [], undefined, undefined, undefined, mockUsers[12]),
+      ], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-s-5-8", "proposal", "Student input on what feels safe vs. oppressive.", 18, 18, [
+        createReply("r-s-5-8a", "pro-argument", "We should have a say in security measures.", 15, 15, [], undefined, undefined, undefined, mockUsers[14]),
+      ], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-s-5-9", "question", "What security measures do successful schools use?", 12, 15, [
+        createReply("r-s-5-9a", "pro-argument", "Positive school culture is the best security.", 17, 12, [], undefined, undefined, undefined, mockUsers[16]),
+      ], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-s-5-10", "proposal", "Train staff in threat assessment.", 16, 10, [], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-s-5-11", "variant", "Community approach: staff, students, parents together.", 19, 8, [], undefined, undefined, undefined, mockUsers[18]),
+      createReply("r-s-5-12", "pro-argument", "Ministry funding needed for proper security.", 14, 5, [], undefined, undefined, undefined, mockUsers[19]),
     ],
   },
+
+  // Winner from Grade 12 - Standardized Testing (ministry level)
   {
-    id: "9d",
+    id: "s-6",
     type: "problem",
-    title: "Lack of Healthy Food Options",
-    description: "The cafeteria primarily serves processed food. Students need access to fresh, nutritious meals for better health and concentration.",
-    votes: 42,
-    timestamp: daysAgo(8),
+    title: "Standardized Testing Pressure",
+    description: "The focus on standardized tests means teachers rush through material and we don't actually learn deeply - just memorize for the test.",
+    votes: 62,
+    timestamp: daysAgo(30),
     phase: "school",
     group: "Whole School",
     solutionLevel: "ministries",
-    authorId: "u17",
-    authorName: "Sarah Zimmermann",
-    authorClass: "7b",
+    promotedFrom: "grade",
+    originalGroup: "Grade 12",
+    authorId: "u14",
+    authorName: "Maximilian Schröder",
+    authorClass: "7a",
     replies: [
-      createReply("r27g", "pro-argument", "Good nutrition directly impacts our ability to learn and focus.", 14, 7.5, [], undefined, undefined, undefined, mockUsers[11]),
-      createReply("r27h", "proposal", "Partner with local farms for fresh produce and create a salad bar option.", 11, 7, [], undefined, undefined, undefined, mockUsers[12]),
+      // Class phase replies
+      createReply("r-s-6-1", "pro-argument", "I forget everything right after the test.", 7, 88, [], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-s-6-2", "pro-argument", "Teachers say 'this won't be on the test' and we skip important topics.", 8, 85, [], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-s-6-3", "objection", "Tests are needed to compare students fairly.", 4, 82, [], undefined, undefined, undefined, mockUsers[16]),
+      // Grade phase replies
+      createReply("r-s-6-4", "proposal", "Advocate for portfolio-based assessment.", 12, 55, [], undefined, undefined, undefined, mockUsers[18]),
+      createReply("r-s-6-5", "variant", "Combine standardized tests with project assessments.", 14, 50, [
+        createReply("r-s-6-5a", "pro-argument", "Shows both knowledge and application.", 10, 48, [], undefined, undefined, undefined, mockUsers[20]),
+      ], undefined, undefined, undefined, mockUsers[19]),
+      // School phase replies
+      createReply("r-s-6-6", "pro-argument", "Grade 12 feels this most acutely - our future depends on test scores.", 22, 28, [
+        createReply("r-s-6-6a", "pro-argument", "University admission is all test-based.", 18, 26, [], undefined, undefined, undefined, mockUsers[0]),
+      ], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-s-6-7", "proposal", "Petition ministry for assessment reform.", 20, 25, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-6-8", "variant", "Request pilot program for alternative assessment.", 16, 22, [
+        createReply("r-s-6-8a", "pro-argument", "Other countries have moved away from standardized tests.", 14, 20, [], undefined, undefined, undefined, mockUsers[3]),
+      ], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-s-6-9", "question", "How do other countries assess students?", 12, 18, [
+        createReply("r-s-6-9a", "pro-argument", "Finland uses continuous assessment - they rank #1 in education.", 17, 15, [], undefined, undefined, undefined, mockUsers[5]),
+      ], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-s-6-10", "proposal", "Research shows project-based learning is more effective.", 15, 15, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-s-6-11", "objection", "Universities need some standardized measure.", 10, 12, [
+        createReply("r-s-6-11a", "variant", "Multiple measures are better than one test.", 13, 10, [], undefined, undefined, undefined, mockUsers[8]),
+      ], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-s-6-12", "pro-argument", "Mental health suffers from test anxiety.", 18, 8, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-s-6-13", "proposal", "Include student voices in ministry education committees.", 14, 5, [], undefined, undefined, undefined, mockUsers[10]),
     ],
   },
+
+  // Additional school phase concern - Sustainability
   {
-    id: "9e",
+    id: "s-7",
     type: "proposal",
-    title: "Inter-School Academic Competitions",
-    description: "Organize regular academic competitions between schools to motivate students and foster healthy competition.",
-    votes: 38,
-    timestamp: daysAgo(6),
-    phase: "school",
-    group: "Whole School",
-    solutionLevel: "ministries",
-    authorId: "u18",
-    authorName: "Tim Braun",
-    authorClass: "7b",
-    replies: [
-      createReply("r27i", "pro-argument", "Competition can be a great motivator for academic excellence.", 10, 5.5, [], undefined, undefined, undefined, mockUsers[13]),
-      createReply("r27j", "objection", "This might increase pressure on students who already feel stressed.", 7, 5, [], undefined, undefined, undefined, mockUsers[14]),
-    ],
-  },
-  {
-    id: "9f",
-    type: "problem",
-    title: "Insufficient Parking for Staff and Students",
-    description: "The school parking lot is always full, causing teachers and driving-age students to park far away or arrive very early.",
-    votes: 35,
-    timestamp: daysAgo(4),
+    title: "School-Wide Sustainability Initiative",
+    description: "Our school lacks comprehensive recycling programs and environmental awareness. We need systematic changes to reduce our ecological footprint.",
+    votes: 58,
+    timestamp: daysAgo(30),
     phase: "school",
     group: "Whole School",
     solutionLevel: "school",
-    authorId: "u19",
-    authorName: "Lisa Krüger",
-    authorClass: "7b",
+    promotedFrom: "grade",
+    originalGroup: "Grade 11",
+    authorId: "u11",
+    authorName: "Anna Richter",
+    authorClass: "6c",
     replies: [
-      createReply("r27k", "pro-argument", "Teachers sometimes arrive 30 minutes early just to find parking.", 8, 3.5, [], undefined, undefined, undefined, mockUsers[15]),
-      createReply("r27l", "proposal", "Create a carpool incentive program and designated carpool parking spaces.", 10, 3, [], undefined, undefined, undefined, mockUsers[16]),
+      // Class phase replies
+      createReply("r-s-7-1", "pro-argument", "Climate change affects all of us.", 8, 88, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-s-7-2", "proposal", "Start with better recycling bins.", 6, 85, [], undefined, undefined, undefined, mockUsers[18]),
+      // Grade phase replies
+      createReply("r-s-7-3", "proposal", "Create student Green Team.", 14, 55, [], undefined, undefined, undefined, mockUsers[20]),
+      createReply("r-s-7-4", "variant", "Energy audit to find savings.", 12, 50, [], undefined, undefined, undefined, mockUsers[21]),
+      // School phase replies
+      createReply("r-s-7-5", "pro-argument", "Schools should lead by example!", 22, 28, [
+        createReply("r-s-7-5a", "pro-argument", "Students care deeply about the environment.", 18, 26, [], undefined, undefined, undefined, mockUsers[1]),
+      ], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-s-7-6", "proposal", "Apply for environmental grants.", 18, 25, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-s-7-7", "question", "What have other schools done successfully?", 10, 22, [
+        createReply("r-s-7-7a", "pro-argument", "Many schools have reduced energy costs 30% with simple changes.", 16, 20, [], undefined, undefined, undefined, mockUsers[4]),
+      ], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-s-7-8", "variant", "Start with LED lighting - quick payback.", 14, 18, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-s-7-9", "proposal", "Partner with local environmental groups.", 12, 15, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-s-7-10", "pro-argument", "Sustainability education is future-proofing.", 15, 10, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-s-7-11", "proposal", "Composting program for cafeteria waste.", 11, 8, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-s-7-12", "variant", "Make sustainability part of school culture.", 13, 5, [], undefined, undefined, undefined, mockUsers[9]),
     ],
   },
+
+  // Additional school phase concern - Extracurricular
   {
-    id: "9g",
+    id: "s-8",
     type: "proposal",
-    title: "School Podcast and Media Center",
-    description: "Create a student-run media center with equipment for podcasts, videos, and journalism to develop communication skills.",
-    votes: 31,
-    timestamp: daysAgo(2),
+    title: "Inclusive Extra-Curricular Programs",
+    description: "Expand after-school programs to include more diverse activities that cater to different interests and abilities.",
+    votes: 55,
+    timestamp: daysAgo(30),
     phase: "school",
     group: "Whole School",
     solutionLevel: "school",
-    authorId: "u20",
-    authorName: "David Hartmann",
-    authorClass: "7b",
+    promotedFrom: "grade",
+    originalGroup: "Grade 10",
+    authorId: "u12",
+    authorName: "Ben Klein",
+    authorClass: "6c",
     replies: [
-      createReply("r27m", "pro-argument", "Media skills are essential in today's world. This would be great career preparation.", 9, 1.5, [], undefined, undefined, undefined, mockUsers[17]),
-      createReply("r27n", "proposal", "Start with basic equipment and expand as interest grows. Partner with local media for mentorship.", 7, 1, [], undefined, undefined, undefined, mockUsers[18]),
+      // Class phase replies
+      createReply("r-s-8-1", "pro-argument", "Not everyone likes traditional sports.", 7, 88, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-8-2", "proposal", "Survey students about interests.", 8, 85, [], undefined, undefined, undefined, mockUsers[2]),
+      // Grade phase replies
+      createReply("r-s-8-3", "pro-argument", "More options = more participation.", 12, 55, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-s-8-4", "proposal", "Student-led clubs are low cost.", 10, 50, [], undefined, undefined, undefined, mockUsers[4]),
+      // School phase replies
+      createReply("r-s-8-5", "pro-argument", "Every grade wants more variety!", 20, 28, [
+        createReply("r-s-8-5a", "pro-argument", "Clubs help students find their passion.", 16, 26, [], undefined, undefined, undefined, mockUsers[6]),
+      ], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-s-8-6", "proposal", "Technology club for coding and robotics.", 18, 25, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-s-8-7", "proposal", "Arts and music programs need expansion.", 15, 22, [
+        createReply("r-s-8-7a", "pro-argument", "Creative activities reduce stress.", 12, 20, [], undefined, undefined, undefined, mockUsers[9]),
+      ], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-s-8-8", "variant", "Partnership with community centers.", 13, 18, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-s-8-9", "question", "How do we find volunteer advisors?", 9, 15, [
+        createReply("r-s-8-9a", "proposal", "Parents and community members often volunteer.", 14, 12, [], undefined, undefined, undefined, mockUsers[12]),
+      ], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-s-8-10", "proposal", "Rotating activities each semester.", 11, 10, [], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-s-8-11", "pro-argument", "Extracurriculars boost college applications.", 16, 8, [], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-s-8-12", "variant", "Virtual clubs for accessibility.", 10, 5, [], undefined, undefined, undefined, mockUsers[15]),
     ],
   },
 
@@ -961,46 +1164,46 @@ export const mockConcerns: Concern[] = [
   // COUNTER-PROPOSALS (referencing problems)
   // ============================================
   {
-    id: "10",
+    id: "cp-1",
     type: "counter-proposal",
     title: "Flexible Lunch Timing System",
     description: "Instead of just improving food quality, implement a flexible lunch schedule with multiple serving windows to reduce crowding and ensure food stays hot.",
     votes: 18,
-    timestamp: daysAgo(80),
+    timestamp: daysAgo(88),
     phase: "class",
     group: "Class 10A",
-    referencedProblemId: "1",
-    referencedObjectionId: "r1",
-    referencedOriginalPostId: "1",
+    referencedProblemId: "g10-1",
+    referencedObjectionId: "r-g10-1-1",
+    referencedOriginalPostId: "g10-1",
     solutionLevel: "school",
     authorId: "u21",
     authorName: "Marie Lange",
     authorClass: "7c",
     replies: [
-      createReply("r28", "pro-argument", "This addresses both the food quality and timing issues!", 7, 79.5, [], undefined, undefined, undefined, mockUsers[19]),
-      createReply("r29", "objection", "Multiple lunch periods might complicate teacher schedules.", 4, 79, [], undefined, undefined, undefined, mockUsers[20]),
+      createReply("r-cp-1-1", "pro-argument", "This addresses both food quality and timing issues!", 7, 87, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-cp-1-2", "objection", "Multiple lunch periods might complicate teacher schedules.", 4, 86, [], undefined, undefined, undefined, mockUsers[20]),
     ],
   },
   {
-    id: "11",
+    id: "cp-2",
     type: "counter-proposal",
     title: "Hybrid PE Classes with Equipment Rotation",
     description: "Address equipment shortage by splitting PE into stations that rotate, so smaller groups use equipment while others do equipment-free exercises.",
     votes: 15,
-    timestamp: daysAgo(73),
+    timestamp: daysAgo(85),
     phase: "class",
     group: "Class 10A",
     solutionLevel: "class",
-    referencedProblemId: "3",
-    referencedObjectionId: "r11",
-    referencedOriginalPostId: "3",
+    referencedProblemId: "g10-3",
+    referencedObjectionId: "r-g10-3-3",
+    referencedOriginalPostId: "g10-3",
     aspects: ["problem", "proposal"],
     authorId: "u22",
     authorName: "Leon Werner",
     authorClass: "7c",
     replies: [
-      createReply("r30", "pro-argument", "Stations would keep everyone active instead of just waiting.", 6, 72.5, [], undefined, undefined, undefined, mockUsers[21]),
-      createReply("r31", "proposal", "We could have fitness stations, skill stations, and game stations rotating every 15 minutes.", 8, 72, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-cp-2-1", "pro-argument", "Stations would keep everyone active instead of just waiting.", 6, 84, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-cp-2-2", "proposal", "We could have fitness stations, skill stations, and game stations rotating every 15 minutes.", 8, 83, [], undefined, undefined, undefined, mockUsers[0]),
     ],
   },
 ];
