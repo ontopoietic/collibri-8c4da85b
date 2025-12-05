@@ -590,44 +590,17 @@ const ConcernDetail = () => {
                   </Select>
                 </div>
                 {questions.length > 0 ? (
-                  <Accordion type="multiple" className="space-y-3">
-                    {questions.map((question) => (
-                      <AccordionItem 
-                        key={question.id} 
-                        value={question.id} 
-                        className="bg-card rounded-lg border-none"
-                      >
-                        <AccordionTrigger className="px-4 py-3 hover:no-underline">
-                          <div className="flex items-start gap-3 text-left flex-1">
-                            <HelpCircle className="h-5 w-5 text-question shrink-0 mt-0.5" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-foreground">{question.text}</p>
-                              <span className="text-xs text-muted-foreground">
-                                {formatDistanceToNow(question.timestamp, { addSuffix: true })}
-                              </span>
-                            </div>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="px-4 pb-4">
-                          {question.replies.length > 0 ? (
-                            <ReplyThread
-                              replies={question.replies}
-                              onReply={(parentId, type = 'question') => {
-                                setReplyToId(parentId);
-                                setReplyType(type);
-                                setShowReplyForm(true);
-                              }}
-                              availableReplies={availableReplies}
-                              parentCategory="question"
-                              concernType={concern.type}
-                            />
-                          ) : (
-                            <p className="text-muted-foreground text-sm">No answers yet</p>
-                          )}
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
+                  <ReplyThread
+                    replies={questions}
+                    onReply={(parentId, type = 'question') => {
+                      setReplyToId(parentId);
+                      setReplyType(type);
+                      setShowReplyForm(true);
+                    }}
+                    availableReplies={availableReplies}
+                    parentCategory="question"
+                    concernType={concern.type}
+                  />
                 ) : (
                   <p className="text-muted-foreground text-center py-8">No questions yet. Ask the first question!</p>
                 )}

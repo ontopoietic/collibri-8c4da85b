@@ -415,22 +415,6 @@ const Index = () => {
                     <AdminModeToggle />
                   </div>
                 )}
-                <Button
-                  variant="statistics"
-                  onClick={() => navigate("/statistics")}
-                  className="gap-2"
-                >
-                  <BarChart3 className="h-4 w-4" />
-                  <span className="hidden lg:inline">Statistics</span>
-                </Button>
-                <Button
-                  variant="secondary-action"
-                  onClick={() => navigate("/graph")}
-                  className="gap-2"
-                >
-                  <Network className="h-4 w-4" />
-                  <span className="hidden lg:inline">Graph</span>
-                </Button>
                 {currentPhase === 'class' ? (
                   <NewConcernDialog onSubmit={handleNewConcern} />
                 ) : (
@@ -449,6 +433,22 @@ const Index = () => {
                     <span className="hidden lg:inline">Leaderboard</span>
                   </Button>
                 )}
+                <Button
+                  variant="statistics"
+                  onClick={() => navigate("/statistics")}
+                  className="gap-2"
+                >
+                  <BarChart3 className="h-4 w-4" />
+                  <span className="hidden lg:inline">Statistics</span>
+                </Button>
+                <Button
+                  variant="secondary-action"
+                  onClick={() => navigate("/graph")}
+                  className="gap-2"
+                >
+                  <Network className="h-4 w-4" />
+                  <span className="hidden lg:inline">Graph</span>
+                </Button>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="secondary-action" className="gap-2">
