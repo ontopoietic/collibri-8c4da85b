@@ -1,5 +1,6 @@
 import { Reply, ReplyCategory, ReplyReference, SolutionLevel } from "@/types/concern";
 import { CategoryBadge } from "./CategoryBadge";
+import { CategoryIconPrefix } from "./CategoryIconPrefix";
 import { AspectBadges } from "./AspectBadges";
 import { SolutionLevelBadge } from "./SolutionLevelBadge";
 import { VoteButton } from "./VoteButton";
@@ -118,7 +119,10 @@ const ReplyItem = ({
               </div>
             )}
             
-            <p className="text-foreground leading-relaxed">{reply.text}</p>
+            <div className="flex items-center gap-2">
+              <CategoryIconPrefix category={reply.category} />
+              <p className="text-foreground leading-relaxed">{reply.text}</p>
+            </div>
             
             {reply.referencedReplies && reply.referencedReplies.length > 0 && (
               <div className="mt-3 space-y-2">
