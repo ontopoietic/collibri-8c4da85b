@@ -86,6 +86,9 @@ All colors MUST be HSL.
     
     --secondary-action: 222 15% 74%;
     --secondary-action-foreground: 231 34% 25%;
+    
+    --leaderboard: 28 80% 52%;
+    --leaderboard-foreground: 0 0% 100%;
 
     --sidebar-background: 245 25% 15%;
     --sidebar-foreground: 240 10% 92%;
@@ -177,6 +180,9 @@ All colors MUST be HSL.
     
     --secondary-action: 222 15% 74%;
     --secondary-action-foreground: 231 34% 25%;
+    
+    --leaderboard: 28 80% 52%;
+    --leaderboard-foreground: 0 0% 100%;
 
     --sidebar-background: 245 30% 12%;
     --sidebar-foreground: 240 10% 95%;

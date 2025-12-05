@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
-import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Network, AlertTriangle, Lightbulb, Filter, ArrowUpDown, Check, Trophy } from "lucide-react";
+import { BarChart3, Bell, Search, Play, Pause, ChartNoAxesCombined, Network, AlertTriangle, Lightbulb, Filter, ArrowUpDown, Check, Trophy, User, UserCircle, Settings, LogOut, FileText, MessageSquare, HelpCircle } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { PhaseTimeline } from "@/components/PhaseTimeline";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
@@ -32,6 +32,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
@@ -370,10 +371,41 @@ const Index = () => {
             {!isMobile && (
               <div className="flex items-center gap-2">
                 {isAdmin && (
-                  <>
+                  <div className="flex items-center gap-2 mr-6">
                     {adminModeEnabled && <AdminPanel />}
                     <AdminModeToggle />
-                  </>
+                  </div>
+                )}
+                <Button
+                  variant="statistics"
+                  onClick={() => navigate("/statistics")}
+                  className="gap-2"
+                >
+                  <BarChart3 className="h-4 w-4" />
+                  <span className="hidden lg:inline">Statistics</span>
+                </Button>
+                <Button
+                  variant="secondary-action"
+                  onClick={() => navigate("/graph")}
+                  className="gap-2"
+                >
+                  <Network className="h-4 w-4" />
+                  <span className="hidden lg:inline">Graph</span>
+                </Button>
+                {currentPhase === 'class' ? (
+                  <NewConcernDialog onSubmit={handleNewConcern} />
+                ) : (
+                  <Button
+                    variant="leaderboard"
+                    onClick={() => {
+                      const prevPhase = getPreviousPhase();
+                      if (prevPhase) navigate(`/leaderboard/${prevPhase}`);
+                    }}
+                    className="gap-2 rounded-full"
+                  >
+                    <Trophy className="h-4 w-4" />
+                    <span className="hidden lg:inline">Leaderboard</span>
+                  </Button>
                 )}
                 <Popover>
                   <PopoverTrigger asChild>
@@ -387,44 +419,47 @@ const Index = () => {
                   </PopoverContent>
                 </Popover>
                 <Button
-                  variant="secondary-action"
+                  variant="ghost"
+                  size="icon"
                   onClick={() => navigate("/notifications")}
-                  className="gap-2"
                 >
                   <Bell className="h-4 w-4" />
-                  <span className="hidden lg:inline">Notifications</span>
                 </Button>
-                <Button
-                  variant="statistics"
-                  onClick={() => navigate("/statistics")}
-                  className="gap-2"
-                >
-                  <BarChart3 className="h-4 w-4" />
-                  <span className="hidden lg:inline">Statistics</span>
-                </Button>
-                <Button
-                  variant="secondary"
-                  onClick={() => navigate("/graph")}
-                  className="gap-2"
-                >
-                  <Network className="h-4 w-4" />
-                  <span className="hidden lg:inline">Graph</span>
-                </Button>
-                {currentPhase === 'class' ? (
-                  <NewConcernDialog onSubmit={handleNewConcern} />
-                ) : (
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      const prevPhase = getPreviousPhase();
-                      if (prevPhase) navigate(`/leaderboard/${prevPhase}`);
-                    }}
-                    className="gap-2"
-                  >
-                    <Trophy className="h-4 w-4" />
-                    <span className="hidden lg:inline">Leaderboard</span>
-                  </Button>
-                )}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <User className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem>
+                      <UserCircle className="mr-2 h-4 w-4" />
+                      Account
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <HelpCircle className="mr-2 h-4 w-4" />
+                      Help
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      Send feedback
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <FileText className="mr-2 h-4 w-4" />
+                      Terms of use
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="text-destructive">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             )}
 
