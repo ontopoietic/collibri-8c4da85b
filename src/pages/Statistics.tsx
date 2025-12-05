@@ -6,6 +6,7 @@ import { ArrowLeft, MessageSquare, ThumbsUp, FileText } from "lucide-react";
 import { mockConcerns } from "@/data/mockData";
 import { Phase } from "@/types/concern";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   BarChart,
   Bar,
@@ -24,8 +25,10 @@ import {
 
 const Statistics = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [viewMode, setViewMode] = useState<"interval" | "phase">("interval");
   const [selectedPhase, setSelectedPhase] = useState<Phase>("school");
+  const [hoveredLine, setHoveredLine] = useState<string | null>(null);
   
   const handlePhaseClick = (phase: Phase) => {
     setSelectedPhase(phase);
@@ -389,13 +392,68 @@ const Statistics = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" tick={{ fontSize: 11 }} />
                     <YAxis width={35} tick={{ fontSize: 11 }} />
-                    <Tooltip />
-                    <Legend wrapperStyle={{ fontSize: 12 }} />
-                    <Line type="monotone" dataKey="concerns" stroke="hsl(var(--primary))" strokeWidth={2} name="Concerns" />
-                    <Line type="monotone" dataKey="objections" stroke="hsl(var(--destructive))" strokeWidth={2} name="Objections" />
-                    <Line type="monotone" dataKey="proposals" stroke="hsl(var(--proposal))" strokeWidth={2} name="Proposals" />
-                    <Line type="monotone" dataKey="proArguments" stroke="hsl(var(--pro-argument))" strokeWidth={2} name="Pro-Arguments" />
-                    <Line type="monotone" dataKey="variants" stroke="hsl(var(--variant))" strokeWidth={2} name="Variants" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--background))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }} 
+                    />
+                    <Legend 
+                      wrapperStyle={{ fontSize: 12 }} 
+                      onMouseEnter={(e) => setHoveredLine(e.dataKey as string)}
+                      onMouseLeave={() => setHoveredLine(null)}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="concerns" 
+                      stroke="hsl(var(--primary))" 
+                      strokeWidth={hoveredLine === "concerns" ? 4 : 2} 
+                      strokeOpacity={hoveredLine && hoveredLine !== "concerns" ? 0.2 : 1}
+                      name="Concerns"
+                      dot={false}
+                      activeDot={{ r: 6, strokeWidth: 2 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="objections" 
+                      stroke="hsl(var(--destructive))" 
+                      strokeWidth={hoveredLine === "objections" ? 4 : 2}
+                      strokeOpacity={hoveredLine && hoveredLine !== "objections" ? 0.2 : 1}
+                      name="Objections"
+                      dot={false}
+                      activeDot={{ r: 6, strokeWidth: 2 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="proposals" 
+                      stroke="hsl(var(--proposal))" 
+                      strokeWidth={hoveredLine === "proposals" ? 4 : 2}
+                      strokeOpacity={hoveredLine && hoveredLine !== "proposals" ? 0.2 : 1}
+                      name="Proposals"
+                      dot={false}
+                      activeDot={{ r: 6, strokeWidth: 2 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="proArguments" 
+                      stroke="hsl(var(--pro-argument))" 
+                      strokeWidth={hoveredLine === "proArguments" ? 4 : 2}
+                      strokeOpacity={hoveredLine && hoveredLine !== "proArguments" ? 0.2 : 1}
+                      name="Pro-Arguments"
+                      dot={false}
+                      activeDot={{ r: 6, strokeWidth: 2 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="variants" 
+                      stroke="hsl(var(--variant))" 
+                      strokeWidth={hoveredLine === "variants" ? 4 : 2}
+                      strokeOpacity={hoveredLine && hoveredLine !== "variants" ? 0.2 : 1}
+                      name="Variants"
+                      dot={false}
+                      activeDot={{ r: 6, strokeWidth: 2 }}
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -409,15 +467,15 @@ const Statistics = () => {
               <CardTitle className="text-foreground">Concern Types Distribution</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={isMobile ? 280 : 300}>
                 <PieChart>
                   <Pie
                     data={concernTypeData}
                     cx="50%"
-                    cy="50%"
+                    cy={isMobile ? "40%" : "50%"}
                     labelLine={false}
-                    label={(entry) => entry.name}
-                    outerRadius={80}
+                    label={isMobile ? undefined : (entry) => entry.name}
+                    outerRadius={isMobile ? 60 : 80}
                     fill="hsl(var(--primary))"
                     dataKey="count"
                     stroke="none"
@@ -427,6 +485,14 @@ const Statistics = () => {
                     ))}
                   </Pie>
                   <Tooltip />
+                  {isMobile && (
+                    <Legend 
+                      layout="horizontal" 
+                      verticalAlign="bottom" 
+                      align="center"
+                      wrapperStyle={{ fontSize: 11, paddingTop: 10 }}
+                    />
+                  )}
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -458,15 +524,15 @@ const Statistics = () => {
               <CardTitle className="text-foreground">Vote Distribution by Categories</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={isMobile ? 280 : 300}>
                 <PieChart>
                   <Pie
                     data={votesByCategoryData}
                     cx="50%"
-                    cy="50%"
+                    cy={isMobile ? "40%" : "50%"}
                     labelLine={false}
-                    label={(entry) => `${entry.name}: ${entry.votes}`}
-                    outerRadius={80}
+                    label={isMobile ? undefined : (entry) => `${entry.name}: ${entry.votes}`}
+                    outerRadius={isMobile ? 60 : 80}
                     fill="hsl(var(--primary))"
                     dataKey="votes"
                     stroke="none"
@@ -476,6 +542,14 @@ const Statistics = () => {
                     ))}
                   </Pie>
                   <Tooltip />
+                  {isMobile && (
+                    <Legend 
+                      layout="horizontal" 
+                      verticalAlign="bottom" 
+                      align="center"
+                      wrapperStyle={{ fontSize: 11, paddingTop: 10 }}
+                    />
+                  )}
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
