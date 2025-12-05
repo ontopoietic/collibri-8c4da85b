@@ -171,7 +171,7 @@ const ReplyItem = ({
                     className={cn(
                       "p-2 rounded-md transition-colors",
                       showReplyForm && replyType === 'endorse'
-                        ? "bg-endorse-hover text-endorse-foreground"
+                        ? "bg-endorse-hover text-white"
                         : "text-muted-foreground hover:text-endorse-hover"
                     )}
                   >
@@ -182,7 +182,7 @@ const ReplyItem = ({
                     className={cn(
                       "p-2 rounded-md transition-colors",
                       showReplyForm && replyType === 'object'
-                        ? "bg-object text-object-foreground"
+                        ? "bg-object text-white"
                         : "text-muted-foreground hover:text-object"
                     )}
                   >
@@ -283,3 +283,5 @@ export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, on
     </div>
   );
 };
+
+export default ReplyThread;
