@@ -85,8 +85,10 @@ const ReplyItem = ({
 
   return (
     <div id={`reply-${reply.id}`}>
-      <div className="bg-card rounded-lg p-4 space-y-3 transition-all">
-            <div className="flex items-start justify-between gap-4">
+      <div className="bg-card rounded-lg p-4 space-y-2 transition-all">
+            {/* Badges row - only show if there are badges */}
+            {((reply.category === "proposal" && (reply.solutionLevel || reply.counterProposal?.solutionLevel)) || 
+              (reply.aspects && reply.aspects.length > 0)) && (
               <div className="flex items-center gap-2 flex-wrap">
                 {reply.category === "proposal" && reply.solutionLevel && (
                   <SolutionLevelBadge level={reply.solutionLevel} />
@@ -98,10 +100,7 @@ const ReplyItem = ({
                   <AspectBadges aspects={reply.aspects} />
                 )}
               </div>
-              <span className="text-xs text-muted-foreground">
-                {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
-              </span>
-            </div>
+            )}
 
             {adminModeEnabled && reply.authorName && (
               <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 px-2 py-1 rounded-md w-fit">
@@ -115,9 +114,15 @@ const ReplyItem = ({
               </div>
             )}
             
-            <div className="flex items-center gap-2">
-              <CategoryIconPrefix category={reply.category} />
-              <p className="text-foreground leading-relaxed">{reply.text}</p>
+            {/* Main content row with timestamp on the right */}
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-2">
+                <CategoryIconPrefix category={reply.category} />
+                <p className="text-foreground leading-relaxed">{reply.text}</p>
+              </div>
+              <span className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">
+                {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
+              </span>
             </div>
             
             {reply.referencedReplies && reply.referencedReplies.length > 0 && (
