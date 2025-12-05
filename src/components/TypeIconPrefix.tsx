@@ -29,9 +29,10 @@ const typeConfig = {
 interface TypeIconPrefixProps {
   type: ConcernType;
   size?: "sm" | "md" | "lg";
+  variant?: "plain" | "styled";
 }
 
-export const TypeIconPrefix = ({ type, size = "md" }: TypeIconPrefixProps) => {
+export const TypeIconPrefix = ({ type, size = "md", variant = "plain" }: TypeIconPrefixProps) => {
   const config = typeConfig[type];
   const Icon = config.icon;
 
@@ -47,11 +48,15 @@ export const TypeIconPrefix = ({ type, size = "md" }: TypeIconPrefixProps) => {
     lg: "p-2",
   };
 
+  const containerClass = variant === "styled"
+    ? `inline-flex items-center justify-center rounded-full border flex-shrink-0 ${containerSizes[size]} ${config.bgColor} ${config.borderColor}`
+    : "inline-flex items-center justify-center flex-shrink-0";
+
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className={`inline-flex items-center justify-center rounded-full border flex-shrink-0 ${containerSizes[size]} ${config.bgColor} ${config.borderColor}`}>
+          <span className={containerClass}>
             <Icon className={`${sizeClasses[size]} ${config.iconColor}`} />
           </span>
         </TooltipTrigger>
