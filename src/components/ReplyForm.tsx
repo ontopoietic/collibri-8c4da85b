@@ -280,17 +280,19 @@ export const ReplyForm = ({
         </div>
       )}
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          {replyType === 'question' ? 'Your Question' : 'Your Response'}
-        </label>
-        <Textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={replyType === 'question' ? 'What would you like to know?' : 'Share your thoughts...'}
-          className="min-h-[120px]"
-        />
-      </div>
+      {(category || replyType === 'question') && (
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            {replyType === 'question' ? 'Your Question' : 'Your Response'}
+          </label>
+          <Textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder={replyType === 'question' ? 'What would you like to know?' : 'Share your thoughts...'}
+            className="min-h-[120px]"
+          />
+        </div>
+      )}
 
       {category === "variant" && isProposalType && (
         <div className="space-y-2">
