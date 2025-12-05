@@ -225,22 +225,65 @@ const Statistics = () => {
 
   const sortedEngagementEntries = Array.from(engagementByDate.entries())
     .sort((a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime());
-  
-  const startDateMs = sortedEngagementEntries.length > 0 
-    ? new Date(sortedEngagementEntries[0][0]).getTime() 
-    : Date.now();
-  const msPerWeek = 7 * 24 * 60 * 60 * 1000;
 
-  const engagementData = sortedEngagementEntries
-    .map(([date, data]) => {
-      const dateMs = new Date(date).getTime();
-      const weekNum = Math.floor((dateMs - startDateMs) / msPerWeek) + 1;
-      return { 
-        date, 
-        weekLabel: `Week ${weekNum}`,
-        ...data 
-      };
+  // Daily data for phase view (with dates)
+  const dailyEngagementData = sortedEngagementEntries
+    .map(([date, data]) => ({ date, ...data }));
+
+  // Weekly aggregated data for full interval view
+  const getWeeklyAggregatedData = () => {
+    if (sortedEngagementEntries.length === 0) return [];
+    
+    const startDate = new Date(sortedEngagementEntries[0][0]);
+    startDate.setHours(0, 0, 0, 0);
+    
+    const endDate = new Date(sortedEngagementEntries[sortedEngagementEntries.length - 1][0]);
+    const totalDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+    const totalWeeks = Math.ceil(totalDays / 7);
+    
+    // Initialize weekly buckets
+    const weeklyData: Array<{
+      weekLabel: string;
+      concerns: number;
+      objections: number;
+      proposals: number;
+      proArguments: number;
+      variants: number;
+    }> = [];
+    
+    for (let w = 1; w <= totalWeeks; w++) {
+      weeklyData.push({
+        weekLabel: `Week ${w}`,
+        concerns: 0,
+        objections: 0,
+        proposals: 0,
+        proArguments: 0,
+        variants: 0
+      });
+    }
+    
+    // Aggregate daily data into weeks
+    sortedEngagementEntries.forEach(([dateStr, data]) => {
+      const date = new Date(dateStr);
+      const daysSinceStart = Math.floor((date.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
+      const weekIndex = Math.floor(daysSinceStart / 7);
+      
+      if (weekIndex >= 0 && weekIndex < weeklyData.length) {
+        weeklyData[weekIndex].concerns += data.concerns;
+        weeklyData[weekIndex].objections += data.objections;
+        weeklyData[weekIndex].proposals += data.proposals;
+        weeklyData[weekIndex].proArguments += data.proArguments;
+        weeklyData[weekIndex].variants += data.variants;
+      }
     });
+    
+    return weeklyData;
+  };
+
+  const weeklyEngagementData = getWeeklyAggregatedData();
+  
+  // Choose data based on view mode
+  const engagementData = viewMode === "interval" ? weeklyEngagementData : dailyEngagementData;
 
   // Vote distribution by reply category
   const votesByCategoryData = [
@@ -411,7 +454,7 @@ const Statistics = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={engagementData} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="weekLabel" tick={{ fontSize: 11 }} interval="preserveStartEnd" />
+                    <XAxis dataKey={viewMode === "interval" ? "weekLabel" : "date"} tick={{ fontSize: 11 }} interval="preserveStartEnd" />
                     <YAxis width={35} tick={{ fontSize: 11 }} />
                     <Tooltip 
                       contentStyle={{ 
@@ -504,10 +547,10 @@ const Statistics = () => {
                   <Pie
                     data={concernTypeData}
                     cx="50%"
-                    cy={isMobile ? "40%" : "50%"}
+                    cy="45%"
                     labelLine={false}
-                    label={isMobile ? undefined : (entry) => entry.name}
-                    outerRadius={isMobile ? 100 : 110}
+                    label={isMobile ? undefined : (entry) => `${entry.name}: ${entry.count}`}
+                    outerRadius={isMobile ? 80 : 100}
                     fill="hsl(var(--primary))"
                     dataKey="count"
                     stroke="none"
@@ -518,14 +561,16 @@ const Statistics = () => {
                     ))}
                   </Pie>
                   <Tooltip />
-                  {isMobile && (
-                    <Legend 
-                      layout="horizontal" 
-                      verticalAlign="bottom" 
-                      align="center"
-                      wrapperStyle={{ fontSize: 11, paddingTop: 5 }}
-                    />
-                  )}
+                  <Legend 
+                    layout="horizontal" 
+                    verticalAlign="bottom" 
+                    align="center"
+                    wrapperStyle={{ fontSize: 11, paddingTop: 5 }}
+                    formatter={(value) => {
+                      const item = concernTypeData.find(d => d.name === value);
+                      return `${value}: ${item?.count || 0}`;
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -562,10 +607,10 @@ const Statistics = () => {
                   <Pie
                     data={votesByCategoryData}
                     cx="50%"
-                    cy={isMobile ? "40%" : "50%"}
+                    cy="45%"
                     labelLine={false}
                     label={isMobile ? undefined : (entry) => `${entry.name}: ${entry.votes}`}
-                    outerRadius={isMobile ? 100 : 110}
+                    outerRadius={isMobile ? 80 : 100}
                     fill="hsl(var(--primary))"
                     dataKey="votes"
                     stroke="none"
@@ -576,14 +621,16 @@ const Statistics = () => {
                     ))}
                   </Pie>
                   <Tooltip />
-                  {isMobile && (
-                    <Legend 
-                      layout="horizontal" 
-                      verticalAlign="bottom" 
-                      align="center"
-                      wrapperStyle={{ fontSize: 11, paddingTop: 5 }}
-                    />
-                  )}
+                  <Legend 
+                    layout="horizontal" 
+                    verticalAlign="bottom" 
+                    align="center"
+                    wrapperStyle={{ fontSize: 11, paddingTop: 5 }}
+                    formatter={(value) => {
+                      const item = votesByCategoryData.find(d => d.name === value);
+                      return `${value}: ${item?.votes || 0}`;
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
