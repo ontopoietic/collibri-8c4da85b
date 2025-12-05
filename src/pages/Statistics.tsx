@@ -319,6 +319,7 @@ const Statistics = () => {
               <Button
                 variant="outline"
                 onClick={() => handlePhaseClick("class")}
+                className="phase-button"
                 style={selectedPhase === "class" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
               >
                 Class Phase
@@ -326,6 +327,7 @@ const Statistics = () => {
               <Button
                 variant="outline"
                 onClick={() => handlePhaseClick("grade")}
+                className="phase-button"
                 style={selectedPhase === "grade" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
               >
                 Grade Phase
@@ -333,6 +335,7 @@ const Statistics = () => {
               <Button
                 variant="outline"
                 onClick={() => handlePhaseClick("school")}
+                className="phase-button"
                 style={selectedPhase === "school" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
               >
                 School Phase
@@ -489,7 +492,7 @@ const Statistics = () => {
                     cy={isMobile ? "40%" : "50%"}
                     labelLine={false}
                     label={isMobile ? undefined : (entry) => entry.name}
-                    outerRadius={isMobile ? 90 : 80}
+                    outerRadius="35%"
                     fill="hsl(var(--primary))"
                     dataKey="count"
                     stroke="none"
@@ -547,7 +550,7 @@ const Statistics = () => {
                     cy={isMobile ? "40%" : "50%"}
                     labelLine={false}
                     label={isMobile ? undefined : (entry) => `${entry.name}: ${entry.votes}`}
-                    outerRadius={isMobile ? 90 : 80}
+                    outerRadius="35%"
                     fill="hsl(var(--primary))"
                     dataKey="votes"
                     stroke="none"
