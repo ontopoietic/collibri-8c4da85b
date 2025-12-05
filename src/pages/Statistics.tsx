@@ -197,21 +197,27 @@ const Statistics = () => {
     engagementByDate.set(date, { concerns: 0, objections: 0, proposals: 0, proArguments: 0, variants: 0 });
   });
   
-  // Populate with actual data
+  // Populate with actual data - concerns on their own date
   displayConcerns.forEach((c) => {
     const date = new Date(c.timestamp).toLocaleDateString();
     if (engagementByDate.has(date)) {
-      const entry = engagementByDate.get(date)!;
-      entry.concerns++;
-      
-      const concernReplies = getAllReplies(c.replies);
-      concernReplies.forEach((reply) => {
+      engagementByDate.get(date)!.concerns++;
+    }
+  });
+
+  // Replies counted on their OWN timestamp, not the concern's date
+  displayConcerns.forEach((c) => {
+    const concernReplies = getAllReplies(c.replies);
+    concernReplies.forEach((reply) => {
+      const replyDate = new Date(reply.timestamp).toLocaleDateString();
+      if (engagementByDate.has(replyDate)) {
+        const entry = engagementByDate.get(replyDate)!;
         if (reply.category === "objection") entry.objections++;
         else if (reply.category === "proposal") entry.proposals++;
         else if (reply.category === "pro-argument") entry.proArguments++;
         else if (reply.category === "variant") entry.variants++;
-      });
-    }
+      }
+    });
   });
 
   const engagementData = Array.from(engagementByDate.entries())
@@ -499,7 +505,7 @@ const Statistics = () => {
             </CardHeader>
             <CardContent className="px-2 sm:px-6">
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={gradeActivity} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
+                <BarChart data={gradeActivity} barSize={25} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="grade" tick={{ fontSize: 11 }} />
                   <YAxis width={35} tick={{ fontSize: 11 }} />

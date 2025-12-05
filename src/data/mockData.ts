@@ -123,6 +123,7 @@ export const mockConcerns: Concern[] = [
       createReply("r-c10a-1-1", "pro-argument", "This would make everyone feel more involved in class decisions.", 6, 89, [], undefined, undefined, undefined, mockUsers[0]),
       createReply("r-c10a-1-2", "objection", "Taking time from lessons might affect our curriculum coverage.", 4, 88, [], undefined, undefined, undefined, mockUsers[1]),
       createReply("r-c10a-1-3", "proposal", "We could do it during homeroom instead of cutting into lesson time.", 5, 87, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-c10a-1-4", "variant", "Instead of weekly meetings, try bi-weekly with a longer 30-minute format for deeper discussions.", 4, 86, [], undefined, undefined, undefined, mockUsers[3]),
     ],
   },
   {
@@ -157,6 +158,7 @@ export const mockConcerns: Concern[] = [
     replies: [
       createReply("r-c10a-2-1", "pro-argument", "It's hard to concentrate when you're freezing or sweating.", 7, 87, [], undefined, undefined, undefined, mockUsers[2]),
       createReply("r-c10a-2-2", "proposal", "Request maintenance to fix the thermostat and check the HVAC system.", 5, 86, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-c10a-2-3", "variant", "Add portable fans and space heaters as a temporary solution until HVAC is fixed.", 3, 84, [], undefined, undefined, undefined, mockUsers[4]),
     ],
   },
   {
@@ -191,6 +193,8 @@ export const mockConcerns: Concern[] = [
     replies: [
       createReply("r-c10a-3-1", "pro-argument", "This would encourage more reading during free time.", 5, 84, [], undefined, undefined, undefined, mockUsers[4]),
       createReply("r-c10a-3-2", "proposal", "We could do a book drive where everyone brings books from home.", 6, 83, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-c10a-3-3", "variant", "Create a rotating book cart that moves between classrooms each week.", 4, 81, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-c10a-3-4", "variant", "Combine physical books with a digital e-reader station for more variety.", 3, 79, [], undefined, undefined, undefined, mockUsers[7]),
     ],
   },
   {
@@ -209,6 +213,7 @@ export const mockConcerns: Concern[] = [
     replies: [
       createReply("r-c10a-4-1", "pro-argument", "I always end up doing everything while others get the same grade.", 4, 81, [], undefined, undefined, undefined, mockUsers[6]),
       createReply("r-c10a-4-2", "proposal", "Teachers should require individual contribution logs for group projects.", 7, 80, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-c10a-4-3", "variant", "Use peer evaluation forms where group members rate each other's contributions.", 5, 78, [], undefined, undefined, undefined, mockUsers[8]),
     ],
   },
   {
@@ -303,6 +308,7 @@ export const mockConcerns: Concern[] = [
       createReply("r-c10b-1-1", "pro-argument", "I sit in the back corner and literally can't read the board during math.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
       createReply("r-c10b-1-2", "proposal", "Try U-shaped seating so everyone can see each other and the board.", 7, 89, [], undefined, undefined, undefined, mockUsers[1]),
       createReply("r-c10b-1-3", "proposal", "Rotate seating weekly so no one is stuck in bad spots permanently.", 4, 88, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-c10b-1-4", "variant", "Combine U-shape with standing desks option for some students who prefer to stand.", 3, 85, [], undefined, undefined, undefined, mockUsers[2]),
     ],
   },
   {
@@ -337,6 +343,7 @@ export const mockConcerns: Concern[] = [
     replies: [
       createReply("r-c10b-2-1", "pro-argument", "I need quiet to focus and the constant talking is really distracting.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
       createReply("r-c10b-2-2", "proposal", "Create quiet zones in the classroom for students who need silence.", 5, 85, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-c10b-2-3", "variant", "Use noise-canceling headphones available for checkout during work time.", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
     ],
   },
   {
