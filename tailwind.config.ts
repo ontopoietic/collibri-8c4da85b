@@ -138,6 +138,10 @@ export default {
 				DEFAULT: 'hsl(var(--secondary-action))',
 				foreground: 'hsl(var(--secondary-action-foreground))'
 			},
+			leaderboard: {
+				DEFAULT: 'hsl(var(--leaderboard))',
+				foreground: 'hsl(var(--leaderboard-foreground))'
+			},
 			sidebar: {
   				DEFAULT: 'hsl(var(--sidebar-background))',
   				foreground: 'hsl(var(--sidebar-foreground))',

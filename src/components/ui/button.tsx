@@ -22,6 +22,7 @@ const buttonVariants = cva(
         statistics: "border border-input bg-background hover:bg-statistics hover:text-statistics-foreground",
         "new-concern": "border border-input bg-background hover:bg-new-concern hover:text-new-concern-foreground",
         "secondary-action": "border border-input bg-background hover:bg-secondary-action hover:text-secondary-action-foreground",
+        leaderboard: "bg-leaderboard text-leaderboard-foreground hover:bg-leaderboard/90 border-0",
       },
       size: {
         default: "h-10 px-4 py-2",
