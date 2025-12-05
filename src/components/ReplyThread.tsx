@@ -172,7 +172,7 @@ const ReplyItem = ({
                       "p-2 rounded-md transition-colors",
                       showReplyForm && replyType === 'endorse'
                         ? "bg-endorse-hover text-white"
-                        : "text-muted-foreground hover:text-endorse-hover"
+                        : "text-muted-foreground hover:bg-endorse-hover hover:text-white"
                     )}
                   >
                     <ThumbsUp className="h-4 w-4" />
@@ -183,7 +183,7 @@ const ReplyItem = ({
                       "p-2 rounded-md transition-colors",
                       showReplyForm && replyType === 'object'
                         ? "bg-object text-white"
-                        : "text-muted-foreground hover:text-object"
+                        : "text-muted-foreground hover:bg-object hover:text-white"
                     )}
                   >
                     <ThumbsDown className="h-4 w-4" />
