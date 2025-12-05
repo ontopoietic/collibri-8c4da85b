@@ -59,7 +59,7 @@ export const VoteButton = ({
         "gap-1",
         hasVoted 
           ? "bg-vote text-vote-foreground hover:bg-vote" 
-          : "bg-background text-foreground hover:bg-vote hover:text-vote-foreground"
+          : "bg-vote/20 text-foreground hover:bg-vote hover:text-vote-foreground"
       )}
     >
       <ChevronUp className="h-4 w-4" />
