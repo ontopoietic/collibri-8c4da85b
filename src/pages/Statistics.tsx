@@ -317,20 +317,23 @@ const Statistics = () => {
           {viewMode === "phase" && (
             <>
               <Button
-                variant={selectedPhase === "class" ? "default" : "outline"}
+                variant="outline"
                 onClick={() => handlePhaseClick("class")}
+                style={selectedPhase === "class" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
               >
                 Class Phase
               </Button>
               <Button
-                variant={selectedPhase === "grade" ? "default" : "outline"}
+                variant="outline"
                 onClick={() => handlePhaseClick("grade")}
+                style={selectedPhase === "grade" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
               >
                 Grade Phase
               </Button>
               <Button
-                variant={selectedPhase === "school" ? "default" : "outline"}
+                variant="outline"
                 onClick={() => handlePhaseClick("school")}
+                style={selectedPhase === "school" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
               >
                 School Phase
               </Button>
@@ -490,6 +493,7 @@ const Statistics = () => {
                     fill="hsl(var(--primary))"
                     dataKey="count"
                     stroke="none"
+                    activeShape={undefined}
                   >
                     {concernTypeData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={CONCERN_TYPE_COLORS[entry.name] || COLORS[index % COLORS.length]} />
@@ -547,6 +551,7 @@ const Statistics = () => {
                     fill="hsl(var(--primary))"
                     dataKey="votes"
                     stroke="none"
+                    activeShape={undefined}
                   >
                     {votesByCategoryData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[entry.name] || COLORS[index % COLORS.length]} />
