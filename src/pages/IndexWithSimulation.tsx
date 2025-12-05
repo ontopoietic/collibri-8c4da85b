@@ -368,6 +368,41 @@ const Index = () => {
                 <Button variant="ghost" size="icon" onClick={() => navigate("/graph")}>
                   <Network className="h-5 w-5" />
                 </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <User className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem>
+                      <UserCircle className="mr-2 h-4 w-4" />
+                      Account
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <HelpCircle className="mr-2 h-4 w-4" />
+                      Help
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      Send feedback
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <FileText className="mr-2 h-4 w-4" />
+                      Terms of use
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="text-destructive">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             )}
 
