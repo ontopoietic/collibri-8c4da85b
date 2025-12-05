@@ -1,13 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Trophy, Medal } from "lucide-react";
+import { Trophy, Medal } from "lucide-react";
 import { mockConcerns } from "@/data/mockData";
 import { Phase } from "@/types/concern";
-import { TypeBadge } from "@/components/TypeBadge";
-import { AspectBadges } from "@/components/AspectBadges";
 import { cn } from "@/lib/utils";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { NavigationHeader } from "@/components/NavigationHeader";
 
 const Leaderboard = () => {
   const navigate = useNavigate();
@@ -45,16 +44,9 @@ const Leaderboard = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
+      <NavigationHeader currentPhase={phase as Phase} />
+      
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/")}
-          className="mb-6 gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span className="hidden sm:inline">Back to Feed</span>
-        </Button>
-
         <h1 className="text-4xl font-bold mb-2 text-foreground">
           {phaseLabels[phase as Phase]} Leaderboard
         </h1>

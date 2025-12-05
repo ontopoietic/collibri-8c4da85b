@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MessageSquare, ThumbsUp, Reply } from "lucide-react";
+import { MessageSquare, ThumbsUp, Reply } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { mockConcerns } from "@/data/mockData";
+import { NavigationHeader } from "@/components/NavigationHeader";
 
 type NotificationType = "reply" | "vote" | "counter-proposal";
 
@@ -97,16 +98,9 @@ const Notifications = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <NavigationHeader />
+      
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/")}
-          className="mb-6 gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span className="hidden sm:inline">Back to Feed</span>
-        </Button>
-
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>

@@ -274,7 +274,7 @@ export const PhaseTimeline = ({
                       className="flex-[0_0_100%] min-w-0 px-1"
                       onClick={() => {
                         if (isCompleted || daysPassed >= 95) {
-                          onPhaseClick(phase.key);
+                          navigate(`/leaderboard/${phase.key}`);
                         }
                       }}
                     >
@@ -345,9 +345,9 @@ export const PhaseTimeline = ({
                       } else if (isCompleted) {
                         setViewedPhase(phase.key);
                       }
-                      // Trigger leaderboard for completed phases or at day 95+
+                      // Navigate to leaderboard for completed phases or at day 95+
                       if (isCompleted || daysPassed >= 95) {
-                        onPhaseClick(phase.key);
+                        navigate(`/leaderboard/${phase.key}`);
                       }
                     }}
                     className={cn(
@@ -409,7 +409,7 @@ export const PhaseTimeline = ({
                   onClick={() => {
                     // Allow clicking if phase is completed OR if we're at day 95+
                     if (isCompleted || daysPassed >= 95) {
-                      onPhaseClick(phase.key);
+                      navigate(`/leaderboard/${phase.key}`);
                     }
                   }}
                 >
