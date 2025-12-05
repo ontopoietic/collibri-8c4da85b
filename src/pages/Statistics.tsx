@@ -401,7 +401,18 @@ const Statistics = () => {
                     />
                     <Legend 
                       wrapperStyle={{ fontSize: 12 }} 
-                      onMouseEnter={(e) => setHoveredLine(e.dataKey as string)}
+                      onMouseEnter={(e) => {
+                        const nameToDataKey: Record<string, string> = {
+                          "Concerns": "concerns",
+                          "Objections": "objections",
+                          "Proposals": "proposals",
+                          "Pro-Arguments": "proArguments",
+                          "Variants": "variants"
+                        };
+                        if (e && e.value) {
+                          setHoveredLine(nameToDataKey[e.value as string] || null);
+                        }
+                      }}
                       onMouseLeave={() => setHoveredLine(null)}
                     />
                     <Line 
@@ -467,15 +478,15 @@ const Statistics = () => {
               <CardTitle className="text-foreground">Concern Types Distribution</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={isMobile ? 280 : 300}>
+              <ResponsiveContainer width="100%" height={isMobile ? 220 : 300}>
                 <PieChart>
                   <Pie
                     data={concernTypeData}
                     cx="50%"
-                    cy={isMobile ? "40%" : "50%"}
+                    cy={isMobile ? "45%" : "50%"}
                     labelLine={false}
                     label={isMobile ? undefined : (entry) => entry.name}
-                    outerRadius={isMobile ? 60 : 80}
+                    outerRadius={isMobile ? 70 : 80}
                     fill="hsl(var(--primary))"
                     dataKey="count"
                     stroke="none"
@@ -490,7 +501,7 @@ const Statistics = () => {
                       layout="horizontal" 
                       verticalAlign="bottom" 
                       align="center"
-                      wrapperStyle={{ fontSize: 11, paddingTop: 10 }}
+                      wrapperStyle={{ fontSize: 11, paddingTop: 5 }}
                     />
                   )}
                 </PieChart>
@@ -509,7 +520,7 @@ const Statistics = () => {
                   <XAxis dataKey="name" tick={{ fontSize: 11 }} />
                   <YAxis width={35} tick={{ fontSize: 11 }} />
                   <Tooltip />
-                  <Bar dataKey="count" radius={[8, 8, 0, 0]}>
+                  <Bar dataKey="count" radius={[8, 8, 0, 0]} activeBar={{ fill: "hsl(var(--muted))" }}>
                     {replyCategoryData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[entry.name]} />
                     ))}
@@ -524,15 +535,15 @@ const Statistics = () => {
               <CardTitle className="text-foreground">Vote Distribution by Categories</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={isMobile ? 280 : 300}>
+              <ResponsiveContainer width="100%" height={isMobile ? 220 : 300}>
                 <PieChart>
                   <Pie
                     data={votesByCategoryData}
                     cx="50%"
-                    cy={isMobile ? "40%" : "50%"}
+                    cy={isMobile ? "45%" : "50%"}
                     labelLine={false}
                     label={isMobile ? undefined : (entry) => `${entry.name}: ${entry.votes}`}
-                    outerRadius={isMobile ? 60 : 80}
+                    outerRadius={isMobile ? 70 : 80}
                     fill="hsl(var(--primary))"
                     dataKey="votes"
                     stroke="none"
@@ -547,7 +558,7 @@ const Statistics = () => {
                       layout="horizontal" 
                       verticalAlign="bottom" 
                       align="center"
-                      wrapperStyle={{ fontSize: 11, paddingTop: 10 }}
+                      wrapperStyle={{ fontSize: 11, paddingTop: 5 }}
                     />
                   )}
                 </PieChart>
@@ -585,8 +596,8 @@ const Statistics = () => {
                   <YAxis width={35} tick={{ fontSize: 11 }} />
                   <Tooltip />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
-                  <Bar dataKey="posts" stackId="a" fill="hsl(var(--primary))" name="Posts" radius={[0, 0, 0, 0]} />
-                  <Bar dataKey="votes" stackId="a" fill="hsl(var(--proposal))" name="Votes" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="posts" stackId="a" fill="hsl(var(--primary))" name="Posts" radius={[0, 0, 0, 0]} activeBar={{ fill: "hsl(var(--primary))" }} />
+                  <Bar dataKey="votes" stackId="a" fill="hsl(var(--proposal))" name="Votes" radius={[8, 8, 0, 0]} activeBar={{ fill: "hsl(var(--proposal))" }} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
