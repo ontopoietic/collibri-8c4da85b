@@ -727,6 +727,8 @@ export const mockConcerns: Concern[] = [
         createReply("r-g10-4-4a", "pro-argument", "This is a great compromise!", 8, 48, [], undefined, undefined, undefined, mockUsers[5]),
       ], undefined, undefined, undefined, mockUsers[7]),
       createReply("r-g10-4-5", "proposal", "Each class can choose their preferred arrangement.", 9, 45, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-g10-4-6", "objection", "Some teachers won't allow rearranging their classroom.", 6, 55, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-g10-4-7", "proposal", "Get principal approval for classroom flexibility.", 8, 50, [], undefined, undefined, undefined, mockUsers[13]),
     ],
   },
 
@@ -756,6 +758,9 @@ export const mockConcerns: Concern[] = [
         createReply("r-g10-5-4a", "pro-argument", "Good idea - less work for teachers.", 7, 48, [], undefined, undefined, undefined, mockUsers[13]),
       ], undefined, undefined, undefined, mockUsers[15]),
       createReply("r-g10-5-5", "question", "Can students also add their extracurricular commitments?", 6, 42, [], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-g10-5-6", "objection", "This puts extra workload on already busy teachers.", 5, 60, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-g10-5-7", "proposal", "Use automated reminders so students don't miss deadlines.", 7, 55, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-g10-5-8", "objection", "Some students might abuse the system to request extensions.", 4, 48, [], undefined, undefined, undefined, mockUsers[1]),
     ],
   },
 
@@ -784,6 +789,8 @@ export const mockConcerns: Concern[] = [
       createReply("r-g10-6-4", "variant", "Have designated discussion time and quiet time, not mixed.", 11, 52, [
         createReply("r-g10-6-4a", "pro-argument", "This respects both learning styles!", 7, 48, [], undefined, undefined, undefined, mockUsers[21]),
       ], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-g10-6-5", "objection", "Enforcing quiet zones is difficult without constant monitoring.", 6, 55, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-g10-6-6", "proposal", "Provide noise-canceling headphones for students who need quiet.", 9, 50, [], undefined, undefined, undefined, mockUsers[5]),
     ],
   },
 
@@ -844,6 +851,8 @@ export const mockConcerns: Concern[] = [
       ], undefined, undefined, undefined, mockUsers[17]),
       createReply("r-g10-8-4", "variant", "Allow extensions only for documented emergencies.", 8, 50, [], undefined, undefined, undefined, mockUsers[20]),
       createReply("r-g10-8-5", "question", "Would this apply to tests too, or just assignments?", 5, 45, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-g10-8-6", "objection", "Teachers already have too much paperwork managing deadlines.", 6, 52, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-g10-8-7", "proposal", "Create an automated system for extension requests.", 8, 48, [], undefined, undefined, undefined, mockUsers[4]),
     ],
   },
 
@@ -959,6 +968,10 @@ export const mockConcerns: Concern[] = [
         createReply("r-s-1-16a", "pro-argument", "Usually 1-2 years, but urgent requests can be expedited.", 11, 6, [], undefined, undefined, undefined, mockUsers[5]),
       ], undefined, undefined, undefined, mockUsers[4]),
       createReply("r-s-1-17", "proposal", "Start with elective courses while waiting for core curriculum changes.", 18, 5, [], undefined, undefined, undefined, mockUsers[6]),
+      // Additional school phase objections
+      createReply("r-s-1-18", "objection", "The ministry moves too slowly - this will take years to implement.", 14, 20, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-s-1-19", "objection", "New curriculum means new textbooks - who pays for that?", 11, 16, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-s-1-20", "objection", "Teachers aren't trained for digital literacy topics.", 9, 14, [], undefined, undefined, undefined, mockUsers[11]),
     ],
   },
 
@@ -1024,6 +1037,11 @@ export const mockConcerns: Concern[] = [
       ], undefined, undefined, undefined, mockUsers[11]),
       createReply("r-s-2-14", "question", "What's the cafeteria budget currently?", 11, 8, [], undefined, undefined, undefined, mockUsers[16]),
       createReply("r-s-2-15", "proposal", "Conduct school-wide survey to prioritize changes.", 20, 5, [], undefined, undefined, undefined, mockUsers[18]),
+      // Additional school phase objections
+      createReply("r-s-2-16", "objection", "Changing food vendors is a long contract process.", 10, 20, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-s-2-17", "objection", "Healthy food costs more and many students can't afford it.", 12, 17, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-s-2-18", "objection", "The kitchen staff is already overworked.", 8, 14, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-2-19", "objection", "Students often complain but then don't eat the healthy options.", 9, 11, [], undefined, undefined, undefined, mockUsers[3]),
     ],
   },
 
@@ -1092,6 +1110,10 @@ export const mockConcerns: Concern[] = [
       ], undefined, undefined, undefined, mockUsers[19]),
       createReply("r-s-3-13", "pro-argument", "Investment in mental health saves money on crisis intervention.", 17, 8, [], undefined, undefined, undefined, mockUsers[21]),
       createReply("r-s-3-14", "proposal", "Start with stress management workshops.", 13, 5, [], undefined, undefined, undefined, mockUsers[0]),
+      // Additional school phase objections
+      createReply("r-s-3-15", "objection", "Hiring more counselors is expensive - where does the money come from?", 10, 19, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-s-3-16", "objection", "Some parents might not want their children discussing mental health at school.", 8, 16, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-s-3-17", "objection", "Peer support can backfire if not properly trained.", 7, 13, [], undefined, undefined, undefined, mockUsers[6]),
     ],
   },
 
@@ -1137,6 +1159,9 @@ export const mockConcerns: Concern[] = [
       createReply("r-s-4-10", "proposal", "Student tech team could help identify weak spots.", 16, 10, [], undefined, undefined, undefined, mockUsers[21]),
       createReply("r-s-4-11", "pro-argument", "Digital learning requires reliable internet.", 19, 8, [], undefined, undefined, undefined, mockUsers[0]),
       createReply("r-s-4-12", "variant", "Phase upgrade starting with high-priority areas.", 13, 5, [], undefined, undefined, undefined, mockUsers[1]),
+      // Additional school phase objections
+      createReply("r-s-4-13", "objection", "Network upgrades require significant budget that we don't have.", 11, 21, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-s-4-14", "objection", "Students will just use faster WiFi for gaming and streaming.", 9, 18, [], undefined, undefined, undefined, mockUsers[4]),
     ],
   },
 
@@ -1182,6 +1207,10 @@ export const mockConcerns: Concern[] = [
       createReply("r-s-5-10", "proposal", "Train staff in threat assessment.", 16, 10, [], undefined, undefined, undefined, mockUsers[17]),
       createReply("r-s-5-11", "variant", "Community approach: staff, students, parents together.", 19, 8, [], undefined, undefined, undefined, mockUsers[18]),
       createReply("r-s-5-12", "pro-argument", "Ministry funding needed for proper security.", 14, 5, [], undefined, undefined, undefined, mockUsers[19]),
+      // Additional school phase objections
+      createReply("r-s-5-13", "objection", "Security measures often target certain student groups unfairly.", 11, 19, [], undefined, undefined, undefined, mockUsers[20]),
+      createReply("r-s-5-14", "objection", "Cameras and surveillance create a culture of distrust.", 9, 16, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-s-5-15", "objection", "Security staff can be intimidating to younger students.", 7, 12, [], undefined, undefined, undefined, mockUsers[0]),
     ],
   },
 
@@ -1228,6 +1257,10 @@ export const mockConcerns: Concern[] = [
       ], undefined, undefined, undefined, mockUsers[7]),
       createReply("r-s-6-12", "pro-argument", "Mental health suffers from test anxiety.", 18, 8, [], undefined, undefined, undefined, mockUsers[9]),
       createReply("r-s-6-13", "proposal", "Include student voices in ministry education committees.", 14, 5, [], undefined, undefined, undefined, mockUsers[10]),
+      // Additional school phase objections
+      createReply("r-s-6-14", "objection", "Without standardized tests, how do employers compare graduates?", 11, 20, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-s-6-15", "objection", "Project-based assessment is harder to grade fairly.", 8, 17, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-s-6-16", "objection", "Changing the assessment system takes years and affects current students.", 9, 14, [], undefined, undefined, undefined, mockUsers[13]),
     ],
   },
 
