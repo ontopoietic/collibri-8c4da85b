@@ -107,13 +107,8 @@ const Statistics = () => {
     },
   ];
 
-  // Activity by grade (mock data for 12 grades)
+  // Activity by grade (mock data for grades 6-12)
   const gradeActivity = [
-    { grade: "Grade 1", posts: 12, votes: 34 },
-    { grade: "Grade 2", posts: 15, votes: 42 },
-    { grade: "Grade 3", posts: 18, votes: 51 },
-    { grade: "Grade 4", posts: 23, votes: 67 },
-    { grade: "Grade 5", posts: 28, votes: 79 },
     { grade: "Grade 6", posts: 31, votes: 88 },
     { grade: "Grade 7", posts: 35, votes: 102 },
     { grade: "Grade 8", posts: 41, votes: 118 },
@@ -135,7 +130,60 @@ const Statistics = () => {
     { date: "Week 8", users: 134 },
   ];
 
-  // Engagement over time with reply categories
+  // Phase date ranges (days ago)
+  const phaseDateRanges: Record<Phase, { start: number; end: number }> = {
+    class: { start: 95, end: 65 },
+    grade: { start: 65, end: 30 },
+    school: { start: 30, end: 0 },
+  };
+
+  // Helper to get a date X days ago
+  const daysAgo = (days: number): Date => {
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  };
+
+  // Generate complete date range for even distribution
+  const getDateRange = (startDate: Date, endDate: Date): string[] => {
+    const dates: string[] = [];
+    const current = new Date(startDate);
+    current.setHours(0, 0, 0, 0);
+    const end = new Date(endDate);
+    end.setHours(0, 0, 0, 0);
+    while (current <= end) {
+      dates.push(current.toLocaleDateString());
+      current.setDate(current.getDate() + 1);
+    }
+    return dates;
+  };
+
+  // Determine date range based on view mode
+  const getTimelineRange = () => {
+    if (viewMode === "phase") {
+      const phaseRange = phaseDateRanges[selectedPhase];
+      return {
+        start: daysAgo(phaseRange.start),
+        end: daysAgo(phaseRange.end)
+      };
+    } else {
+      // For interval view, use full range from earliest concern to today
+      if (displayConcerns.length === 0) {
+        return { start: daysAgo(95), end: new Date() };
+      }
+      const concernDates = displayConcerns.map(c => new Date(c.timestamp).getTime());
+      return {
+        start: new Date(Math.min(...concernDates)),
+        end: new Date()
+      };
+    }
+  };
+
+  const timelineRange = getTimelineRange();
+  const fullDateRange = getDateRange(timelineRange.start, timelineRange.end);
+
+  // Create engagementByDate map with all dates initialized to 0
   const engagementByDate = new Map<string, { 
     concerns: number; 
     objections: number;
@@ -144,21 +192,26 @@ const Statistics = () => {
     variants: number;
   }>();
   
+  // Initialize all dates with zeros
+  fullDateRange.forEach(date => {
+    engagementByDate.set(date, { concerns: 0, objections: 0, proposals: 0, proArguments: 0, variants: 0 });
+  });
+  
+  // Populate with actual data
   displayConcerns.forEach((c) => {
     const date = new Date(c.timestamp).toLocaleDateString();
-    if (!engagementByDate.has(date)) {
-      engagementByDate.set(date, { concerns: 0, objections: 0, proposals: 0, proArguments: 0, variants: 0 });
+    if (engagementByDate.has(date)) {
+      const entry = engagementByDate.get(date)!;
+      entry.concerns++;
+      
+      const concernReplies = getAllReplies(c.replies);
+      concernReplies.forEach((reply) => {
+        if (reply.category === "objection") entry.objections++;
+        else if (reply.category === "proposal") entry.proposals++;
+        else if (reply.category === "pro-argument") entry.proArguments++;
+        else if (reply.category === "variant") entry.variants++;
+      });
     }
-    const entry = engagementByDate.get(date)!;
-    entry.concerns++;
-    
-    const concernReplies = getAllReplies(c.replies);
-    concernReplies.forEach((reply) => {
-      if (reply.category === "objection") entry.objections++;
-      else if (reply.category === "proposal") entry.proposals++;
-      else if (reply.category === "pro-argument") entry.proArguments++;
-      else if (reply.category === "variant") entry.variants++;
-    });
   });
 
   const engagementData = Array.from(engagementByDate.entries())
