@@ -60,7 +60,7 @@ const Leaderboard = () => {
               key={p}
               variant={p === phase ? "default" : "outline"}
               onClick={() => navigate(`/leaderboard/${p}`)}
-              className={p === phase ? "text-white" : ""}
+              className={p === phase ? "text-white" : "hover:text-white"}
             >
               {phaseLabels[p]}
             </Button>
@@ -94,7 +94,7 @@ const Leaderboard = () => {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <CardTitle className="text-xl mb-2">{concern.title}</CardTitle>
+                      <CardTitle className="text-xl mb-2 text-white">{concern.title}</CardTitle>
                       <p className="text-muted-foreground line-clamp-2">
                         {concern.description}
                       </p>
