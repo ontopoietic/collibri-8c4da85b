@@ -223,9 +223,24 @@ const Statistics = () => {
     });
   });
 
-  const engagementData = Array.from(engagementByDate.entries())
-    .map(([date, data]) => ({ date, ...data }))
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const sortedEngagementEntries = Array.from(engagementByDate.entries())
+    .sort((a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime());
+  
+  const startDateMs = sortedEngagementEntries.length > 0 
+    ? new Date(sortedEngagementEntries[0][0]).getTime() 
+    : Date.now();
+  const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+
+  const engagementData = sortedEngagementEntries
+    .map(([date, data]) => {
+      const dateMs = new Date(date).getTime();
+      const weekNum = Math.floor((dateMs - startDateMs) / msPerWeek) + 1;
+      return { 
+        date, 
+        weekLabel: `Week ${weekNum}`,
+        ...data 
+      };
+    });
 
   // Vote distribution by reply category
   const votesByCategoryData = [
@@ -396,7 +411,7 @@ const Statistics = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={engagementData} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" tick={{ fontSize: 11 }} />
+                    <XAxis dataKey="weekLabel" tick={{ fontSize: 11 }} interval="preserveStartEnd" />
                     <YAxis width={35} tick={{ fontSize: 11 }} />
                     <Tooltip 
                       contentStyle={{ 
@@ -492,7 +507,7 @@ const Statistics = () => {
                     cy={isMobile ? "40%" : "50%"}
                     labelLine={false}
                     label={isMobile ? undefined : (entry) => entry.name}
-                    outerRadius="35%"
+                    outerRadius={isMobile ? 100 : 110}
                     fill="hsl(var(--primary))"
                     dataKey="count"
                     stroke="none"
@@ -522,7 +537,7 @@ const Statistics = () => {
             </CardHeader>
             <CardContent className="px-2 sm:px-6">
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={replyCategoryData} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
+                <BarChart data={replyCategoryData} barSize={30} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" tick={{ fontSize: 11 }} />
                   <YAxis width={35} tick={{ fontSize: 11 }} />
@@ -550,7 +565,7 @@ const Statistics = () => {
                     cy={isMobile ? "40%" : "50%"}
                     labelLine={false}
                     label={isMobile ? undefined : (entry) => `${entry.name}: ${entry.votes}`}
-                    outerRadius="35%"
+                    outerRadius={isMobile ? 100 : 110}
                     fill="hsl(var(--primary))"
                     dataKey="votes"
                     stroke="none"
