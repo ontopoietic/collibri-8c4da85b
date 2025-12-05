@@ -33,12 +33,14 @@ interface ReplyFormProps {
     category: ReplyCategory,
     text: string,
     referencedReplies?: ReplyReference[],
-    counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: SolutionLevel }
+    counterProposal?: { text: string; postedAsConcern?: boolean; solutionLevel?: SolutionLevel },
+    variantSolutionLevel?: SolutionLevel
   ) => void;
   onCancel: () => void;
   replyType: 'endorse' | 'object' | 'question';
   originalText?: string;
   availableReplies?: Reply[];
+  parentConcernType?: "problem" | "proposal" | "counter-proposal";
 }
 
 const categoryConfig = {
@@ -73,6 +75,7 @@ export const ReplyForm = ({
   replyType,
   originalText = "",
   availableReplies = [],
+  parentConcernType,
 }: ReplyFormProps) => {
   const [category, setCategory] = useState<ReplyCategory | "">("");
   const [title, setTitle] = useState("");
@@ -83,6 +86,9 @@ export const ReplyForm = ({
   const [counterProposalText, setCounterProposalText] = useState("");
   const [postCounterAsConcern, setPostCounterAsConcern] = useState(false);
   const [counterProposalSolutionLevel, setCounterProposalSolutionLevel] = useState<SolutionLevel | "">("");
+  const [variantSolutionLevel, setVariantSolutionLevel] = useState<SolutionLevel | "">(""); 
+
+  const isProposalType = parentConcernType === "proposal" || parentConcernType === "counter-proposal";
 
   const allowedCategories = replyType === 'question' 
     ? ['question' as ReplyCategory]
@@ -127,7 +133,8 @@ export const ReplyForm = ({
         category as ReplyCategory,
         text,
         selectedReplies.length > 0 ? selectedReplies : undefined,
-        counterProposal
+        counterProposal,
+        category === "variant" && variantSolutionLevel ? variantSolutionLevel as SolutionLevel : undefined
       );
       setCategory("");
       setTitle("");
@@ -137,6 +144,7 @@ export const ReplyForm = ({
       setCounterProposalText("");
       setPostCounterAsConcern(false);
       setCounterProposalSolutionLevel("");
+      setVariantSolutionLevel("");
     }
   };
 
@@ -274,6 +282,28 @@ export const ReplyForm = ({
           className="min-h-[120px]"
         />
       </div>
+
+      {category === "variant" && isProposalType && (
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">Solution Level (optional)</Label>
+          <p className="text-xs text-muted-foreground">
+            Leave empty to keep the same level as the original, or select a different level
+          </p>
+          <Select 
+            value={variantSolutionLevel} 
+            onValueChange={(value) => setVariantSolutionLevel(value as SolutionLevel)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Same as original" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="class">Class</SelectItem>
+              <SelectItem value="school">School</SelectItem>
+              <SelectItem value="ministries">Ministries</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
       {category === "objection" && (
         <div className="space-y-4 border-t border-border pt-4">

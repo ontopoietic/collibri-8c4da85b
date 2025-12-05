@@ -400,16 +400,14 @@ const Index = () => {
                   <NewConcernDialog onSubmit={handleNewConcern} />
                 ) : (
                   <Button
-                    variant="ghost"
+                    variant="leaderboard"
                     onClick={() => {
                       const prevPhase = getPreviousPhase();
                       if (prevPhase) navigate(`/leaderboard/${prevPhase}`);
                     }}
                     className={cn(
                       "gap-2",
-                      showLeaderboard 
-                        ? "bg-leaderboard text-leaderboard-foreground hover:bg-leaderboard/90 rounded-full" 
-                        : ""
+                      showLeaderboard && "bg-leaderboard text-leaderboard-foreground hover:bg-leaderboard/90"
                     )}
                   >
                     <Trophy className="h-4 w-4" />
