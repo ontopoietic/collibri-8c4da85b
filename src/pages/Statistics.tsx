@@ -171,15 +171,8 @@ const Statistics = () => {
         end: daysAgo(phaseRange.end)
       };
     } else {
-      // For interval view, use full range from earliest concern to today
-      if (displayConcerns.length === 0) {
-        return { start: daysAgo(95), end: new Date() };
-      }
-      const concernDates = displayConcerns.map(c => new Date(c.timestamp).getTime());
-      return {
-        start: new Date(Math.min(...concernDates)),
-        end: new Date()
-      };
+      // For interval view, use fixed 95-day range (14 weeks)
+      return { start: daysAgo(95), end: daysAgo(1) };
     }
   };
 
@@ -365,42 +358,35 @@ const Statistics = () => {
             variant={viewMode === "interval" ? "default" : "outline"}
             onClick={() => setViewMode("interval")}
           >
-            Full Interval
+            Interval
           </Button>
           <Button
-            variant={viewMode === "phase" ? "default" : "outline"}
-            onClick={() => setViewMode("phase")}
+            variant={viewMode === "phase" && selectedPhase === "class" ? "default" : "outline"}
+            onClick={() => {
+              setViewMode("phase");
+              setSelectedPhase("class");
+            }}
           >
-            Phase View
+            Class
           </Button>
-          {viewMode === "phase" && (
-            <>
-              <Button
-                variant="outline"
-                onClick={() => handlePhaseClick("class")}
-                className="phase-button"
-                style={selectedPhase === "class" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
-              >
-                Class Phase
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => handlePhaseClick("grade")}
-                className="phase-button"
-                style={selectedPhase === "grade" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
-              >
-                Grade Phase
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => handlePhaseClick("school")}
-                className="phase-button"
-                style={selectedPhase === "school" ? { backgroundColor: "#B3B9C7", borderColor: "#B3B9C7", color: "#1a1a1a" } : undefined}
-              >
-                School Phase
-              </Button>
-            </>
-          )}
+          <Button
+            variant={viewMode === "phase" && selectedPhase === "grade" ? "default" : "outline"}
+            onClick={() => {
+              setViewMode("phase");
+              setSelectedPhase("grade");
+            }}
+          >
+            Grade
+          </Button>
+          <Button
+            variant={viewMode === "phase" && selectedPhase === "school" ? "default" : "outline"}
+            onClick={() => {
+              setViewMode("phase");
+              setSelectedPhase("school");
+            }}
+          >
+            School
+          </Button>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
