@@ -219,9 +219,9 @@ const Statistics = () => {
   const sortedEngagementEntries = Array.from(engagementByDate.entries())
     .sort((a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime());
 
-  // Daily data for phase view (with dates)
+  // Daily data for phase view (with day numbers, date kept for tooltip)
   const dailyEngagementData = sortedEngagementEntries
-    .map(([date, data]) => ({ date, ...data }));
+    .map(([date, data], index) => ({ date, dayLabel: `${index + 1}`, ...data }));
 
   // Weekly aggregated data for full interval view
   const getWeeklyAggregatedData = () => {
@@ -357,8 +357,8 @@ const Statistics = () => {
           <Button
             variant={viewMode === "interval" ? "default" : "outline"}
             onClick={() => setViewMode("interval")}
-            className={viewMode === "interval" ? "" : "hover:bg-[#CC0A71]/10 hover:text-[#CC0A71] hover:border-[#CC0A71]"}
-            style={viewMode === "interval" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71' } : undefined}
+            className={viewMode === "interval" ? "" : "hover:bg-[#CC0A71] hover:text-white hover:border-[#CC0A71]"}
+            style={viewMode === "interval" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71', color: 'white' } : undefined}
           >
             Interval
           </Button>
@@ -368,8 +368,8 @@ const Statistics = () => {
               setViewMode("phase");
               setSelectedPhase("class");
             }}
-            className={viewMode === "phase" && selectedPhase === "class" ? "" : "hover:bg-[#CC0A71]/10 hover:text-[#CC0A71] hover:border-[#CC0A71]"}
-            style={viewMode === "phase" && selectedPhase === "class" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71' } : undefined}
+            className={viewMode === "phase" && selectedPhase === "class" ? "" : "hover:bg-[#CC0A71] hover:text-white hover:border-[#CC0A71]"}
+            style={viewMode === "phase" && selectedPhase === "class" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71', color: 'white' } : undefined}
           >
             Class
           </Button>
@@ -379,8 +379,8 @@ const Statistics = () => {
               setViewMode("phase");
               setSelectedPhase("grade");
             }}
-            className={viewMode === "phase" && selectedPhase === "grade" ? "" : "hover:bg-[#CC0A71]/10 hover:text-[#CC0A71] hover:border-[#CC0A71]"}
-            style={viewMode === "phase" && selectedPhase === "grade" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71' } : undefined}
+            className={viewMode === "phase" && selectedPhase === "grade" ? "" : "hover:bg-[#CC0A71] hover:text-white hover:border-[#CC0A71]"}
+            style={viewMode === "phase" && selectedPhase === "grade" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71', color: 'white' } : undefined}
           >
             Grade
           </Button>
@@ -390,8 +390,8 @@ const Statistics = () => {
               setViewMode("phase");
               setSelectedPhase("school");
             }}
-            className={viewMode === "phase" && selectedPhase === "school" ? "" : "hover:bg-[#CC0A71]/10 hover:text-[#CC0A71] hover:border-[#CC0A71]"}
-            style={viewMode === "phase" && selectedPhase === "school" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71' } : undefined}
+            className={viewMode === "phase" && selectedPhase === "school" ? "" : "hover:bg-[#CC0A71] hover:text-white hover:border-[#CC0A71]"}
+            style={viewMode === "phase" && selectedPhase === "school" ? { backgroundColor: '#CC0A71', borderColor: '#CC0A71', color: 'white' } : undefined}
           >
             School
           </Button>
@@ -451,7 +451,7 @@ const Statistics = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={engagementData} margin={{ left: 0, right: 10, top: 5, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey={viewMode === "interval" ? "weekLabel" : "date"} tick={{ fontSize: 11 }} interval="preserveStartEnd" />
+                    <XAxis dataKey={viewMode === "interval" ? "weekLabel" : "dayLabel"} tick={{ fontSize: 11 }} interval="preserveStartEnd" />
                     <YAxis width={35} tick={{ fontSize: 11 }} />
                     <Tooltip 
                       contentStyle={{ 
