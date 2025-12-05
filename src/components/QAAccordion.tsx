@@ -3,11 +3,6 @@ import { ChevronRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Reply } from "@/types/concern";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-} from "@/components/ui/accordion";
 
 interface QAAccordionProps {
   questions: Reply[];
@@ -15,9 +10,9 @@ interface QAAccordionProps {
 
 const QAAccordion = ({ questions }: QAAccordionProps) => {
   return (
-    <Accordion type="multiple" className="space-y-2">
+    <AccordionPrimitive.Root type="multiple" className="space-y-2">
       {questions.map((question) => (
-        <AccordionItem 
+        <AccordionPrimitive.Item 
           key={question.id} 
           value={question.id}
           className="border border-border rounded-lg overflow-hidden"
@@ -41,32 +36,36 @@ const QAAccordion = ({ questions }: QAAccordionProps) => {
             </AccordionPrimitive.Trigger>
           </AccordionPrimitive.Header>
 
-          <AccordionContent className="px-4 pb-4 pt-0">
-            {question.replies?.length > 0 ? (
-              <div className="space-y-3 pl-8">
-                {question.replies.map((answer) => (
-                  <div 
-                    key={answer.id}
-                    className="p-3 bg-muted/30 rounded-lg border border-border/50"
-                  >
-                    <p className="text-foreground">{answer.text}</p>
-                    <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
-                      {answer.authorName && (
-                        <span>{answer.authorName}</span>
-                      )}
-                      <span>•</span>
-                      <span>{formatDistanceToNow(answer.timestamp, { addSuffix: true })}</span>
+          <AccordionPrimitive.Content 
+            className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+          >
+            <div className="px-4 pb-4 pt-0">
+              {question.replies?.length > 0 ? (
+                <div className="space-y-3 pl-8">
+                  {question.replies.map((answer) => (
+                    <div 
+                      key={answer.id}
+                      className="p-3 bg-muted/30 rounded-lg border border-border/50"
+                    >
+                      <p className="text-foreground">{answer.text}</p>
+                      <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
+                        {answer.authorName && (
+                          <span>{answer.authorName}</span>
+                        )}
+                        <span>•</span>
+                        <span>{formatDistanceToNow(answer.timestamp, { addSuffix: true })}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-muted-foreground text-sm pl-8">No answers yet.</p>
-            )}
-          </AccordionContent>
-        </AccordionItem>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground text-sm pl-8">No answers yet.</p>
+              )}
+            </div>
+          </AccordionPrimitive.Content>
+        </AccordionPrimitive.Item>
       ))}
-    </Accordion>
+    </AccordionPrimitive.Root>
   );
 };
 
