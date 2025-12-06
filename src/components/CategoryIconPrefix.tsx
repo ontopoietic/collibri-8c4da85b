@@ -13,9 +13,9 @@ const categoryConfig = {
   proposal: {
     label: "Proposal",
     icon: Lightbulb,
-    iconColor: "text-pro-argument",
-    bgColor: "bg-pro-argument/10",
-    borderColor: "border-pro-argument/30",
+    iconColor: "text-proposal",
+    bgColor: "bg-proposal/10",
+    borderColor: "border-proposal/30",
   },
   "pro-argument": {
     label: "Pro Argument",
@@ -34,9 +34,9 @@ const categoryConfig = {
   question: {
     label: "Question",
     icon: HelpCircle,
-    iconColor: "text-question",
-    bgColor: "bg-question/10",
-    borderColor: "border-question/30",
+    iconColor: "text-muted-foreground",
+    bgColor: "bg-muted/10",
+    borderColor: "border-muted/30",
   },
 };
 

@@ -6,9 +6,9 @@ const typeConfig = {
   problem: {
     label: "Problem",
     icon: AlertTriangle,
-    iconColor: "text-problem-aspect",
-    bgColor: "bg-problem-aspect/10",
-    borderColor: "border-problem-aspect/30",
+    iconColor: "text-problem",
+    bgColor: "bg-problem/10",
+    borderColor: "border-problem/30",
   },
   proposal: {
     label: "Proposal",
@@ -20,9 +20,9 @@ const typeConfig = {
   "counter-proposal": {
     label: "Counter-Proposal",
     icon: Scale,
-    iconColor: "text-primary",
-    bgColor: "bg-primary/10",
-    borderColor: "border-primary/30",
+    iconColor: "text-concern-type",
+    bgColor: "bg-concern-type/10",
+    borderColor: "border-concern-type/30",
   },
 };
 

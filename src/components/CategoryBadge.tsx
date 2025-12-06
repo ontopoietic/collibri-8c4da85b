@@ -16,7 +16,7 @@ const categoryConfig = {
   proposal: {
     label: "Proposal",
     icon: Lightbulb,
-    className: "bg-pro-argument text-pro-argument-foreground hover:bg-pro-argument/90",
+    className: "bg-proposal text-proposal-foreground hover:bg-proposal/90",
   },
   "pro-argument": {
     label: "Pro Argument",
@@ -31,7 +31,7 @@ const categoryConfig = {
   question: {
     label: "Question",
     icon: HelpCircle,
-    className: "bg-pro-argument text-pro-argument-foreground hover:bg-pro-argument/90",
+    className: "bg-muted text-muted-foreground hover:bg-muted/90",
   },
 };
 
