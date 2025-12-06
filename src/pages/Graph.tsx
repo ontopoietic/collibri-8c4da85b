@@ -56,10 +56,10 @@ const Graph = () => {
         // Determine color based on reply category
         let color = "#94a3b8"; // default gray
         if (reply.category === "objection") color = "#ef4444";
-        else if (reply.category === "proposal") color = "#f59e0b";
+        else if (reply.category === "proposal") color = "#5370F2";
         else if (reply.category === "pro-argument") color = "#22c55e";
-        else if (reply.category === "variant") color = "#8b5cf6";
-        else if (reply.category === "question") color = "#3b82f6";
+        else if (reply.category === "variant") color = "#9B49FD";
+        else if (reply.category === "question") color = "#E2E1E5";
 
         nodes.push({
           id: replyNodeId,
@@ -87,10 +87,10 @@ const Graph = () => {
       const concernNodeId = `concern-${concern.id}`;
       
       // Determine color based on concern type
-      let color = "#3b82f6"; // default blue
-      if (concern.type === "problem") color = "#dc2626";
-      else if (concern.type === "proposal") color = "#f59e0b";
-      else if (concern.type === "counter-proposal") color = "#8b5cf6";
+      let color = "#5370F2"; // default blue
+      if (concern.type === "problem") color = "#DC143C";
+      else if (concern.type === "proposal") color = "#5370F2";
+      else if (concern.type === "counter-proposal") color = "#9F52FC";
 
       nodes.push({
         id: concernNodeId,
@@ -264,16 +264,20 @@ const Graph = () => {
           <CollapsibleContent className="px-4 pb-4">
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-[#dc2626]"></div>
+                <div className="w-4 h-4 rounded-full bg-[#DC143C]"></div>
                 <span>Problems</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-[#f59e0b]"></div>
+                <div className="w-4 h-4 rounded-full bg-[#5370F2]"></div>
                 <span>Proposals</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-[#8b5cf6]"></div>
-                <span>Counter-Proposals / Variants</span>
+                <div className="w-4 h-4 rounded-full bg-[#9F52FC]"></div>
+                <span>Counter-Proposals</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#9B49FD]"></div>
+                <span>Variants</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded-full bg-[#ef4444]"></div>
@@ -284,8 +288,12 @@ const Graph = () => {
                 <span>Pro-Arguments</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-[#3b82f6]"></div>
+                <div className="w-4 h-4 rounded-full bg-[#E2E1E5]"></div>
                 <span>Questions</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-[#19C3AC]"></div>
+                <span>Votes</span>
               </div>
             </div>
             <p className="text-xs text-muted-foreground mt-4">

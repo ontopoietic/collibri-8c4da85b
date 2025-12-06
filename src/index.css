@@ -43,23 +43,29 @@ All colors MUST be HSL.
     --objection: 7 95% 72%;
     --objection-foreground: 7 95% 72%;
 
-    --proposal: 224 100% 91%;
-    --proposal-foreground: 218 13% 48%;
+    --proposal: 228 86% 64%;
+    --proposal-foreground: 0 0% 100%;
 
     --pro-argument: 270 96% 65%;
     --pro-argument-foreground: 0 0% 100%;
 
-    --variant: 255 8% 89%;
-    --variant-foreground: 218 13% 48%;
+    --variant: 269 97% 64%;
+    --variant-foreground: 0 0% 100%;
 
-    --concern-type: 255 8% 89%;
-    --concern-type-foreground: 218 13% 48%;
+    --concern-type: 269 97% 64%;
+    --concern-type-foreground: 0 0% 100%;
 
-    --problem: 37 100% 50%;
+    --problem: 348 83% 47%;
     --problem-foreground: 0 0% 100%;
 
-    --problem-aspect: 37 100% 50%;
-    --problem-aspect-foreground: 37 100% 50%;
+    --problem-aspect: 348 83% 47%;
+    --problem-aspect-foreground: 348 83% 47%;
+
+    --question: 255 5% 89%;
+    --question-foreground: 231 34% 25%;
+
+    --vote: 169 79% 43%;
+    --vote-foreground: 0 0% 100%;
 
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;
@@ -72,11 +78,6 @@ All colors MUST be HSL.
     --object: 9 95% 72%;
     --object-foreground: 0 0% 100%;
     
-    --vote: 145 45% 55%;
-    --vote-foreground: 0 0% 100%;
-    
-    --question: 220 100% 91%;
-    --question-foreground: 231 34% 25%;
     
     --statistics: 328 90% 42%;
     --statistics-foreground: 0 0% 100%;
@@ -137,23 +138,29 @@ All colors MUST be HSL.
     --objection: 7 95% 72%;
     --objection-foreground: 7 95% 72%;
 
-    --proposal: 224 100% 91%;
-    --proposal-foreground: 218 13% 48%;
+    --proposal: 228 86% 64%;
+    --proposal-foreground: 0 0% 100%;
 
     --pro-argument: 270 96% 65%;
     --pro-argument-foreground: 0 0% 100%;
 
-    --variant: 255 8% 89%;
-    --variant-foreground: 218 13% 48%;
+    --variant: 269 97% 64%;
+    --variant-foreground: 0 0% 100%;
 
-    --concern-type: 255 8% 89%;
-    --concern-type-foreground: 218 13% 48%;
+    --concern-type: 269 97% 64%;
+    --concern-type-foreground: 0 0% 100%;
 
-    --problem: 37 100% 50%;
+    --problem: 348 83% 47%;
     --problem-foreground: 0 0% 100%;
 
-    --problem-aspect: 37 100% 50%;
-    --problem-aspect-foreground: 37 100% 50%;
+    --problem-aspect: 348 83% 47%;
+    --problem-aspect-foreground: 348 83% 47%;
+
+    --question: 255 5% 89%;
+    --question-foreground: 231 34% 25%;
+
+    --vote: 169 79% 43%;
+    --vote-foreground: 0 0% 100%;
 
     --school: 8 100% 68%;
     --school-foreground: 0 0% 100%;
@@ -166,11 +173,6 @@ All colors MUST be HSL.
     --object: 9 95% 72%;
     --object-foreground: 0 0% 100%;
     
-    --vote: 145 45% 55%;
-    --vote-foreground: 0 0% 100%;
-    
-    --question: 220 100% 91%;
-    --question-foreground: 231 34% 25%;
     
     --statistics: 328 90% 42%;
     --statistics-foreground: 0 0% 100%;

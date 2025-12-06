@@ -328,9 +328,9 @@ const Statistics = () => {
   const COLORS = ["hsl(var(--objection))", "hsl(var(--proposal))", "hsl(var(--primary))", "hsl(var(--pro-argument))"];
   
   const CONCERN_TYPE_COLORS: { [key: string]: string } = {
-    "Problems": "hsl(var(--objection))",
+    "Problems": "hsl(var(--problem))",
     "Proposals": "hsl(var(--proposal))",
-    "Counter-Proposals": "hsl(var(--variant))",
+    "Counter-Proposals": "hsl(var(--concern-type))",
   };
   
   const CATEGORY_COLORS: { [key: string]: string } = {
