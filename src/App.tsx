@@ -16,7 +16,11 @@ import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+console.log("[App] Module loaded");
+
+const App = () => {
+  console.log("[App] Rendering");
+  return (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <AdminProvider>
@@ -40,6 +44,7 @@ const App = () => (
       </AdminProvider>
     </QueryClientProvider>
   </ErrorBoundary>
-);
+  );
+};
 
 export default App;
