@@ -60,7 +60,9 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
 
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <TypeIconPrefix type={concern.type} />
+            {!(concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText) && (
+              <TypeIconPrefix type={concern.type} />
+            )}
             <h3 className="text-xl font-semibold text-foreground">{concern.title}</h3>
           </div>
           {concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText ? (
