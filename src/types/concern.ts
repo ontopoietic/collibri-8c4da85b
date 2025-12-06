@@ -96,6 +96,8 @@ export interface Concern {
   type: ConcernType;
   title: string;
   description: string;
+  problemText?: string;
+  proposalText?: string;
   votes: number;
   replies: Reply[];
   timestamp: Date;

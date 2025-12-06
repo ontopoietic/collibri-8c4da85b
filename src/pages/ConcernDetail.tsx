@@ -299,7 +299,30 @@ const ConcernDetail = () => {
 
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-4">{concern.title}</h1>
-            <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
+            
+            {concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText ? (
+              <div className="space-y-4">
+                {/* Problem Section */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <TypeIconPrefix type="problem" size="sm" />
+                    <h2 className="text-base font-semibold text-foreground">Problem</h2>
+                  </div>
+                  <p className="text-foreground leading-relaxed">{concern.problemText}</p>
+                </div>
+                
+                {/* Proposal Section */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <TypeIconPrefix type="proposal" size="sm" />
+                    <h2 className="text-base font-semibold text-foreground">Proposal</h2>
+                  </div>
+                  <p className="text-foreground leading-relaxed">{concern.proposalText}</p>
+                </div>
+              </div>
+            ) : (
+              <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
+            )}
           </div>
 
           {concern.solutionLevel && (
