@@ -325,7 +325,7 @@ const Statistics = () => {
     },
   ];
 
-  const COLORS = ["hsl(var(--objection))", "hsl(var(--proposal))", "hsl(var(--primary))", "hsl(var(--pro-argument))"];
+  const COLORS = ["hsl(var(--objection))", "hsl(var(--proposal))", "hsl(var(--pro-argument))", "hsl(var(--variant))"];
   
   const CONCERN_TYPE_COLORS: { [key: string]: string } = {
     "Problems": "hsl(var(--problem))",
@@ -484,7 +484,7 @@ const Statistics = () => {
                     <Line 
                       type="monotone" 
                       dataKey="objections" 
-                      stroke="hsl(var(--destructive))" 
+                      stroke="hsl(var(--objection))" 
                       strokeWidth={hoveredLine === "objections" ? 4 : 2}
                       strokeOpacity={hoveredLine && hoveredLine !== "objections" ? 0.2 : 1}
                       name="Objections"
