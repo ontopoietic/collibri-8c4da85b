@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -12,6 +13,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { X } from "lucide-react";
@@ -33,29 +35,10 @@ export const ResponsiveFormContainer = ({
 }: ResponsiveFormContainerProps) => {
   const isMobile = useIsMobile();
 
-  console.log("[ResponsiveFormContainer] Rendering - isMobile:", isMobile, "open:", open);
-
-  return (
-    <>
-      {/* Trigger rendered outside modals - always visible */}
-      {trigger && (
-        <span onClick={() => onOpenChange(true)} style={{ cursor: 'pointer' }}>
-          {trigger}
-        </span>
-      )}
-
-      {/* Always render Dialog - control visibility via open prop */}
-      <Dialog open={open && !isMobile} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-          </DialogHeader>
-          {children}
-        </DialogContent>
-      </Dialog>
-
-      {/* Always render Drawer - control visibility via open prop */}
-      <Drawer open={open && isMobile} onOpenChange={onOpenChange}>
+  if (isMobile) {
+    return (
+      <Drawer open={open} onOpenChange={onOpenChange}>
+        {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
         <DrawerContent className="h-[100dvh] max-h-[100dvh] rounded-none">
           <DrawerHeader className="border-b border-border relative">
             <DrawerTitle>{title}</DrawerTitle>
@@ -69,6 +52,18 @@ export const ResponsiveFormContainer = ({
           </ScrollArea>
         </DrawerContent>
       </Drawer>
-    </>
+    );
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        {children}
+      </DialogContent>
+    </Dialog>
   );
 };
