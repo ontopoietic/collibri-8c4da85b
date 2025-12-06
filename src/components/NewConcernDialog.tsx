@@ -74,16 +74,7 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className={cn(
-          "max-h-[90vh] overflow-y-auto",
-          // Desktop styles
-          "sm:max-w-[700px]",
-          // Mobile: full width at bottom
-          "max-sm:max-w-full max-sm:w-full max-sm:m-0 max-sm:rounded-t-xl max-sm:rounded-b-none",
-          "max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:top-auto",
-          "max-sm:translate-x-0 max-sm:translate-y-0",
-          "max-sm:data-[state=open]:slide-in-from-bottom max-sm:data-[state=closed]:slide-out-to-bottom"
-        )}>
+        <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>
             <DialogTitle>Share a New Concern</DialogTitle>
           </DialogHeader>
