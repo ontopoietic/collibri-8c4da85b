@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { ResponsiveFormContainer } from "@/components/ResponsiveFormContainer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -57,18 +62,22 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
                     (isSolution && solutionTitle.trim() && solutionDescription.trim());
 
   return (
-    <ResponsiveFormContainer
-      open={open}
-      onOpenChange={setOpen}
-      title="Share a New Concern"
-      trigger={
-        <Button size="lg" className="gap-2 bg-new-concern text-new-concern-foreground hover:bg-new-concern">
-          <Plus className="h-5 w-5" />
-          New Concern
-        </Button>
-      }
-    >
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <>
+      <Button 
+        size="lg" 
+        className="gap-2 bg-new-concern text-new-concern-foreground hover:bg-new-concern"
+        onClick={() => setOpen(true)}
+      >
+        <Plus className="h-5 w-5" />
+        New Concern
+      </Button>
+      
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Share a New Concern</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-3">
           <label className="text-sm font-medium">What would you like to share?</label>
           <div className="grid grid-cols-2 gap-3">
@@ -191,6 +200,8 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
           </Button>
         </div>
       </form>
-    </ResponsiveFormContainer>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
