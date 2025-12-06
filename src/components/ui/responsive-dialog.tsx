@@ -7,7 +7,6 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogClose,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -16,131 +15,57 @@ import {
   DrawerTitle,
   DrawerDescription,
   DrawerFooter,
-  DrawerClose,
 } from "@/components/ui/drawer";
+import { cn } from "@/lib/utils";
 
 interface ResponsiveDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  children: React.ReactNode;
-}
-
-interface ResponsiveDialogContentProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-interface ResponsiveDialogHeaderProps {
+  title: React.ReactNode;
+  description?: React.ReactNode;
+  footer?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  footerClassName?: string;
 }
 
-interface ResponsiveDialogTitleProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-interface ResponsiveDialogDescriptionProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-interface ResponsiveDialogFooterProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-const ResponsiveDialogContext = React.createContext<{ isMobile: boolean }>({
-  isMobile: false,
-});
-
-const useResponsiveDialogContext = () => React.useContext(ResponsiveDialogContext);
-
-export const ResponsiveDialog = ({ open, onOpenChange, children }: ResponsiveDialogProps) => {
-  const [isReady, setIsReady] = React.useState(false);
+export const ResponsiveDialog = ({
+  open,
+  onOpenChange,
+  title,
+  description,
+  footer,
+  children,
+  className,
+  footerClassName,
+}: ResponsiveDialogProps) => {
   const isMobile = useIsMobile();
 
-  // Wait for first render to complete to ensure stable isMobile value
-  React.useEffect(() => {
-    setIsReady(true);
-  }, []);
-
-  // Don't render until mounted to prevent hydration mismatches
-  if (!isReady) {
-    return null;
+  if (isMobile) {
+    return (
+      <Drawer open={open} onOpenChange={onOpenChange}>
+        <DrawerContent className={cn("max-h-[90vh]", className)}>
+          <DrawerHeader>
+            <DrawerTitle>{title}</DrawerTitle>
+            {description && <DrawerDescription>{description}</DrawerDescription>}
+          </DrawerHeader>
+          <div className="px-4 overflow-y-auto flex-1">{children}</div>
+          {footer && <DrawerFooter className={footerClassName}>{footer}</DrawerFooter>}
+        </DrawerContent>
+      </Drawer>
+    );
   }
 
   return (
-    <ResponsiveDialogContext.Provider value={{ isMobile }}>
-      {isMobile ? (
-        <Drawer open={open} onOpenChange={onOpenChange}>
-          {children}
-        </Drawer>
-      ) : (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-          {children}
-        </Dialog>
-      )}
-    </ResponsiveDialogContext.Provider>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className={className}>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          {description && <DialogDescription>{description}</DialogDescription>}
+        </DialogHeader>
+        {children}
+        {footer && <DialogFooter className={footerClassName}>{footer}</DialogFooter>}
+      </DialogContent>
+    </Dialog>
   );
-};
-
-export const ResponsiveDialogContent = ({ children, className }: ResponsiveDialogContentProps) => {
-  const { isMobile } = useResponsiveDialogContext();
-
-  if (isMobile) {
-    return <DrawerContent className={className}>{children}</DrawerContent>;
-  }
-
-  return <DialogContent className={className}>{children}</DialogContent>;
-};
-
-export const ResponsiveDialogHeader = ({ children, className }: ResponsiveDialogHeaderProps) => {
-  const { isMobile } = useResponsiveDialogContext();
-
-  if (isMobile) {
-    return <DrawerHeader className={className}>{children}</DrawerHeader>;
-  }
-
-  return <DialogHeader className={className}>{children}</DialogHeader>;
-};
-
-export const ResponsiveDialogTitle = ({ children, className }: ResponsiveDialogTitleProps) => {
-  const { isMobile } = useResponsiveDialogContext();
-
-  if (isMobile) {
-    return <DrawerTitle className={className}>{children}</DrawerTitle>;
-  }
-
-  return <DialogTitle className={className}>{children}</DialogTitle>;
-};
-
-export const ResponsiveDialogDescription = ({ children, className }: ResponsiveDialogDescriptionProps) => {
-  const { isMobile } = useResponsiveDialogContext();
-
-  if (isMobile) {
-    return <DrawerDescription className={className}>{children}</DrawerDescription>;
-  }
-
-  return <DialogDescription className={className}>{children}</DialogDescription>;
-};
-
-export const ResponsiveDialogFooter = ({ children, className }: ResponsiveDialogFooterProps) => {
-  const { isMobile } = useResponsiveDialogContext();
-
-  if (isMobile) {
-    return <DrawerFooter className={className}>{children}</DrawerFooter>;
-  }
-
-  return <DialogFooter className={className}>{children}</DialogFooter>;
-};
-
-export const ResponsiveDialogClose = ({ children }: { children: React.ReactNode }) => {
-  const { isMobile } = useResponsiveDialogContext();
-
-  if (isMobile) {
-    return <DrawerClose asChild>{children}</DrawerClose>;
-  }
-
-  return <DialogClose asChild>{children}</DialogClose>;
 };
