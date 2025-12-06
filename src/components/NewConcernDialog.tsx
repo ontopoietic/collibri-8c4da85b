@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-  ResponsiveDialogFooter,
-} from "@/components/ui/responsive-dialog";
+import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -73,135 +67,137 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
         New Concern
       </Button>
 
-      <ResponsiveDialog open={open} onOpenChange={setOpen}>
-        <ResponsiveDialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
-          <ResponsiveDialogHeader>
-            <ResponsiveDialogTitle>Share a New Concern</ResponsiveDialogTitle>
-          </ResponsiveDialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-6 px-4 sm:px-0">
-            <div className="space-y-3">
-              <label className="text-sm font-medium">What would you like to share?</label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => setIsProblem(!isProblem)}
-                  className={cn(
-                    "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all",
-                    isProblem
-                      ? "border-destructive bg-destructive/5"
-                      : "border-border bg-card hover:bg-muted/50"
-                  )}
-                >
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-5 w-5 text-destructive" />
-                    <span className="font-medium">Problem</span>
-                  </div>
-                  <span className="text-xs text-muted-foreground text-left">
-                    Share an issue that needs attention
-                  </span>
-                </button>
+      <ResponsiveDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Share a New Concern"
+        className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto"
+        footerClassName="gap-2 sm:gap-0"
+        footer={
+          <>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={!canSubmit} form="new-concern-form">
+              Submit Concern{(isProblem && isSolution) ? 's' : ''}
+            </Button>
+          </>
+        }
+      >
+        <form id="new-concern-form" onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-3">
+            <label className="text-sm font-medium">What would you like to share?</label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setIsProblem(!isProblem)}
+                className={cn(
+                  "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all",
+                  isProblem
+                    ? "border-destructive bg-destructive/5"
+                    : "border-border bg-card hover:bg-muted/50"
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5 text-destructive" />
+                  <span className="font-medium">Problem</span>
+                </div>
+                <span className="text-xs text-muted-foreground text-left">
+                  Share an issue that needs attention
+                </span>
+              </button>
 
-                <button
-                  type="button"
-                  onClick={() => setIsSolution(!isSolution)}
-                  className={cn(
-                    "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all",
-                    isSolution
-                      ? "border-proposal bg-proposal/5"
-                      : "border-border bg-card hover:bg-muted/50"
-                  )}
-                >
-                  <div className="flex items-center gap-2">
-                    <Lightbulb className="h-5 w-5 text-proposal" />
-                    <span className="font-medium">Solution</span>
-                  </div>
-                  <span className="text-xs text-muted-foreground text-left">
-                    Propose a solution or improvement
-                  </span>
-                </button>
+              <button
+                type="button"
+                onClick={() => setIsSolution(!isSolution)}
+                className={cn(
+                  "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all",
+                  isSolution
+                    ? "border-proposal bg-proposal/5"
+                    : "border-border bg-card hover:bg-muted/50"
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <Lightbulb className="h-5 w-5 text-proposal" />
+                  <span className="font-medium">Solution</span>
+                </div>
+                <span className="text-xs text-muted-foreground text-left">
+                  Propose a solution or improvement
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {isProblem && (
+            <div className="space-y-4 p-4 rounded-lg border border-destructive/20 bg-destructive/5">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-destructive" />
+                <h3 className="font-medium">Problem</h3>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Title</label>
+                <Input
+                  value={problemTitle}
+                  onChange={(e) => setProblemTitle(e.target.value)}
+                  placeholder="Brief summary of the problem..."
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Description</label>
+                <Textarea
+                  value={problemDescription}
+                  onChange={(e) => setProblemDescription(e.target.value)}
+                  placeholder="Provide details about the problem..."
+                  className="min-h-[120px]"
+                />
               </div>
             </div>
+          )}
 
-            {isProblem && (
-              <div className="space-y-4 p-4 rounded-lg border border-destructive/20 bg-destructive/5">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-destructive" />
-                  <h3 className="font-medium">Problem</h3>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Title</label>
-                  <Input
-                    value={problemTitle}
-                    onChange={(e) => setProblemTitle(e.target.value)}
-                    placeholder="Brief summary of the problem..."
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Description</label>
-                  <Textarea
-                    value={problemDescription}
-                    onChange={(e) => setProblemDescription(e.target.value)}
-                    placeholder="Provide details about the problem..."
-                    className="min-h-[120px]"
-                  />
-                </div>
+          {isSolution && (
+            <div className="space-y-4 p-4 rounded-lg border border-proposal/20 bg-proposal/5">
+              <div className="flex items-center gap-2">
+                <Lightbulb className="h-4 w-4 text-proposal" />
+                <h3 className="font-medium">Solution</h3>
               </div>
-            )}
-
-            {isSolution && (
-              <div className="space-y-4 p-4 rounded-lg border border-proposal/20 bg-proposal/5">
-                <div className="flex items-center gap-2">
-                  <Lightbulb className="h-4 w-4 text-proposal" />
-                  <h3 className="font-medium">Solution</h3>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Title</label>
-                  <Input
-                    value={solutionTitle}
-                    onChange={(e) => setSolutionTitle(e.target.value)}
-                    placeholder="Brief summary of your solution..."
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Description</label>
-                  <Textarea
-                    value={solutionDescription}
-                    onChange={(e) => setSolutionDescription(e.target.value)}
-                    placeholder="Provide details about your solution..."
-                    className="min-h-[120px]"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Where can this be solved?</label>
-                  <Select value={solutionLevel} onValueChange={(value) => setSolutionLevel(value as SolutionLevel)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select solution level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="class">Class</SelectItem>
-                      <SelectItem value="school">School</SelectItem>
-                      <SelectItem value="ministries">Ministries</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Title</label>
+                <Input
+                  value={solutionTitle}
+                  onChange={(e) => setSolutionTitle(e.target.value)}
+                  placeholder="Brief summary of your solution..."
+                />
               </div>
-            )}
 
-            <ResponsiveDialogFooter className="gap-2 sm:gap-0">
-              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={!canSubmit}>
-                Submit Concern{(isProblem && isSolution) ? 's' : ''}
-              </Button>
-            </ResponsiveDialogFooter>
-          </form>
-        </ResponsiveDialogContent>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Description</label>
+                <Textarea
+                  value={solutionDescription}
+                  onChange={(e) => setSolutionDescription(e.target.value)}
+                  placeholder="Provide details about your solution..."
+                  className="min-h-[120px]"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Where can this be solved?</label>
+                <Select value={solutionLevel} onValueChange={(value) => setSolutionLevel(value as SolutionLevel)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select solution level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="class">Class</SelectItem>
+                    <SelectItem value="school">School</SelectItem>
+                    <SelectItem value="ministries">Ministries</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
+        </form>
       </ResponsiveDialog>
     </>
   );
