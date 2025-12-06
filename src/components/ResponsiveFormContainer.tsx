@@ -35,10 +35,24 @@ export const ResponsiveFormContainer = ({
 }: ResponsiveFormContainerProps) => {
   const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return (
-      <Drawer open={open} onOpenChange={onOpenChange}>
-        {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
+  // Render both but only show the appropriate one based on screen size
+  // This avoids conditional component tree issues during hydration
+  return (
+    <>
+      {/* Desktop: Dialog */}
+      <Dialog open={!isMobile && open} onOpenChange={onOpenChange}>
+        {trigger && !isMobile && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+        <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+          </DialogHeader>
+          {children}
+        </DialogContent>
+      </Dialog>
+
+      {/* Mobile: Drawer */}
+      <Drawer open={isMobile && open} onOpenChange={onOpenChange}>
+        {trigger && isMobile && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
         <DrawerContent className="h-[100dvh] max-h-[100dvh] rounded-none">
           <DrawerHeader className="border-b border-border relative">
             <DrawerTitle>{title}</DrawerTitle>
@@ -52,18 +66,6 @@ export const ResponsiveFormContainer = ({
           </ScrollArea>
         </DrawerContent>
       </Drawer>
-    );
-  }
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        {children}
-      </DialogContent>
-    </Dialog>
+    </>
   );
 };
