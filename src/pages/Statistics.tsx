@@ -541,7 +541,7 @@ const Statistics = () => {
                     cx="50%"
                     cy="45%"
                     labelLine={false}
-                    label={isMobile ? undefined : (entry) => `${entry.name}: ${entry.count}`}
+                    label={false}
                     outerRadius={isMobile ? 80 : 100}
                     fill="hsl(var(--primary))"
                     dataKey="count"
@@ -601,7 +601,7 @@ const Statistics = () => {
                     cx="50%"
                     cy="45%"
                     labelLine={false}
-                    label={isMobile ? undefined : (entry) => `${entry.name}: ${entry.votes}`}
+                    label={false}
                     outerRadius={isMobile ? 80 : 100}
                     fill="hsl(var(--primary))"
                     dataKey="votes"
