@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { CategoryBadge } from "@/components/CategoryBadge";
 import { VoteButton } from "@/components/VoteButton";
 import { ReplyThread } from "@/components/ReplyThread";
-import { ReplyForm } from "@/components/ReplyForm";
+import { ReplyFormSheet } from "@/components/ReplyFormSheet";
 import { AspectBadges } from "@/components/AspectBadges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -449,19 +449,18 @@ const ConcernDetail = () => {
             )}
           </div>
 
-          {showReplyForm && (
-            <ReplyForm
-              onSubmit={handleReply}
-              onCancel={() => {
-                setShowReplyForm(false);
-                setReplyToId(null);
-              }}
-              replyType={replyType}
-              originalText={replyToTarget?.text ?? concern.description}
-              availableReplies={availableReplies}
-              parentConcernType={concern.type}
-            />
-          )}
+          <ReplyFormSheet
+            open={showReplyForm}
+            onOpenChange={(open) => {
+              setShowReplyForm(open);
+              if (!open) setReplyToId(null);
+            }}
+            replyType={replyType}
+            onSubmit={handleReply}
+            originalText={replyToTarget?.text ?? concern.description}
+            availableReplies={availableReplies}
+            parentConcernType={concern.type}
+          />
         </div>
 
         {concern.replies.length > 0 && (
