@@ -270,17 +270,20 @@ const ConcernDetail = () => {
 
         <div className="bg-card rounded-lg p-4 sm:p-8 shadow-sm space-y-6">
           <div className="flex items-start justify-between gap-4">
-            <div className="flex items-center gap-2 flex-wrap">
-              {concern.aspects && concern.aspects.length > 0 ? (
-                <AspectBadges aspects={concern.aspects} />
-              ) : (
-                <Badge variant="outline" className={config.className}>
-                  <Icon className="mr-1 h-3 w-3" />
-                  {config.label}
-                </Badge>
-              )}
-            </div>
-            <span className="text-xs text-muted-foreground">
+            {/* Hide aspect badges when both problem and proposal sections are shown */}
+            {!(concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText) && (
+              <div className="flex items-center gap-2 flex-wrap">
+                {concern.aspects && concern.aspects.length > 0 ? (
+                  <AspectBadges aspects={concern.aspects} />
+                ) : (
+                  <Badge variant="outline" className={config.className}>
+                    <Icon className="mr-1 h-3 w-3" />
+                    {config.label}
+                  </Badge>
+                )}
+              </div>
+            )}
+            <span className="text-xs text-muted-foreground ml-auto">
               {formatDistanceToNow(concern.timestamp, { addSuffix: true })}
             </span>
           </div>

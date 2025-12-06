@@ -32,9 +32,11 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
       <div className="space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2 flex-wrap">
-            {concern.aspects && concern.aspects.length > 0 && (
-              <AspectBadges aspects={concern.aspects} />
-            )}
+            {/* Hide aspect badges when both problem and proposal sections will be shown */}
+            {!(concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText) && 
+              concern.aspects && concern.aspects.length > 0 && (
+                <AspectBadges aspects={concern.aspects} />
+              )}
             {concern.solutionLevel && (
               <SolutionLevelBadge level={concern.solutionLevel} />
             )}
@@ -61,7 +63,29 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
             <TypeIconPrefix type={concern.type} />
             <h3 className="text-xl font-semibold text-foreground">{concern.title}</h3>
           </div>
-          <p className="text-muted-foreground line-clamp-3">{concern.description}</p>
+          {concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText ? (
+            <div className="space-y-2">
+              {/* Problem Section */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <TypeIconPrefix type="problem" size="sm" />
+                  <span className="text-sm font-medium text-foreground">Problem</span>
+                </div>
+                <p className="text-muted-foreground text-sm line-clamp-2">{concern.problemText}</p>
+              </div>
+              
+              {/* Proposal Section */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <TypeIconPrefix type="proposal" size="sm" />
+                  <span className="text-sm font-medium text-foreground">Proposal</span>
+                </div>
+                <p className="text-muted-foreground text-sm line-clamp-2">{concern.proposalText}</p>
+              </div>
+            </div>
+          ) : (
+            <p className="text-muted-foreground line-clamp-3">{concern.description}</p>
+          )}
         </div>
 
         <div className="flex items-center gap-4 pt-2">
