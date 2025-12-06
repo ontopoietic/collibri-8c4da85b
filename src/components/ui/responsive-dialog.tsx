@@ -57,10 +57,16 @@ const ResponsiveDialogContext = React.createContext<{ isMobile: boolean }>({
 const useResponsiveDialogContext = () => React.useContext(ResponsiveDialogContext);
 
 export const ResponsiveDialog = ({ open, onOpenChange, children }: ResponsiveDialogProps) => {
+  const [isReady, setIsReady] = React.useState(false);
   const isMobile = useIsMobile();
 
-  // Don't render until we know the device type to prevent hydration mismatches
-  if (isMobile === undefined) {
+  // Wait for first render to complete to ensure stable isMobile value
+  React.useEffect(() => {
+    setIsReady(true);
+  }, []);
+
+  // Don't render until mounted to prevent hydration mismatches
+  if (!isReady) {
     return null;
   }
 
