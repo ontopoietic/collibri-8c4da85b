@@ -16,34 +16,30 @@ import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
-console.log("[App] Module loaded");
-
 const App = () => {
-  console.log("[App] Rendering");
   return (
-  <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <AdminProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/concern/:id" element={<ConcernDetail />} />
-              <Route path="/statistics" element={<Statistics />} />
-              <Route path="/leaderboard/:phase" element={<Leaderboard />} />
-              <Route path="/notifications" element={<Notifications />} />
-              <Route path="/graph" element={<Graph />} />
-              <Route path="/admin/users" element={<AdminUsers />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AdminProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AdminProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/concern/:id" element={<ConcernDetail />} />
+                <Route path="/statistics" element={<Statistics />} />
+                <Route path="/leaderboard/:phase" element={<Leaderboard />} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/graph" element={<Graph />} />
+                <Route path="/admin/users" element={<AdminUsers />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </AdminProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 };
 
