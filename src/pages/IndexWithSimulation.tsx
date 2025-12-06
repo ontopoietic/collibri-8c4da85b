@@ -365,198 +365,95 @@ const Index = () => {
                 {currentPhase === "class" ? "Class" : currentPhase === "grade" ? "Grade" : "School"} Phase Concerns
               </h2>
               
-              {isMobile ? (
-                <div className="flex gap-2 items-center">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Search concerns..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                  
-                  {/* Filter Dropdown */}
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="icon">
-                        <Filter className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => setFilterBy("all")}>
-                        <ListFilter className="h-4 w-4 mr-2" />
-                        All Concerns
-                        {filterBy === "all" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilterBy("my-posts")}>
-                        <User className="h-4 w-4 mr-2" />
-                        My Concerns
-                        {filterBy === "my-posts" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilterBy("followed")}>
-                        <Heart className="h-4 w-4 mr-2" />
-                        Followed
-                        {filterBy === "followed" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilterBy("unnoticed")}>
-                        <EyeOff className="h-4 w-4 mr-2" />
-                        Unnoticed
-                        {filterBy === "unnoticed" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => setSolutionLevelFilter("all")}>
-                        <ListFilter className="h-4 w-4 mr-2" />
-                        All Levels
-                        {solutionLevelFilter === "all" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setSolutionLevelFilter("class")}>
-                        <Users className="h-4 w-4 mr-2" />
-                        Class Level
-                        {solutionLevelFilter === "class" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setSolutionLevelFilter("school")}>
-                        <School className="h-4 w-4 mr-2" />
-                        School Level
-                        {solutionLevelFilter === "school" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setSolutionLevelFilter("ministries")}>
-                        <Building2 className="h-4 w-4 mr-2" />
-                        Ministry Level
-                        {solutionLevelFilter === "ministries" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  
-                  {/* Sort Dropdown */}
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="icon">
-                        <ArrowUpDown className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => setSortBy("newest")}>
-                        <Clock className="h-4 w-4 mr-2" />
-                        Newest
-                        {sortBy === "newest" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setSortBy("oldest")}>
-                        <ArrowUp className="h-4 w-4 mr-2" />
-                        Oldest
-                        {sortBy === "oldest" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setSortBy("popularity")}>
-                        <TrendingUp className="h-4 w-4 mr-2" />
-                        Popularity
-                        {sortBy === "popularity" && <Check className="h-4 w-4 ml-auto" />}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+              <div className="flex gap-2 items-center">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search concerns..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10"
+                  />
                 </div>
-              ) : (
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Search concerns..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                  <div className="flex gap-2">
-                    <Select value={filterBy} onValueChange={(value: any) => setFilterBy(value)}>
-                      <SelectTrigger className="w-[140px]">
-                        <SelectValue placeholder="Filter by" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">
-                          <span className="flex items-center gap-2">
-                            <ListFilter className="h-4 w-4" />
-                            All Concerns
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="my-posts">
-                          <span className="flex items-center gap-2">
-                            <User className="h-4 w-4" />
-                            My Concerns
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="followed">
-                          <span className="flex items-center gap-2">
-                            <Heart className="h-4 w-4" />
-                            Followed
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="unnoticed">
-                          <span className="flex items-center gap-2">
-                            <EyeOff className="h-4 w-4" />
-                            Unnoticed
-                          </span>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
-                      <SelectTrigger className="w-[140px]">
-                        <SelectValue placeholder="Sort by" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="newest">
-                          <span className="flex items-center gap-2">
-                            <Clock className="h-4 w-4" />
-                            Newest
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="oldest">
-                          <span className="flex items-center gap-2">
-                            <ArrowUp className="h-4 w-4" />
-                            Oldest
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="popularity">
-                          <span className="flex items-center gap-2">
-                            <TrendingUp className="h-4 w-4" />
-                            Popularity
-                          </span>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select value={solutionLevelFilter} onValueChange={(value: any) => setSolutionLevelFilter(value)}>
-                      <SelectTrigger className="w-[150px]">
-                        <SelectValue placeholder="Solution Level" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">
-                          <span className="flex items-center gap-2">
-                            <ListFilter className="h-4 w-4" />
-                            All Levels
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="class">
-                          <span className="flex items-center gap-2">
-                            <Users className="h-4 w-4" />
-                            Class Level
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="school">
-                          <span className="flex items-center gap-2">
-                            <School className="h-4 w-4" />
-                            School Level
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="ministries">
-                          <span className="flex items-center gap-2">
-                            <Building2 className="h-4 w-4" />
-                            Ministry Level
-                          </span>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              )}
+                
+                {/* Filter Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <Filter className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setFilterBy("all")}>
+                      <ListFilter className="h-4 w-4 mr-2" />
+                      All Concerns
+                      {filterBy === "all" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setFilterBy("my-posts")}>
+                      <User className="h-4 w-4 mr-2" />
+                      My Concerns
+                      {filterBy === "my-posts" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setFilterBy("followed")}>
+                      <Heart className="h-4 w-4 mr-2" />
+                      Followed
+                      {filterBy === "followed" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setFilterBy("unnoticed")}>
+                      <EyeOff className="h-4 w-4 mr-2" />
+                      Unnoticed
+                      {filterBy === "unnoticed" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => setSolutionLevelFilter("all")}>
+                      <ListFilter className="h-4 w-4 mr-2" />
+                      All Levels
+                      {solutionLevelFilter === "all" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSolutionLevelFilter("class")}>
+                      <Users className="h-4 w-4 mr-2" />
+                      Class Level
+                      {solutionLevelFilter === "class" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSolutionLevelFilter("school")}>
+                      <School className="h-4 w-4 mr-2" />
+                      School Level
+                      {solutionLevelFilter === "school" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSolutionLevelFilter("ministries")}>
+                      <Building2 className="h-4 w-4 mr-2" />
+                      Ministry Level
+                      {solutionLevelFilter === "ministries" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                
+                {/* Sort Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <ArrowUpDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setSortBy("newest")}>
+                      <Clock className="h-4 w-4 mr-2" />
+                      Newest
+                      {sortBy === "newest" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSortBy("oldest")}>
+                      <ArrowUp className="h-4 w-4 mr-2" />
+                      Oldest
+                      {sortBy === "oldest" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSortBy("popularity")}>
+                      <TrendingUp className="h-4 w-4 mr-2" />
+                      Popularity
+                      {sortBy === "popularity" && <Check className="h-4 w-4 ml-auto" />}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
 
             <div className="space-y-4">
