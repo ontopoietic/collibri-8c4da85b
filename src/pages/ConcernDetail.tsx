@@ -270,8 +270,8 @@ const ConcernDetail = () => {
 
         <div className="bg-card rounded-lg p-4 sm:p-8 shadow-sm space-y-6">
           <div className="flex items-start justify-between gap-4">
-            {/* Hide aspect badges when both problem and proposal sections are shown */}
-            {!(concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText) && (
+            {/* Hide aspect badges when inline type icons will be shown */}
+            {!((concern.problemText || concern.aspects?.includes("problem")) || (concern.proposalText || concern.aspects?.includes("proposal"))) && (
               <div className="flex items-center gap-2 flex-wrap">
                 {concern.aspects && concern.aspects.length > 0 ? (
                   <AspectBadges aspects={concern.aspects} />
@@ -303,28 +303,41 @@ const ConcernDetail = () => {
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-4">{concern.title}</h1>
             
-            {concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText ? (
+            {/* Show inline sections based on available content */}
+            {(concern.problemText || concern.aspects?.includes("problem")) || (concern.proposalText || concern.aspects?.includes("proposal")) ? (
               <div className="space-y-4">
-                {/* Problem Section */}
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <TypeIconPrefix type="problem" size="sm" />
-                    <h2 className="text-base font-semibold text-foreground">Problem</h2>
+                {/* Problem Section - show if problemText exists OR has problem aspect */}
+                {(concern.problemText || concern.aspects?.includes("problem")) && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <TypeIconPrefix type="problem" size="sm" />
+                      <h2 className="text-base font-semibold text-foreground">Problem</h2>
+                    </div>
+                    <p className="text-foreground leading-relaxed">
+                      {concern.problemText || concern.description}
+                    </p>
                   </div>
-                  <p className="text-foreground leading-relaxed">{concern.problemText}</p>
-                </div>
+                )}
                 
-                {/* Proposal Section */}
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <TypeIconPrefix type="proposal" size="sm" />
-                    <h2 className="text-base font-semibold text-foreground">Proposal</h2>
+                {/* Proposal Section - show if proposalText exists OR has proposal aspect */}
+                {(concern.proposalText || concern.aspects?.includes("proposal")) && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <TypeIconPrefix type="proposal" size="sm" />
+                      <h2 className="text-base font-semibold text-foreground">Proposal</h2>
+                    </div>
+                    <p className="text-foreground leading-relaxed">
+                      {concern.proposalText || concern.description}
+                    </p>
                   </div>
-                  <p className="text-foreground leading-relaxed">{concern.proposalText}</p>
-                </div>
+                )}
               </div>
             ) : (
-              <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
+              /* Fallback for concerns without aspects - show type icon with description */
+              <div className="flex items-start gap-2">
+                <TypeIconPrefix type={concern.type} size="sm" />
+                <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
+              </div>
             )}
           </div>
 
