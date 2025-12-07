@@ -32,8 +32,8 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
       <div className="space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2 flex-wrap">
-            {/* Hide aspect badges when both problem and proposal sections will be shown */}
-            {!(concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText) && 
+            {/* Hide aspect badges when inline type icons will be shown */}
+            {!((concern.problemText || concern.aspects?.includes("problem")) || (concern.proposalText || concern.aspects?.includes("proposal"))) && 
               concern.aspects && concern.aspects.length > 0 && (
                 <AspectBadges aspects={concern.aspects} />
               )}
@@ -59,34 +59,43 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
         )}
 
         <div>
-          <div className="flex items-center gap-2 mb-2">
-            {!(concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText) && (
-              <TypeIconPrefix type={concern.type} />
-            )}
-            <h3 className="text-xl font-semibold text-foreground">{concern.title}</h3>
-          </div>
-          {concern.aspects?.includes("problem") && concern.aspects?.includes("proposal") && concern.problemText && concern.proposalText ? (
+          <h3 className="text-xl font-semibold text-foreground mb-2">{concern.title}</h3>
+          
+          {/* Show inline sections based on available content */}
+          {(concern.problemText || concern.aspects?.includes("problem")) || (concern.proposalText || concern.aspects?.includes("proposal")) ? (
             <div className="space-y-2">
-              {/* Problem Section */}
-              <div>
-                <div className="flex items-center gap-1.5 mb-1">
-                  <TypeIconPrefix type="problem" size="sm" />
-                  <span className="text-sm font-medium text-foreground">Problem</span>
+              {/* Problem Section - show if problemText exists OR has problem aspect */}
+              {(concern.problemText || concern.aspects?.includes("problem")) && (
+                <div>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <TypeIconPrefix type="problem" size="sm" />
+                    <span className="text-sm font-medium text-foreground">Problem</span>
+                  </div>
+                  <p className="text-muted-foreground text-sm line-clamp-2">
+                    {concern.problemText || concern.description}
+                  </p>
                 </div>
-                <p className="text-muted-foreground text-sm line-clamp-2">{concern.problemText}</p>
-              </div>
+              )}
               
-              {/* Proposal Section */}
-              <div>
-                <div className="flex items-center gap-1.5 mb-1">
-                  <TypeIconPrefix type="proposal" size="sm" />
-                  <span className="text-sm font-medium text-foreground">Proposal</span>
+              {/* Proposal Section - show if proposalText exists OR has proposal aspect */}
+              {(concern.proposalText || concern.aspects?.includes("proposal")) && (
+                <div>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <TypeIconPrefix type="proposal" size="sm" />
+                    <span className="text-sm font-medium text-foreground">Proposal</span>
+                  </div>
+                  <p className="text-muted-foreground text-sm line-clamp-2">
+                    {concern.proposalText || concern.description}
+                  </p>
                 </div>
-                <p className="text-muted-foreground text-sm line-clamp-2">{concern.proposalText}</p>
-              </div>
+              )}
             </div>
           ) : (
-            <p className="text-muted-foreground line-clamp-3">{concern.description}</p>
+            /* Fallback for concerns without aspects - show type icon with description */
+            <div className="flex items-start gap-2">
+              <TypeIconPrefix type={concern.type} size="sm" />
+              <p className="text-muted-foreground line-clamp-3">{concern.description}</p>
+            </div>
           )}
         </div>
 
