@@ -22,6 +22,7 @@ interface ReplyThreadProps {
   onFormToggle?: (replyId: string | null) => void;
   parentCategory?: ReplyCategory;
   concernType?: "problem" | "proposal" | "counter-proposal";
+  depth?: number;
 }
 
 const getAllRepliesFlat = (replies: Reply[]): Reply[] => {
@@ -45,7 +46,8 @@ const ReplyItem = ({
   openFormId,
   onFormToggle,
   parentCategory,
-  concernType
+  concernType,
+  depth = 0
 }: { 
   reply: Reply; 
   onReply: (parentId: string, replyType?: 'endorse' | 'object' | 'question') => void;
@@ -54,10 +56,11 @@ const ReplyItem = ({
   onFormToggle?: (replyId: string | null) => void;
   parentCategory?: ReplyCategory;
   concernType?: "problem" | "proposal" | "counter-proposal";
+  depth?: number;
 }) => {
   const isMobile = useIsMobile();
   const { adminModeEnabled } = useAdmin();
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(depth === 0);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
   const hasReplies = reply.replies.length > 0;
   const showReplyForm = openFormId === reply.id;
@@ -251,6 +254,7 @@ const ReplyItem = ({
                   onFormToggle={onFormToggle}
                   parentCategory={reply.category}
                   concernType={concernType}
+                  depth={depth + 1}
                 />
               </div>
             )}
@@ -259,7 +263,7 @@ const ReplyItem = ({
   );
 };
 
-export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle, parentCategory, concernType }: ReplyThreadProps) => {
+export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle, parentCategory, concernType, depth = 0 }: ReplyThreadProps) => {
   const [localOpenFormId, setLocalOpenFormId] = useState<string | null>(null);
   
   if (replies.length === 0) return null;
@@ -283,6 +287,7 @@ export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, on
           onFormToggle={handleFormToggle}
           parentCategory={parentCategory}
           concernType={concernType}
+          depth={depth}
         />
       ))}
     </div>
