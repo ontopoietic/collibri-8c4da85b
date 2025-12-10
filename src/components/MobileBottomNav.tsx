@@ -77,11 +77,11 @@ export const MobileBottomNav = ({
           </Button>
 
           <Button
-            variant={activeAction === 'vote' ? 'vote' : 'ghost'}
+            variant={activeAction === 'vote' ? 'question' : 'ghost'}
             size="sm"
-            onClick={onVote}
+            onClick={onAskQuestion}
             className={activeAction === 'vote' 
-              ? "gap-1.5 bg-vote text-vote-foreground hover:bg-vote rounded-full px-4" 
+              ? "gap-1.5 bg-question text-question-foreground hover:bg-question rounded-full px-4" 
               : "flex-col h-auto py-2 gap-1 text-white"
             }
           >
