@@ -10,6 +10,7 @@ import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, ThumbsUp, ThumbsDo
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import { ReplyForm } from "./ReplyForm";
+import { MobileFormDrawer } from "./MobileFormDrawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { useAdmin } from "@/contexts/AdminContext";
@@ -231,7 +232,8 @@ const ReplyItem = ({
               )}
             </div>
 
-            {showReplyForm && (
+            {/* Reply Form - inline on desktop, drawer on mobile */}
+            {showReplyForm && !isMobile && (
               <div className="mt-4">
                 <ReplyForm
                   onSubmit={handleReplySubmit}
@@ -242,6 +244,24 @@ const ReplyItem = ({
                   parentConcernType={concernType}
                 />
               </div>
+            )}
+
+            {/* Mobile Reply Form Drawer */}
+            {isMobile && (
+              <MobileFormDrawer
+                isOpen={showReplyForm}
+                onClose={() => onFormToggle?.(null)}
+                title={replyType === 'endorse' ? 'Endorse' : replyType === 'object' ? 'Object' : 'Ask Question'}
+              >
+                <ReplyForm
+                  onSubmit={handleReplySubmit}
+                  onCancel={() => onFormToggle?.(null)}
+                  replyType={replyType}
+                  originalText={reply.text}
+                  availableReplies={availableReplies}
+                  parentConcernType={concernType}
+                />
+              </MobileFormDrawer>
             )}
 
             {hasReplies && isExpanded && (
