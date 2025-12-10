@@ -29,6 +29,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { MobileFormDrawer } from "@/components/MobileFormDrawer";
 import { cn } from "@/lib/utils";
 
 const Index = () => {
@@ -485,14 +486,15 @@ const Index = () => {
         }}
       />
 
-      {/* New Concern Dialog for Mobile */}
-      <Dialog open={showNewConcernDialog} onOpenChange={setShowNewConcernDialog}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>New Concern</DialogTitle>
-          </DialogHeader>
+      {/* New Concern Form - Drawer on mobile, Dialog on desktop */}
+      {isMobile ? (
+        <MobileFormDrawer
+          isOpen={showNewConcernDialog}
+          onClose={() => setShowNewConcernDialog(false)}
+          title="New Concern"
+        >
           <div className="space-y-6">
-            {/* Problem Section - Styled like NewConcernDialog */}
+            {/* Problem Section */}
             <div className="space-y-4">
               <button
                 type="button"
@@ -530,7 +532,7 @@ const Index = () => {
               )}
             </div>
 
-            {/* Solution Section - Styled like NewConcernDialog */}
+            {/* Solution Section */}
             <div className="space-y-4">
               <button
                 type="button"
@@ -597,8 +599,122 @@ const Index = () => {
               </Button>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </MobileFormDrawer>
+      ) : (
+        <Dialog open={showNewConcernDialog} onOpenChange={setShowNewConcernDialog}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>New Concern</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6">
+              {/* Problem Section */}
+              <div className="space-y-4">
+                <button
+                  type="button"
+                  onClick={() => setIsProblem(!isProblem)}
+                  className={cn(
+                    "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all w-full text-left",
+                    isProblem
+                      ? "border-problem bg-problem/5"
+                      : "border-border bg-card hover:bg-muted/50"
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5 text-problem" />
+                    <span className="font-medium">I want to describe a Problem</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Share an issue that needs attention
+                  </span>
+                </button>
+                
+                {isProblem && (
+                  <div className="space-y-3 pl-2">
+                    <Input
+                      placeholder="Problem Title"
+                      value={problemTitle}
+                      onChange={(e) => setProblemTitle(e.target.value)}
+                    />
+                    <Textarea
+                      placeholder="Describe the problem..."
+                      value={problemDescription}
+                      onChange={(e) => setProblemDescription(e.target.value)}
+                      rows={4}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Solution Section */}
+              <div className="space-y-4">
+                <button
+                  type="button"
+                  onClick={() => setIsSolution(!isSolution)}
+                  className={cn(
+                    "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all w-full text-left",
+                    isSolution
+                      ? "border-proposal bg-proposal/5"
+                      : "border-border bg-card hover:bg-muted/50"
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    <Lightbulb className="h-5 w-5 text-proposal" />
+                    <span className="font-medium">I want to propose a Solution</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Suggest an improvement or change
+                  </span>
+                </button>
+                
+                {isSolution && (
+                  <div className="space-y-3 pl-2">
+                    <Input
+                      placeholder="Solution Title"
+                      value={solutionTitle}
+                      onChange={(e) => setSolutionTitle(e.target.value)}
+                    />
+                    <Textarea
+                      placeholder="Describe your solution..."
+                      value={solutionDescription}
+                      onChange={(e) => setSolutionDescription(e.target.value)}
+                      rows={4}
+                    />
+                    <Select value={solutionLevel} onValueChange={(value: SolutionLevel) => setSolutionLevel(value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Solution Level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="class">Class</SelectItem>
+                        <SelectItem value="school">School</SelectItem>
+                        <SelectItem value="ministries">Ministries</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex gap-2 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowNewConcernDialog(false)}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  onClick={handleMobileSubmit}
+                  disabled={!canSubmit}
+                  className="flex-1"
+                >
+                  Submit Concern(s)
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };

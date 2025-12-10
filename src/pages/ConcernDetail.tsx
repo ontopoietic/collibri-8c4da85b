@@ -19,6 +19,7 @@ import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { GlassOverlay } from "@/components/GlassOverlay";
+import { MobileFormDrawer } from "@/components/MobileFormDrawer";
 import { useAdmin } from "@/contexts/AdminContext";
 import QAAccordion from "@/components/QAAccordion";
 import {
@@ -488,12 +489,14 @@ const ConcernDetail = () => {
             )}
           </div>
 
-          {showReplyForm && (
+          {/* Reply Form - inline on desktop, drawer on mobile */}
+          {showReplyForm && !isMobile && (
             <ReplyForm
               onSubmit={handleReply}
               onCancel={() => {
                 setShowReplyForm(false);
                 setReplyToId(null);
+                setActiveAction(null);
               }}
               replyType={replyType}
               originalText={replyToTarget?.text ?? concern.description}
@@ -502,6 +505,35 @@ const ConcernDetail = () => {
             />
           )}
         </div>
+
+        {/* Mobile Reply Form Drawer */}
+        {isMobile && (
+          <MobileFormDrawer
+            isOpen={showReplyForm}
+            onClose={() => {
+              setShowReplyForm(false);
+              setReplyToId(null);
+              setActiveAction(null);
+            }}
+            title={replyType === 'endorse' ? 'Endorse' : replyType === 'object' ? 'Object' : 'Ask Question'}
+          >
+            <ReplyForm
+              onSubmit={(category, text, referencedReplies, counterProposal) => {
+                handleReply(category, text, referencedReplies, counterProposal);
+                setActiveAction(null);
+              }}
+              onCancel={() => {
+                setShowReplyForm(false);
+                setReplyToId(null);
+                setActiveAction(null);
+              }}
+              replyType={replyType}
+              originalText={replyToTarget?.text ?? concern.description}
+              availableReplies={availableReplies}
+              parentConcernType={concern.type}
+            />
+          </MobileFormDrawer>
+        )}
 
         {concern.replies.length > 0 && (
           <div className="mt-8">
