@@ -635,8 +635,8 @@ const ConcernDetail = () => {
                   </div>
                 </div>
                 {regularReplies.length > 0 ? (
-                  <ReplyThread
-                    replies={regularReplies}
+                  <ReplyThread 
+                    replies={regularReplies} 
                     onReply={(parentId, type = 'question') => {
                       setReplyToId(parentId);
                       setReplyType(type);
@@ -644,6 +644,7 @@ const ConcernDetail = () => {
                     }}
                     availableReplies={availableReplies}
                     concernType={concern.type}
+                    concernId={concern.id}
                   />
                 ) : (
                   <p className="text-muted-foreground text-center py-8">No responses yet. Be the first to respond!</p>

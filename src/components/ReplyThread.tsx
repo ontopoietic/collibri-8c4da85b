@@ -9,6 +9,7 @@ import { Badge } from "./ui/badge";
 import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, ThumbsUp, ThumbsDown, Trash2, User } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReplyForm } from "./ReplyForm";
 import { MobileFormDrawer } from "./MobileFormDrawer";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -23,6 +24,7 @@ interface ReplyThreadProps {
   onFormToggle?: (replyId: string | null) => void;
   parentCategory?: ReplyCategory;
   concernType?: "problem" | "proposal" | "counter-proposal";
+  concernId?: string;
   depth?: number;
 }
 
@@ -48,6 +50,7 @@ const ReplyItem = ({
   onFormToggle,
   parentCategory,
   concernType,
+  concernId,
   depth = 0
 }: { 
   reply: Reply; 
@@ -57,8 +60,10 @@ const ReplyItem = ({
   onFormToggle?: (replyId: string | null) => void;
   parentCategory?: ReplyCategory;
   concernType?: "problem" | "proposal" | "counter-proposal";
+  concernId?: string;
   depth?: number;
 }) => {
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { adminModeEnabled } = useAdmin();
   const [isExpanded, setIsExpanded] = useState(depth === 0);
@@ -203,10 +208,21 @@ const ReplyItem = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setIsExpanded(!isExpanded)}
+                  onClick={() => {
+                    if (isMobile && concernId) {
+                      navigate(`/reply/${concernId}/${reply.id}`);
+                    } else {
+                      setIsExpanded(!isExpanded);
+                    }
+                  }}
                   className="gap-1 text-xs"
                 >
-                  {isExpanded ? (
+                  {isMobile ? (
+                    <>
+                      <ChevronDown className="h-3 w-3" />
+                      View Replies ({reply.replies.length})
+                    </>
+                  ) : isExpanded ? (
                     <>
                       <ChevronUp className="h-3 w-3" />
                       Hide Replies ({reply.replies.length})
@@ -264,7 +280,7 @@ const ReplyItem = ({
               </MobileFormDrawer>
             )}
 
-            {hasReplies && isExpanded && (
+            {hasReplies && isExpanded && !isMobile && (
               <div className="mt-4">
                 <ReplyThread 
                   replies={reply.replies} 
@@ -274,6 +290,7 @@ const ReplyItem = ({
                   onFormToggle={onFormToggle}
                   parentCategory={reply.category}
                   concernType={concernType}
+                  concernId={concernId}
                   depth={depth + 1}
                 />
               </div>
@@ -283,7 +300,7 @@ const ReplyItem = ({
   );
 };
 
-export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle, parentCategory, concernType, depth = 0 }: ReplyThreadProps) => {
+export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, onFormToggle, parentCategory, concernType, concernId, depth = 0 }: ReplyThreadProps) => {
   const [localOpenFormId, setLocalOpenFormId] = useState<string | null>(null);
   
   if (replies.length === 0) return null;
@@ -307,6 +324,7 @@ export const ReplyThread = ({ replies, onReply, availableReplies, openFormId, on
           onFormToggle={handleFormToggle}
           parentCategory={parentCategory}
           concernType={concernType}
+          concernId={concernId}
           depth={depth}
         />
       ))}
