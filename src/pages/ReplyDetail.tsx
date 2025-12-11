@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CategoryBadge } from "@/components/CategoryBadge";
@@ -9,7 +9,7 @@ import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
-import { ArrowLeft, ThumbsUp, ThumbsDown, User, ExternalLink } from "lucide-react";
+import { ArrowLeft, ThumbsUp, ThumbsDown, HelpCircle, User, ExternalLink, MessageSquare } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -23,14 +23,13 @@ import { useAdmin } from "@/contexts/AdminContext";
 const ReplyDetail = () => {
   const { concernId, replyId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const isMobile = useIsMobile();
   const { adminModeEnabled } = useAdmin();
 
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyToId, setReplyToId] = useState<string | null>(null);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
-  const [activeAction, setActiveAction] = useState<'endorse' | 'object' | 'vote' | null>(null);
+  const [isNewConcernOpen, setIsNewConcernOpen] = useState(false);
 
   const concern = mockConcerns.find((c) => c.id === concernId);
 
@@ -108,24 +107,11 @@ const ReplyDetail = () => {
     console.log("New reply:", { category, text, referencedReplies, counterProposal });
     setShowReplyForm(false);
     setReplyToId(null);
-    setActiveAction(null);
   };
 
-  const handleMobileEndorse = () => {
-    setReplyType('endorse');
-    setActiveAction(activeAction === 'endorse' ? null : 'endorse');
-    setShowReplyForm(activeAction !== 'endorse');
-  };
-
-  const handleMobileObject = () => {
-    setReplyType('object');
-    setActiveAction(activeAction === 'object' ? null : 'object');
-    setShowReplyForm(activeAction !== 'object');
-  };
-
-  const handleMobileVote = () => {
-    setActiveAction(activeAction === 'vote' ? null : 'vote');
-    setShowReplyForm(false);
+  const handleFormOpen = (type: 'endorse' | 'object' | 'question') => {
+    setReplyType(type);
+    setShowReplyForm(true);
   };
 
   return (
@@ -215,46 +201,41 @@ const ReplyDetail = () => {
             </div>
           )}
 
-          {/* Action buttons */}
-          <div className="flex items-center gap-3 pt-4 border-t border-border">
+          {/* Action buttons - same style as ReplyThread */}
+          <div className="flex items-center gap-2 pt-4 border-t border-border flex-wrap">
             <VoteButton initialVotes={reply.votes} />
-            {!isMobile && reply.category !== "question" && (
+            {reply.category !== "question" && (
               <>
-                <Button
-                  variant="endorse"
-                  onClick={() => {
-                    setReplyType('endorse');
-                    setShowReplyForm(!(showReplyForm && replyType === 'endorse'));
-                    setReplyToId(null);
-                  }}
+                <button
+                  onClick={() => handleFormOpen('endorse')}
                   className={cn(
-                    "gap-2",
+                    "p-2 rounded-md transition-colors",
                     showReplyForm && replyType === 'endorse'
-                      ? "bg-endorse-hover text-endorse-foreground"
-                      : ""
+                      ? "bg-endorse-hover text-white"
+                      : "text-muted-foreground hover:bg-endorse-hover hover:text-white"
                   )}
                 >
                   <ThumbsUp className="h-4 w-4" />
-                  Endorse
-                </Button>
-                <Button
-                  variant="object"
-                  onClick={() => {
-                    setReplyType('object');
-                    setShowReplyForm(!(showReplyForm && replyType === 'object'));
-                    setReplyToId(null);
-                  }}
+                </button>
+                <button
+                  onClick={() => handleFormOpen('object')}
                   className={cn(
-                    "gap-2",
+                    "p-2 rounded-md transition-colors",
                     showReplyForm && replyType === 'object'
-                      ? "bg-object text-object-foreground"
-                      : ""
+                      ? "bg-object text-white"
+                      : "text-muted-foreground hover:bg-object hover:text-white"
                   )}
                 >
                   <ThumbsDown className="h-4 w-4" />
-                  Object
-                </Button>
+                </button>
               </>
+            )}
+            {/* Reply count indicator */}
+            {reply.replies.length > 0 && (
+              <div className="flex items-center gap-1 text-xs text-muted-foreground ml-auto">
+                <MessageSquare className="h-3.5 w-3.5" />
+                <span>{reply.replies.length}</span>
+              </div>
             )}
           </div>
 
@@ -303,14 +284,13 @@ const ReplyDetail = () => {
         )}
       </div>
 
-      {/* Mobile Bottom Nav */}
-      {isMobile && reply.category !== "question" && (
+      {/* Mobile Bottom Nav - Regular navigation */}
+      {isMobile && (
         <MobileBottomNav
-          onEndorse={handleMobileEndorse}
-          onObject={handleMobileObject}
-          onVote={handleMobileVote}
-          onAskQuestion={() => {}}
-          activeAction={activeAction}
+          onNewConcern={() => setIsNewConcernOpen(true)}
+          isNewConcernOpen={isNewConcernOpen}
+          currentPhase={concern.phase}
+          onViewLeaderboard={() => navigate('/leaderboard')}
         />
       )}
 
@@ -318,18 +298,12 @@ const ReplyDetail = () => {
       {isMobile && (
         <MobileFormDrawer
           isOpen={showReplyForm}
-          onClose={() => {
-            setShowReplyForm(false);
-            setActiveAction(null);
-          }}
-          title={replyType === 'endorse' ? 'Endorse' : 'Object'}
+          onClose={() => setShowReplyForm(false)}
+          title={replyType === 'endorse' ? 'Endorse' : replyType === 'object' ? 'Object' : 'Ask Question'}
         >
           <ReplyForm
             onSubmit={handleReply}
-            onCancel={() => {
-              setShowReplyForm(false);
-              setActiveAction(null);
-            }}
+            onCancel={() => setShowReplyForm(false)}
             replyType={replyType}
             originalText={reply.text}
             availableReplies={availableReplies}

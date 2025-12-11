@@ -92,9 +92,21 @@ const ReplyItem = ({
     onFormToggle?.(reply.id);
   };
 
+  const handleCardClick = () => {
+    if (isMobile && hasReplies && concernId) {
+      navigate(`/reply/${concernId}/${reply.id}`);
+    }
+  };
+
   return (
     <div id={`reply-${reply.id}`}>
-      <div className="bg-card rounded-lg p-4 space-y-2 transition-all">
+      <div 
+        className={cn(
+          "bg-card rounded-lg p-4 space-y-2 transition-all",
+          isMobile && hasReplies && "cursor-pointer active:bg-muted/50"
+        )}
+        onClick={handleCardClick}
+      >
             {/* Badges row - only show if there are badges */}
             {((reply.category === "proposal" && (reply.solutionLevel || reply.counterProposal?.solutionLevel)) || 
               (reply.aspects && reply.aspects.length > 0)) && (
@@ -135,7 +147,7 @@ const ReplyItem = ({
             </div>
             
             {reply.referencedReplies && reply.referencedReplies.length > 0 && (
-              <div className="mt-3 space-y-2">
+              <div className="mt-3 space-y-2" onClick={(e) => e.stopPropagation()}>
                 <p className="text-sm font-medium text-muted-foreground">References:</p>
                 <div className="flex flex-wrap gap-2">
                   {reply.referencedReplies.map((ref) => (
@@ -143,7 +155,8 @@ const ReplyItem = ({
                       key={ref.id}
                       variant="outline"
                       className="cursor-pointer hover:bg-muted transition-colors gap-1"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         const element = document.getElementById(`reply-${ref.id}`);
                         if (element) {
                           element.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -175,7 +188,7 @@ const ReplyItem = ({
               </div>
             )}
             
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap" onClick={(e) => e.stopPropagation()}>
               {/* Hide voting buttons for questions and answers to questions */}
               {reply.category !== "question" && parentCategory !== "question" && (
                 <>
@@ -204,36 +217,33 @@ const ReplyItem = ({
                   </button>
                 </>
               )}
+              {/* Reply count indicator on mobile, expand button on desktop */}
               {hasReplies && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    if (isMobile && concernId) {
-                      navigate(`/reply/${concernId}/${reply.id}`);
-                    } else {
-                      setIsExpanded(!isExpanded);
-                    }
-                  }}
-                  className="gap-1 text-xs"
-                >
-                  {isMobile ? (
-                    <>
-                      <ChevronDown className="h-3 w-3" />
-                      View Replies ({reply.replies.length})
-                    </>
-                  ) : isExpanded ? (
-                    <>
-                      <ChevronUp className="h-3 w-3" />
-                      Hide Replies ({reply.replies.length})
-                    </>
-                  ) : (
-                    <>
-                      <ChevronDown className="h-3 w-3" />
-                      Show Replies ({reply.replies.length})
-                    </>
-                  )}
-                </Button>
+                isMobile ? (
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground ml-auto">
+                    <MessageSquare className="h-3.5 w-3.5" />
+                    <span>{reply.replies.length}</span>
+                  </div>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="gap-1 text-xs"
+                  >
+                    {isExpanded ? (
+                      <>
+                        <ChevronUp className="h-3 w-3" />
+                        Hide Replies ({reply.replies.length})
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="h-3 w-3" />
+                        Show Replies ({reply.replies.length})
+                      </>
+                    )}
+                  </Button>
+                )
               )}
               {adminModeEnabled && (
                 <Button
