@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ChevronUp } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -62,7 +62,7 @@ export const VoteButton = ({
           : "bg-transparent text-muted-foreground hover:bg-vote hover:text-vote-foreground border border-muted-foreground/30"
       )}
     >
-      <ChevronUp className="h-4 w-4" />
+      <ThumbsUp className="h-4 w-4" />
       <span className="font-semibold">{votes}</span>
     </Button>
   );

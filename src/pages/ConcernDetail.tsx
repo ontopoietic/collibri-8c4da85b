@@ -9,7 +9,7 @@ import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, ThumbsUp, ThumbsDown, ExternalLink, Filter, ArrowUpDown, Check, Trash2, User } from "lucide-react";
+import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, Handshake, Zap, ExternalLink, Filter, ArrowUpDown, Check, Trash2, User } from "lucide-react";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
 import { TypeIconPrefix } from "@/components/TypeIconPrefix";
 import { formatDistanceToNow } from "date-fns";
@@ -432,8 +432,8 @@ const ConcernDetail = () => {
                   : ""
               )}
             >
-              <ThumbsUp className="h-4 w-4" />
-              {!isMobile && "Endorse"}
+            <Handshake className="h-4 w-4" />
+            {!isMobile && "Endorse"}
             </Button>
             <Button
               variant="object"
@@ -450,8 +450,8 @@ const ConcernDetail = () => {
                   : ""
               )}
             >
-              <ThumbsDown className="h-4 w-4" />
-              {!isMobile && "Object"}
+            <Zap className="h-4 w-4" />
+            {!isMobile && "Object"}
             </Button>
             <Button
               variant="question"
