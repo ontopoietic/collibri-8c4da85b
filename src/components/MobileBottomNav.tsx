@@ -40,7 +40,9 @@ export const MobileBottomNav = ({
 
   if (!isMobile) return null;
 
-  const isForumActive = location.pathname === '/';
+  const isForumActive = location.pathname === '/' || 
+    location.pathname.startsWith('/concern/') || 
+    location.pathname.startsWith('/reply/');
   const isStatisticsActive = location.pathname === '/statistics';
   const isLeaderboardActive = location.pathname.startsWith('/leaderboard');
 
