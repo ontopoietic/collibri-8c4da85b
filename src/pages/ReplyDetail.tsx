@@ -9,7 +9,7 @@ import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
-import { ArrowLeft, ThumbsUp, ThumbsDown, HelpCircle, User, ExternalLink, MessageSquare } from "lucide-react";
+import { ArrowLeft, Handshake, Zap, HelpCircle, User, ExternalLink, MessageSquare } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -215,7 +215,7 @@ const ReplyDetail = () => {
                       : "text-muted-foreground hover:bg-endorse-hover hover:text-white"
                   )}
                 >
-                  <ThumbsUp className="h-4 w-4" />
+                  <Handshake className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => handleFormOpen('object')}
@@ -226,7 +226,7 @@ const ReplyDetail = () => {
                       : "text-muted-foreground hover:bg-object hover:text-white"
                   )}
                 >
-                  <ThumbsDown className="h-4 w-4" />
+                  <Zap className="h-4 w-4" />
                 </button>
               </>
             )}

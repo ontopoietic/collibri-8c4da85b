@@ -6,7 +6,7 @@ import { SolutionLevelBadge } from "./SolutionLevelBadge";
 import { VoteButton } from "./VoteButton";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, ThumbsUp, ThumbsDown, Trash2, User } from "lucide-react";
+import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, Handshake, Zap, Trash2, User } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -202,7 +202,7 @@ const ReplyItem = ({
                         : "text-muted-foreground hover:bg-endorse-hover hover:text-white"
                     )}
                   >
-                    <ThumbsUp className="h-4 w-4" />
+                    <Handshake className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => handleFormOpen('object')}
@@ -213,7 +213,7 @@ const ReplyItem = ({
                         : "text-muted-foreground hover:bg-object hover:text-white"
                     )}
                   >
-                    <ThumbsDown className="h-4 w-4" />
+                    <Zap className="h-4 w-4" />
                   </button>
                 </>
               )}
