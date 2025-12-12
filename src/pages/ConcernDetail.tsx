@@ -417,62 +417,60 @@ const ConcernDetail = () => {
                 setRemainingVotes(prev => isAdding ? prev - 1 : prev + 1);
               }}
             />
-            {!isMobile && (
-              <>
-                <Button
-                  variant="endorse"
-                  onClick={() => {
-                    setReplyType('endorse');
-                    setShowReplyForm(!(showReplyForm && replyType === 'endorse'));
-                    setReplyToId(null);
-                  }}
-                  className={cn(
-                    "gap-2",
-                    showReplyForm && replyType === 'endorse'
-                      ? "bg-endorse-hover text-endorse-foreground"
-                      : ""
-                  )}
-                >
-                  <ThumbsUp className="h-4 w-4" />
-                  Endorse
-                </Button>
-                <Button
-                  variant="object"
-                  onClick={() => {
-                    setReplyType('object');
-                    setShowReplyForm(!(showReplyForm && replyType === 'object'));
-                    setReplyToId(null);
-                  }}
-                  className={cn(
-                    "gap-2",
-                    showReplyForm && replyType === 'object'
-                      ? "bg-object text-object-foreground"
-                      : ""
-                  )}
-                >
-                  <ThumbsDown className="h-4 w-4" />
-                  Object
-                </Button>
-                <Button
-                  variant="question"
-                  size="sm"
-                  onClick={() => {
-                    setReplyType('question');
-                    setShowReplyForm(!(showReplyForm && replyType === 'question'));
-                    setReplyToId(null);
-                  }}
-                  className={cn(
-                    "gap-2",
-                    showReplyForm && replyType === 'question'
-                      ? "bg-question hover:bg-question"
-                      : ""
-                  )}
-                >
-                  <HelpCircle className="h-4 w-4" />
-                  Ask Question
-                </Button>
-              </>
-            )}
+            <Button
+              variant="endorse"
+              size={isMobile ? "sm" : "default"}
+              onClick={() => {
+                setReplyType('endorse');
+                setShowReplyForm(!(showReplyForm && replyType === 'endorse'));
+                setReplyToId(null);
+              }}
+              className={cn(
+                "gap-2",
+                showReplyForm && replyType === 'endorse'
+                  ? "bg-endorse-hover text-endorse-foreground"
+                  : ""
+              )}
+            >
+              <ThumbsUp className="h-4 w-4" />
+              {!isMobile && "Endorse"}
+            </Button>
+            <Button
+              variant="object"
+              size={isMobile ? "sm" : "default"}
+              onClick={() => {
+                setReplyType('object');
+                setShowReplyForm(!(showReplyForm && replyType === 'object'));
+                setReplyToId(null);
+              }}
+              className={cn(
+                "gap-2",
+                showReplyForm && replyType === 'object'
+                  ? "bg-object text-object-foreground"
+                  : ""
+              )}
+            >
+              <ThumbsDown className="h-4 w-4" />
+              {!isMobile && "Object"}
+            </Button>
+            <Button
+              variant="question"
+              size={isMobile ? "sm" : "default"}
+              onClick={() => {
+                setReplyType('question');
+                setShowReplyForm(!(showReplyForm && replyType === 'question'));
+                setReplyToId(null);
+              }}
+              className={cn(
+                "gap-2",
+                showReplyForm && replyType === 'question'
+                  ? "bg-question hover:bg-question"
+                  : ""
+              )}
+            >
+              <HelpCircle className="h-4 w-4" />
+              {!isMobile && "Ask Question"}
+            </Button>
             {adminModeEnabled && (
               <Button
                 variant="destructive"
@@ -678,26 +676,10 @@ const ConcernDetail = () => {
 
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav
-        concernDetailMode={true}
-        activeAction={activeAction}
-        onEndorse={() => {
-          setActiveAction(activeAction === 'endorse' ? null : 'endorse');
-          setReplyType('endorse');
-          setShowReplyForm(activeAction !== 'endorse');
-          setReplyToId(null);
-        }}
-        onObject={() => {
-          setActiveAction(activeAction === 'object' ? null : 'object');
-          setReplyType('object');
-          setShowReplyForm(activeAction !== 'object');
-          setReplyToId(null);
-        }}
-        onAskQuestion={() => {
-          setActiveAction(activeAction === 'vote' ? null : 'vote');
-          setReplyType('question');
-          setShowReplyForm(activeAction !== 'vote');
-          setReplyToId(null);
-        }}
+        currentPhase={concern.phase}
+        onNewConcern={() => setShowReplyForm(true)}
+        isNewConcernOpen={showReplyForm}
+        onViewLeaderboard={() => navigate('/leaderboard')}
       />
     </div>
   );
