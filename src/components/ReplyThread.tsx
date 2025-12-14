@@ -6,7 +6,7 @@ import { SolutionLevelBadge } from "./SolutionLevelBadge";
 import { VoteButton } from "./VoteButton";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { MessageSquare, ExternalLink, ChevronDown, ChevronUp, Handshake, Zap, Trash2, User } from "lucide-react";
+import { MessageSquare, ExternalLink, Handshake, Zap, Trash2, User } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -193,6 +193,21 @@ const ReplyItem = ({
               {reply.category !== "question" && parentCategory !== "question" && (
                 <>
                   <VoteButton initialVotes={reply.votes} />
+                  {/* Unified conversation button - navigates on mobile, expands on desktop */}
+                  {hasReplies && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => isMobile && concernId 
+                        ? navigate(`/reply/${concernId}/${reply.id}`)
+                        : setIsExpanded(!isExpanded)
+                      }
+                      className="gap-1 px-2 h-8 bg-transparent text-muted-foreground hover:bg-muted border border-muted-foreground/30"
+                    >
+                      <MessageSquare className="h-4 w-4" />
+                      <span className="font-semibold text-sm">{reply.replies.length}</span>
+                    </Button>
+                  )}
                   <button
                     onClick={() => handleFormOpen('endorse')}
                     className={cn(
@@ -216,34 +231,6 @@ const ReplyItem = ({
                     <Zap className="h-4 w-4" />
                   </button>
                 </>
-              )}
-              {/* Reply count indicator on mobile, expand button on desktop */}
-              {hasReplies && (
-                isMobile ? (
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground ml-auto">
-                    <MessageSquare className="h-3.5 w-3.5" />
-                    <span>{reply.replies.length}</span>
-                  </div>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsExpanded(!isExpanded)}
-                    className="gap-1 text-xs"
-                  >
-                    {isExpanded ? (
-                      <>
-                        <ChevronUp className="h-3 w-3" />
-                        Hide Replies ({reply.replies.length})
-                      </>
-                    ) : (
-                      <>
-                        <ChevronDown className="h-3 w-3" />
-                        Show Replies ({reply.replies.length})
-                      </>
-                    )}
-                  </Button>
-                )
               )}
               {adminModeEnabled && (
                 <Button
