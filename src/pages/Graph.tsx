@@ -287,10 +287,6 @@ const Graph = () => {
                 <div className="w-4 h-4 rounded-full bg-[#74E09B]"></div>
                 <span>Pro-Arguments</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-[#19C3AC]"></div>
-                <span>Votes</span>
-              </div>
             </div>
             <p className="text-xs text-muted-foreground mt-4">
               Drag nodes to rearrange. Scroll to zoom. Click to view concern.
