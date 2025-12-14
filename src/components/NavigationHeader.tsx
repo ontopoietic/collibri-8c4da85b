@@ -1,11 +1,11 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Bell, Gauge, Network, Trophy, User, UserCircle, Settings, LogOut, FileText, MessageSquare, HelpCircle, Home } from "lucide-react";
+import { BarChart3, Bell, Gauge, Network, Trophy, User, UserCircle, Settings, LogOut, FileText, MessageSquare, HelpCircle, Home, Eye, ShieldCheck } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
 import { AdminPanel } from "@/components/AdminPanel";
-import { AdminModeToggle } from "@/components/AdminModeToggle";
 import { useAdmin } from "@/contexts/AdminContext";
+import { Switch } from "@/components/ui/switch";
 import { NewConcernDialog } from "@/components/NewConcernDialog";
 import {
   Popover,
@@ -40,7 +40,7 @@ export const NavigationHeader = ({
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useIsMobile();
-  const { isAdmin, adminModeEnabled } = useAdmin();
+  const { isAdmin, adminModeEnabled, toggleAdminMode } = useAdmin();
   
   const pathname = location.pathname;
   const isOnForum = pathname === "/";
@@ -119,7 +119,28 @@ export const NavigationHeader = ({
                     <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-56 bg-popover">
+                  {isAdmin && (
+                    <>
+                      <div className="flex items-center justify-between px-2 py-1.5">
+                        <div className="flex items-center gap-2">
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm">Admin Mode</span>
+                        </div>
+                        <Switch
+                          checked={adminModeEnabled}
+                          onCheckedChange={toggleAdminMode}
+                          className="scale-75"
+                        />
+                      </div>
+                      {adminModeEnabled && (
+                        <div className="px-1 py-1">
+                          <AdminPanel />
+                        </div>
+                      )}
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
                   <DropdownMenuItem>
                     <UserCircle className="mr-2 h-4 w-4" />
                     Account
@@ -154,12 +175,6 @@ export const NavigationHeader = ({
           {/* Desktop Navigation */}
           {!isMobile && (
             <div className="flex items-center gap-2">
-              {isAdmin && (
-                <div className="flex items-center gap-2 mr-6">
-                  {adminModeEnabled && <AdminPanel />}
-                  <AdminModeToggle />
-                </div>
-              )}
               {showNewConcernButton && onNewConcern && currentPhase === 'class' && (
                 <NewConcernDialog onSubmit={onNewConcern} />
               )}
@@ -246,7 +261,28 @@ export const NavigationHeader = ({
                     <User className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-56 bg-popover">
+                  {isAdmin && (
+                    <>
+                      <div className="flex items-center justify-between px-2 py-1.5">
+                        <div className="flex items-center gap-2">
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm">Admin Mode</span>
+                        </div>
+                        <Switch
+                          checked={adminModeEnabled}
+                          onCheckedChange={toggleAdminMode}
+                          className="scale-75"
+                        />
+                      </div>
+                      {adminModeEnabled && (
+                        <div className="px-1 py-1">
+                          <AdminPanel />
+                        </div>
+                      )}
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
                   <DropdownMenuItem>
                     <UserCircle className="mr-2 h-4 w-4" />
                     Account
