@@ -66,7 +66,7 @@ const ReplyItem = ({
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { adminModeEnabled } = useAdmin();
-  const [isExpanded, setIsExpanded] = useState(depth === 0);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [replyType, setReplyType] = useState<'endorse' | 'object' | 'question'>('endorse');
   const hasReplies = reply.replies.length > 0;
   const showReplyForm = openFormId === reply.id;
@@ -139,9 +139,9 @@ const ReplyItem = ({
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-2">
                 <CategoryIconPrefix category={reply.category} />
-                <p className="text-foreground leading-relaxed">{reply.text}</p>
+                <p className="text-sm text-foreground leading-relaxed">{reply.text}</p>
               </div>
-              <span className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">
+              <span className="text-[10px] text-muted-foreground whitespace-nowrap flex-shrink-0">
                 {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
               </span>
             </div>
@@ -177,11 +177,21 @@ const ReplyItem = ({
             )}
 
             {reply.counterProposal && reply.category === "objection" && (
-              <div className="bg-primary/5 border border-primary/20 p-3 rounded-md space-y-2">
-                <p className="text-xs font-medium text-white">Counter-Proposal:</p>
-                <p className="text-sm text-foreground">{reply.counterProposal.text}</p>
+              <div className="pt-3 border-t border-border/50">
+                <div className="flex items-center gap-2 mb-2">
+                  <CategoryIconPrefix category="proposal" />
+                  <h3 className="text-xs font-semibold text-foreground">Counter-Proposal</h3>
+                </div>
+                <p className="text-sm text-foreground leading-relaxed pl-6">
+                  {reply.counterProposal.text}
+                </p>
+                {reply.counterProposal.solutionLevel && (
+                  <div className="pl-6 mt-2">
+                    <SolutionLevelBadge level={reply.counterProposal.solutionLevel} />
+                  </div>
+                )}
                 {reply.counterProposal.postedAsConcern && (
-                  <p className="text-xs text-muted-foreground italic">
+                  <p className="text-xs text-muted-foreground italic pl-6 mt-1">
                     Posted as a forum concern
                   </p>
                 )}
@@ -202,7 +212,12 @@ const ReplyItem = ({
                         ? navigate(`/reply/${concernId}/${reply.id}`)
                         : setIsExpanded(!isExpanded)
                       }
-                      className="gap-1 px-2 h-8 bg-transparent text-muted-foreground hover:bg-muted border border-muted-foreground/30"
+                      className={cn(
+                        "gap-1 px-2 h-8 border border-muted-foreground/30",
+                        isExpanded && !isMobile
+                          ? "bg-[#383649] text-white hover:bg-[#383649]"
+                          : "bg-transparent text-muted-foreground hover:bg-[#383649] hover:text-white"
+                      )}
                     >
                       <MessageSquare className="h-4 w-4" />
                       <span className="font-semibold text-sm">{reply.replies.length}</span>

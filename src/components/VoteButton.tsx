@@ -56,14 +56,14 @@ export const VoteButton = ({
       size="sm"
       onClick={handleVote}
       className={cn(
-        "gap-1",
+        "gap-1 px-2 h-8",
         hasVoted 
           ? "bg-vote text-vote-foreground hover:bg-vote" 
           : "bg-transparent text-muted-foreground hover:bg-vote hover:text-vote-foreground border border-muted-foreground/30"
       )}
     >
       <ThumbsUp className="h-4 w-4" />
-      <span className="font-semibold">{votes}</span>
+      <span className="font-semibold text-sm">{votes}</span>
     </Button>
   );
 };
