@@ -96,8 +96,8 @@ export const mockConcerns: Concern[] = [
     aspects: ["problem", "proposal"],
     title: "Weekly Class Meetings for Student Voice",
     description: "Students currently lack a regular forum to voice concerns and participate in class decisions. We propose holding regular 15-minute class meetings where students can discuss concerns and vote on class-level decisions together.",
-    problemText: "Students currently lack a regular forum to voice concerns and participate in class decisions.",
-    proposalText: "Hold regular 15-minute class meetings where students can discuss concerns and vote on class-level decisions together.",
+    problemText: "Our school has no structured way for students to regularly communicate their concerns, ideas, and feedback to teachers and administration. This has led to a growing sense of disconnection between students and the decision-making processes that directly affect their daily school experience. Many students feel unheard when important changes are made to schedules, rules, or classroom policies without any student input. Furthermore, the lack of a regular communication channel means that small issues often escalate into bigger problems before anyone in authority becomes aware of them. Students have expressed frustration that their perspectives are not valued, which negatively impacts school morale and engagement.",
+    proposalText: "We propose implementing weekly 15-minute class meetings at the start of each Monday during homeroom. These meetings would follow a structured agenda: 5 minutes for announcements, 5 minutes for student concerns and suggestions, and 5 minutes for quick votes on class-level decisions. A rotating student facilitator would lead each meeting, with the teacher present to guide and support. All decisions would be documented in a shared digital notebook accessible to students and teachers. This system would create a predictable and democratic space for student voice while teaching valuable skills in civic participation, public speaking, and collaborative decision-making.",
     votes: 18,
     timestamp: daysAgo(90),
     phase: "class",
@@ -123,8 +123,11 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10a-1-1", "pro-argument", "This would make everyone feel more involved in class decisions.", 6, 89, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r-c10a-1-2", "objection", "Taking time from lessons might affect our curriculum coverage.", 4, 88, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-c10a-1-1", "pro-argument", "This would make everyone feel more involved in class decisions. When students have a voice in the rules and procedures that affect them, they're more likely to follow those rules because they understand the reasoning behind them and feel ownership over the outcomes. Research shows that schools with strong student participation programs have better attendance, fewer disciplinary issues, and higher academic achievement.", 6, 89, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-c10a-1-2", "objection", "While I appreciate the intention behind this proposal, I'm concerned about the practical implementation. Taking 15 minutes from lessons every week might seem small, but over a school year that adds up to nearly 10 hours of lost instruction time. Our curriculum is already packed, and teachers often struggle to cover all the required material. Additionally, not all students may feel comfortable speaking up in a group setting, which could lead to the same few voices dominating the discussions while quieter students remain unheard.", 4, 88, [], undefined, {
+        text: "Instead of weekly class meetings that take time from instruction, we should implement a digital suggestion system where students can submit concerns anonymously at any time. Teachers would review submissions weekly and address the most pressing issues during natural breaks in the schedule. This preserves instruction time while still giving students a voice, and the anonymity feature would encourage participation from students who might not speak up in public meetings.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[1]),
       createReply("r-c10a-1-3", "proposal", "We could do it during homeroom instead of cutting into lesson time.", 5, 87, [], undefined, undefined, undefined, mockUsers[2]),
       createReply("r-c10a-1-4", "variant", "Instead of weekly meetings, try bi-weekly with a longer 30-minute format for deeper discussions.", 4, 86, [], undefined, undefined, undefined, mockUsers[3]),
     ],
@@ -132,8 +135,11 @@ export const mockConcerns: Concern[] = [
   {
     id: "c10a-2",
     type: "problem",
+    aspects: ["problem", "proposal"],
     title: "Classroom Temperature Control Issues",
     description: "Our classroom is too hot in summer and too cold in winter. The heating and AC systems don't work properly.",
+    problemText: "The climate control systems in our classroom building have been malfunctioning for over two years, creating an uncomfortable and sometimes unhealthy learning environment. During summer months, classroom temperatures regularly exceed 30°C, causing students to become drowsy, dehydrated, and unable to concentrate. In winter, the heating often fails entirely or overcompensates, leaving some rooms freezing while others become stifling. Students have reported headaches, difficulty focusing, and increased absenteeism during extreme temperature periods. Several teachers have had to pause lessons to open windows or allow students to step outside to cool down, further disrupting learning time.",
+    proposalText: "We propose a comprehensive approach to address the temperature issues: First, request an immediate professional audit of the HVAC system to identify all malfunctioning components. Second, install digital thermometers in each classroom connected to a central monitoring system so facilities can track and respond to temperature issues in real-time. Third, create a simple reporting app where students and teachers can log temperature complaints with timestamps and room numbers. Fourth, establish a short-term emergency protocol including portable fans, space heaters, and the option to relocate classes to more comfortable rooms during extreme conditions. Finally, allocate budget for systematic repairs or replacement of failing equipment.",
     votes: 16,
     timestamp: daysAgo(88),
     phase: "class",
@@ -159,8 +165,11 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10a-2-1", "pro-argument", "It's hard to concentrate when you're freezing or sweating.", 7, 87, [], undefined, undefined, undefined, mockUsers[2]),
-      createReply("r-c10a-2-2", "proposal", "Request maintenance to fix the thermostat and check the HVAC system.", 5, 86, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-c10a-2-1", "pro-argument", "It's hard to concentrate when you're freezing or sweating. Last week during the math exam, half the class was fanning themselves with papers and the other half couldn't focus because of the noise and heat. Several students had to leave the room to get water multiple times. This directly impacts our academic performance and it's not fair that our grades might suffer because of building maintenance issues that are completely out of our control.", 7, 87, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-c10a-2-2", "objection", "While the temperature issues are real, the proposed solution is too expensive and complex to implement quickly. A full HVAC audit, monitoring system, and app development would cost tens of thousands of euros and take months to complete. We need solutions that can help us now, not next year.", 5, 86, [], undefined, {
+        text: "As an immediate and cost-effective solution, I propose we request portable air conditioning units for the hottest classrooms during summer and ensure all radiators are properly bled and functioning before winter. We should also allow teachers flexibility to move classes to cooler/warmer rooms as needed, and relax the dress code slightly during extreme temperatures. These measures can be implemented within weeks rather than months.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[3]),
       createReply("r-c10a-2-3", "variant", "Add portable fans and space heaters as a temporary solution until HVAC is fixed.", 3, 84, [], undefined, undefined, undefined, mockUsers[4]),
     ],
   },

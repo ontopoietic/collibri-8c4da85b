@@ -3,6 +3,7 @@ import { CategoryBadge } from "./CategoryBadge";
 import { CategoryIconPrefix } from "./CategoryIconPrefix";
 import { AspectBadges } from "./AspectBadges";
 import { SolutionLevelBadge } from "./SolutionLevelBadge";
+import { CollapsibleText } from "./CollapsibleText";
 import { VoteButton } from "./VoteButton";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -137,9 +138,13 @@ const ReplyItem = ({
             
             {/* Main content row with timestamp on the right */}
             <div className="flex items-start justify-between gap-4">
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 flex-1 min-w-0">
                 <CategoryIconPrefix category={reply.category} />
-                <p className="text-sm text-foreground leading-relaxed">{reply.text}</p>
+                <CollapsibleText 
+                  text={reply.text} 
+                  maxHeight={100}
+                  className="text-sm text-foreground leading-relaxed"
+                />
               </div>
               <span className="text-[10px] text-muted-foreground whitespace-nowrap flex-shrink-0">
                 {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
@@ -182,9 +187,13 @@ const ReplyItem = ({
                   <CategoryIconPrefix category="proposal" />
                   <h3 className="text-xs font-semibold text-foreground">Counter-Proposal</h3>
                 </div>
-                <p className="text-sm text-foreground leading-relaxed pl-6">
-                  {reply.counterProposal.text}
-                </p>
+                <div className="pl-6">
+                  <CollapsibleText 
+                    text={reply.counterProposal.text}
+                    maxHeight={100}
+                    className="text-sm text-foreground leading-relaxed"
+                  />
+                </div>
                 {reply.counterProposal.solutionLevel && (
                   <div className="pl-6 mt-2">
                     <SolutionLevelBadge level={reply.counterProposal.solutionLevel} />
