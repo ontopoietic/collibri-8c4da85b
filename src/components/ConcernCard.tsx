@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { AspectBadges } from "@/components/AspectBadges";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
 import { TypeIconPrefix } from "@/components/TypeIconPrefix";
+import { CollapsibleText } from "@/components/CollapsibleText";
 import { MessageSquare, ThumbsUp, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
@@ -71,9 +72,11 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
                     <TypeIconPrefix type="problem" size="sm" />
                     <span className="text-sm font-medium text-foreground">Problem</span>
                   </div>
-                  <p className="text-muted-foreground text-sm line-clamp-2">
-                    {concern.problemText || concern.description}
-                  </p>
+                  <CollapsibleText 
+                    text={concern.problemText || concern.description} 
+                    maxHeight={80}
+                    className="text-muted-foreground text-sm"
+                  />
                 </div>
               )}
               
@@ -84,9 +87,11 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
                     <TypeIconPrefix type="proposal" size="sm" />
                     <span className="text-sm font-medium text-foreground">Proposal</span>
                   </div>
-                  <p className="text-muted-foreground text-sm line-clamp-2">
-                    {concern.proposalText || concern.description}
-                  </p>
+                  <CollapsibleText 
+                    text={concern.proposalText || concern.description}
+                    maxHeight={80}
+                    className="text-muted-foreground text-sm"
+                  />
                 </div>
               )}
             </div>
@@ -94,7 +99,11 @@ export const ConcernCard = ({ concern }: ConcernCardProps) => {
             /* Fallback for concerns without aspects - show type icon with description */
             <div className="flex items-start gap-2">
               <TypeIconPrefix type={concern.type} size="sm" />
-              <p className="text-muted-foreground line-clamp-3">{concern.description}</p>
+              <CollapsibleText 
+                text={concern.description}
+                maxHeight={80}
+                className="text-muted-foreground"
+              />
             </div>
           )}
         </div>

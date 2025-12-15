@@ -7,6 +7,7 @@ import { VoteButton } from "@/components/VoteButton";
 import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
+import { CollapsibleText } from "@/components/CollapsibleText";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, Handshake, Zap, ExternalLink, Filter, ArrowUpDown, Check, Trash2, User } from "lucide-react";
@@ -314,9 +315,11 @@ const ConcernDetail = () => {
                       <TypeIconPrefix type="problem" size="sm" />
                       <h2 className="text-base font-semibold text-foreground">Problem</h2>
                     </div>
-                    <p className="text-foreground leading-relaxed">
-                      {concern.problemText || concern.description}
-                    </p>
+                    <CollapsibleText 
+                      text={concern.problemText || concern.description}
+                      maxHeight={150}
+                      className="text-foreground leading-relaxed"
+                    />
                   </div>
                 )}
                 
@@ -327,9 +330,11 @@ const ConcernDetail = () => {
                       <TypeIconPrefix type="proposal" size="sm" />
                       <h2 className="text-base font-semibold text-foreground">Proposal</h2>
                     </div>
-                    <p className="text-foreground leading-relaxed">
-                      {concern.proposalText || concern.description}
-                    </p>
+                    <CollapsibleText 
+                      text={concern.proposalText || concern.description}
+                      maxHeight={150}
+                      className="text-foreground leading-relaxed"
+                    />
                   </div>
                 )}
               </div>
@@ -337,7 +342,11 @@ const ConcernDetail = () => {
               /* Fallback for concerns without aspects - show type icon with description */
               <div className="flex items-start gap-2">
                 <TypeIconPrefix type={concern.type} size="sm" />
-                <p className="text-foreground leading-relaxed text-lg">{concern.description}</p>
+                <CollapsibleText 
+                  text={concern.description}
+                  maxHeight={150}
+                  className="text-foreground leading-relaxed text-lg"
+                />
               </div>
             )}
           </div>
