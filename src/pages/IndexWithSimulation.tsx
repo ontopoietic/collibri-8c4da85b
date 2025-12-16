@@ -55,7 +55,10 @@ const Index = () => {
   // Simulation state
   const [isSimulating, setIsSimulating] = useState(false);
   const [simulationProgress, setSimulationProgress] = useState(100); // 0-100%
-  const [persistedSimulationDay, setPersistedSimulationDay] = useState<number | null>(null);
+  const [persistedSimulationDay, setPersistedSimulationDay] = useState<number | null>(() => {
+    const saved = localStorage.getItem('collibri-simulation-day');
+    return saved ? parseFloat(saved) : null;
+  });
 
   // Calculate the simulated "current time" and phase based on slider
   const now = new Date();
@@ -100,8 +103,15 @@ const Index = () => {
       // Exiting simulation - persist the current simulated day
       const simulatedDays = (simulationProgress / 100) * totalDuration;
       setPersistedSimulationDay(simulatedDays);
+      localStorage.setItem('collibri-simulation-day', String(simulatedDays));
     }
     setIsSimulating(!isSimulating);
+  };
+
+  const handleResetTimeline = () => {
+    setPersistedSimulationDay(null);
+    localStorage.removeItem('collibri-simulation-day');
+    setSimulationProgress(100);
   };
 
   // Determine which variant selection phase we're in (if any)
