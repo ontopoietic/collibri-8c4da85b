@@ -693,8 +693,11 @@ export const mockConcerns: Concern[] = [
   {
     id: "g10-3",
     type: "problem",
+    aspects: ["problem", "proposal"],
     title: "Limited Access to Sports Equipment",
-    description: "Our class doesn't have enough sports equipment for PE lessons, leading to long waiting times and reduced activity.",
+    description: "PE equipment shortage causing reduced physical activity.",
+    problemText: "Our physical education program is severely hampered by a critical shortage of sports equipment. In a typical 45-minute PE class with 30 students, we have only 8 basketballs, 4 working badminton rackets, and 6 soccer balls that aren't deflated or damaged. This means students spend more time waiting than actually exercising. During our last basketball unit, some students only touched the ball twice during the entire class period. The volleyball nets are torn and unsafe, the gymnastics mats are cracked and don't provide adequate cushioning, and half the jump ropes are missing handles. This equipment shortage directly contradicts the school's stated commitment to student health and physical development. Students who need physical activity most are often the ones who end up standing on the sidelines because they're less assertive about claiming equipment.",
+    proposalText: "We propose a three-phase equipment renewal plan: Phase 1 (immediate) - conduct a complete inventory of all PE equipment and immediately retire anything damaged or unsafe. Phase 2 (within one month) - submit a prioritized equipment request to administration including costs (we've estimated €2,500 for essential items like balls, rackets, and safety equipment). Phase 3 (ongoing) - implement an equipment care program where students learn proper storage and maintenance, extending equipment lifespan. Additionally, we suggest partnering with local sports clubs who often have gently used equipment they're willing to donate. Our PE teacher supports this proposal and has offered to help coordinate with administration.",
     votes: 38,
     timestamp: daysAgo(65),
     phase: "grade",
@@ -707,11 +710,14 @@ export const mockConcerns: Concern[] = [
     authorClass: "7b",
     replies: [
       // Class phase replies
-      createReply("r-g10-3-1", "pro-argument", "Yes! Half the class just stands around waiting for their turn.", 8, 88, [], undefined, undefined, undefined, mockUsers[18]),
+      createReply("r-g10-3-1", "pro-argument", "Yes! Half the class just stands around waiting for their turn. It's frustrating because we want to be active but physically cannot when there's only one basketball for every 4 students.", 8, 88, [], undefined, undefined, undefined, mockUsers[18]),
       createReply("r-g10-3-2", "proposal", "We could create a rotation system and extend PE class time.", 6, 85, [], undefined, undefined, undefined, mockUsers[19]),
-      createReply("r-g10-3-3", "objection", "The real issue is that PE classes are too large.", 10, 82, [], undefined, undefined, undefined, mockUsers[20]),
+      createReply("r-g10-3-3", "objection", "While I agree equipment is an issue, I think the real problem is that PE classes are too large. We have 30 students with one teacher trying to manage activities. Even with more equipment, one teacher can't effectively coach that many students. Perhaps we should advocate for smaller class sizes or additional PE assistants instead of just buying more equipment that will eventually break down from overuse.", 10, 82, [], undefined, {
+        text: "Request that PE classes be split into smaller groups of 15 students maximum, with staggered scheduling. This allows existing equipment to be adequate while improving the quality of instruction and individual attention each student receives.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[20]),
       // Grade phase replies
-      createReply("r-g10-3-4", "pro-argument", "10B and 10C have the same problem - it's grade-wide!", 14, 60, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-g10-3-4", "pro-argument", "10B and 10C have the same problem - it's grade-wide! We compared notes and every class in Grade 10 has these equipment issues.", 14, 60, [], undefined, undefined, undefined, mockUsers[2]),
       createReply("r-g10-3-5", "proposal", "Request budget allocation for new equipment purchase.", 12, 55, [
         createReply("r-g10-3-5a", "question", "How much would new equipment cost?", 5, 52, [], undefined, undefined, undefined, mockUsers[4]),
       ], undefined, undefined, undefined, mockUsers[6]),
@@ -816,8 +822,11 @@ export const mockConcerns: Concern[] = [
   {
     id: "g10-7",
     type: "problem",
+    aspects: ["problem", "proposal"],
     title: "Broken Lab Equipment",
-    description: "Many science lab instruments are broken or missing parts, making experiments difficult to complete properly.",
+    description: "Science lab equipment requires urgent repairs and replacement.",
+    problemText: "Our school's science laboratories are in a critical state of disrepair, significantly impacting the quality of science education for all students. During chemistry classes, we frequently encounter broken Bunsen burners with faulty gas connections, cracked beakers that pose safety risks, and scales that give inconsistent readings. In biology, our microscope situation is dire - of the 24 microscopes in Lab 2, only 8 function properly, and 3 of those have broken fine focus knobs. This means groups of 6-7 students must share a single working microscope, drastically reducing hands-on learning time. Physics equipment is equally neglected, with most voltmeters showing inaccurate readings and several missing probes entirely. Last week, a chemistry experiment had to be cancelled when we discovered that half the test tubes were etched and unsafe for heating. The science department has submitted repair requests for over two years, but budget constraints have prevented any meaningful action.",
+    proposalText: "We propose an emergency science equipment restoration initiative: First, conduct a comprehensive safety audit of all lab equipment within two weeks, tagging items as 'safe,' 'needs repair,' or 'replace immediately.' Second, immediately quarantine unsafe equipment to prevent accidents. Third, apply for science education grants from the state - our science teacher has identified three programs we qualify for that together could provide up to €15,000. Fourth, establish a parent-teacher fundraising campaign specifically for lab equipment, with transparent reporting on how funds are used. Fifth, create a student lab assistant program where responsible students help maintain equipment, extending its lifespan and teaching valuable skills. We've already drafted a letter to the principal and school board outlining the safety concerns and educational impact.",
     votes: 40,
     timestamp: daysAgo(65),
     phase: "grade",
@@ -830,16 +839,20 @@ export const mockConcerns: Concern[] = [
     authorClass: "7a",
     replies: [
       // Class phase replies
-      createReply("r-g10-7-1", "pro-argument", "We had to share one microscope between 6 students last week.", 6, 91, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-g10-7-1", "pro-argument", "We had to share one microscope between 6 students last week. By the time it was my turn, we only had 3 minutes left in class. I barely got to look at the cell structure before we had to clean up. This isn't fair to students who want to learn!", 6, 91, [], undefined, undefined, undefined, mockUsers[12]),
       createReply("r-g10-7-2", "proposal", "Request emergency funding for lab equipment repairs.", 8, 88, [], undefined, undefined, undefined, mockUsers[13]),
       // Grade phase replies
-      createReply("r-g10-7-3", "pro-argument", "All three classes share the same labs - this affects everyone!", 15, 60, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-g10-7-3", "pro-argument", "All three classes share the same labs - this affects every single student in Grade 10, not just one class! We need to present this as a grade-wide priority.", 15, 60, [], undefined, undefined, undefined, mockUsers[0]),
       createReply("r-g10-7-4", "proposal", "Create a prioritized list of essential equipment to repair first.", 12, 55, [
         createReply("r-g10-7-4a", "pro-argument", "Microscopes and scales should be top priority.", 9, 52, [], undefined, undefined, undefined, mockUsers[2]),
       ], undefined, undefined, undefined, mockUsers[4]),
       createReply("r-g10-7-5", "question", "Can we apply for science education grants?", 7, 48, [
         createReply("r-g10-7-5a", "proposal", "The science teacher mentioned there are state grants available.", 10, 45, [], undefined, undefined, undefined, mockUsers[6]),
       ], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-g10-7-6", "objection", "While I support fixing the equipment, I'm concerned that focusing only on repairs doesn't address the underlying issue: our school chronically underfunds the science department. Even if we fix everything now, without a sustainable maintenance budget, we'll be back in the same situation in two years. We need to advocate for ongoing science funding, not just one-time repairs.", 11, 42, [], undefined, {
+        text: "Propose a recurring annual science equipment budget of €3,000 specifically allocated for maintenance and gradual replacement. This could be funded by redirecting a small portion of existing budgets or through a dedicated science equipment fee of €15 per student per year.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[10]),
     ],
   },
 
@@ -847,8 +860,11 @@ export const mockConcerns: Concern[] = [
   {
     id: "g10-8",
     type: "proposal",
+    aspects: ["problem", "proposal"],
     title: "Flexible Deadline Policy",
-    description: "Allow students to request 24-48 hour extensions on assignments without penalty, with teacher approval.",
+    description: "Implementing a fair extension system for assignments.",
+    problemText: "The current rigid deadline system creates unnecessary stress and doesn't account for the complex realities of students' lives. Many of us juggle school with extracurricular activities, family responsibilities, part-time jobs, and mental health challenges. When multiple major assignments coincide - which happens frequently because teachers don't coordinate due dates - students face impossible choices. Last month, I had two essays, a lab report, and a math project all due within 48 hours. Despite starting early, I couldn't complete everything to my best ability. The all-or-nothing approach to deadlines means a student who submits mediocre work on time gets a better grade than one who could have submitted excellent work with just one extra day. This doesn't reflect real-world professional environments where reasonable deadline adjustments are normal. Furthermore, the stress of rigid deadlines contributes to anxiety, sleep deprivation, and in some cases, academic dishonesty as desperate students see no other option.",
+    proposalText: "We propose a Flexible Deadline Policy with clear guidelines to prevent abuse while supporting students who genuinely need flexibility: Each student gets 3 'extension tokens' per semester, each worth a 24-hour extension that can be claimed through a simple online form without requiring justification. Additional extensions require teacher approval with a brief explanation. Extensions cannot be used for final exams or presentations scheduled in class. Teachers will have access to a shared calendar showing major due dates across all subjects for each class, encouraging them to coordinate and avoid deadline pile-ups. This system respects student autonomy, reduces stress, and teaches time management through limited resources rather than rigid rules.",
     votes: 36,
     timestamp: daysAgo(65),
     phase: "grade",
@@ -861,16 +877,19 @@ export const mockConcerns: Concern[] = [
     authorClass: "7a",
     replies: [
       // Class phase replies
-      createReply("r-g10-8-1", "pro-argument", "Life happens - sometimes we need a little extra time.", 5, 87, [], undefined, undefined, undefined, mockUsers[15]),
-      createReply("r-g10-8-2", "objection", "This could be abused by procrastinators.", 4, 84, [], undefined, undefined, undefined, mockUsers[16]),
+      createReply("r-g10-8-1", "pro-argument", "Life happens - sometimes we need a little extra time. Last week my grandmother was hospitalized and I couldn't focus on my essay at all. A small extension would have helped so much.", 5, 87, [], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-g10-8-2", "objection", "I'm worried this could be heavily abused by procrastinators. Some students will just use all their tokens immediately and then complain they have none left when they actually need them. Plus, it creates an unfair advantage - students who use extensions get more time to improve their work compared to those who submit on time. In the real world, deadlines are deadlines.", 4, 84, [], undefined, {
+        text: "Instead of free extensions, implement a 'deadline coordination week' at the start of each semester where students can see all major due dates and request schedule changes before the semester begins. Teachers would be required to spread out major assignments. This prevents last-minute extension requests while addressing the root cause of deadline conflicts.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[16]),
       // Grade phase replies
       createReply("r-g10-8-3", "proposal", "Limit extensions to 2 per semester per student.", 14, 58, [
         createReply("r-g10-8-3a", "pro-argument", "This prevents abuse while still helping when needed.", 10, 55, [], undefined, undefined, undefined, mockUsers[18]),
       ], undefined, undefined, undefined, mockUsers[17]),
       createReply("r-g10-8-4", "variant", "Allow extensions only for documented emergencies.", 8, 50, [], undefined, undefined, undefined, mockUsers[20]),
       createReply("r-g10-8-5", "question", "Would this apply to tests too, or just assignments?", 5, 45, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r-g10-8-6", "objection", "Teachers already have too much paperwork managing deadlines.", 6, 52, [], undefined, undefined, undefined, mockUsers[2]),
-      createReply("r-g10-8-7", "proposal", "Create an automated system for extension requests.", 8, 48, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-g10-8-6", "objection", "Teachers already have too much paperwork managing deadlines. This would add another administrative burden tracking who used how many tokens.", 6, 52, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-g10-8-7", "proposal", "Create an automated system for extension requests so teachers don't have extra paperwork.", 8, 48, [], undefined, undefined, undefined, mockUsers[4]),
     ],
   },
 
@@ -1067,8 +1086,11 @@ export const mockConcerns: Concern[] = [
   {
     id: "s-3",
     type: "proposal",
+    aspects: ["problem", "proposal"],
     title: "Mental Health Support Program",
-    description: "Establish regular access to school counselors and mental health resources for all students.",
+    description: "Comprehensive mental health support system for all students.",
+    problemText: "Our school faces a mental health crisis that has been largely invisible until now. Based on anonymous surveys conducted by our student council, over 40% of students report experiencing significant stress or anxiety related to school, 25% have considered seeking professional mental health support but didn't know how, and 15% report symptoms consistent with depression. Currently, our school has only 2 counselors for over 800 students - a ratio of 1:400, far exceeding the recommended 1:250. The average wait time to see a counselor is 3 weeks, by which point many students have either struggled through alone or given up trying to get help. There's also significant stigma around mental health - students fear being labeled or having parents notified. The COVID-19 pandemic has made things worse, with increased isolation, uncertainty about the future, and academic pressure. Teachers report noticing more students struggling but feeling unequipped to help. We've had multiple students leave school temporarily due to mental health issues, and we know there are many more suffering in silence.",
+    proposalText: "We propose a comprehensive Mental Health Support Initiative with multiple components working together: First, advocate for hiring one additional school counselor to improve our ratio to 1:270. Second, establish a trained Peer Support Network where student volunteers receive 20 hours of mental health first aid training and serve as first-point contacts for struggling peers. Third, partner with local mental health organizations (we've already contacted three who are interested) to provide free monthly workshops and crisis support. Fourth, create a dedicated Wellness Room - a quiet, calm space students can visit during free periods when feeling overwhelmed. Fifth, integrate mental health education into the existing health curriculum with age-appropriate content about stress management, recognizing warning signs, and seeking help. Sixth, implement anonymous mental health check-ins twice per semester through an app, with counselors following up on concerning responses. Seventh, provide teachers with basic mental health awareness training so they can better recognize and respond to students in distress. This multi-layered approach ensures support is accessible, reduces stigma, and catches problems early.",
     votes: 72,
     timestamp: daysAgo(30),
     phase: "school",
@@ -1084,34 +1106,34 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-s-3-1",
-        title: "Mental Health Support Program",
-        text: "Establish regular access to school counselors and mental health resources for all students.",
+        title: "Basic Support",
+        text: "Focus on peer support network and partnerships with external organizations.",
         votes: 20,
       },
       {
         id: "v-s-3-2",
-        title: "Comprehensive Mental Health Initiative",
-        text: "Implement peer support training, partner with external mental health organizations, integrate mental health education into curriculum, and hire additional counselors.",
+        title: "Comprehensive Initiative",
+        text: "Full implementation including additional counselor, peer network, external partnerships, wellness room, curriculum integration, anonymous check-ins, and teacher training.",
         votes: 42,
       },
     ],
     replies: [
       // Class phase replies
-      createReply("r-s-3-1", "pro-argument", "This is so important! Many students struggle silently.", 10, 90, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r-s-3-2", "pro-argument", "Mental health should be treated as seriously as physical health.", 12, 88, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-3-1", "pro-argument", "This is so important! Many students struggle silently because there's nowhere to turn. I've seen friends deteriorate over months with no support.", 10, 90, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-s-3-2", "pro-argument", "Mental health should be treated as seriously as physical health. If we had physical education, why not mental health education?", 12, 88, [], undefined, undefined, undefined, mockUsers[1]),
       createReply("r-s-3-3", "proposal", "Start with awareness campaigns.", 8, 85, [], undefined, undefined, undefined, mockUsers[2]),
       // Grade phase replies
-      createReply("r-s-3-4", "pro-argument", "Grade 11 has high stress - we really need this.", 18, 58, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-s-3-4", "pro-argument", "Grade 11 has particularly high stress with university preparation starting. We really need this support system.", 18, 58, [], undefined, undefined, undefined, mockUsers[3]),
       createReply("r-s-3-5", "proposal", "Train peer supporters from each class.", 15, 55, [
         createReply("r-s-3-5a", "pro-argument", "Peers are often first to notice when someone is struggling.", 12, 52, [], undefined, undefined, undefined, mockUsers[5]),
       ], undefined, undefined, undefined, mockUsers[4]),
       createReply("r-s-3-6", "question", "How many counselors do we currently have?", 7, 50, [
-        createReply("r-s-3-6a", "pro-argument", "Only 2 for 800+ students. Way understaffed.", 14, 48, [], undefined, undefined, undefined, mockUsers[7]),
+        createReply("r-s-3-6a", "pro-argument", "Only 2 for 800+ students. Way understaffed compared to recommendations.", 14, 48, [], undefined, undefined, undefined, mockUsers[7]),
       ], undefined, undefined, undefined, mockUsers[6]),
       // School phase replies
-      createReply("r-s-3-7", "pro-argument", "Every grade needs better mental health support!", 28, 28, [
+      createReply("r-s-3-7", "pro-argument", "Every grade needs better mental health support! This isn't just a Grade 11 issue.", 28, 28, [
         createReply("r-s-3-7a", "pro-argument", "Grade 10 supports this completely.", 20, 26, [], undefined, undefined, undefined, mockUsers[9]),
-        createReply("r-s-3-7b", "pro-argument", "Grade 12 too - exam stress is real.", 22, 24, [], undefined, undefined, undefined, mockUsers[11]),
+        createReply("r-s-3-7b", "pro-argument", "Grade 12 too - exam stress is real and we have the least support.", 22, 24, [], undefined, undefined, undefined, mockUsers[11]),
       ], undefined, undefined, undefined, mockUsers[8]),
       createReply("r-s-3-8", "proposal", "Partner with local mental health organizations.", 24, 25, [
         createReply("r-s-3-8a", "pro-argument", "They often offer free school programs.", 16, 22, [], undefined, undefined, undefined, mockUsers[13]),
@@ -1128,10 +1150,16 @@ export const mockConcerns: Concern[] = [
       ], undefined, undefined, undefined, mockUsers[19]),
       createReply("r-s-3-13", "pro-argument", "Investment in mental health saves money on crisis intervention.", 17, 8, [], undefined, undefined, undefined, mockUsers[21]),
       createReply("r-s-3-14", "proposal", "Start with stress management workshops.", 13, 5, [], undefined, undefined, undefined, mockUsers[0]),
-      // Additional school phase objections
-      createReply("r-s-3-15", "objection", "Hiring more counselors is expensive - where does the money come from?", 10, 19, [], undefined, undefined, undefined, mockUsers[2]),
-      createReply("r-s-3-16", "objection", "Some parents might not want their children discussing mental health at school.", 8, 16, [], undefined, undefined, undefined, mockUsers[4]),
-      createReply("r-s-3-17", "objection", "Peer support can backfire if not properly trained.", 7, 13, [], undefined, undefined, undefined, mockUsers[6]),
+      // Additional school phase objections with counter-proposals
+      createReply("r-s-3-15", "objection", "Hiring additional counselors requires €45,000-60,000 per year in salary and benefits. Where exactly does the money come from? The school budget is already stretched thin with facilities maintenance and educational materials. This proposal sounds nice but ignores financial reality.", 10, 19, [], undefined, {
+        text: "Focus on cost-free or low-cost solutions first: partner with university psychology departments for supervised counseling interns, apply for mental health grants from the state health department (3 programs currently accepting applications), and train volunteer peer supporters. Once we demonstrate need and impact with data, advocate for budget reallocation in next year's planning.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[2]),
+      createReply("r-s-3-16", "objection", "Some parents might strongly object to their children discussing mental health at school without parental involvement. This could create legal issues and parental backlash that damages the school's relationship with families.", 8, 16, [], undefined, {
+        text: "Include a comprehensive parent communication component: informational sessions about the program, clear policies on when parents are notified versus when confidentiality is maintained (following legal guidelines), and an opt-out option for families who prefer to handle mental health privately. Transparency builds trust rather than conflict.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[4]),
+      createReply("r-s-3-17", "objection", "Peer support sounds good in theory, but untrained students giving mental health advice can actually make things worse. They might give harmful advice, break confidentiality, or become overwhelmed themselves. This could create more problems than it solves.", 7, 13, [], undefined, undefined, undefined, mockUsers[6]),
     ],
   },
 
@@ -1286,8 +1314,11 @@ export const mockConcerns: Concern[] = [
   {
     id: "s-7",
     type: "proposal",
+    aspects: ["problem", "proposal"],
     title: "School-Wide Sustainability Initiative",
-    description: "Our school lacks comprehensive recycling programs and environmental awareness. We need systematic changes to reduce our ecological footprint.",
+    description: "Comprehensive environmental program to reduce our school's ecological footprint.",
+    problemText: "Our school's environmental impact is significant and largely unaddressed. We have no functioning recycling program - the blue bins that exist are rarely emptied separately from regular trash, effectively making recycling theater rather than reality. Energy waste is rampant: lights are left on in empty classrooms, computers run 24/7, and the heating system operates at full capacity even during mild weather because there's no programmable thermostat. Single-use plastics are everywhere - from cafeteria utensils to water bottles sold in vending machines. Paper waste is enormous; teachers print hundreds of sheets daily for assignments that could be digital. The school has no environmental education component, leaving students unaware of their impact. Conservative estimates suggest our school produces 50+ tons of waste annually, uses 40% more energy than comparable modern schools, and has virtually no sustainability practices. This contradicts everything we're learning about climate change in science class and sends a message that environmental responsibility doesn't matter in practice.",
+    proposalText: "We propose a phased School-Wide Sustainability Initiative: Phase 1 (immediate, no cost): Establish a student-led Green Team with representatives from each grade to lead initiatives and monitor progress. Implement proper recycling with clearly labeled bins and student monitors. Create 'energy patrol' to turn off lights and equipment in empty rooms. Phase 2 (within 3 months, low cost): Replace cafeteria single-use plastics with compostable alternatives (€500/year). Start a composting program for food waste, partnering with a local community garden. Launch digital-first policy to reduce printing. Phase 3 (within 1 year, investment required): Apply for government green school grants for LED lighting retrofit (typical payback: 2 years in energy savings). Install programmable thermostats (€2,000 investment, €3,000 annual savings). Create an outdoor environmental education area. We've researched similar programs at other schools and found that comprehensive sustainability initiatives typically save 25-35% on utility costs within 3 years, making this financially beneficial as well as environmentally responsible.",
     votes: 58,
     timestamp: daysAgo(30),
     phase: "school",
@@ -1300,24 +1331,28 @@ export const mockConcerns: Concern[] = [
     authorClass: "6c",
     replies: [
       // Class phase replies
-      createReply("r-s-7-1", "pro-argument", "Climate change affects all of us.", 8, 88, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-s-7-1", "pro-argument", "Climate change affects all of us and schools should be leading the way in teaching environmental responsibility through action, not just textbooks.", 8, 88, [], undefined, undefined, undefined, mockUsers[19]),
       createReply("r-s-7-2", "proposal", "Start with better recycling bins.", 6, 85, [], undefined, undefined, undefined, mockUsers[18]),
       // Grade phase replies
-      createReply("r-s-7-3", "proposal", "Create student Green Team.", 14, 55, [], undefined, undefined, undefined, mockUsers[20]),
-      createReply("r-s-7-4", "variant", "Energy audit to find savings.", 12, 50, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-s-7-3", "proposal", "Create student Green Team to coordinate all initiatives.", 14, 55, [], undefined, undefined, undefined, mockUsers[20]),
+      createReply("r-s-7-4", "variant", "Conduct a professional energy audit to identify the biggest savings opportunities.", 12, 50, [], undefined, undefined, undefined, mockUsers[21]),
       // School phase replies
-      createReply("r-s-7-5", "pro-argument", "Schools should lead by example!", 22, 28, [
-        createReply("r-s-7-5a", "pro-argument", "Students care deeply about the environment.", 18, 26, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-s-7-5", "pro-argument", "Schools should lead by example! How can we teach students about environmental responsibility while running an environmentally irresponsible institution?", 22, 28, [
+        createReply("r-s-7-5a", "pro-argument", "Students care deeply about the environment - this would boost school pride.", 18, 26, [], undefined, undefined, undefined, mockUsers[1]),
       ], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r-s-7-6", "proposal", "Apply for environmental grants.", 18, 25, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-s-7-6", "proposal", "Apply for environmental grants - several are available specifically for schools.", 18, 25, [], undefined, undefined, undefined, mockUsers[2]),
       createReply("r-s-7-7", "question", "What have other schools done successfully?", 10, 22, [
-        createReply("r-s-7-7a", "pro-argument", "Many schools have reduced energy costs 30% with simple changes.", 16, 20, [], undefined, undefined, undefined, mockUsers[4]),
+        createReply("r-s-7-7a", "pro-argument", "Many schools have reduced energy costs 30% with simple changes like LED bulbs and programmable thermostats.", 16, 20, [], undefined, undefined, undefined, mockUsers[4]),
       ], undefined, undefined, undefined, mockUsers[3]),
-      createReply("r-s-7-8", "variant", "Start with LED lighting - quick payback.", 14, 18, [], undefined, undefined, undefined, mockUsers[5]),
-      createReply("r-s-7-9", "proposal", "Partner with local environmental groups.", 12, 15, [], undefined, undefined, undefined, mockUsers[6]),
-      createReply("r-s-7-10", "pro-argument", "Sustainability education is future-proofing.", 15, 10, [], undefined, undefined, undefined, mockUsers[7]),
-      createReply("r-s-7-11", "proposal", "Composting program for cafeteria waste.", 11, 8, [], undefined, undefined, undefined, mockUsers[8]),
-      createReply("r-s-7-12", "variant", "Make sustainability part of school culture.", 13, 5, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-s-7-8", "variant", "Start with LED lighting replacement - it has the quickest payback period.", 14, 18, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-s-7-9", "proposal", "Partner with local environmental groups who can provide expertise and volunteers.", 12, 15, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-s-7-10", "pro-argument", "Sustainability education is future-proofing our students for green economy jobs.", 15, 10, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-s-7-11", "proposal", "Start a composting program for cafeteria food waste.", 11, 8, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-s-7-12", "variant", "Make sustainability part of school culture through competitions between classes.", 13, 5, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-s-7-13", "objection", "This sounds like a lot of work with uncertain payoff. The recycling and composting will require ongoing student and staff effort that will decline over time. Previous 'green initiatives' at our school have fizzled out within a year. What makes this different?", 9, 15, [], undefined, {
+        text: "Build sustainability into school structure, not just enthusiasm: make Green Team a formal student council committee with recognition and credits. Tie energy savings to visible benefits (e.g., savings fund class activities). Create automated systems where possible (programmable thermostats, motion-sensor lights). Focus on easy wins first to build momentum.",
+        solutionLevel: "school"
+      }, undefined, mockUsers[10]),
     ],
   },
 
