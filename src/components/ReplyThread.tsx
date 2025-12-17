@@ -136,9 +136,12 @@ const ReplyItem = ({
               </div>
             )}
             
-            {/* Main content row with timestamp on the right */}
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-start gap-2 flex-1 min-w-0">
+            {/* Main content with timestamp floating right */}
+            <div className="relative">
+              <span className="float-right text-[10px] text-muted-foreground whitespace-nowrap ml-3 mt-0.5">
+                {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
+              </span>
+              <div className="flex items-start gap-2">
                 <CategoryIconPrefix category={reply.category} />
                 <CollapsibleText 
                   text={reply.text} 
@@ -146,9 +149,6 @@ const ReplyItem = ({
                   className="text-sm text-foreground leading-relaxed"
                 />
               </div>
-              <span className="text-[10px] text-muted-foreground whitespace-nowrap flex-shrink-0">
-                {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
-              </span>
             </div>
             
             {reply.referencedReplies && reply.referencedReplies.length > 0 && (
@@ -186,6 +186,9 @@ const ReplyItem = ({
                 <div className="flex items-center gap-2 mb-2">
                   <CategoryIconPrefix category="proposal" />
                   <h3 className="text-xs font-semibold text-foreground">Counter-Proposal</h3>
+                  {reply.counterProposal.solutionLevel && (
+                    <SolutionLevelBadge level={reply.counterProposal.solutionLevel} />
+                  )}
                 </div>
                 <div className="pl-6">
                   <CollapsibleText 
@@ -194,11 +197,6 @@ const ReplyItem = ({
                     className="text-sm text-foreground leading-relaxed"
                   />
                 </div>
-                {reply.counterProposal.solutionLevel && (
-                  <div className="pl-6 mt-2">
-                    <SolutionLevelBadge level={reply.counterProposal.solutionLevel} />
-                  </div>
-                )}
                 {reply.counterProposal.postedAsConcern && (
                   <p className="text-xs text-muted-foreground italic pl-6 mt-1">
                     Posted as a forum concern
