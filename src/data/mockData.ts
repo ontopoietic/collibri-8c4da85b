@@ -112,13 +112,13 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10a-1-1",
         title: "Weekly Class Meetings for Student Voice (Original)",
-        text: "Hold regular 15-minute class meetings where students can discuss concerns and vote on class-level decisions together.",
+        text: "We propose implementing weekly 15-minute class meetings during Monday homeroom to address the lack of structured student voice in school decisions. Currently, students have no regular forum to express concerns, leading to frustration and disengagement. The meeting format would include a rotating student facilitator to lead discussions, a 5-minute open floor for raising new concerns, 5 minutes for discussing ongoing issues, and 5 minutes for quick votes on class matters. All decisions and concerns would be documented in a shared digital notebook accessible to students and teachers. This creates a democratic, predictable space for participation while building civic skills in public speaking and collaborative decision-making.",
         votes: 8,
       },
       {
         id: "v-c10a-1-2",
-        title: "Structured Class Meetings with Rotating Facilitators",
-        text: "Students lack a regular forum to voice concerns and participate in class decisions. We propose holding weekly 15-minute class meetings with rotating student facilitators and a digital suggestion box for anonymous submissions, ensuring everyone has a voice in class matters.",
+        title: "Structured Class Meetings with Rotating Facilitators and Digital Submission",
+        text: "Students currently lack any structured way to voice concerns and participate in class decisions, leading to a growing sense of disconnection from school governance. We propose holding weekly 20-minute class meetings with several key innovations: a rotating student facilitator chosen by lottery each week, a digital suggestion box where students can submit concerns anonymously throughout the week, and a voting app where students can prioritize which issues to discuss. The facilitator would compile submissions, lead the discussion, and document outcomes in a shared notebook. Teachers would attend as advisors but students would drive the agenda. This approach ensures quieter students can participate through anonymous submissions while building leadership skills through the facilitator rotation.",
         votes: 14,
       },
     ],
@@ -153,14 +153,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-c10a-2-1",
-        title: "Temperature Control Issues (Original)",
-        text: "Our classroom is too hot in summer and too cold in winter. The heating and AC systems don't work properly.",
+        title: "Temperature Control Issues - Emergency Protocol Focus",
+        text: "The climate control systems in our building have created an uncomfortable learning environment for over two years. During summer, classroom temperatures regularly exceed 30°C, causing drowsiness and inability to concentrate. In winter, heating often fails entirely. We propose an emergency protocol as the first step: immediate procurement of portable fans and space heaters, teacher authority to relocate classes to more comfortable rooms during extreme temperatures, relaxed dress code during heat waves, and a simple paper-based temperature log in each classroom. These measures can be implemented within days while longer-term HVAC repairs are planned. Student safety should not wait for bureaucratic approval processes.",
         votes: 6,
       },
       {
         id: "v-c10a-2-2",
-        title: "Comprehensive Climate Control Fix",
-        text: "Our classroom temperatures fluctuate between too hot in summer and too cold in winter due to faulty HVAC systems. We propose a maintenance audit, installing thermometers in each classroom, and creating a reporting system so issues can be tracked and resolved quickly.",
+        title: "Comprehensive Climate Control with Digital Monitoring",
+        text: "Our classroom climate control problems have persisted for over two years, with temperatures ranging from freezing in winter to over 30°C in summer. Students report headaches, inability to concentrate, and several have had to leave class during extreme conditions. We propose a comprehensive four-phase approach: Phase 1 (immediate) - request professional HVAC audit to identify all malfunctioning components. Phase 2 (within 1 month) - install digital thermometers in each classroom connected to a central monitoring dashboard. Phase 3 (within 2 months) - deploy a mobile app where students and teachers can log temperature complaints with timestamps and room numbers. Phase 4 (budget dependent) - systematic repair or replacement of failing equipment prioritized by severity data collected from the monitoring system.",
         votes: 12,
       },
     ],
@@ -191,14 +191,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-c10a-3-1",
-        title: "Class Library Corner (Original)",
-        text: "Create a small library corner in our classroom with books students can borrow and exchange freely.",
+        title: "Class Library Corner with Honor System",
+        text: "Our classroom currently has no accessible reading materials for students during free time, lunch breaks, or when they finish assignments early. We propose creating a dedicated library corner in the back of the classroom with a comfortable reading chair, a small bookshelf, and an honor-system checkout log. Students would donate books from home to build the initial collection, with a goal of at least 50 books covering various genres and reading levels. A student volunteer would serve as 'librarian' each month, responsible for organizing books and ensuring the log is maintained. Books can be borrowed for up to two weeks. This creates a culture of reading and sharing while teaching responsibility through the honor system.",
         votes: 7,
       },
       {
         id: "v-c10a-3-2",
-        title: "Community Book Exchange Program",
-        text: "Our classroom lacks accessible reading materials for free time. We propose creating a classroom library corner with a book drive where students bring books from home, a digital catalog for tracking, and monthly reading recommendations from students.",
+        title: "Digital-Integrated Community Book Exchange",
+        text: "Students often have free moments during school but no accessible reading materials - the main library requires passes and has limited hours. We propose creating a classroom library with modern tracking: students donate books from home during a class book drive, each book receives a QR code sticker linked to a simple Google Sheets catalog showing availability and borrower history. Monthly 'book talks' would let students recommend favorites to classmates. The system would include genre labels, difficulty ratings, and student reviews. A rotating 'Book Committee' of three students would manage new acquisitions, organize themed displays, and coordinate with the main library for additional resources. This combines the warmth of a classroom library with digital organization skills.",
         votes: 10,
       },
     ],
@@ -308,14 +308,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-c10b-1-1",
-        title: "Seating Arrangement Issues (Original)",
-        text: "Our current row-by-row seating makes group work difficult and some students can't see the board well from back corners.",
+        title: "Seating Arrangement - Flexible Zones Approach",
+        text: "Our current row-by-row seating arrangement creates several problems: students in back corners cannot see the board clearly (especially during math when small numbers are written), group work requires awkward desk rearrangement that wastes class time, and students feel trapped in the same spot all year. We propose implementing a flexible zoning system with three areas: a traditional desk area near the board for direct instruction, a collaborative cluster area with grouped desks for project work, and a quiet corner with individual desks for focused independent study. Students would rotate through zones based on the day's activities. This requires no additional furniture, just reorganization, and teaches students to adapt to different work environments.",
         votes: 5,
       },
       {
         id: "v-c10b-1-2",
-        title: "Flexible Seating with Rotation",
-        text: "Our current row-by-row classroom seating creates difficulties: students in back corners can't see the board well, and group work is awkward. We propose implementing U-shaped seating for better visibility and weekly seat rotation so no one is stuck in disadvantaged positions.",
+        title: "U-Shape Seating with Weekly Rotation and Standing Options",
+        text: "Students in our class struggle with visibility and collaboration due to traditional row seating. Some students in back corners literally cannot read the board during math and science, while group work requires disruptive desk-moving that wastes 5-10 minutes per class. We propose a comprehensive seating redesign: arrange desks in a U-shape so all students face the board and can see each other for discussions, implement weekly seat rotation so no student is permanently disadvantaged, and add 2-3 standing desk stations for students who focus better when standing. The rotation lottery would be managed by students themselves, teaching fairness and organization. This creates an equitable, engaging classroom environment that supports multiple learning styles.",
         votes: 11,
       },
     ],
@@ -344,14 +344,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-c10b-2-1",
-        title: "Class Noise Issues (Original)",
-        text: "When we have independent work time, some students chat loudly, making it hard for others to concentrate.",
+        title: "Class Noise - Traffic Light System",
+        text: "During independent work time, some students chat loudly while others need silence to concentrate. This creates tension and affects learning outcomes for students who require quiet focus. We propose implementing a simple 'traffic light' noise system: when the teacher displays a red card, complete silence is required; yellow allows whispered collaboration with immediate neighbors; green indicates open discussion time. This visual system is easy to understand, requires no technology, and gives teachers flexibility to adjust noise levels based on the task. Students would participate in creating the rules and consequences, increasing buy-in. The system respects both social learners and those who need quiet.",
         votes: 4,
       },
       {
         id: "v-c10b-2-2",
-        title: "Structured Work Time with Zones",
-        text: "During independent work time, some students chat loudly, making it hard for others to concentrate. We propose creating designated quiet zones and discussion areas in the classroom, with clear time blocks for silent work and collaborative time.",
+        title: "Structured Work Time with Designated Zones and Equipment",
+        text: "Our classroom experiences a recurring conflict: during independent work time, social students chat while focused students cannot concentrate, leading to frustration on both sides. We propose creating designated zones within the classroom: a 'silence zone' in one area with noise-canceling headphones available for checkout, and a 'collaboration zone' where quiet discussion is permitted. Work periods would also include structured time blocks - the first 15 minutes always silent, followed by 10 minutes of optional collaborative time. A student-managed noise monitor would track disruptions using a simple tally system. This approach respects different learning styles while maintaining productivity for everyone.",
         votes: 9,
       },
     ],
@@ -379,14 +379,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-c10b-3-1",
-        title: "Digital Homework Calendar (Original)",
-        text: "Create a shared digital calendar where all teachers post homework deadlines so we can plan better.",
+        title: "Digital Homework Calendar - Simple Shared Solution",
+        text: "Students frequently experience assignment pile-ups where 4-5 deadlines fall on the same day, causing unnecessary stress and lower quality work. Currently, each teacher announces homework independently with no coordination. We propose creating a simple shared Google Calendar visible to all students and teachers in our class. Teachers would spend 30 seconds entering each assignment with subject name, brief description, and due date. Students could subscribe to receive notifications and see the week's workload at a glance. A student volunteer would maintain the calendar and send weekly summary emails. This low-tech solution requires minimal effort from teachers while dramatically improving student organization and stress levels.",
         votes: 5,
       },
       {
         id: "v-c10b-3-2",
-        title: "Integrated Assignment Management System",
-        text: "Students struggle to track homework deadlines across multiple classes, often resulting in multiple assignments due the same day. We propose a school-wide digital calendar integrated with existing platforms, mandatory for all teachers, with notification options for students.",
+        title: "Integrated Assignment Management System with Workload Balancing",
+        text: "Students struggle to manage homework deadlines across 8 different subjects, often resulting in multiple major assignments due simultaneously. This leads to all-night study sessions, lower quality work, and increased stress. We propose implementing a school-wide digital assignment calendar integrated with our existing school portal. The system would be mandatory for all teachers and include: automatic notifications to students 3 days and 1 day before deadlines, a color-coded workload view showing assignment density, and - most importantly - a 'load balancing' feature that alerts teachers when they're scheduling deadlines on already-heavy days. Students could export calendars to their phones. This promotes coordination between teachers and gives students visibility to plan their time effectively.",
         votes: 8,
       },
     ],
@@ -457,14 +457,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-c10c-1-1",
-        title: "Broken Lab Equipment (Original)",
-        text: "Many science lab instruments are broken or missing parts, making experiments difficult to complete properly.",
+        title: "Broken Lab Equipment - Emergency Repair Priority",
+        text: "Our science labs have deteriorated to the point where meaningful experiments are nearly impossible. During last week's biology class, only 2 of 6 microscopes were functional, forcing groups of 8 students to share a single working unit - each student got less than 2 minutes of actual viewing time during the entire 45-minute lab. The chemistry equipment is equally problematic: several Bunsen burners have gas leaks that teachers have flagged as potential safety hazards, half the beakers have chips that could cause cuts, and we're missing basic items like test tube holders and graduated cylinders. This equipment shortage directly undermines the hands-on learning that science education requires. We propose creating a prioritized repair/replacement list starting with safety hazards, then essential instructional equipment.",
         votes: 6,
       },
       {
         id: "v-c10c-1-2",
-        title: "Lab Equipment Restoration Program",
-        text: "Many science lab instruments are broken or missing parts, forcing students to share equipment excessively and making experiments difficult to complete. We propose requesting emergency funding for essential repairs, creating a prioritized equipment list, and exploring grant opportunities for science education.",
+        title: "Lab Equipment Restoration Program with Multiple Funding Sources",
+        text: "The state of our science lab equipment has reached a crisis point that's compromising both education quality and student safety. Students must share one working microscope among 6-8 people, gas equipment has documented leaks, and essential tools are broken or missing. We propose a comprehensive Lab Equipment Restoration Program: Phase 1 - immediate safety audit and retirement of hazardous equipment; Phase 2 - submit prioritized funding request to administration (estimated €3,000 for essential items); Phase 3 - simultaneously apply for STEM education grants (our science teacher has identified 3 opportunities); Phase 4 - organize a community fundraiser and reach out to local businesses for equipment donations. Many companies upgrade lab equipment annually and donate their older-but-functional units. This multi-pronged approach maximizes our chances of restoring functional labs within this school year.",
         votes: 13,
       },
     ],
@@ -492,14 +492,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-c10c-2-1",
-        title: "Flexible Deadline Policy (Original)",
-        text: "Allow students to request 24-48 hour extensions on assignments without penalty, with teacher approval.",
+        title: "Flexible Deadline Policy - Limited Extensions",
+        text: "Current school policy treats all late submissions the same way - immediate grade penalties - regardless of circumstances. This ignores the reality that students face unexpected challenges: family emergencies, illness, technology failures, or simply overwhelming workload when multiple deadlines coincide. We propose allowing each student 2 'extension tokens' per semester that can be used for any assignment without questions or penalties. Using a token grants an automatic 24-hour extension. Students would request extensions through a simple online form that automatically notifies the teacher. Unused tokens don't carry over, preventing hoarding. This system provides necessary flexibility while maintaining structure and accountability - students must budget their extensions wisely across the semester.",
         votes: 5,
       },
       {
         id: "v-c10c-2-2",
-        title: "Structured Extension System",
-        text: "Students sometimes need extra time on assignments due to unexpected circumstances but face penalties for late submissions. We propose allowing 2 extensions per semester per student, with a 24-48 hour grace period for documented emergencies or teacher approval, balancing flexibility with accountability.",
+        title: "Structured Extension System with Teacher Flexibility",
+        text: "Students sometimes face legitimate obstacles to meeting deadlines - illness, family emergencies, technology failures, or multiple tests on the same day - but our current system applies identical penalties regardless of circumstances. This causes unnecessary stress and doesn't reflect real-world professional environments where deadline negotiation is normal. We propose a structured extension policy: students may request up to 2 extensions per semester per class through a simple form citing the reason (no documentation required for the first request). Teachers have discretion to approve 24-48 hour extensions. For documented emergencies (verified illness, family crisis), unlimited extensions apply. Requests must be submitted at least 6 hours before the deadline to prevent last-minute abuse. This balances flexibility with accountability while teaching students to communicate proactively about obstacles.",
         votes: 10,
       },
     ],
@@ -526,14 +526,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-c10c-3-1",
-        title: "Cafeteria Wait Times (Original)",
-        text: "The lunch line is so long that we only have 10 minutes to actually eat before the next class.",
+        title: "Cafeteria Wait Times - Staggered Scheduling",
+        text: "Our 30-minute lunch period is effectively reduced to 10-12 minutes of actual eating time due to extreme cafeteria lines. Students at the end of the line regularly have to choose between eating quickly and unhealthily or skipping lunch entirely to make their next class on time. The bottleneck occurs because all 400+ students in our lunch block try to get food simultaneously. We propose staggering lunch times by grade or building wing: Group A enters at 12:00, Group B at 12:10, Group C at 12:20. Each group would still have 30 minutes, but the serving line would handle smaller waves of students. This requires no additional staff or equipment - just schedule coordination. The result would be reasonable wait times and enough time for students to actually eat a proper meal.",
         votes: 4,
       },
       {
         id: "v-c10c-3-2",
-        title: "Cafeteria Efficiency Improvement",
-        text: "The lunch line is so long that students only have 10 minutes to actually eat before the next class, causing many to skip meals. We propose staggering lunch times by grade, adding grab-and-go options, and considering a second serving line to reduce wait times.",
+        title: "Cafeteria Efficiency - Multi-Pronged Improvement Plan",
+        text: "The cafeteria bottleneck has reached a point where many students skip lunch rather than wait. With 400+ students in a single lunch period, average wait times exceed 15 minutes, leaving only 10 minutes to eat before the next class. This affects nutrition, energy levels, and afternoon academic performance. We propose a comprehensive efficiency plan: First, implement staggered lunch entry by grade (5-minute intervals) to smooth the flow. Second, add a second serving line or grab-and-go station with pre-packaged healthy options like sandwiches, salads, and fruit that bypass the main line. Third, extend lunch period by 5 minutes by shortening the preceding passing period (students can eat slightly later but with adequate time). Fourth, install a digital menu display so students can decide what they want before reaching the front. These combined measures could reduce average wait time to under 5 minutes.",
         votes: 9,
       },
     ],
@@ -607,14 +607,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-g10-1-1",
-        title: "Cafeteria Food Quality Issues",
-        text: "The food served in our cafeteria is often cold and lacks variety. Students are frequently complaining about limited healthy options.",
+        title: "Cafeteria Food Quality - Basic Improvements",
+        text: "The cafeteria food quality has been a consistent complaint across all Grade 10 classes, with students reporting cold meals, limited variety, and few healthy options. Many students have started bringing lunch from home or skipping meals entirely, which affects afternoon concentration and academic performance. We propose starting with achievable improvements: install a food thermometer system to ensure serving temperatures meet standards, survey students monthly about menu preferences, and add at least one fresh salad option daily. These changes require minimal budget but would significantly improve the dining experience. Students are willing to participate in menu planning committees to ensure realistic suggestions that work within existing constraints.",
         votes: 12,
       },
       {
         id: "v-g10-1-2",
-        title: "Comprehensive Cafeteria Improvement",
-        text: "The cafeteria food is often cold and lacks variety, with limited healthy options causing many students to skip lunch. We propose implementing a student feedback system for menu choices, extending lunch breaks, adding fresh salad options, and installing better warming equipment to keep food hot.",
+        title: "Comprehensive Cafeteria Overhaul with Student Partnership",
+        text: "The cafeteria food situation has become a grade-wide crisis - students from Classes 10A, 10B, and 10C all report identical complaints: cold food (even items that should be hot), repetitive weekly menus with minimal variation, and a near-complete absence of healthy options. A student survey showed 65% have reduced cafeteria purchases and 30% regularly skip lunch. We propose a comprehensive improvement plan developed in partnership between students and cafeteria management: First, establish a Student Cafeteria Committee with 2 representatives per class meeting monthly with kitchen staff. Second, implement a digital feedback system where students rate meals daily (takes 10 seconds). Third, request budget allocation for proper warming equipment - the current steamers are over 15 years old. Fourth, introduce a 'healthy corner' with fresh fruits, vegetables, and salads. Fifth, publish weekly menus in advance so students can plan. This collaborative approach ensures changes reflect actual student preferences while respecting kitchen constraints.",
         votes: 28,
       },
     ],
@@ -661,14 +661,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-g10-2-1",
-        title: "Digital Assignment Submission",
-        text: "Move to a fully digital assignment submission system to reduce paper waste and make tracking easier.",
+        title: "Digital Assignment Submission - Gradual Transition",
+        text: "Our current paper-based assignment submission system is inefficient, environmentally wasteful, and makes it difficult for students to track their work. Papers get lost, teachers struggle to organize stacks of submissions, and students have no way to verify their work was received. We propose transitioning to digital submissions using Google Classroom, which most students already have accounts for through the school. The transition would be gradual: start with one subject this semester as a pilot, gather feedback, then expand next semester. Teachers would receive training sessions, and the school library would extend hours for students without home internet access. Digital submission allows automatic timestamps (no more 'I submitted it!' disputes), easier feedback through comments, and environmental benefits - our grade alone uses an estimated 5,000 sheets of paper per semester on assignments.",
         votes: 14,
       },
       {
         id: "v-g10-2-2",
-        title: "Hybrid Digital System with School Support",
-        text: "Paper-based assignment submission creates waste and makes tracking difficult, but not all students have reliable internet at home. We propose implementing digital submissions while extending library hours for students without home internet access, plus maintaining offline submission options for equity.",
+        title: "Hybrid Digital System with Equity Safeguards",
+        text: "Paper-based assignment submission creates problems for everyone: environmental waste, lost assignments, difficulty tracking deadlines, and delayed feedback. However, moving fully digital raises equity concerns since not all students have reliable internet at home. We propose a thoughtful hybrid approach: implement Google Classroom as the primary submission platform with several equity safeguards built in. First, maintain paper submission as a backup option - no student should be penalized for lack of technology access. Second, extend library hours until 6 PM on weekdays so students can use school computers. Third, identify students with technology barriers and provide targeted support (the school has unused Chromebooks that could be loaned). Fourth, teachers must allow at least 48-hour submission windows so students can access school computers during the next school day if needed. This maximizes the benefits of digital submission while ensuring no student is disadvantaged by their circumstances.",
         votes: 26,
       },
     ],
@@ -950,14 +950,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-s-1-1",
-        title: "Curriculum Content Update Request",
-        text: "Much of what we learn in textbooks is outdated. Topics like digital literacy, climate science, and modern history are barely covered.",
+        title: "Curriculum Content Update - Focused Petition Approach",
+        text: "Our textbooks and curriculum are severely outdated, with some materials unchanged since the early 2000s. Our history books stop at 2005, missing two decades of significant global events. There is virtually no coverage of digital literacy, artificial intelligence, or modern technology - skills every student will need regardless of career path. Climate science content is limited to a few paragraphs despite it being the defining issue of our generation. We propose creating a focused student petition specifically targeting the ministry's curriculum review board. The petition would document specific outdated content with page references, compare our curriculum to what students learn in neighboring countries, and include signatures from students across all grades. A single, well-documented petition with school-wide backing is more likely to succeed than scattered complaints. We'd request a meeting with ministry representatives to present our case directly.",
         votes: 25,
       },
       {
         id: "v-s-1-2",
-        title: "Comprehensive Curriculum Modernization Proposal",
-        text: "Create a student committee to formally petition the ministry for curriculum updates, focusing on digital literacy, climate science, modern history, and practical life skills.",
+        title: "Comprehensive Curriculum Modernization - Multi-Stakeholder Campaign",
+        text: "Our curriculum is so outdated that it's failing to prepare students for the modern world. History stops at 2005, coding and AI are absent despite being essential for every career, climate science is barely mentioned, and practical life skills like financial literacy are completely ignored. The ministry only reviews curriculum every 10-15 years - far too slow given the pace of change. We propose a comprehensive modernization campaign involving multiple stakeholders: First, form a Student Curriculum Committee with representatives from every grade to document specific gaps. Second, conduct a comparative analysis showing what students in other European countries learn that we don't. Third, partner with the Parent Association (they've expressed support) to add adult voices to our petition. Fourth, reach out to local media - student education stories often get coverage. Fifth, request formal meetings with our local ministry representative and school board members. Sixth, propose a pilot program where a few 'modern topics' electives could be offered even before full curriculum revision. This multi-pronged approach maximizes pressure for change while showing we're proposing solutions, not just complaining.",
         votes: 52,
       },
     ],
@@ -1033,14 +1033,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-s-2-1",
-        title: "Cafeteria Food Quality Issues",
-        text: "The food served in our cafeteria is often cold and lacks variety.",
+        title: "Cafeteria Food Quality - Quick Wins Approach",
+        text: "The cafeteria situation has reached a school-wide breaking point. Students across all grades report identical complaints: food served cold even when it should be hot, the same repetitive menu cycling weekly, and virtually no healthy options available. A recent informal poll showed over 40% of students now bring lunch from home or skip eating entirely, which impacts afternoon energy and learning. We propose focusing on achievable 'quick wins' that require minimal budget: enforce proper serving temperatures through staff monitoring, add a simple daily salad bar with basic vegetables (cost-effective and healthy), publish menus a week in advance so students can plan, and create a student feedback form to identify the most-wanted menu items. These changes can be implemented within weeks and would immediately improve student satisfaction while larger improvements are planned.",
         votes: 18,
       },
       {
         id: "v-s-2-2",
-        title: "School-Wide Cafeteria Improvement Initiative",
-        text: "Implement student feedback system, upgrade heating equipment, add healthy options, extend lunch period, and create a cafeteria improvement committee.",
+        title: "School-Wide Cafeteria Improvement Initiative - Full Transformation",
+        text: "Cafeteria food quality has been the single most consistent complaint across every grade in our school for years. The issues are well-documented: cold food (warming equipment is outdated), repetitive menus, minimal healthy options, and inadequate lunch time due to long lines. This affects nutrition, academic performance, and school morale. We propose a comprehensive School-Wide Cafeteria Improvement Initiative with buy-in from administration: First, establish a permanent Cafeteria Advisory Committee with 2 student representatives per grade meeting monthly with kitchen management and administration. Second, implement a real-time digital feedback system where students rate meals daily, generating data to guide improvements. Third, request capital budget for modern warming equipment (current units are 15+ years old). Fourth, extend the lunch period by 10 minutes by adjusting the afternoon schedule. Fifth, create a 'Healthy Corner' with fresh fruits, vegetables, yogurt, and salads as alternatives to the hot line. Sixth, explore partnerships with local restaurants for occasional variety days. Seventh, conduct a school-wide satisfaction survey twice per year to measure progress. This comprehensive approach treats cafeteria improvement as the school-wide priority it deserves.",
         votes: 48,
       },
     ],
@@ -1106,14 +1106,14 @@ export const mockConcerns: Concern[] = [
     variants: [
       {
         id: "v-s-3-1",
-        title: "Basic Support",
-        text: "Focus on peer support network and partnerships with external organizations.",
+        title: "Mental Health Support - Community Partnership Model",
+        text: "Our school faces a mental health crisis largely invisible to administration. Student surveys reveal over 40% experience significant school-related stress, 25% have wanted professional help but didn't know how to access it, and wait times to see our overloaded counselors average 3 weeks. With only 2 counselors for 800+ students (1:400 ratio vs. recommended 1:250), the system cannot meet demand. We propose a Community Partnership Model as a cost-effective first step: partner with local mental health organizations (three have already expressed interest) to provide free monthly workshops on stress management, coping skills, and recognizing warning signs. Train a volunteer Peer Support Network of students who complete 20 hours of mental health first aid certification. Create simple awareness campaigns reducing stigma around seeking help. These initiatives require minimal school budget while immediately expanding support availability. Success can build the case for hiring additional counseling staff.",
         votes: 20,
       },
       {
         id: "v-s-3-2",
-        title: "Comprehensive Initiative",
-        text: "Full implementation including additional counselor, peer network, external partnerships, wellness room, curriculum integration, anonymous check-ins, and teacher training.",
+        title: "Comprehensive Mental Health Initiative - Full Support System",
+        text: "Mental health has reached crisis levels in our school community. Anonymous surveys show 40% of students report significant anxiety or depression symptoms, 25% have wanted professional help but couldn't access it, and our 2 counselors for 800+ students creates a 3-week average wait time. Students are suffering in silence while small problems escalate into serious ones. We propose a comprehensive, multi-layered Mental Health Initiative addressing this crisis from every angle: First, advocate strongly for hiring one additional counselor to improve our ratio toward the recommended 1:250. Second, create a trained Peer Support Network with 20 volunteer students receiving certified mental health first aid training. Third, establish partnerships with local mental health organizations for free monthly workshops and crisis support (three have already expressed interest). Fourth, designate a Wellness Room - a quiet, calming space students can visit during free periods when feeling overwhelmed. Fifth, integrate mental health education into existing health curriculum covering stress management, warning sign recognition, and help-seeking. Sixth, implement anonymous wellness check-ins twice per semester through a simple app, with counselors following up on concerning responses. Seventh, provide teachers with basic mental health awareness training. This comprehensive system ensures support is accessible, reduces stigma through normalization, and catches problems before they become crises.",
         votes: 42,
       },
     ],

@@ -133,6 +133,49 @@ const Graph = () => {
       .force("center", d3.forceCenter(dimensions.width / 2, dimensions.height / 2))
       .force("collision", d3.forceCollide<GraphNode>().radius(d => d.radius + 10));
 
+    // Zoom to fit all nodes after simulation stabilizes
+    simulation.on("end", () => {
+      if (nodes.length === 0) return;
+      
+      // Calculate bounds of all nodes
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+      nodes.forEach(node => {
+        if (node.x !== undefined && node.y !== undefined) {
+          minX = Math.min(minX, node.x - node.radius);
+          maxX = Math.max(maxX, node.x + node.radius);
+          minY = Math.min(minY, node.y - node.radius);
+          maxY = Math.max(maxY, node.y + node.radius);
+        }
+      });
+      
+      const padding = 80;
+      const graphWidth = maxX - minX + padding * 2;
+      const graphHeight = maxY - minY + padding * 2;
+      
+      // Calculate scale to fit
+      const scale = Math.min(
+        dimensions.width / graphWidth,
+        dimensions.height / graphHeight,
+        0.8 // Max scale to avoid too much zoom
+      );
+      
+      // Calculate center offset
+      const centerX = (minX + maxX) / 2;
+      const centerY = (minY + maxY) / 2;
+      
+      const translateX = dimensions.width / 2 - centerX * scale;
+      const translateY = dimensions.height / 2 - centerY * scale;
+      
+      // Apply zoom transform
+      const initialTransform = d3.zoomIdentity
+        .translate(translateX, translateY)
+        .scale(scale);
+      
+      svg.transition()
+        .duration(500)
+        .call(zoom.transform, initialTransform);
+    });
+
     // Create links
     const link = g.append("g")
       .attr("stroke", "#666")
