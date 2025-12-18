@@ -136,20 +136,25 @@ const ReplyItem = ({
               </div>
             )}
             
-            {/* Main content with timestamp floating right - text flows around it */}
-            <div className="relative">
-              <span className="float-right text-[10px] text-muted-foreground whitespace-nowrap ml-3 mb-1">
-                {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
-              </span>
-              <span className="inline-block mr-1.5 align-top">
+            {/* Main content with flexbox for proper text alignment */}
+            <div className="flex items-start gap-1.5">
+              {/* Icon - fixed width, doesn't shrink */}
+              <span className="flex-shrink-0 mt-0.5">
                 <CategoryIconPrefix category={reply.category} />
               </span>
-              <CollapsibleText 
-                text={reply.text} 
-                maxHeight={100}
-                className="text-sm text-foreground leading-relaxed"
-                inline={true}
-              />
+              
+              {/* Text container - takes remaining width */}
+              <div className="flex-1 min-w-0">
+                <span className="float-right text-[10px] text-muted-foreground whitespace-nowrap ml-3 mb-1">
+                  {formatDistanceToNow(reply.timestamp, { addSuffix: true })}
+                </span>
+                <CollapsibleText 
+                  text={reply.text} 
+                  maxHeight={100}
+                  className="text-sm text-foreground leading-relaxed"
+                  inline={true}
+                />
+              </div>
             </div>
             
             {reply.referencedReplies && reply.referencedReplies.length > 0 && (
