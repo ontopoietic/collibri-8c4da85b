@@ -29,7 +29,13 @@ export const CollapsibleText = ({ text, maxHeight = 120, className, inline = fal
           style={{ 
             maxHeight: !isExpanded && needsCollapse ? `${maxHeight}px` : undefined,
             display: 'inline',
-            overflow: !isExpanded && needsCollapse ? 'hidden' : undefined
+            overflow: !isExpanded && needsCollapse ? 'hidden' : undefined,
+            WebkitMaskImage: !isExpanded && needsCollapse 
+              ? 'linear-gradient(to bottom, black 60%, transparent 100%)' 
+              : undefined,
+            maskImage: !isExpanded && needsCollapse 
+              ? 'linear-gradient(to bottom, black 60%, transparent 100%)' 
+              : undefined,
           }}
           className={cn(className)}
         >
@@ -60,7 +66,15 @@ export const CollapsibleText = ({ text, maxHeight = 120, className, inline = fal
     <div className="relative">
       <div 
         ref={textRef as React.RefObject<HTMLDivElement>}
-        style={{ maxHeight: !isExpanded && needsCollapse ? `${maxHeight}px` : undefined }}
+        style={{ 
+          maxHeight: !isExpanded && needsCollapse ? `${maxHeight}px` : undefined,
+          WebkitMaskImage: !isExpanded && needsCollapse 
+            ? 'linear-gradient(to bottom, black 70%, transparent 100%)' 
+            : undefined,
+          maskImage: !isExpanded && needsCollapse 
+            ? 'linear-gradient(to bottom, black 70%, transparent 100%)' 
+            : undefined,
+        }}
         className={cn(
           "transition-all duration-300 overflow-hidden",
           className
@@ -68,9 +82,6 @@ export const CollapsibleText = ({ text, maxHeight = 120, className, inline = fal
       >
         {text}
       </div>
-      {needsCollapse && !isExpanded && (
-        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-card to-transparent pointer-events-none" />
-      )}
       {needsCollapse && (
         <Button
           variant="ghost"
