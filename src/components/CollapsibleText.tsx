@@ -7,12 +7,13 @@ interface CollapsibleTextProps {
   text: string;
   maxHeight?: number;
   className?: string;
+  inline?: boolean;
 }
 
-export const CollapsibleText = ({ text, maxHeight = 120, className }: CollapsibleTextProps) => {
+export const CollapsibleText = ({ text, maxHeight = 120, className, inline = false }: CollapsibleTextProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsCollapse, setNeedsCollapse] = useState(false);
-  const textRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
 
   useEffect(() => {
     if (textRef.current) {
@@ -20,10 +21,45 @@ export const CollapsibleText = ({ text, maxHeight = 120, className }: Collapsibl
     }
   }, [text, maxHeight]);
 
+  if (inline) {
+    return (
+      <>
+        <span 
+          ref={textRef as React.RefObject<HTMLSpanElement>}
+          style={{ 
+            maxHeight: !isExpanded && needsCollapse ? `${maxHeight}px` : undefined,
+            display: 'inline',
+            overflow: !isExpanded && needsCollapse ? 'hidden' : undefined
+          }}
+          className={cn(className)}
+        >
+          {text}
+        </span>
+        {needsCollapse && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsExpanded(!isExpanded);
+            }}
+            className="h-5 w-5 p-0 ml-1 text-muted-foreground hover:text-foreground inline-flex align-middle"
+          >
+            {isExpanded ? (
+              <ChevronUp className="h-3 w-3" />
+            ) : (
+              <ChevronDown className="h-3 w-3" />
+            )}
+          </Button>
+        )}
+      </>
+    );
+  }
+
   return (
     <div className="relative">
       <div 
-        ref={textRef}
+        ref={textRef as React.RefObject<HTMLDivElement>}
         style={{ maxHeight: !isExpanded && needsCollapse ? `${maxHeight}px` : undefined }}
         className={cn(
           "transition-all duration-300 overflow-hidden",
