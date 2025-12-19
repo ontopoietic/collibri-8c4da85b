@@ -126,6 +126,13 @@ const Graph = () => {
 
     svg.call(zoom);
 
+    // Apply initial zoom-out immediately (before simulation starts)
+    const initialScale = 0.6;
+    const initialTransform = d3.zoomIdentity
+      .translate(dimensions.width / 2 * (1 - initialScale), dimensions.height / 2 * (1 - initialScale))
+      .scale(initialScale);
+    svg.call(zoom.transform, initialTransform);
+
     // Create simulation
     const simulation = d3.forceSimulation<GraphNode>(nodes)
       .force("link", d3.forceLink<GraphNode, GraphLink>(links).id(d => d.id).distance(100))
@@ -152,12 +159,15 @@ const Graph = () => {
       const graphWidth = maxX - minX + padding * 2;
       const graphHeight = maxY - minY + padding * 2;
       
-      // Calculate scale to fit
-      const scale = Math.min(
+      // Calculate base scale to fit
+      const baseScale = Math.min(
         dimensions.width / graphWidth,
         dimensions.height / graphHeight,
-        0.8 // Max scale to avoid too much zoom
+        0.8
       );
+      
+      // Make it 50% closer to 1.0 (less zoomed out)
+      const scale = baseScale + (1 - baseScale) * 0.5;
       
       // Calculate center offset
       const centerX = (minX + maxX) / 2;
@@ -166,14 +176,14 @@ const Graph = () => {
       const translateX = dimensions.width / 2 - centerX * scale;
       const translateY = dimensions.height / 2 - centerY * scale;
       
-      // Apply zoom transform
-      const initialTransform = d3.zoomIdentity
+      // Apply zoom transform with smooth transition
+      const finalTransform = d3.zoomIdentity
         .translate(translateX, translateY)
         .scale(scale);
       
       svg.transition()
-        .duration(500)
-        .call(zoom.transform, initialTransform);
+        .duration(300)
+        .call(zoom.transform, finalTransform);
     });
 
     // Create links
