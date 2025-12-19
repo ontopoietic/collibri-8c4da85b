@@ -188,7 +188,7 @@ const ReplyItem = ({
             )}
 
             {reply.counterProposal && reply.category === "objection" && (
-              <div className="pt-3 border-t border-border/50">
+              <div className="pt-3 border-t border-border/50 pl-[34px]">
                 <div className="flex items-center gap-2 mb-2">
                   <CategoryIconPrefix category="proposal" />
                   <h3 className="text-xs font-semibold text-foreground">Counter-Proposal</h3>
@@ -196,7 +196,7 @@ const ReplyItem = ({
                     <SolutionLevelBadge level={reply.counterProposal.solutionLevel} />
                   )}
                 </div>
-                <div className="pl-6">
+                <div className="pl-[34px]">
                   <CollapsibleText 
                     text={reply.counterProposal.text}
                     maxHeight={100}
@@ -204,14 +204,14 @@ const ReplyItem = ({
                   />
                 </div>
                 {reply.counterProposal.postedAsConcern && (
-                  <p className="text-xs text-muted-foreground italic pl-6 mt-1">
+                  <p className="text-xs text-muted-foreground italic pl-[34px] mt-1">
                     Posted as a forum concern
                   </p>
                 )}
               </div>
             )}
             
-            <div className="flex items-center gap-2 flex-wrap" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-2 flex-wrap pl-[34px]" onClick={(e) => e.stopPropagation()}>
               {/* Hide voting buttons for questions and answers to questions */}
               {reply.category !== "question" && parentCategory !== "question" && (
                 <>
