@@ -155,8 +155,8 @@ const Graph = () => {
 
     // Create simulation
     const simulation = d3.forceSimulation<GraphNode>(nodes)
-      .force("link", d3.forceLink<GraphNode, GraphLink>(links).id(d => d.id).distance(100))
-      .force("charge", d3.forceManyBody().strength(-300))
+      .force("link", d3.forceLink<GraphNode, GraphLink>(links).id(d => d.id).distance(60))
+      .force("charge", d3.forceManyBody().strength(-150))
       .force("center", d3.forceCenter(dimensions.width / 2, dimensions.height / 2))
       .force("collision", d3.forceCollide<GraphNode>().radius(d => d.radius + 10));
 
