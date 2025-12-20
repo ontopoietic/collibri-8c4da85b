@@ -89,7 +89,7 @@ export const NavigationHeader = ({
                     <Gauge className="h-5 w-5" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto max-w-[calc(100vw-2rem)] p-0" align="end" withOverlay>
+                <PopoverContent className="w-auto max-w-[calc(100vw-2rem)] p-0" align="end" withOverlay collisionPadding={16}>
                   <QuotaDisplay quota={defaultQuota} currentPhase={currentPhase} />
                 </PopoverContent>
               </Popover>
