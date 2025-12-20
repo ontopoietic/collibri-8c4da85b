@@ -127,7 +127,7 @@ const Graph = () => {
     svg.call(zoom);
 
     // Apply initial zoom-out immediately (before simulation starts)
-    const initialScale = 0.6;
+    const initialScale = 0.7;
     const initialTransform = d3.zoomIdentity
       .translate(dimensions.width / 2 * (1 - initialScale), dimensions.height / 2 * (1 - initialScale))
       .scale(initialScale);
@@ -139,52 +139,6 @@ const Graph = () => {
       .force("charge", d3.forceManyBody().strength(-300))
       .force("center", d3.forceCenter(dimensions.width / 2, dimensions.height / 2))
       .force("collision", d3.forceCollide<GraphNode>().radius(d => d.radius + 10));
-
-    // Zoom to fit all nodes after simulation stabilizes
-    simulation.on("end", () => {
-      if (nodes.length === 0) return;
-      
-      // Calculate bounds of all nodes
-      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-      nodes.forEach(node => {
-        if (node.x !== undefined && node.y !== undefined) {
-          minX = Math.min(minX, node.x - node.radius);
-          maxX = Math.max(maxX, node.x + node.radius);
-          minY = Math.min(minY, node.y - node.radius);
-          maxY = Math.max(maxY, node.y + node.radius);
-        }
-      });
-      
-      const padding = 80;
-      const graphWidth = maxX - minX + padding * 2;
-      const graphHeight = maxY - minY + padding * 2;
-      
-      // Calculate base scale to fit
-      const baseScale = Math.min(
-        dimensions.width / graphWidth,
-        dimensions.height / graphHeight,
-        0.8
-      );
-      
-      // Make it 50% closer to 1.0 (less zoomed out)
-      const scale = baseScale + (1 - baseScale) * 0.5;
-      
-      // Calculate center offset
-      const centerX = (minX + maxX) / 2;
-      const centerY = (minY + maxY) / 2;
-      
-      const translateX = dimensions.width / 2 - centerX * scale;
-      const translateY = dimensions.height / 2 - centerY * scale;
-      
-      // Apply zoom transform with smooth transition
-      const finalTransform = d3.zoomIdentity
-        .translate(translateX, translateY)
-        .scale(scale);
-      
-      svg.transition()
-        .duration(300)
-        .call(zoom.transform, finalTransform);
-    });
 
     // Create links
     const link = g.append("g")
