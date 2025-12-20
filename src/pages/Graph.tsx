@@ -5,7 +5,7 @@ import { mockConcerns } from "@/data/mockData";
 import { Concern, Reply } from "@/types/concern";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Plus, Minus } from "lucide-react";
 import { NavigationHeader } from "@/components/NavigationHeader";
 
 interface GraphNode extends d3.SimulationNodeDatum {
@@ -30,9 +30,28 @@ interface GraphLink extends d3.SimulationLinkDatum<GraphNode> {
 const Graph = () => {
   const navigate = useNavigate();
   const svgRef = useRef<SVGSVGElement>(null);
+  const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; label: string } | null>(null);
   const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight - 120 });
   const [legendOpen, setLegendOpen] = useState(window.innerWidth > 768);
+
+  const handleZoomIn = () => {
+    if (svgRef.current && zoomRef.current) {
+      d3.select(svgRef.current)
+        .transition()
+        .duration(200)
+        .call(zoomRef.current.scaleBy, 1.3);
+    }
+  };
+
+  const handleZoomOut = () => {
+    if (svgRef.current && zoomRef.current) {
+      d3.select(svgRef.current)
+        .transition()
+        .duration(200)
+        .call(zoomRef.current.scaleBy, 0.7);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -125,9 +144,10 @@ const Graph = () => {
       });
 
     svg.call(zoom);
+    zoomRef.current = zoom;
 
     // Apply initial zoom-out immediately (before simulation starts)
-    const initialScale = 0.7;
+    const initialScale = 0.5;
     const initialTransform = d3.zoomIdentity
       .translate(dimensions.width / 2 * (1 - initialScale), dimensions.height / 2 * (1 - initialScale))
       .scale(initialScale);
@@ -300,6 +320,26 @@ const Graph = () => {
             </p>
           </CollapsibleContent>
         </Collapsible>
+
+        {/* Zoom Controls */}
+        <div className="absolute bottom-4 right-4 flex flex-col gap-2 z-10">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleZoomIn}
+            className="bg-card shadow-lg"
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleZoomOut}
+            className="bg-card shadow-lg"
+          >
+            <Minus className="h-4 w-4" />
+          </Button>
+        </div>
 
         <svg
           ref={svgRef}
