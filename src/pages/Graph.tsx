@@ -322,20 +322,20 @@ const Graph = () => {
         </Collapsible>
 
         {/* Zoom Controls */}
-        <div className="absolute bottom-4 right-4 flex flex-col gap-2 z-10">
+        <div className="absolute bottom-4 right-4 flex flex-col z-10 rounded-md shadow-lg overflow-hidden border border-border">
           <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
             onClick={handleZoomIn}
-            className="bg-card shadow-lg"
+            className="bg-card rounded-none border-b border-border hover:bg-muted"
           >
             <Plus className="h-4 w-4" />
           </Button>
           <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
             onClick={handleZoomOut}
-            className="bg-card shadow-lg"
+            className="bg-card rounded-none hover:bg-muted"
           >
             <Minus className="h-4 w-4" />
           </Button>
