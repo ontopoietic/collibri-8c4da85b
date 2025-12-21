@@ -10,7 +10,7 @@ import { AspectBadges } from "@/components/AspectBadges";
 import { CollapsibleText } from "@/components/CollapsibleText";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, Handshake, AlertCircle, ExternalLink, Filter, ArrowUpDown, Check, Trash2, User } from "lucide-react";
+import { ArrowLeft, MessageSquare, AlertTriangle, Lightbulb, Scale, HelpCircle, Star, AlertCircle, ExternalLink, Filter, ArrowUpDown, Check, Trash2, User } from "lucide-react";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
 import { TypeIconPrefix } from "@/components/TypeIconPrefix";
 import { formatDistanceToNow } from "date-fns";
@@ -441,7 +441,7 @@ const ConcernDetail = () => {
                   : ""
               )}
             >
-            <Handshake className="h-4 w-4" />
+            <Star className="h-4 w-4" />
             {!isMobile && "Endorse"}
             </Button>
             <Button
