@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RichText } from "@/components/RichText";
 
 interface CollapsibleTextProps {
   text: string;
@@ -39,7 +40,7 @@ export const CollapsibleText = ({ text, maxHeight = 120, className, inline = fal
           }}
           className={cn(className)}
         >
-          {text}
+          <RichText content={text} />
         </span>
         {needsCollapse && (
           <Button
@@ -77,10 +78,10 @@ export const CollapsibleText = ({ text, maxHeight = 120, className, inline = fal
         }}
         className={cn(
           "transition-all duration-300 overflow-hidden",
-          className
+        className
         )}
       >
-        {text}
+        <RichText content={text} />
       </div>
       {needsCollapse && (
         <Button

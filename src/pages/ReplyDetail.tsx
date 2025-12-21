@@ -9,6 +9,7 @@ import { ReplyThread } from "@/components/ReplyThread";
 import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
+import { RichText } from "@/components/RichText";
 import { ArrowLeft, Star, AlertCircle, HelpCircle, User, ExternalLink, MessageSquare } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
@@ -165,14 +166,14 @@ const ReplyDetail = () => {
           {/* Reply Content */}
           <div className="flex items-start gap-2">
             <CategoryIconPrefix category={reply.category} />
-            <p className="text-foreground leading-relaxed text-lg">{reply.text}</p>
+            <RichText content={reply.text} className="text-foreground leading-relaxed text-lg" />
           </div>
 
           {/* Counter Proposal */}
           {reply.counterProposal && reply.category === "objection" && (
             <div className="bg-primary/5 border border-primary/20 p-3 rounded-md space-y-2">
               <p className="text-xs font-medium text-foreground">Counter-Proposal:</p>
-              <p className="text-sm text-foreground">{reply.counterProposal.text}</p>
+              <RichText content={reply.counterProposal.text} className="text-sm text-foreground" />
               {reply.counterProposal.postedAsConcern && (
                 <p className="text-xs text-muted-foreground italic">
                   Posted as a forum concern

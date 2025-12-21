@@ -7,6 +7,7 @@ import { Phase } from "@/types/concern";
 import { cn } from "@/lib/utils";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { NavigationHeader } from "@/components/NavigationHeader";
+import { RichText } from "@/components/RichText";
 
 const Leaderboard = () => {
   const navigate = useNavigate();
@@ -95,9 +96,9 @@ const Leaderboard = () => {
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-xl mb-2 text-white">{concern.title}</CardTitle>
-                      <p className="text-muted-foreground line-clamp-2">
-                        {concern.description}
-                      </p>
+                      <div className="text-muted-foreground line-clamp-2">
+                        <RichText content={concern.description} />
+                      </div>
                       <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
                         <span>{concern.replies.length} replies</span>
                         <span>
