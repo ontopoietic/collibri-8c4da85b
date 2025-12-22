@@ -235,7 +235,7 @@ export const mockConcerns: Concern[] = [
     id: "c10a-5",
     type: "problem",
     title: "Lack of Storage Space for Personal Items",
-    description: "We don't have enough locker space or shelves for our bags and sports equipment during the day.",
+    description: "We don't have enough locker space or shelves for our bags and sports equipment during the day → this creates **chaos** and *frustration*.",
     votes: 9,
     timestamp: daysAgo(78),
     phase: "class",
@@ -245,15 +245,15 @@ export const mockConcerns: Concern[] = [
     authorName: "Mia Wagner",
     authorClass: "6b",
     replies: [
-      createReply("r-c10a-5-1", "pro-argument", "Our bags are piled up and things get lost or damaged.", 3, 77, [], undefined, undefined, undefined, mockUsers[8]),
-      createReply("r-c10a-5-2", "proposal", "Install additional hooks and shelves along the classroom walls.", 4, 76, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-c10a-5-1", "pro-argument", "Our bags are **piled up** creating several problems:\n- Items get *lost* in the chaos\n- Personal belongings get **damaged**\n- Finding your bag wastes time between classes\n\n> Last week, two students had items stolen from the unorganized pile.", 3, 77, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-c10a-5-2", "proposal", "Install additional **hooks and shelves** along the classroom walls:\n1. Wall-mounted hooks near the door\n2. Low shelves under windows for bags\n3. Designated sports equipment corner\n\n→ This costs *under €100* and solves the problem permanently.", 4, 76, [], undefined, undefined, undefined, mockUsers[9]),
     ],
   },
   {
     id: "c10a-6",
     type: "problem",
     title: "Insufficient Time Between Classes",
-    description: "Only 5 minutes between classes isn't enough to get to lockers, use bathroom, and reach the next classroom across campus.",
+    description: "Only **5 minutes** between classes isn't enough to get to lockers, use bathroom, and reach the next classroom across campus.",
     votes: 8,
     timestamp: daysAgo(75),
     phase: "class",
@@ -263,15 +263,15 @@ export const mockConcerns: Concern[] = [
     authorName: "Elias Becker",
     authorClass: "6b",
     replies: [
-      createReply("r-c10a-6-1", "pro-argument", "I'm always late to my next class because my locker is far away.", 3, 74, [], undefined, undefined, undefined, mockUsers[10]),
-      createReply("r-c10a-6-2", "proposal", "Extend breaks to 7-8 minutes or create a passing period schedule.", 5, 73, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-c10a-6-1", "pro-argument", "I'm **always late** to my next class because:\n- My locker is on the *opposite side* of campus\n- Bathroom lines are **10+ students** long\n- Teachers start exactly on time with no grace period\n\n> I've been marked tardy **8 times** this semester through no fault of my own.", 3, 74, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-c10a-6-2", "proposal", "We propose a **two-part solution**:\n\n1. Extend breaks to *7-8 minutes* (just 2-3 more minutes makes a huge difference)\n2. Create a staggered passing schedule:\n   - Even-numbered rooms dismiss 1 minute early\n   - Reduces hallway congestion\n\n→ This small change would eliminate most tardiness issues.", 5, 73, [], undefined, undefined, undefined, mockUsers[11]),
     ],
   },
   {
     id: "c10a-7",
     type: "proposal",
     title: "Student Tutoring Exchange Program",
-    description: "Create a peer tutoring system where students who excel in a subject can help classmates who struggle, earning community service hours.",
+    description: "Create a **peer tutoring system** where students who excel in a subject can help classmates who struggle → earning *community service hours* in return.",
     votes: 7,
     timestamp: daysAgo(72),
     phase: "class",
@@ -281,8 +281,8 @@ export const mockConcerns: Concern[] = [
     authorName: "Hannah Hoffmann",
     authorClass: "6b",
     replies: [
-      createReply("r-c10a-7-1", "pro-argument", "Learning from peers often feels less intimidating than asking teachers.", 4, 71, [], undefined, undefined, undefined, mockUsers[12]),
-      createReply("r-c10a-7-2", "proposal", "Match students by learning style and schedule to make pairing effective.", 3, 70, [], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-c10a-7-1", "pro-argument", "Learning from peers has **proven benefits**:\n- *Less intimidating* than asking teachers\n- Tutors explain things in student-friendly language\n- Both tutor and tutee benefit academically\n\n> Studies show peer tutoring improves grades for *both* participants by an average of **15%**.", 4, 71, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-c10a-7-2", "proposal", "For **effective matching**, we should:\n1. Survey students on their *strengths and needs*\n2. Match by learning style and schedule compatibility\n3. Provide tutor training on **how to explain concepts**\n4. Track progress with simple feedback forms\n\n→ This creates a sustainable system that helps everyone.", 3, 70, [], undefined, undefined, undefined, mockUsers[13]),
     ],
   },
 
@@ -294,7 +294,7 @@ export const mockConcerns: Concern[] = [
     id: "c10b-1",
     type: "problem",
     title: "Classroom Seating Arrangement Issues",
-    description: "Our current row-by-row seating makes group work difficult and some students can't see the board well from back corners.",
+    description: "Our current **row-by-row seating** makes group work difficult and some students *can't see the board well* from back corners.",
     votes: 15,
     timestamp: daysAgo(91),
     phase: "class",
@@ -320,17 +320,17 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10b-1-1", "pro-argument", "I sit in the back corner and literally can't read the board during math.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r-c10b-1-2", "proposal", "Try U-shaped seating so everyone can see each other and the board.", 7, 89, [], undefined, undefined, undefined, mockUsers[1]),
-      createReply("r-c10b-1-3", "proposal", "Rotate seating weekly so no one is stuck in bad spots permanently.", 4, 88, [], undefined, undefined, undefined, mockUsers[3]),
-      createReply("r-c10b-1-4", "variant", "Combine U-shape with standing desks option for some students who prefer to stand.", 3, 85, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-c10b-1-1", "pro-argument", "I sit in the **back corner** and literally *can't read the board* during math.\n\nThe problems I face daily:\n- Numbers look blurry from my seat\n- I have to constantly ask neighbors what's written\n- My grades in math have **dropped 10%** this semester\n\n> Moving closer isn't an option because seats are assigned.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-c10b-1-2", "proposal", "Try **U-shaped seating** so everyone can see each other and the board:\n\n1. All students face toward center\n2. No one more than *3 rows* from board\n3. Eye contact with classmates improves discussion\n\n→ Many classrooms already use this successfully.", 7, 89, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-c10b-1-3", "proposal", "Rotate seating **weekly** so no one is stuck in bad spots permanently.\n\n- *Fair distribution* of prime spots\n- Students meet different classmates\n- Lottery system keeps it unbiased", 4, 88, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-c10b-1-4", "variant", "Combine U-shape with **standing desks** option:\n- 2-3 standing stations for students who prefer it\n- Improves focus for some learners\n- Easy to implement with *adjustable desk risers*", 3, 85, [], undefined, undefined, undefined, mockUsers[2]),
     ],
   },
   {
     id: "c10b-2",
     type: "problem",
     title: "Class Noise During Independent Work",
-    description: "When we have independent work time, some students chat loudly, making it hard for others to concentrate.",
+    description: "When we have independent work time, some students chat **loudly** → making it *impossible* for others to concentrate.",
     votes: 13,
     timestamp: daysAgo(87),
     phase: "class",
@@ -356,16 +356,16 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10b-2-1", "pro-argument", "I need quiet to focus and the constant talking is really distracting.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
-      createReply("r-c10b-2-2", "proposal", "Create quiet zones in the classroom for students who need silence.", 5, 85, [], undefined, undefined, undefined, mockUsers[5]),
-      createReply("r-c10b-2-3", "variant", "Use noise-canceling headphones available for checkout during work time.", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-c10b-2-1", "pro-argument", "I *need quiet* to focus and the constant talking is **really distracting**.\n\nWhat happens during 'independent work':\n- Can't hear myself think\n- Make **more mistakes** on assignments\n- Finish work slower than I should\n\n> Students who need quiet shouldn't be forced to suffer.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-c10b-2-2", "proposal", "Create **designated quiet zones** in the classroom:\n1. One corner marked as *silent area*\n2. Rest of room allows whispered discussion\n3. Simple visual boundary (tape on floor)\n\n→ Respects **both** learning styles without conflict.", 5, 85, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-c10b-2-3", "variant", "Provide **noise-canceling headphones** for checkout:\n- Library has them → we should too\n- Students who need focus can *block out* distractions\n- Low cost solution (€50-100 for 5 pairs)", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
     ],
   },
   {
     id: "c10b-3",
     type: "proposal",
     title: "Digital Homework Calendar",
-    description: "Create a shared digital calendar where all teachers post homework deadlines so we can plan better.",
+    description: "Create a **shared digital calendar** where all teachers post homework deadlines → so we can *plan better* and avoid pile-ups.",
     votes: 11,
     timestamp: daysAgo(83),
     phase: "class",
@@ -391,8 +391,8 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10b-3-1", "pro-argument", "This would help us avoid having 4 assignments due the same day.", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
-      createReply("r-c10b-3-2", "objection", "Not all teachers will use it consistently.", 3, 81, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-c10b-3-1", "pro-argument", "This would help us avoid **4 assignments due the same day**.\n\nLast week I had:\n- Math test\n- History essay\n- Science project\n- English presentation\n\n> All on *Thursday*. I literally didn't sleep.", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-c10b-3-2", "objection", "Not all teachers will use it *consistently*.\n\nConcerns:\n- Some teachers are **not tech-savvy**\n- Extra workload for already busy staff\n- What if they forget to update it?\n\n> The system only works if *everyone* participates.", 3, 81, [], undefined, undefined, undefined, mockUsers[7]),
     ],
   },
   {
@@ -401,8 +401,8 @@ export const mockConcerns: Concern[] = [
     aspects: ["problem", "proposal"],
     title: "Late Bus Arrivals",
     description: "School buses frequently arrive late, causing students to miss the start of first period. We propose implementing GPS tracking and earlier departure times.",
-    problemText: "School buses frequently arrive late, causing students to miss the start of first period and get marked tardy.",
-    proposalText: "Implement GPS tracking for buses so students can monitor arrival times, and schedule earlier departure times.",
+    problemText: "School buses frequently arrive **10-15 minutes late**, causing students to miss the start of first period and get marked *tardy* → affecting our attendance records unfairly.",
+    proposalText: "Implement **GPS tracking** for buses so students can monitor arrival times, and schedule *earlier departure times* to account for traffic.",
     votes: 10,
     timestamp: daysAgo(79),
     phase: "class",
@@ -412,15 +412,15 @@ export const mockConcerns: Concern[] = [
     authorName: "Anna Richter",
     authorClass: "6c",
     replies: [
-      createReply("r-c10b-4-1", "pro-argument", "I've been marked tardy 5 times this month because of the bus.", 5, 78, [], undefined, undefined, undefined, mockUsers[8]),
-      createReply("r-c10b-4-2", "proposal", "Request earlier departure times or additional routes.", 4, 77, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-c10b-4-1", "pro-argument", "I've been marked **tardy 5 times** this month because of the bus → this affects my attendance record *unfairly*.\n\nThe real problems:\n- Bus arrives 10-15 minutes late *regularly*\n- No way to notify the school we're on route\n- Tardies count against us for privileges\n\n> Students shouldn't be punished for transportation issues outside their control.", 5, 78, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-c10b-4-2", "proposal", "We need a **two-part solution**:\n\n1. Request *earlier departure times* (just 10 minutes earlier)\n2. Add **bus tracker app** so school knows when we're delayed\n\nAlternatively:\n- Additional routes to reduce load\n- Grace period for bus riders on late days", 4, 77, [], undefined, undefined, undefined, mockUsers[9]),
     ],
   },
   {
     id: "c10b-5",
     type: "proposal",
     title: "Classroom Plant Initiative",
-    description: "Add plants to our classroom to improve air quality and create a more pleasant learning environment.",
+    description: "Add **plants** to our classroom to improve *air quality* and create a more pleasant learning environment.",
     votes: 8,
     timestamp: daysAgo(74),
     phase: "class",
@@ -430,8 +430,8 @@ export const mockConcerns: Concern[] = [
     authorName: "Ben Klein",
     authorClass: "6c",
     replies: [
-      createReply("r-c10b-5-1", "pro-argument", "Studies show plants improve focus and reduce stress.", 4, 73, [], undefined, undefined, undefined, mockUsers[10]),
-      createReply("r-c10b-5-2", "objection", "Who will take care of them during holidays?", 2, 72, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-c10b-5-1", "pro-argument", "Studies show plants have **proven benefits**:\n- *Improve focus* by up to 15%\n- Reduce stress and anxiety\n- Filter air pollutants\n- Make spaces feel more *welcoming*\n\n> NASA research shows certain plants can remove **87% of air toxins** in 24 hours.", 4, 73, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-c10b-5-2", "objection", "Who will take care of them during **holidays**?\n\nConcerns:\n- Plants need *water* every few days\n- Summer break is 6+ weeks\n- Could die and waste money\n\n> We need a care schedule before committing to this.", 2, 72, [], undefined, undefined, undefined, mockUsers[11]),
     ],
   },
 
@@ -443,7 +443,7 @@ export const mockConcerns: Concern[] = [
     id: "c10c-1",
     type: "problem",
     title: "Broken Lab Equipment",
-    description: "Many science lab instruments are broken or missing parts, making experiments difficult to complete properly.",
+    description: "Many science lab instruments are **broken or missing parts** → making experiments *difficult to complete* properly.",
     votes: 17,
     timestamp: daysAgo(92),
     phase: "class",
@@ -469,16 +469,16 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10c-1-1", "pro-argument", "We had to share one microscope between 6 students last week.", 6, 91, [], undefined, undefined, undefined, mockUsers[12]),
-      createReply("r-c10c-1-2", "proposal", "Request emergency funding for essential lab equipment repairs.", 8, 90, [], undefined, undefined, undefined, mockUsers[13]),
-      createReply("r-c10c-1-3", "question", "Can we fundraise to supplement the school budget?", 3, 89, [], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-c10c-1-1", "pro-argument", "We had to share **one microscope** between *6 students* last week.\n\nCurrent broken equipment:\n- 4 of 6 microscopes **non-functional**\n- Bunsen burners with *gas leaks*\n- Chipped beakers (safety hazard)\n- Missing test tube holders\n\n> Each student got less than **2 minutes** of actual viewing time.", 6, 91, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-c10c-1-2", "proposal", "Request **emergency funding** for essential lab equipment:\n\n1. *Immediate* → Replace safety hazards (burners, beakers)\n2. *This semester* → New microscopes (estimated €1,500)\n3. *Ongoing* → Equipment maintenance budget\n\n> Science education requires **hands-on learning** - we can't do that without working equipment.", 8, 90, [], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-c10c-1-3", "question", "Can we **fundraise** to supplement the school budget?\n\n- Bake sales and car washes\n- Local business sponsorships\n- *Parent donations*\n\n> Many companies donate equipment when approached properly.", 3, 89, [], undefined, undefined, undefined, mockUsers[14]),
     ],
   },
   {
     id: "c10c-2",
     type: "proposal",
     title: "Flexible Deadline Policy",
-    description: "Allow students to request 24-48 hour extensions on assignments without penalty, with teacher approval.",
+    description: "Allow students to request **24-48 hour extensions** on assignments *without penalty*, with teacher approval.",
     votes: 14,
     timestamp: daysAgo(88),
     phase: "class",
@@ -504,15 +504,15 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10c-2-1", "pro-argument", "Life happens - sometimes we need a little extra time.", 5, 87, [], undefined, undefined, undefined, mockUsers[15]),
-      createReply("r-c10c-2-2", "objection", "This could be abused by procrastinators.", 4, 86, [], undefined, undefined, undefined, mockUsers[16]),
+      createReply("r-c10c-2-1", "pro-argument", "**Life happens** - sometimes we need extra time:\n\n- Family emergencies\n- *Illness* (mental and physical)\n- Technology failures\n- Multiple deadlines colliding\n\n> Real-world workplaces negotiate deadlines all the time. This teaches valuable communication skills.", 5, 87, [], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-c10c-2-2", "objection", "This could be **abused by procrastinators**.\n\nConcerns:\n- Students might *always* request extensions\n- Unfair to those who submit on time\n- Creates extra work for teachers\n\n> We need limits - maybe **2 tokens per semester** that can't be abused.", 4, 86, [], undefined, undefined, undefined, mockUsers[16]),
     ],
   },
   {
     id: "c10c-3",
     type: "problem",
     title: "Cafeteria Wait Times",
-    description: "The lunch line is so long that we only have 10 minutes to actually eat before the next class.",
+    description: "The lunch line is **so long** that we only have *10 minutes* to actually eat before the next class.",
     votes: 12,
     timestamp: daysAgo(84),
     phase: "class",
@@ -620,22 +620,22 @@ export const mockConcerns: Concern[] = [
     ],
     replies: [
       // Class phase replies (days 95-65)
-      createReply("r-g10-1-1", "objection", "I think the main issue is timing, not quality. Food is hot when served.", 8, 92, [], undefined, undefined, undefined, mockUsers[1]),
-      createReply("r-g10-1-2", "pro-argument", "Absolutely agree! I've noticed many students skip lunch because of this.", 12, 90, [
-        createReply("r-g10-1-2a", "question", "Do we have data on how many students actually skip lunch?", 3, 88, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-g10-1-1", "objection", "I think the main issue is **timing, not quality**. Food is hot when served → the problem is students arriving late.", 8, 92, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-g10-1-2", "pro-argument", "**Absolutely agree!** I've noticed many students skip lunch because of this.\n\nThe consequences:\n- *Low energy* in afternoon classes\n- Students buy junk food instead\n- **Wasted food** that goes uneaten", 12, 90, [
+        createReply("r-g10-1-2a", "question", "Do we have **data** on how many students actually skip lunch?\n\n> A survey would strengthen our case significantly.", 3, 88, [], undefined, undefined, undefined, mockUsers[2]),
       ], undefined, undefined, undefined, mockUsers[5]),
-      createReply("r-g10-1-3", "proposal", "We could propose a student feedback system where we vote on menu items weekly.", 15, 85, [], undefined, {
-        text: "Create a monthly rotating menu based on student preferences collected through surveys.",
+      createReply("r-g10-1-3", "proposal", "We could propose a **student feedback system** where we vote on menu items weekly:\n\n1. Digital survey each Monday\n2. Top choices served that week\n3. *Track satisfaction* over time", 15, 85, [], undefined, {
+        text: "Create a **monthly rotating menu** based on student preferences collected through surveys → ensuring variety and satisfaction.",
         solutionLevel: "school"
       }, undefined, mockUsers[6]),
       // Grade phase replies (days 65-30)
-      createReply("r-g10-1-4", "pro-argument", "Students from 10B have the same complaints - this is a grade-wide issue!", 18, 60, [], undefined, undefined, undefined, mockUsers[8]),
-      createReply("r-g10-1-5", "proposal", "Let's combine our ideas: student surveys + better heating equipment + healthier options.", 22, 55, [
-        createReply("r-g10-1-5a", "pro-argument", "Class 10C supports this combined approach!", 14, 52, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-g10-1-4", "pro-argument", "Students from **10B** have the *same complaints* - this is a grade-wide issue!\n\n> When all three classes report identical problems, it's clearly systemic.", 18, 60, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-g10-1-5", "proposal", "Let's **combine our ideas**:\n\n1. Student surveys → know what we want\n2. Better heating equipment → *food stays hot*\n3. Healthier options → salad bar\n\n> A comprehensive approach addresses all concerns.", 22, 55, [
+        createReply("r-g10-1-5a", "pro-argument", "Class **10C supports** this combined approach!\n\n→ Unity across classes makes our voice stronger.", 14, 52, [], undefined, undefined, undefined, mockUsers[12]),
       ], undefined, undefined, undefined, mockUsers[10]),
-      createReply("r-g10-1-6", "variant", "The combined proposal addresses all three classes' concerns about food quality, variety, and temperature.", 16, 48, [], undefined, undefined, undefined, mockUsers[14]),
-      createReply("r-g10-1-7", "question", "Has anyone talked to the cafeteria staff about these issues?", 8, 45, [
-        createReply("r-g10-1-7a", "pro-argument", "Yes! They said they need budget approval for better equipment.", 11, 42, [], undefined, undefined, undefined, mockUsers[16]),
+      createReply("r-g10-1-6", "variant", "The combined proposal addresses **all three classes' concerns**:\n- Food quality\n- Menu variety\n- Temperature issues\n\n> This is how grade-level collaboration should work.", 16, 48, [], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-g10-1-7", "question", "Has anyone **talked to the cafeteria staff** about these issues?\n\n> Understanding their constraints would help us propose *realistic* solutions.", 8, 45, [
+        createReply("r-g10-1-7a", "pro-argument", "Yes! They said they need **budget approval** for better equipment.\n\n- Current steamers are *15+ years old*\n- Repairs keep failing\n- Need new investment", 11, 42, [], undefined, undefined, undefined, mockUsers[16]),
       ], undefined, undefined, undefined, mockUsers[18]),
     ],
   },
@@ -674,18 +674,18 @@ export const mockConcerns: Concern[] = [
     ],
     replies: [
       // Class phase replies
-      createReply("r-g10-2-1", "pro-argument", "This would help the environment and make it easier to keep track of deadlines.", 9, 90, [], undefined, undefined, undefined, mockUsers[11]),
-      createReply("r-g10-2-2", "objection", "Not all students have reliable internet access at home.", 14, 88, [], undefined, undefined, undefined, mockUsers[12]),
-      createReply("r-g10-2-3", "proposal", "Extend library hours so students can use school computers.", 11, 85, [], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-g10-2-1", "pro-argument", "This would help the **environment** and make it easier to track deadlines:\n\n- Less paper waste → *eco-friendly*\n- Automatic timestamps\n- Never lose an assignment again\n\n> We use 5,000+ sheets per semester on assignments alone.", 9, 90, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-g10-2-2", "objection", "Not all students have **reliable internet** access at home.\n\n> This could *disadvantage* students from lower-income families.", 14, 88, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-g10-2-3", "proposal", "**Extend library hours** so students can use school computers:\n\n- Open until *6 PM* on weekdays\n- Morning access before classes\n- Saturday hours for major deadlines", 11, 85, [], undefined, undefined, undefined, mockUsers[14]),
       // Grade phase replies
-      createReply("r-g10-2-4", "pro-argument", "Class 10B already uses Google Classroom - it works great!", 16, 58, [], undefined, undefined, undefined, mockUsers[8]),
-      createReply("r-g10-2-5", "variant", "Combine digital submissions with extended library access for equity.", 19, 52, [
-        createReply("r-g10-2-5a", "pro-argument", "This addresses the internet access concerns perfectly.", 12, 48, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-g10-2-4", "pro-argument", "Class **10B** already uses Google Classroom - it works great!\n\n- Easy to submit\n- *Instant confirmation*\n- Teachers respond faster\n\n> Proof that digital works when implemented properly.", 16, 58, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-g10-2-5", "variant", "Combine digital submissions with **extended library access** for equity:\n\n1. Digital-first approach\n2. Paper backup always available\n3. Extended computer access\n\n→ No student left behind.", 19, 52, [
+        createReply("r-g10-2-5a", "pro-argument", "This addresses the internet access concerns **perfectly**.\n\n> Equity and efficiency can coexist.", 12, 48, [], undefined, undefined, undefined, mockUsers[10]),
       ], undefined, undefined, undefined, mockUsers[16]),
-      createReply("r-g10-2-6", "question", "What platform should we use? Google Classroom or something else?", 8, 45, [
-        createReply("r-g10-2-6a", "proposal", "Google Classroom is free and most students already have accounts.", 15, 42, [], undefined, undefined, undefined, mockUsers[18]),
+      createReply("r-g10-2-6", "question", "What **platform** should we use? Google Classroom or something else?", 8, 45, [
+        createReply("r-g10-2-6a", "proposal", "**Google Classroom** is best because:\n- *Free* for schools\n- Most students already have accounts\n- Teachers know how to use it", 15, 42, [], undefined, undefined, undefined, mockUsers[18]),
       ], undefined, undefined, undefined, mockUsers[20]),
-      createReply("r-g10-2-7", "pro-argument", "Teachers can provide faster feedback digitally.", 10, 38, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-g10-2-7", "pro-argument", "Teachers can provide **faster feedback** digitally:\n\n- Comments inline on documents\n- Track changes visible\n- *No waiting* for paper return\n\n> Digital grading can cut feedback time by 50%.", 10, 38, [], undefined, undefined, undefined, mockUsers[0]),
     ],
   },
 
@@ -710,18 +710,18 @@ export const mockConcerns: Concern[] = [
     authorClass: "7b",
     replies: [
       // Class phase replies
-      createReply("r-g10-3-1", "pro-argument", "Yes! Half the class just stands around waiting for their turn. It's frustrating because we want to be active but physically cannot when there's only one basketball for every 4 students.", 8, 88, [], undefined, undefined, undefined, mockUsers[18]),
-      createReply("r-g10-3-2", "proposal", "We could create a rotation system and extend PE class time.", 6, 85, [], undefined, undefined, undefined, mockUsers[19]),
-      createReply("r-g10-3-3", "objection", "While I agree equipment is an issue, I think the real problem is that PE classes are too large. We have 30 students with one teacher trying to manage activities. Even with more equipment, one teacher can't effectively coach that many students. Perhaps we should advocate for smaller class sizes or additional PE assistants instead of just buying more equipment that will eventually break down from overuse.", 10, 82, [], undefined, {
-        text: "Request that PE classes be split into smaller groups of 15 students maximum, with staggered scheduling. This allows existing equipment to be adequate while improving the quality of instruction and individual attention each student receives.",
+      createReply("r-g10-3-1", "pro-argument", "Yes! **Half the class** just stands around waiting for their turn.\n\nIt's frustrating because:\n- We *want* to be active\n- Only **1 basketball** for every 4 students\n- Standing around isn't exercise\n\n> We're being graded on PE but can't actually participate.", 8, 88, [], undefined, undefined, undefined, mockUsers[18]),
+      createReply("r-g10-3-2", "proposal", "We could create a **rotation system** and extend PE class time:\n\n1. Stations for different activities\n2. Everyone rotates every 15 minutes\n3. *Maximize active time* for all students", 6, 85, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-g10-3-3", "objection", "While I agree equipment is an issue, the **real problem is class size**.\n\n- 30 students with *one teacher*\n- Even with more equipment, supervision is difficult\n- Quality of instruction suffers\n\n> Perhaps we should advocate for smaller classes or PE assistants.", 10, 82, [], undefined, {
+        text: "Request that PE classes be split into **smaller groups of 15 students maximum**, with staggered scheduling → allows existing equipment to be adequate while improving instruction quality.",
         solutionLevel: "school"
       }, undefined, mockUsers[20]),
       // Grade phase replies
-      createReply("r-g10-3-4", "pro-argument", "10B and 10C have the same problem - it's grade-wide! We compared notes and every class in Grade 10 has these equipment issues.", 14, 60, [], undefined, undefined, undefined, mockUsers[2]),
-      createReply("r-g10-3-5", "proposal", "Request budget allocation for new equipment purchase.", 12, 55, [
-        createReply("r-g10-3-5a", "question", "How much would new equipment cost?", 5, 52, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-g10-3-4", "pro-argument", "**10B and 10C** have the *same problem* - it's grade-wide!\n\n> We compared notes and every Grade 10 class reports identical equipment issues.", 14, 60, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-g10-3-5", "proposal", "Request **budget allocation** for new equipment purchase:\n\n- Prioritized list of needs\n- Cost estimates included\n- *Phased approach* for affordability", 12, 55, [
+        createReply("r-g10-3-5a", "question", "How much would new equipment **cost**?\n\n> We need concrete numbers to present to administration.", 5, 52, [], undefined, undefined, undefined, mockUsers[4]),
       ], undefined, undefined, undefined, mockUsers[6]),
-      createReply("r-g10-3-6", "variant", "Combine equipment sharing between classes with new purchases.", 9, 48, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-g10-3-6", "variant", "Combine **equipment sharing** between classes with new purchases:\n\n1. Coordinate PE schedules\n2. Share equipment across timeslots\n3. Buy only what's truly needed\n\n→ More efficient use of resources.", 9, 48, [], undefined, undefined, undefined, mockUsers[8]),
     ],
   },
 
@@ -743,16 +743,16 @@ export const mockConcerns: Concern[] = [
     authorClass: "6b",
     replies: [
       // Class phase replies
-      createReply("r-g10-4-1", "pro-argument", "I sit in the back corner and literally can't read the board.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r-g10-4-2", "proposal", "Try U-shaped seating so everyone can see.", 7, 88, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-g10-4-1", "pro-argument", "I sit in the **back corner** and literally *can't read* the board.\n\n> My grades are suffering because I miss important information.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-g10-4-2", "proposal", "Try **U-shaped seating** so everyone can see:\n\n- All students face center\n- Better for discussions\n- *No bad seats*", 7, 88, [], undefined, undefined, undefined, mockUsers[1]),
       // Grade phase replies
-      createReply("r-g10-4-3", "pro-argument", "Class 10A tried rotating seats - it helped a lot!", 11, 58, [], undefined, undefined, undefined, mockUsers[3]),
-      createReply("r-g10-4-4", "variant", "Combine U-shape with weekly rotation for fairness.", 14, 52, [
-        createReply("r-g10-4-4a", "pro-argument", "This is a great compromise!", 8, 48, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-g10-4-3", "pro-argument", "Class **10A tried rotating seats** - it helped a lot!\n\n- Fair distribution of good spots\n- Students meet new classmates\n- *Weekly lottery* keeps it random", 11, 58, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-g10-4-4", "variant", "Combine **U-shape with weekly rotation** for maximum fairness:\n\n1. U-shape layout for visibility\n2. Rotate positions each Monday\n3. Everyone gets front-row experience\n\n> Best of both approaches.", 14, 52, [
+        createReply("r-g10-4-4a", "pro-argument", "This is a **great compromise!**\n\n→ Addresses visibility *and* fairness concerns.", 8, 48, [], undefined, undefined, undefined, mockUsers[5]),
       ], undefined, undefined, undefined, mockUsers[7]),
-      createReply("r-g10-4-5", "proposal", "Each class can choose their preferred arrangement.", 9, 45, [], undefined, undefined, undefined, mockUsers[9]),
-      createReply("r-g10-4-6", "objection", "Some teachers won't allow rearranging their classroom.", 6, 55, [], undefined, undefined, undefined, mockUsers[11]),
-      createReply("r-g10-4-7", "proposal", "Get principal approval for classroom flexibility.", 8, 50, [], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-g10-4-5", "proposal", "Each class can choose their **preferred arrangement**:\n\n- Vote on layout options\n- *Experiment* for one month\n- Keep what works best", 9, 45, [], undefined, undefined, undefined, mockUsers[9]),
+      createReply("r-g10-4-6", "objection", "Some teachers **won't allow** rearranging their classroom.\n\nConcerns:\n- 'Their room, their rules'\n- *Time wasted* moving desks\n- Disruption concerns", 6, 55, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-g10-4-7", "proposal", "Get **principal approval** for classroom flexibility:\n\n> Administrative backing would override individual teacher resistance.", 8, 50, [], undefined, undefined, undefined, mockUsers[13]),
     ],
   },
 
@@ -774,17 +774,17 @@ export const mockConcerns: Concern[] = [
     authorClass: "6c",
     replies: [
       // Class phase replies
-      createReply("r-g10-5-1", "pro-argument", "This would help us avoid having 4 assignments due the same day.", 4, 88, [], undefined, undefined, undefined, mockUsers[6]),
-      createReply("r-g10-5-2", "objection", "Not all teachers will use it consistently.", 3, 85, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-g10-5-1", "pro-argument", "This would help us avoid having **4 assignments due the same day**.\n\n> Last week I had to pull an *all-nighter* because of poor coordination.", 4, 88, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-g10-5-2", "objection", "Not all teachers will use it **consistently**.\n\nRisks:\n- Incomplete information\n- Students can't trust it\n- *Defeats the purpose*", 3, 85, [], undefined, undefined, undefined, mockUsers[7]),
       // Grade phase replies
-      createReply("r-g10-5-3", "pro-argument", "If it's mandatory for teachers, it would work!", 12, 58, [], undefined, undefined, undefined, mockUsers[11]),
-      createReply("r-g10-5-4", "proposal", "Integrate with existing school systems for easier adoption.", 10, 52, [
-        createReply("r-g10-5-4a", "pro-argument", "Good idea - less work for teachers.", 7, 48, [], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-g10-5-3", "pro-argument", "If it's **mandatory for teachers**, it would work!\n\n→ Administration must require participation, not just suggest it.", 12, 58, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-g10-5-4", "proposal", "Integrate with **existing school systems** for easier adoption:\n\n- Use current portal\n- *Auto-sync* with gradebook\n- Less extra work for teachers", 10, 52, [
+        createReply("r-g10-5-4a", "pro-argument", "Good idea - **less work** for teachers means more likely adoption.\n\n> Integration is key.", 7, 48, [], undefined, undefined, undefined, mockUsers[13]),
       ], undefined, undefined, undefined, mockUsers[15]),
-      createReply("r-g10-5-5", "question", "Can students also add their extracurricular commitments?", 6, 42, [], undefined, undefined, undefined, mockUsers[17]),
-      createReply("r-g10-5-6", "objection", "This puts extra workload on already busy teachers.", 5, 60, [], undefined, undefined, undefined, mockUsers[19]),
-      createReply("r-g10-5-7", "proposal", "Use automated reminders so students don't miss deadlines.", 7, 55, [], undefined, undefined, undefined, mockUsers[21]),
-      createReply("r-g10-5-8", "objection", "Some students might abuse the system to request extensions.", 4, 48, [], undefined, undefined, undefined, mockUsers[1]),
+      createReply("r-g10-5-5", "question", "Can students also add their **extracurricular commitments**?\n\n- Sports games\n- Music recitals\n- *Club activities*\n\n> Would help teachers understand our full schedules.", 6, 42, [], undefined, undefined, undefined, mockUsers[17]),
+      createReply("r-g10-5-6", "objection", "This puts **extra workload** on already busy teachers.\n\n> We need to acknowledge their concerns too.", 5, 60, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-g10-5-7", "proposal", "Use **automated reminders** so students don't miss deadlines:\n\n1. *3 days before* → first alert\n2. *1 day before* → urgent reminder\n3. Morning of → final notification", 7, 55, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-g10-5-8", "objection", "Some students might **abuse** the system to request extensions.\n\n> Need safeguards against gaming the system.", 4, 48, [], undefined, undefined, undefined, mockUsers[1]),
     ],
   },
 
@@ -806,15 +806,15 @@ export const mockConcerns: Concern[] = [
     authorClass: "6c",
     replies: [
       // Class phase replies
-      createReply("r-g10-6-1", "pro-argument", "I need quiet to focus and the constant talking is distracting.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
-      createReply("r-g10-6-2", "proposal", "Create quiet zones in the classroom.", 5, 84, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-g10-6-1", "pro-argument", "I *need quiet* to focus and the constant talking is **distracting**.\n\n> Some of us literally *can't think* with background noise.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-g10-6-2", "proposal", "Create **quiet zones** in the classroom:\n\n- Designated silent corner\n- *Visual boundaries* (tape, signs)\n- Mutual respect for different needs", 5, 84, [], undefined, undefined, undefined, mockUsers[5]),
       // Grade phase replies
-      createReply("r-g10-6-3", "objection", "Some students learn better by discussing problems.", 8, 58, [], undefined, undefined, undefined, mockUsers[19]),
-      createReply("r-g10-6-4", "variant", "Have designated discussion time and quiet time, not mixed.", 11, 52, [
-        createReply("r-g10-6-4a", "pro-argument", "This respects both learning styles!", 7, 48, [], undefined, undefined, undefined, mockUsers[21]),
+      createReply("r-g10-6-3", "objection", "Some students learn better by **discussing problems**.\n\n- Verbal processing helps understanding\n- Collaboration improves outcomes\n- *Both styles are valid*", 8, 58, [], undefined, undefined, undefined, mockUsers[19]),
+      createReply("r-g10-6-4", "variant", "Have **designated time blocks** instead of mixed:\n\n1. First 15 min → *silence required*\n2. Next 10 min → quiet discussion OK\n3. Final 5 min → questions aloud\n\n> Respects both learning styles!", 11, 52, [
+        createReply("r-g10-6-4a", "pro-argument", "This respects **both learning styles**!\n\n→ Time-based rather than space-based solution.", 7, 48, [], undefined, undefined, undefined, mockUsers[21]),
       ], undefined, undefined, undefined, mockUsers[1]),
-      createReply("r-g10-6-5", "objection", "Enforcing quiet zones is difficult without constant monitoring.", 6, 55, [], undefined, undefined, undefined, mockUsers[3]),
-      createReply("r-g10-6-6", "proposal", "Provide noise-canceling headphones for students who need quiet.", 9, 50, [], undefined, undefined, undefined, mockUsers[5]),
+      createReply("r-g10-6-5", "objection", "Enforcing quiet zones is **difficult** without constant monitoring.\n\n> Who polices the boundaries?", 6, 55, [], undefined, undefined, undefined, mockUsers[3]),
+      createReply("r-g10-6-6", "proposal", "Provide **noise-canceling headphones** for students who need quiet:\n\n- Available for checkout\n- *Students self-manage*\n- Low cost solution (~€50)", 9, 50, [], undefined, undefined, undefined, mockUsers[5]),
     ],
   },
 
