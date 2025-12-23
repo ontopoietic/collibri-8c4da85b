@@ -96,8 +96,8 @@ export const mockConcerns: Concern[] = [
     aspects: ["problem", "proposal"],
     title: "Weekly Class Meetings for Student Voice",
     description: "Students currently lack a regular forum to voice concerns and participate in class decisions. We propose holding **regular 15-minute class meetings** where students can discuss concerns and vote on class-level decisions together.",
-    problemText: "Our school has **no structured way** for students to regularly communicate their concerns, ideas, and feedback to teachers and administration.\n\nThis has led to:\n- A growing sense of *disconnection* between students and decision-making processes\n- Students feeling unheard when changes are made to schedules, rules, or policies\n- Small issues escalating into bigger problems before anyone becomes aware\n\n> Students have expressed frustration that their perspectives are not valued, which negatively impacts school morale and engagement.",
-    proposalText: "We propose implementing **weekly 15-minute class meetings** at the start of each Monday during homeroom.\n\nThe meeting structure would be:\n1. **5 minutes** → Announcements\n2. **5 minutes** → Student concerns and suggestions\n3. **5 minutes** → Quick votes on class-level decisions\n\nKey features:\n- A *rotating student facilitator* would lead each meeting\n- Teacher present to guide and support\n- All decisions documented in a shared digital notebook\n\n> This system creates a predictable and democratic space for student voice while teaching valuable skills in civic participation.",
+    problemText: "Our school has **no structured way** for students to regularly communicate their concerns, ideas, and feedback to teachers and administration.\n\nThis has led to:\n- A growing sense of *disconnection* between students and decision-making processes\n- Students feeling unheard when changes are made to schedules, rules, or policies\n- Small issues escalating into bigger problems before anyone becomes aware\n\nStudents have expressed frustration that their perspectives are not valued, which negatively impacts school morale and engagement.",
+    proposalText: "We propose implementing **weekly 15-minute class meetings** at the start of each Monday during homeroom.\n\nThe meeting structure would be:\n1. **5 minutes** → Announcements\n2. **5 minutes** → Student concerns and suggestions\n3. **5 minutes** → Quick votes on class-level decisions\n\nKey features:\n- A *rotating student facilitator* would lead each meeting\n- Teacher present to guide and support\n- All decisions documented in a shared digital notebook\n\nThis system creates a predictable and democratic space for student voice while teaching valuable skills in civic participation.",
     votes: 18,
     timestamp: daysAgo(90),
     phase: "class",
@@ -118,13 +118,13 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10a-1-2",
         title: "Structured Class Meetings with Rotating Facilitators and Digital Submission",
-        text: "Students currently lack any structured way to voice concerns, leading to *disconnection* from school governance.\n\nWe propose **weekly 20-minute class meetings** with key innovations:\n1. Rotating student facilitator chosen by **lottery** each week\n2. Digital suggestion box for *anonymous* submissions\n3. Voting app to prioritize discussion topics\n\nThe facilitator compiles submissions, leads discussion, and documents outcomes. Teachers attend as advisors but *students drive the agenda*.\n\n> This ensures quieter students can participate through anonymous submissions while building leadership skills.",
+        text: "Students currently lack any structured way to voice concerns, leading to *disconnection* from school governance.\n\nWe propose **weekly 20-minute class meetings** with key innovations:\n1. Rotating student facilitator chosen by **lottery** each week\n2. Digital suggestion box for *anonymous* submissions\n3. Voting app to prioritize discussion topics\n\nThe facilitator compiles submissions, leads discussion, and documents outcomes. Teachers attend as advisors but *students drive the agenda*.\n\nThis ensures quieter students can participate through anonymous submissions while building leadership skills.",
         votes: 14,
       },
     ],
     replies: [
-      createReply("r-c10a-1-1", "pro-argument", "This would make everyone feel **more involved** in class decisions.\n\nWhen students have a voice in rules and procedures:\n- They're more likely to *follow* those rules\n- They understand the reasoning behind decisions\n- They feel *ownership* over outcomes\n\n> Research shows that schools with strong student participation programs have better attendance, fewer disciplinary issues, and higher academic achievement.", 6, 89, [], undefined, undefined, undefined, mockUsers[0]),
-      createReply("r-c10a-1-2", "objection", "While I appreciate the intention behind this proposal, I'm concerned about **practical implementation**.\n\nTaking 15 minutes from lessons weekly:\n- Adds up to nearly **10 hours** of lost instruction time per year\n- Our curriculum is already packed\n- Not all students feel comfortable speaking up in groups\n\n> This could lead to the same few voices dominating while quieter students remain unheard.", 4, 88, [], undefined, {
+      createReply("r-c10a-1-1", "pro-argument", "This would make everyone feel **more involved** in class decisions.\n\nWhen students have a voice in rules and procedures:\n- They're more likely to *follow* those rules\n- They understand the reasoning behind decisions\n- They feel *ownership* over outcomes\n\nResearch shows that schools with strong student participation programs have better attendance, fewer disciplinary issues, and higher academic achievement.", 6, 89, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-c10a-1-2", "objection", "While I appreciate the intention behind this proposal, I'm concerned about **practical implementation**.\n\nTaking 15 minutes from lessons weekly:\n- Adds up to nearly **10 hours** of lost instruction time per year\n- Our curriculum is already packed\n- Not all students feel comfortable speaking up in groups\n\nThis could lead to the same few voices dominating while quieter students remain unheard.", 4, 88, [], undefined, {
         text: "Instead of weekly class meetings, we should implement a **digital suggestion system**:\n\n1. Students submit concerns *anonymously* at any time\n2. Teachers review submissions weekly\n3. Address pressing issues during natural breaks\n\nThis preserves instruction time while still giving students a voice → anonymity encourages participation from students who might not speak up publicly.",
         solutionLevel: "school"
       }, undefined, mockUsers[1]),
@@ -138,8 +138,8 @@ export const mockConcerns: Concern[] = [
     aspects: ["problem", "proposal"],
     title: "Classroom Temperature Control Issues",
     description: "Our classroom is **too hot** in summer and **too cold** in winter. The heating and AC systems don't work properly.",
-    problemText: "The climate control systems have been malfunctioning for **over two years**, creating an uncomfortable learning environment.\n\nDuring summer months:\n- Classroom temperatures regularly exceed **30°C**\n- Students become drowsy, dehydrated, and unable to concentrate\n\nDuring winter:\n- Heating often fails entirely or *overcompensates*\n- Some rooms freezing while others become stifling\n\n> Students have reported headaches, difficulty focusing, and increased absenteeism during extreme temperature periods.",
-    proposalText: "We propose a **comprehensive four-phase approach**:\n\n1. **Immediate** → Request professional HVAC audit\n2. **Within 1 month** → Install digital thermometers connected to central monitoring\n3. **Within 2 months** → Deploy temperature complaint reporting app\n4. **Budget dependent** → Systematic repair of failing equipment\n\nShort-term emergency protocol:\n- Portable fans and space heaters\n- Option to relocate classes during extreme conditions\n\n> Student safety should not wait for bureaucratic approval processes.",
+    problemText: "The climate control systems have been malfunctioning for **over two years**, creating an uncomfortable learning environment.\n\nDuring summer months:\n- Classroom temperatures regularly exceed **30°C**\n- Students become drowsy, dehydrated, and unable to concentrate\n\nDuring winter:\n- Heating often fails entirely or *overcompensates*\n- Some rooms freezing while others become stifling\n\nStudents have reported headaches, difficulty focusing, and increased absenteeism during extreme temperature periods.",
+    proposalText: "We propose a **comprehensive four-phase approach**:\n\n1. **Immediate** → Request professional HVAC audit\n2. **Within 1 month** → Install digital thermometers connected to central monitoring\n3. **Within 2 months** → Deploy temperature complaint reporting app\n4. **Budget dependent** → Systematic repair of failing equipment\n\nShort-term emergency protocol:\n- Portable fans and space heaters\n- Option to relocate classes during extreme conditions\n\nStudent safety should not wait for bureaucratic approval processes.",
     votes: 16,
     timestamp: daysAgo(88),
     phase: "class",
@@ -154,7 +154,7 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10a-2-1",
         title: "Temperature Control Issues - Emergency Protocol Focus",
-        text: "Climate control has been a problem for **over two years**.\n\nWe propose an **emergency protocol** as the first step:\n- Immediate procurement of portable fans and space heaters\n- Teacher authority to relocate classes during extreme temperatures\n- Relaxed dress code during heat waves\n- Simple paper-based temperature log in each classroom\n\nThese measures can be implemented *within days* while longer-term HVAC repairs are planned.\n\n> Student safety should not wait for bureaucratic approval processes.",
+        text: "Climate control has been a problem for **over two years**.\n\nWe propose an **emergency protocol** as the first step:\n- Immediate procurement of portable fans and space heaters\n- Teacher authority to relocate classes during extreme temperatures\n- Relaxed dress code during heat waves\n- Simple paper-based temperature log in each classroom\n\nThese measures can be implemented *within days* while longer-term HVAC repairs are planned.\n\n**Student safety should not wait for bureaucratic approval processes.**",
         votes: 6,
       },
       {
@@ -165,8 +165,8 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10a-2-1", "pro-argument", "It's **hard to concentrate** when you're freezing or sweating.\n\nLast week during the math exam:\n- Half the class was fanning themselves with papers\n- Several students had to leave for water *multiple times*\n- The noise and heat made focus impossible\n\n> This directly impacts our academic performance. It's not fair that grades might suffer because of building maintenance issues.", 7, 87, [], undefined, undefined, undefined, mockUsers[2]),
-      createReply("r-c10a-2-2", "objection", "While the temperature issues are real, the proposed solution is **too expensive and complex** to implement quickly.\n\nConcerns:\n- Full HVAC audit, monitoring system, and app → *tens of thousands of euros*\n- Would take *months* to complete\n\n> We need solutions that can help us **now**, not next year.", 5, 86, [], undefined, {
+      createReply("r-c10a-2-1", "pro-argument", "It's **hard to concentrate** when you're freezing or sweating.\n\nLast week during the math exam:\n- Half the class was fanning themselves with papers\n- Several students had to leave for water *multiple times*\n- The noise and heat made focus impossible\n\nThis directly impacts our academic performance. It's not fair that grades might suffer because of building maintenance issues.", 7, 87, [], undefined, undefined, undefined, mockUsers[2]),
+      createReply("r-c10a-2-2", "objection", "While the temperature issues are real, the proposed solution is **too expensive and complex** to implement quickly.\n\nConcerns:\n- Full HVAC audit, monitoring system, and app → *tens of thousands of euros*\n- Would take *months* to complete\n\nWe need solutions that can help us **now**, not next year.", 5, 86, [], undefined, {
         text: "As an **immediate and cost-effective solution**, I propose:\n\n1. Request portable AC units for hottest classrooms during summer\n2. Ensure all radiators are properly bled before winter\n3. Allow teachers flexibility to move classes as needed\n4. Relax dress code during extreme temperatures\n\n→ These measures can be implemented within *weeks* rather than months.",
         solutionLevel: "school"
       }, undefined, mockUsers[3]),
@@ -192,13 +192,13 @@ export const mockConcerns: Concern[] = [
       {
         id: "v-c10a-3-1",
         title: "Class Library Corner with Honor System",
-        text: "Our classroom currently has **no accessible reading materials** for free time, lunch breaks, or when assignments finish early.\n\nWe propose creating a dedicated library corner with:\n- A comfortable reading chair\n- A small bookshelf with **50+ books** covering various genres\n- An *honor-system* checkout log\n\nStudents would:\n1. Donate books from home to build the collection\n2. Volunteer as monthly 'librarian' to organize books\n3. Borrow books for up to *two weeks*\n\n> This creates a culture of reading and sharing while teaching responsibility.",
+        text: "Our classroom currently has **no accessible reading materials** for free time, lunch breaks, or when assignments finish early.\n\nWe propose creating a dedicated library corner with:\n- A comfortable reading chair\n- A small bookshelf with **50+ books** covering various genres\n- An *honor-system* checkout log\n\nStudents would:\n1. Donate books from home to build the collection\n2. Volunteer as monthly 'librarian' to organize books\n3. Borrow books for up to *two weeks*\n\nThis creates a culture of reading and sharing while teaching responsibility.",
         votes: 7,
       },
       {
         id: "v-c10a-3-2",
         title: "Digital-Integrated Community Book Exchange",
-        text: "Students often have free moments during school but **no accessible reading materials** — the main library requires passes and has limited hours.\n\nWe propose a classroom library with *modern tracking*:\n- Students donate books during a class book drive\n- Each book receives a **QR code** linked to a Google Sheets catalog\n- Monthly 'book talks' for student recommendations\n\nThe system includes:\n- Genre labels and difficulty ratings\n- Student reviews\n- A rotating **Book Committee** of three students\n\n> This combines the warmth of a classroom library with digital organization skills.",
+        text: "Students often have free moments during school but **no accessible reading materials** — the main library requires passes and has limited hours.\n\nWe propose a classroom library with *modern tracking*:\n- Students donate books during a class book drive\n- Each book receives a **QR code** linked to a Google Sheets catalog\n- Monthly 'book talks' for student recommendations\n\nThe system includes:\n- Genre labels and difficulty ratings\n- Student reviews\n- A rotating **Book Committee** of three students\n\nThis combines the warmth of a classroom library with digital organization skills.",
         votes: 10,
       },
     ],
@@ -245,7 +245,7 @@ export const mockConcerns: Concern[] = [
     authorName: "Mia Wagner",
     authorClass: "6b",
     replies: [
-      createReply("r-c10a-5-1", "pro-argument", "Our bags are **piled up** creating several problems:\n- Items get *lost* in the chaos\n- Personal belongings get **damaged**\n- Finding your bag wastes time between classes\n\n> Last week, two students had items stolen from the unorganized pile.", 3, 77, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-c10a-5-1", "pro-argument", "Our bags are **piled up** creating several problems:\n- Items get *lost* in the chaos\n- Personal belongings get **damaged**\n- Finding your bag wastes time between classes\n\nLast week, two students had items stolen from the unorganized pile.", 3, 77, [], undefined, undefined, undefined, mockUsers[8]),
       createReply("r-c10a-5-2", "proposal", "Install additional **hooks and shelves** along the classroom walls:\n1. Wall-mounted hooks near the door\n2. Low shelves under windows for bags\n3. Designated sports equipment corner\n\n→ This costs *under €100* and solves the problem permanently.", 4, 76, [], undefined, undefined, undefined, mockUsers[9]),
     ],
   },
@@ -263,7 +263,7 @@ export const mockConcerns: Concern[] = [
     authorName: "Elias Becker",
     authorClass: "6b",
     replies: [
-      createReply("r-c10a-6-1", "pro-argument", "I'm **always late** to my next class because:\n- My locker is on the *opposite side* of campus\n- Bathroom lines are **10+ students** long\n- Teachers start exactly on time with no grace period\n\n> I've been marked tardy **8 times** this semester through no fault of my own.", 3, 74, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-c10a-6-1", "pro-argument", "I'm **always late** to my next class because:\n- My locker is on the *opposite side* of campus\n- Bathroom lines are **10+ students** long\n- Teachers start exactly on time with no grace period\n\nI've been marked tardy **8 times** this semester through no fault of my own.", 3, 74, [], undefined, undefined, undefined, mockUsers[10]),
       createReply("r-c10a-6-2", "proposal", "We propose a **two-part solution**:\n\n1. Extend breaks to *7-8 minutes* (just 2-3 more minutes makes a huge difference)\n2. Create a staggered passing schedule:\n   - Even-numbered rooms dismiss 1 minute early\n   - Reduces hallway congestion\n\n→ This small change would eliminate most tardiness issues.", 5, 73, [], undefined, undefined, undefined, mockUsers[11]),
     ],
   },
@@ -281,7 +281,7 @@ export const mockConcerns: Concern[] = [
     authorName: "Hannah Hoffmann",
     authorClass: "6b",
     replies: [
-      createReply("r-c10a-7-1", "pro-argument", "Learning from peers has **proven benefits**:\n- *Less intimidating* than asking teachers\n- Tutors explain things in student-friendly language\n- Both tutor and tutee benefit academically\n\n> Studies show peer tutoring improves grades for *both* participants by an average of **15%**.", 4, 71, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-c10a-7-1", "pro-argument", "Learning from peers has **proven benefits**:\n- *Less intimidating* than asking teachers\n- Tutors explain things in student-friendly language\n- Both tutor and tutee benefit academically\n\nStudies show peer tutoring improves grades for *both* participants by an average of **15%**.", 4, 71, [], undefined, undefined, undefined, mockUsers[12]),
       createReply("r-c10a-7-2", "proposal", "For **effective matching**, we should:\n1. Survey students on their *strengths and needs*\n2. Match by learning style and schedule compatibility\n3. Provide tutor training on **how to explain concepts**\n4. Track progress with simple feedback forms\n\n→ This creates a sustainable system that helps everyone.", 3, 70, [], undefined, undefined, undefined, mockUsers[13]),
     ],
   },
@@ -320,7 +320,7 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10b-1-1", "pro-argument", "I sit in the **back corner** and literally *can't read the board* during math.\n\nThe problems I face daily:\n- Numbers look blurry from my seat\n- I have to constantly ask neighbors what's written\n- My grades in math have **dropped 10%** this semester\n\n> Moving closer isn't an option because seats are assigned.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
+      createReply("r-c10b-1-1", "pro-argument", "I sit in the **back corner** and literally *can't read the board* during math.\n\nThe problems I face daily:\n- Numbers look blurry from my seat\n- I have to constantly ask neighbors what's written\n- My grades in math have **dropped 10%** this semester\n\nMoving closer isn't an option because seats are assigned.", 5, 90, [], undefined, undefined, undefined, mockUsers[0]),
       createReply("r-c10b-1-2", "proposal", "Try **U-shaped seating** so everyone can see each other and the board:\n\n1. All students face toward center\n2. No one more than *3 rows* from board\n3. Eye contact with classmates improves discussion\n\n→ Many classrooms already use this successfully.", 7, 89, [], undefined, undefined, undefined, mockUsers[1]),
       createReply("r-c10b-1-3", "proposal", "Rotate seating **weekly** so no one is stuck in bad spots permanently.\n\n- *Fair distribution* of prime spots\n- Students meet different classmates\n- Lottery system keeps it unbiased", 4, 88, [], undefined, undefined, undefined, mockUsers[3]),
       createReply("r-c10b-1-4", "variant", "Combine U-shape with **standing desks** option:\n- 2-3 standing stations for students who prefer it\n- Improves focus for some learners\n- Easy to implement with *adjustable desk risers*", 3, 85, [], undefined, undefined, undefined, mockUsers[2]),
@@ -356,7 +356,7 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10b-2-1", "pro-argument", "I *need quiet* to focus and the constant talking is **really distracting**.\n\nWhat happens during 'independent work':\n- Can't hear myself think\n- Make **more mistakes** on assignments\n- Finish work slower than I should\n\n> Students who need quiet shouldn't be forced to suffer.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
+      createReply("r-c10b-2-1", "pro-argument", "I *need quiet* to focus and the constant talking is **really distracting**.\n\nWhat happens during 'independent work':\n- Can't hear myself think\n- Make **more mistakes** on assignments\n- Finish work slower than I should\n\nStudents who need quiet shouldn't be forced to suffer.", 6, 86, [], undefined, undefined, undefined, mockUsers[4]),
       createReply("r-c10b-2-2", "proposal", "Create **designated quiet zones** in the classroom:\n1. One corner marked as *silent area*\n2. Rest of room allows whispered discussion\n3. Simple visual boundary (tape on floor)\n\n→ Respects **both** learning styles without conflict.", 5, 85, [], undefined, undefined, undefined, mockUsers[5]),
       createReply("r-c10b-2-3", "variant", "Provide **noise-canceling headphones** for checkout:\n- Library has them → we should too\n- Students who need focus can *block out* distractions\n- Low cost solution (€50-100 for 5 pairs)", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
     ],
@@ -391,8 +391,8 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10b-3-1", "pro-argument", "This would help us avoid **4 assignments due the same day**.\n\nLast week I had:\n- Math test\n- History essay\n- Science project\n- English presentation\n\n> All on *Thursday*. I literally didn't sleep.", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
-      createReply("r-c10b-3-2", "objection", "Not all teachers will use it *consistently*.\n\nConcerns:\n- Some teachers are **not tech-savvy**\n- Extra workload for already busy staff\n- What if they forget to update it?\n\n> The system only works if *everyone* participates.", 3, 81, [], undefined, undefined, undefined, mockUsers[7]),
+      createReply("r-c10b-3-1", "pro-argument", "This would help us avoid **4 assignments due the same day**.\n\nLast week I had:\n- Math test\n- History essay\n- Science project\n- English presentation\n\nAll on *Thursday*. I literally didn't sleep.", 4, 82, [], undefined, undefined, undefined, mockUsers[6]),
+      createReply("r-c10b-3-2", "objection", "Not all teachers will use it *consistently*.\n\nConcerns:\n- Some teachers are **not tech-savvy**\n- Extra workload for already busy staff\n- What if they forget to update it?\n\nThe system only works if *everyone* participates.", 3, 81, [], undefined, undefined, undefined, mockUsers[7]),
     ],
   },
   {
@@ -412,7 +412,7 @@ export const mockConcerns: Concern[] = [
     authorName: "Anna Richter",
     authorClass: "6c",
     replies: [
-      createReply("r-c10b-4-1", "pro-argument", "I've been marked **tardy 5 times** this month because of the bus → this affects my attendance record *unfairly*.\n\nThe real problems:\n- Bus arrives 10-15 minutes late *regularly*\n- No way to notify the school we're on route\n- Tardies count against us for privileges\n\n> Students shouldn't be punished for transportation issues outside their control.", 5, 78, [], undefined, undefined, undefined, mockUsers[8]),
+      createReply("r-c10b-4-1", "pro-argument", "I've been marked **tardy 5 times** this month because of the bus → this affects my attendance record *unfairly*.\n\nThe real problems:\n- Bus arrives 10-15 minutes late *regularly*\n- No way to notify the school we're on route\n- Tardies count against us for privileges\n\nStudents shouldn't be punished for transportation issues outside their control.", 5, 78, [], undefined, undefined, undefined, mockUsers[8]),
       createReply("r-c10b-4-2", "proposal", "We need a **two-part solution**:\n\n1. Request *earlier departure times* (just 10 minutes earlier)\n2. Add **bus tracker app** so school knows when we're delayed\n\nAlternatively:\n- Additional routes to reduce load\n- Grace period for bus riders on late days", 4, 77, [], undefined, undefined, undefined, mockUsers[9]),
     ],
   },
@@ -430,8 +430,8 @@ export const mockConcerns: Concern[] = [
     authorName: "Ben Klein",
     authorClass: "6c",
     replies: [
-      createReply("r-c10b-5-1", "pro-argument", "Studies show plants have **proven benefits**:\n- *Improve focus* by up to 15%\n- Reduce stress and anxiety\n- Filter air pollutants\n- Make spaces feel more *welcoming*\n\n> NASA research shows certain plants can remove **87% of air toxins** in 24 hours.", 4, 73, [], undefined, undefined, undefined, mockUsers[10]),
-      createReply("r-c10b-5-2", "objection", "Who will take care of them during **holidays**?\n\nConcerns:\n- Plants need *water* every few days\n- Summer break is 6+ weeks\n- Could die and waste money\n\n> We need a care schedule before committing to this.", 2, 72, [], undefined, undefined, undefined, mockUsers[11]),
+      createReply("r-c10b-5-1", "pro-argument", "Studies show plants have **proven benefits**:\n- *Improve focus* by up to 15%\n- Reduce stress and anxiety\n- Filter air pollutants\n- Make spaces feel more *welcoming*\n\nNASA research shows certain plants can remove **87% of air toxins** in 24 hours.", 4, 73, [], undefined, undefined, undefined, mockUsers[10]),
+      createReply("r-c10b-5-2", "objection", "Who will take care of them during **holidays**?\n\nConcerns:\n- Plants need *water* every few days\n- Summer break is 6+ weeks\n- Could die and waste money\n\nWe need a care schedule before committing to this.", 2, 72, [], undefined, undefined, undefined, mockUsers[11]),
     ],
   },
 
@@ -469,9 +469,9 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10c-1-1", "pro-argument", "We had to share **one microscope** between *6 students* last week.\n\nCurrent broken equipment:\n- 4 of 6 microscopes **non-functional**\n- Bunsen burners with *gas leaks*\n- Chipped beakers (safety hazard)\n- Missing test tube holders\n\n> Each student got less than **2 minutes** of actual viewing time.", 6, 91, [], undefined, undefined, undefined, mockUsers[12]),
-      createReply("r-c10c-1-2", "proposal", "Request **emergency funding** for essential lab equipment:\n\n1. *Immediate* → Replace safety hazards (burners, beakers)\n2. *This semester* → New microscopes (estimated €1,500)\n3. *Ongoing* → Equipment maintenance budget\n\n> Science education requires **hands-on learning** - we can't do that without working equipment.", 8, 90, [], undefined, undefined, undefined, mockUsers[13]),
-      createReply("r-c10c-1-3", "question", "Can we **fundraise** to supplement the school budget?\n\n- Bake sales and car washes\n- Local business sponsorships\n- *Parent donations*\n\n> Many companies donate equipment when approached properly.", 3, 89, [], undefined, undefined, undefined, mockUsers[14]),
+      createReply("r-c10c-1-1", "pro-argument", "We had to share **one microscope** between *6 students* last week.\n\nCurrent broken equipment:\n- 4 of 6 microscopes **non-functional**\n- Bunsen burners with *gas leaks*\n- Chipped beakers (safety hazard)\n- Missing test tube holders\n\nEach student got less than **2 minutes** of actual viewing time.", 6, 91, [], undefined, undefined, undefined, mockUsers[12]),
+      createReply("r-c10c-1-2", "proposal", "Request **emergency funding** for essential lab equipment:\n\n1. *Immediate* → Replace safety hazards (burners, beakers)\n2. *This semester* → New microscopes (estimated €1,500)\n3. *Ongoing* → Equipment maintenance budget\n\nScience education requires **hands-on learning** - we can't do that without working equipment.", 8, 90, [], undefined, undefined, undefined, mockUsers[13]),
+      createReply("r-c10c-1-3", "question", "Can we **fundraise** to supplement the school budget?\n\n- Bake sales and car washes\n- Local business sponsorships\n- *Parent donations*\n\nMany companies donate equipment when approached properly.", 3, 89, [], undefined, undefined, undefined, mockUsers[14]),
     ],
   },
   {
@@ -504,8 +504,8 @@ export const mockConcerns: Concern[] = [
       },
     ],
     replies: [
-      createReply("r-c10c-2-1", "pro-argument", "**Life happens** - sometimes we need extra time:\n\n- Family emergencies\n- *Illness* (mental and physical)\n- Technology failures\n- Multiple deadlines colliding\n\n> Real-world workplaces negotiate deadlines all the time. This teaches valuable communication skills.", 5, 87, [], undefined, undefined, undefined, mockUsers[15]),
-      createReply("r-c10c-2-2", "objection", "This could be **abused by procrastinators**.\n\nConcerns:\n- Students might *always* request extensions\n- Unfair to those who submit on time\n- Creates extra work for teachers\n\n> We need limits - maybe **2 tokens per semester** that can't be abused.", 4, 86, [], undefined, undefined, undefined, mockUsers[16]),
+      createReply("r-c10c-2-1", "pro-argument", "**Life happens** - sometimes we need extra time:\n\n- Family emergencies\n- *Illness* (mental and physical)\n- Technology failures\n- Multiple deadlines colliding\n\nReal-world workplaces negotiate deadlines all the time. This teaches valuable communication skills.", 5, 87, [], undefined, undefined, undefined, mockUsers[15]),
+      createReply("r-c10c-2-2", "objection", "This could be **abused by procrastinators**.\n\nConcerns:\n- Students might *always* request extensions\n- Unfair to those who submit on time\n- Creates extra work for teachers\n\nWe need limits - maybe **2 tokens per semester** that can't be abused.", 4, 86, [], undefined, undefined, undefined, mockUsers[16]),
     ],
   },
   {

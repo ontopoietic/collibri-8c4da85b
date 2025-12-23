@@ -220,9 +220,31 @@ const Statistics = () => {
   const sortedEngagementEntries = Array.from(engagementByDate.entries())
     .sort((a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime());
 
-  // Daily data for phase view (with day numbers, date kept for tooltip)
-  const dailyEngagementData = sortedEngagementEntries
-    .map(([date, data], index) => ({ date, dayLabel: `${index + 1}`, ...data }));
+  // Daily data for phase view - aggregate 2 days at a time for better readability
+  const dailyEngagementData: Array<{
+    date: string;
+    dayLabel: string;
+    concerns: number;
+    objections: number;
+    proposals: number;
+    proArguments: number;
+    variants: number;
+  }> = [];
+  
+  for (let i = 0; i < sortedEngagementEntries.length; i += 2) {
+    const [date1, data1] = sortedEngagementEntries[i];
+    const entry2 = sortedEngagementEntries[i + 1];
+    
+    dailyEngagementData.push({
+      date: date1,
+      dayLabel: entry2 ? `${i + 1}-${i + 2}` : `${i + 1}`,
+      concerns: data1.concerns + (entry2?.[1].concerns ?? 0),
+      objections: data1.objections + (entry2?.[1].objections ?? 0),
+      proposals: data1.proposals + (entry2?.[1].proposals ?? 0),
+      proArguments: data1.proArguments + (entry2?.[1].proArguments ?? 0),
+      variants: data1.variants + (entry2?.[1].variants ?? 0),
+    });
+  }
 
   // Weekly aggregated data for full interval view
   const getWeeklyAggregatedData = () => {

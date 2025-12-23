@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { RichTextarea } from "@/components/RichTextarea";
 import {
   Dialog,
   DialogContent,
@@ -141,9 +141,9 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Description</label>
-                  <Textarea
+                  <RichTextarea
                     value={problemDescription}
-                    onChange={(e) => setProblemDescription(e.target.value)}
+                    onChange={setProblemDescription}
                     placeholder="Provide details about the problem..."
                     className="min-h-[120px]"
                   />
@@ -169,9 +169,9 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Description</label>
-                  <Textarea
+                  <RichTextarea
                     value={solutionDescription}
-                    onChange={(e) => setSolutionDescription(e.target.value)}
+                    onChange={setSolutionDescription}
                     placeholder="Provide details about your solution..."
                     className="min-h-[120px]"
                   />
