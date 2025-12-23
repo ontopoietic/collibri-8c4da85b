@@ -14,7 +14,6 @@ interface RichTextProps {
  * - `inline code`
  * - Bullet lists (- item or • item)
  * - Numbered lists (1. item)
- * - Blockquotes (> quote)
  * - Arrows (-> or →)
  * - Horizontal rules (---)
  * - Line breaks
@@ -107,25 +106,6 @@ export const RichText = ({ content, className }: RichTextProps) => {
         continue;
       }
 
-      // Blockquote: > text
-      if (trimmedLine.startsWith('> ')) {
-        const quoteLines: string[] = [];
-        while (i < lines.length && lines[i].trim().startsWith('> ')) {
-          quoteLines.push(lines[i].trim().slice(2));
-          i++;
-        }
-        elements.push(
-          <blockquote key={key++} className="border-l-2 border-primary/50 pl-3 my-2 text-muted-foreground italic">
-            {quoteLines.map((ql, idx) => (
-              <span key={idx}>
-                {parseInlineFormatting(ql)}
-                {idx < quoteLines.length - 1 && <br />}
-              </span>
-            ))}
-          </blockquote>
-        );
-        continue;
-      }
 
       // Unordered list: - item or • item
       if (trimmedLine.match(/^[-•]\s/)) {
@@ -172,7 +152,6 @@ export const RichText = ({ content, className }: RichTextProps) => {
       while (
         i < lines.length &&
         lines[i].trim() !== '' &&
-        !lines[i].trim().startsWith('> ') &&
         !lines[i].trim().match(/^[-•]\s/) &&
         !lines[i].trim().match(/^\d+\.\s/) &&
         !['---', '***', '___'].includes(lines[i].trim())

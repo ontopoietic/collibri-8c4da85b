@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { RichTextarea } from "@/components/RichTextarea";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -285,9 +285,9 @@ export const ReplyForm = ({
           <label className="text-sm font-medium">
             {replyType === 'question' ? 'Your Question' : 'Your Response'}
           </label>
-          <Textarea
+          <RichTextarea
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={setText}
             placeholder={replyType === 'question' ? 'What would you like to know?' : 'Share your thoughts...'}
             className="min-h-[120px]"
           />
@@ -354,10 +354,10 @@ export const ReplyForm = ({
                 <Label htmlFor="counterProposalText" className="text-sm font-medium">
                   Counter-Proposal
                 </Label>
-                <Textarea
+                <RichTextarea
                   id="counterProposalText"
                   value={counterProposalText}
-                  onChange={(e) => setCounterProposalText(e.target.value)}
+                  onChange={setCounterProposalText}
                   placeholder="Describe your alternative proposal..."
                   className="min-h-[100px]"
                 />
