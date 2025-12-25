@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { MessageSquare, BarChart3, Plus, Star, AlertCircle, HelpCircle, Trophy } from "lucide-react";
+import { MessageSquare, BarChart3, Plus, Target, AlertCircle, HelpCircle, Trophy } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -61,7 +61,7 @@ export const MobileBottomNav = ({
               : "flex-col h-auto py-2 gap-1 text-white"
             }
           >
-            <Star className="h-5 w-5" />
+            <Target className="h-5 w-5" />
             {activeAction === 'endorse' && <span className="text-sm font-medium">Endorse</span>}
           </Button>
 
