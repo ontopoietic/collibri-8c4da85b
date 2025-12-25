@@ -1,11 +1,11 @@
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
-import { AlertCircle, Lightbulb, BicepsFlexed, GitBranch, HelpCircle } from "lucide-react";
+import { Ban, Lightbulb, BicepsFlexed, GitBranch, HelpCircle } from "lucide-react";
 import { ReplyCategory } from "@/types/concern";
 
 const categoryConfig = {
   objection: {
     label: "Objection",
-    icon: AlertCircle,
+    icon: Ban,
     iconColor: "text-objection",
     bgColor: "bg-objection/10",
     borderColor: "border-objection/30",

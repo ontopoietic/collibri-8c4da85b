@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { ReplyCategory } from "@/types/concern";
-import { AlertCircle, Lightbulb, GitBranch, HelpCircle, BicepsFlexed } from "lucide-react";
+import { Ban, Lightbulb, GitBranch, HelpCircle, BicepsFlexed } from "lucide-react";
 
 interface CategoryBadgeProps {
   category: ReplyCategory;
@@ -10,7 +10,7 @@ interface CategoryBadgeProps {
 const categoryConfig = {
   objection: {
     label: "Objection",
-    icon: AlertCircle,
+    icon: Ban,
     className: "bg-transparent text-objection-foreground border-objection",
   },
   proposal: {
