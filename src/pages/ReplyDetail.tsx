@@ -10,7 +10,7 @@ import { ReplyForm } from "@/components/ReplyForm";
 import { AspectBadges } from "@/components/AspectBadges";
 import { SolutionLevelBadge } from "@/components/SolutionLevelBadge";
 import { RichText } from "@/components/RichText";
-import { ArrowLeft, Star, AlertCircle, HelpCircle, User, ExternalLink, MessageSquare } from "lucide-react";
+import { ArrowLeft, Target, AlertCircle, HelpCircle, User, ExternalLink, MessageSquare } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ReplyCategory, Reply, ReplyReference, SolutionLevel } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
@@ -216,7 +216,7 @@ const ReplyDetail = () => {
                       : "text-muted-foreground hover:bg-endorse-hover hover:text-white"
                   )}
                 >
-                  <Star className="h-4 w-4" />
+                  <Target className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => handleFormOpen('object')}
