@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { MessageSquare, BarChart3, Plus, Target, AlertCircle, HelpCircle, Trophy } from "lucide-react";
+import { MessageSquare, BarChart3, Plus, Target, Ban, HelpCircle, Trophy } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -74,7 +74,7 @@ export const MobileBottomNav = ({
               : "flex-col h-auto py-2 gap-1 text-white"
             }
           >
-            <AlertCircle className="h-5 w-5" />
+            <Ban className="h-5 w-5" />
             {activeAction === 'object' && <span className="text-sm font-medium">Object</span>}
           </Button>
 
