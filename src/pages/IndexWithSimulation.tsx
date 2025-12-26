@@ -334,7 +334,7 @@ const Index = () => {
       />
 
       <main className="max-w-6xl mx-auto px-4 py-8 pb-20 md:pb-8">
-        <div className="mb-8">
+        <div className="mb-8" data-tour="phase-timeline">
           <PhaseTimeline 
             currentPhase={currentPhase} 
             onPhaseClick={() => {}}
@@ -467,9 +467,11 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="space-y-4">
-              {filteredConcerns.map((concern) => (
-                <ConcernCard key={concern.id} concern={concern} />
+            <div className="space-y-4" data-tour="concern-list">
+              {filteredConcerns.map((concern, index) => (
+                <div key={concern.id} data-tour={index === 0 ? "concern-card" : undefined}>
+                  <ConcernCard concern={concern} />
+                </div>
               ))}
             </div>
 

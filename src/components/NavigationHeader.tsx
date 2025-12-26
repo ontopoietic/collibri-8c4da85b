@@ -1,10 +1,11 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Bell, Gauge, Network, Trophy, User, UserCircle, Settings, LogOut, FileText, MessageSquare, HelpCircle, Home, Eye, ShieldCheck } from "lucide-react";
+import { BarChart3, Bell, Gauge, Network, Trophy, User, UserCircle, Settings, LogOut, FileText, MessageSquare, HelpCircle, Home, Eye, ShieldCheck, Compass } from "lucide-react";
 import collibriLogo from "@/assets/collibri-logo.png";
 import { QuotaDisplay } from "@/components/QuotaDisplay";
 import { AdminPanel } from "@/components/AdminPanel";
 import { useAdmin } from "@/contexts/AdminContext";
+import { useTour } from "@/contexts/TourContext";
 import { Switch } from "@/components/ui/switch";
 import { NewConcernDialog } from "@/components/NewConcernDialog";
 import {
@@ -41,6 +42,7 @@ export const NavigationHeader = ({
   const location = useLocation();
   const isMobile = useIsMobile();
   const { isAdmin, adminModeEnabled, toggleAdminMode } = useAdmin();
+  const { startTour, hasCompleted } = useTour();
   
   const pathname = location.pathname;
   const isOnForum = pathname === "/";
@@ -141,6 +143,11 @@ export const NavigationHeader = ({
                       <DropdownMenuSeparator />
                     </>
                   )}
+                  <DropdownMenuItem onClick={startTour}>
+                    <Compass className="mr-2 h-4 w-4" />
+                    {hasCompleted ? "Restart Tour" : "Start Tour"}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <UserCircle className="mr-2 h-4 w-4" />
                     Account
@@ -174,9 +181,11 @@ export const NavigationHeader = ({
 
           {/* Desktop Navigation */}
           {!isMobile && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" data-tour="navigation">
               {showNewConcernButton && onNewConcern && currentPhase === 'class' && (
-                <NewConcernDialog onSubmit={onNewConcern} />
+                <div data-tour="new-concern">
+                  <NewConcernDialog onSubmit={onNewConcern} />
+                </div>
               )}
               {/* Forum */}
               <Button
@@ -233,6 +242,7 @@ export const NavigationHeader = ({
                     variant="ghost" 
                     size="icon"
                     className={iconButtonClass}
+                    data-tour="quota"
                   >
                     <Gauge className="h-4 w-4" />
                   </Button>
@@ -283,6 +293,11 @@ export const NavigationHeader = ({
                       <DropdownMenuSeparator />
                     </>
                   )}
+                  <DropdownMenuItem onClick={startTour}>
+                    <Compass className="mr-2 h-4 w-4" />
+                    {hasCompleted ? "Restart Tour" : "Start Tour"}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <UserCircle className="mr-2 h-4 w-4" />
                     Account
