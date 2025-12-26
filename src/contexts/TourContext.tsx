@@ -93,7 +93,7 @@ export const tourSteps: TourStep[] = [
     title: "Voting",
     description: "Vote on concerns to show your support. The most-voted concerns advance to the next phase.",
     position: "right",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
   },
   {
     id: "endorse-action",
@@ -101,7 +101,7 @@ export const tourSteps: TourStep[] = [
     title: "Endorse Proposals",
     description: "Use the Target icon to endorse proposals you support. Let's open the endorse form to see the response types.",
     position: "top",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
   },
   {
     id: "endorse-form",
@@ -109,7 +109,7 @@ export const tourSteps: TourStep[] = [
     title: "The Endorse Form",
     description: "When you endorse, you have three ways to show support: create a Proposal with a new solution, add a Pro-Argument to strengthen the case, or suggest a Variant with modifications.",
     position: "top",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
     action: "openEndorseForm",
   },
   {
@@ -118,7 +118,7 @@ export const tourSteps: TourStep[] = [
     title: "Proposal Reply",
     description: "A Proposal suggests a concrete solution. If responding to a problem, propose how to fix it. If there's already a proposal, suggest a refined or alternative approach.",
     position: "right",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
   },
   {
     id: "reply-pro-argument",
@@ -126,7 +126,7 @@ export const tourSteps: TourStep[] = [
     title: "Pro-Argument",
     description: "Pro-Arguments support an idea with reasoning or evidence. They explain WHY a proposal is good – its benefits, feasibility, or positive outcomes.",
     position: "right",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
   },
   {
     id: "reply-variant",
@@ -134,7 +134,7 @@ export const tourSteps: TourStep[] = [
     title: "Variant",
     description: "A Variant modifies the original proposal while keeping its core idea. The variant can also act as a synthesis by referencing other replies which it incorporates.",
     position: "right",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
   },
   {
     id: "object-action",
@@ -142,7 +142,7 @@ export const tourSteps: TourStep[] = [
     title: "Raise Objections",
     description: "Use the Ban icon to raise an objection if you see a significant flaw. Let's see what options the objection form provides.",
     position: "top",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
     action: "closeForm",
   },
   {
@@ -151,7 +151,7 @@ export const tourSteps: TourStep[] = [
     title: "The Objection Form",
     description: "Objections raise significant concerns or flaws. Unlike simple disagreement, constructive objections should be specific and actionable. You can optionally attach a counter-proposal.",
     position: "top",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
     action: "openObjectForm",
   },
   {
@@ -160,7 +160,7 @@ export const tourSteps: TourStep[] = [
     title: "Reply Categories",
     description: "Replies are organized into tabs: Responses for endorsements and objections, Q&A for questions and answers. This keeps conversations structured.",
     position: "top",
-    route: "/concern/1",
+    route: "/concern/c10a-1",
     action: "closeForm",
   },
   {
@@ -199,6 +199,8 @@ export const TourProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const startTour = useCallback(() => {
     setCurrentStep(0);
     setIsActive(true);
+    // Dispatch event to reset simulation to class phase for tour
+    window.dispatchEvent(new CustomEvent('tour-reset-simulation'));
   }, []);
 
   const endTour = useCallback(() => {
