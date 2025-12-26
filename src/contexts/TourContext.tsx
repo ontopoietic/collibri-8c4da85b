@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 
+export type TourAction = 'openEndorseForm' | 'openObjectForm' | 'closeForm';
+
 export interface TourStep {
   id: string;
   targetSelector: string | null;
@@ -7,6 +9,7 @@ export interface TourStep {
   description: string;
   position: "top" | "bottom" | "left" | "right";
   route?: string;
+  action?: TourAction;
 }
 
 interface TourContextType {
@@ -55,7 +58,7 @@ export const tourSteps: TourStep[] = [
     targetSelector: '[data-tour="concern-card"]',
     title: "Concern Cards",
     description: "Each card shows a concern with its title, description, votes, and reply count. Click on a card to see the full discussion.",
-    position: "bottom",
+    position: "top",
     route: "/",
   },
   {
@@ -72,27 +75,75 @@ export const tourSteps: TourStep[] = [
     title: "Voting",
     description: "Vote on concerns to show your support. The most-voted concerns advance to the next phase.",
     position: "right",
+    route: "/concern/1",
   },
   {
     id: "endorse-action",
     targetSelector: '[data-tour="endorse-button"]',
     title: "Endorse Proposals",
-    description: "Use the Target icon to endorse proposals you support. Endorsements help good ideas gain visibility.",
+    description: "Use the Target icon to endorse proposals you support. Let's open the endorse form to see the response types.",
     position: "top",
+    route: "/concern/1",
+  },
+  {
+    id: "endorse-form",
+    targetSelector: '[data-tour="reply-form"]',
+    title: "The Endorse Form",
+    description: "When you endorse, you have three ways to show support: create a Proposal with a new solution, add a Pro-Argument to strengthen the case, or suggest a Variant with modifications.",
+    position: "top",
+    route: "/concern/1",
+    action: "openEndorseForm",
+  },
+  {
+    id: "reply-proposal",
+    targetSelector: '[data-tour="reply-type-proposal"]',
+    title: "Proposal Reply",
+    description: "A Proposal suggests a concrete solution. If responding to a problem, propose how to fix it. If there's already a proposal, suggest a refined or alternative approach.",
+    position: "right",
+    route: "/concern/1",
+  },
+  {
+    id: "reply-pro-argument",
+    targetSelector: '[data-tour="reply-type-pro-argument"]',
+    title: "Pro-Argument",
+    description: "Pro-Arguments support an idea with reasoning or evidence. They explain WHY a proposal is good – its benefits, feasibility, or positive outcomes.",
+    position: "right",
+    route: "/concern/1",
+  },
+  {
+    id: "reply-variant",
+    targetSelector: '[data-tour="reply-type-variant"]',
+    title: "Variant",
+    description: "A Variant modifies the original proposal while keeping its core idea. The variant can also act as a synthesis by referencing other replies which it incorporates.",
+    position: "right",
+    route: "/concern/1",
   },
   {
     id: "object-action",
     targetSelector: '[data-tour="object-button"]',
     title: "Raise Objections",
-    description: "Use the Ban icon to raise an objection if you see a significant flaw. Constructive objections improve proposals.",
+    description: "Use the Ban icon to raise an objection if you see a significant flaw. Let's see what options the objection form provides.",
     position: "top",
+    route: "/concern/1",
+    action: "closeForm",
+  },
+  {
+    id: "objection-form",
+    targetSelector: '[data-tour="reply-form"]',
+    title: "The Objection Form",
+    description: "Objections raise significant concerns or flaws. Unlike simple disagreement, constructive objections should be specific and actionable. You can optionally attach a counter-proposal.",
+    position: "top",
+    route: "/concern/1",
+    action: "openObjectForm",
   },
   {
     id: "reply-categories",
     targetSelector: '[data-tour="reply-tabs"]',
     title: "Reply Categories",
-    description: "Replies are organized into tabs: Discussion for general comments, Q&A for questions and answers. This keeps conversations structured.",
+    description: "Replies are organized into tabs: Responses for endorsements and objections, Q&A for questions and answers. This keeps conversations structured.",
     position: "top",
+    route: "/concern/1",
+    action: "closeForm",
   },
   {
     id: "quota-display",
