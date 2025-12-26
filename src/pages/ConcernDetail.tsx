@@ -417,15 +417,17 @@ const ConcernDetail = () => {
           )}
 
           <div className="flex items-center gap-3 pt-4 border-t border-border">
-            <VoteButton 
-              initialVotes={concern.votes} 
-              hasVotedInitially={hasVoted}
-              remainingVotes={remainingVotes}
-              onVote={(isAdding) => {
-                setHasVoted(isAdding);
-                setRemainingVotes(prev => isAdding ? prev - 1 : prev + 1);
-              }}
-            />
+            <div data-tour="vote-button">
+              <VoteButton 
+                initialVotes={concern.votes} 
+                hasVotedInitially={hasVoted}
+                remainingVotes={remainingVotes}
+                onVote={(isAdding) => {
+                  setHasVoted(isAdding);
+                  setRemainingVotes(prev => isAdding ? prev - 1 : prev + 1);
+                }}
+              />
+            </div>
             <Button
               variant="endorse"
               size={isMobile ? "sm" : "default"}
@@ -440,6 +442,7 @@ const ConcernDetail = () => {
                   ? "bg-endorse-hover text-endorse-foreground"
                   : ""
               )}
+              data-tour="endorse-button"
             >
             <Target className="h-4 w-4" />
             {!isMobile && "Endorse"}
@@ -458,6 +461,7 @@ const ConcernDetail = () => {
                   ? "bg-object text-object-foreground"
                   : ""
               )}
+              data-tour="object-button"
             >
             <Ban className="h-4 w-4" />
             {!isMobile && "Object"}
@@ -545,7 +549,7 @@ const ConcernDetail = () => {
         {concern.replies.length > 0 && (
           <div className="mt-8">
             <Tabs defaultValue="responses" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-2" data-tour="reply-tabs">
                 <TabsTrigger value="responses">
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Responses ({regularReplies.length})
