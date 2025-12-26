@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BarChart3, Bell, Gauge, Network, Trophy, User, UserCircle, Settings, LogOut, FileText, MessageSquare, HelpCircle, Home, Eye, ShieldCheck, Compass } from "lucide-react";
@@ -42,7 +43,29 @@ export const NavigationHeader = ({
   const location = useLocation();
   const isMobile = useIsMobile();
   const { isAdmin, adminModeEnabled, toggleAdminMode } = useAdmin();
-  const { startTour, hasCompleted } = useTour();
+  const { startTour, hasCompleted, isActive: isTourActive } = useTour();
+  const [quotaOpen, setQuotaOpen] = useState(false);
+
+  // Listen for tour actions to control quota popover
+  useEffect(() => {
+    const handleTourAction = (event: CustomEvent<{ action: string }>) => {
+      if (event.detail.action === 'openQuotaModal') {
+        setQuotaOpen(true);
+      } else if (event.detail.action === 'closeQuotaModal') {
+        setQuotaOpen(false);
+      }
+    };
+
+    window.addEventListener('tour-action', handleTourAction as EventListener);
+    return () => window.removeEventListener('tour-action', handleTourAction as EventListener);
+  }, []);
+
+  // Close quota popover when tour ends
+  useEffect(() => {
+    if (!isTourActive) {
+      setQuotaOpen(false);
+    }
+  }, [isTourActive]);
   
   const pathname = location.pathname;
   const isOnForum = pathname === "/";
@@ -236,7 +259,7 @@ export const NavigationHeader = ({
                 <span className="hidden lg:inline">Graph</span>
               </Button>
               {/* My Quota - Icon only */}
-              <Popover>
+              <Popover open={quotaOpen} onOpenChange={setQuotaOpen}>
                 <PopoverTrigger asChild>
                   <Button 
                     variant="ghost" 

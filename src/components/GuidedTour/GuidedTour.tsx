@@ -90,7 +90,8 @@ export const GuidedTour: React.FC = () => {
     const tooltipWidth = 320;
     const tooltipHeight = 200;
     const padding = 16;
-    const arrowOffset = isMobile ? 20 : 12; // More offset on mobile
+    // Larger offset on mobile for bottom-positioned tooltips to avoid overlap with forms
+    const arrowOffset = isMobile ? 28 : 12;
     const bottomMargin = 100; // Safe margin for bottom nav and button visibility
 
     let position: TooltipPosition = {};

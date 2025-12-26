@@ -97,7 +97,7 @@ export const MobileBottomNav = ({
 
   // Main navigation context: show forum, statistics, new concern
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50">
+    <div className="fixed bottom-0 left-0 right-0 z-50" data-tour="navigation">
       <GlassOverlay direction="up" />
       <div className="relative flex items-center justify-around px-4 py-3 gap-2">
         <Button

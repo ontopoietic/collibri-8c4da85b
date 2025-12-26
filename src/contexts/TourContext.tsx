@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 
-export type TourAction = 'openEndorseForm' | 'openObjectForm' | 'closeForm';
+export type TourAction = 'openEndorseForm' | 'openObjectForm' | 'closeForm' | 'openQuotaModal' | 'closeQuotaModal';
 
 export interface AlternativeContent {
   targetSelector: string | null;
@@ -182,6 +182,7 @@ export const tourSteps: TourStep[] = [
     description: "You have a limited number of votes, concerns, and replies per phase. Use them wisely to make your voice count!",
     position: "bottom",
     route: "/",
+    action: "openQuotaModal",
   },
   {
     id: "navigation",
@@ -190,6 +191,7 @@ export const tourSteps: TourStep[] = [
     description: "Use these buttons to explore Statistics, Leaderboard, and the relationship Graph. Stay informed about the community's progress.",
     position: "bottom",
     route: "/",
+    action: "closeQuotaModal",
   },
   {
     id: "complete",
