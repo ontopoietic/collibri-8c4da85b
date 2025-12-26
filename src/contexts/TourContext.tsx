@@ -131,13 +131,20 @@ export const TourProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsActive(true);
   }, []);
 
+  const endTour = useCallback(() => {
+    setIsActive(false);
+    setCurrentStep(0);
+    setHasCompleted(true);
+    localStorage.setItem(TOUR_COMPLETED_KEY, "true");
+  }, []);
+
   const nextStep = useCallback(() => {
     if (currentStep < tourSteps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
       endTour();
     }
-  }, [currentStep]);
+  }, [currentStep, endTour]);
 
   const prevStep = useCallback(() => {
     if (currentStep > 0) {
@@ -146,13 +153,6 @@ export const TourProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [currentStep]);
 
   const skipTour = useCallback(() => {
-    setIsActive(false);
-    setCurrentStep(0);
-    setHasCompleted(true);
-    localStorage.setItem(TOUR_COMPLETED_KEY, "true");
-  }, []);
-
-  const endTour = useCallback(() => {
     setIsActive(false);
     setCurrentStep(0);
     setHasCompleted(true);
