@@ -530,25 +530,27 @@ const ConcernDetail = () => {
             )}
           </div>
 
-          {/* Reply Form - inline on desktop, drawer on mobile */}
-          {showReplyForm && !isMobile && (
-            <ReplyForm
-              onSubmit={handleReply}
-              onCancel={() => {
-                setShowReplyForm(false);
-                setReplyToId(null);
-                setActiveAction(null);
-              }}
-              replyType={replyType}
-              originalText={replyToTarget?.text ?? concern.description}
-              availableReplies={availableReplies}
-              parentConcernType={concern.type}
-            />
+          {/* Reply Form - inline on desktop, or inline on mobile when tour is active */}
+          {showReplyForm && (!isMobile || isTourActive) && (
+            <div data-tour="endorse-form">
+              <ReplyForm
+                onSubmit={handleReply}
+                onCancel={() => {
+                  setShowReplyForm(false);
+                  setReplyToId(null);
+                  setActiveAction(null);
+                }}
+                replyType={replyType}
+                originalText={replyToTarget?.text ?? concern.description}
+                availableReplies={availableReplies}
+                parentConcernType={concern.type}
+              />
+            </div>
           )}
         </div>
 
-        {/* Mobile Reply Form Drawer */}
-        {isMobile && (
+        {/* Mobile Reply Form Drawer - only when tour is not active */}
+        {isMobile && !isTourActive && (
           <MobileFormDrawer
             isOpen={showReplyForm}
             onClose={() => {

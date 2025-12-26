@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTour } from "@/contexts/TourContext";
 import { TourTooltip } from "./TourTooltip";
-import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface TooltipPosition {
   top?: number;
@@ -82,18 +82,37 @@ export const GuidedTour: React.FC = () => {
     calculateTooltipPosition(rect);
   }, [effectiveStepData]);
 
+  const isMobile = useIsMobile();
+
   const calculateTooltipPosition = (rect: DOMRect) => {
     if (!effectiveStepData) return;
 
     const tooltipWidth = 320;
     const tooltipHeight = 200;
     const padding = 16;
-    const arrowOffset = 12;
+    const arrowOffset = isMobile ? 16 : 12; // More offset on mobile
     const bottomMargin = 100; // Safe margin for bottom nav and button visibility
 
     let position: TooltipPosition = {};
+    let effectivePosition = effectiveStepData.position;
 
-    switch (effectiveStepData.position) {
+    // Smart position flipping on mobile when there's not enough space
+    if (isMobile) {
+      const spaceRight = window.innerWidth - rect.right;
+      const spaceLeft = rect.left;
+      const spaceTop = rect.top;
+      const spaceBottom = window.innerHeight - rect.bottom - bottomMargin;
+
+      if (effectivePosition === "right" && spaceRight < tooltipWidth + arrowOffset + padding) {
+        // Not enough space on right, flip to bottom or top
+        effectivePosition = spaceBottom > spaceTop ? "bottom" : "top";
+      } else if (effectivePosition === "left" && spaceLeft < tooltipWidth + arrowOffset + padding) {
+        // Not enough space on left, flip to bottom or top
+        effectivePosition = spaceBottom > spaceTop ? "bottom" : "top";
+      }
+    }
+
+    switch (effectivePosition) {
       case "top":
         position = {
           top: rect.top - tooltipHeight - arrowOffset,
