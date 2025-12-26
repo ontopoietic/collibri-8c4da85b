@@ -105,6 +105,18 @@ const Index = () => {
     setCurrentPhase(currentPhase);
   }, [currentPhase, setCurrentPhase]);
 
+  // Listen for tour reset event to reset simulation to class phase
+  useEffect(() => {
+    const handleTourReset = () => {
+      setPersistedSimulationDay(null);
+      localStorage.removeItem('collibri-simulation-day');
+      setSimulationProgress(30); // End of class phase
+    };
+    
+    window.addEventListener('tour-reset-simulation', handleTourReset);
+    return () => window.removeEventListener('tour-reset-simulation', handleTourReset);
+  }, []);
+
   const handleSimulationToggle = () => {
     if (isSimulating) {
       // Exiting simulation - persist the current simulated day
