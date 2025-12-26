@@ -85,6 +85,7 @@ export const GuidedTour: React.FC = () => {
     const tooltipHeight = 200;
     const padding = 16;
     const arrowOffset = 12;
+    const bottomMargin = 100; // Safe margin for bottom nav and button visibility
 
     let position: TooltipPosition = {};
 
@@ -119,7 +120,7 @@ export const GuidedTour: React.FC = () => {
             padding,
             Math.min(
               rect.top + rect.height / 2 - tooltipHeight / 2,
-              window.innerHeight - tooltipHeight - padding
+              window.innerHeight - tooltipHeight - bottomMargin
             )
           ),
           left: rect.left - tooltipWidth - arrowOffset,
@@ -131,7 +132,7 @@ export const GuidedTour: React.FC = () => {
             padding,
             Math.min(
               rect.top + rect.height / 2 - tooltipHeight / 2,
-              window.innerHeight - tooltipHeight - padding
+              window.innerHeight - tooltipHeight - bottomMargin
             )
           ),
           left: rect.right + arrowOffset,
@@ -139,24 +140,47 @@ export const GuidedTour: React.FC = () => {
         break;
     }
 
-    // Ensure tooltip stays within viewport
+    // Ensure tooltip stays within viewport - top edge
     if (position.top !== undefined && position.top < padding) {
       position.top = padding;
     }
+    // Ensure tooltip stays within viewport - bottom edge
+    if (position.top !== undefined) {
+      const maxTop = window.innerHeight - tooltipHeight - bottomMargin;
+      if (position.top > maxTop) {
+        position.top = maxTop;
+      }
+    }
+    // Ensure tooltip stays within viewport - left edge
     if (position.left !== undefined && position.left < padding) {
       position.left = padding;
+    }
+    // Ensure tooltip stays within viewport - right edge
+    if (position.left !== undefined) {
+      const maxLeft = window.innerWidth - tooltipWidth - padding;
+      if (position.left > maxLeft) {
+        position.left = maxLeft;
+      }
     }
 
     setTooltipPosition(position);
     setIsPositioned(true);
   };
 
-  // Navigate to required route for current step
+  // Navigate to required route for current step and dispatch actions
   useEffect(() => {
     if (!isActive || !currentStepData) return;
 
     if (currentStepData.route && location.pathname !== currentStepData.route) {
       navigate(currentStepData.route);
+    }
+
+    // Dispatch tour action events for form control
+    if (currentStepData.action) {
+      const event = new CustomEvent('tour-action', { 
+        detail: { action: currentStepData.action } 
+      });
+      window.dispatchEvent(event);
     }
   }, [isActive, currentStepData, location.pathname, navigate]);
 

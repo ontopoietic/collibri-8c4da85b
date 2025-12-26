@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +23,7 @@ import { GlassOverlay } from "@/components/GlassOverlay";
 import { MobileFormDrawer } from "@/components/MobileFormDrawer";
 import { useAdmin } from "@/contexts/AdminContext";
 import QAAccordion from "@/components/QAAccordion";
+import { useTour, TourAction } from "@/contexts/TourContext";
 import {
   Select,
   SelectContent,
@@ -61,6 +62,7 @@ const ConcernDetail = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const { adminModeEnabled } = useAdmin();
+  const { isActive: isTourActive } = useTour();
   const [navigationHistory, setNavigationHistory] = useState<string[]>([]);
 
   useEffect(() => {
@@ -82,6 +84,34 @@ const ConcernDetail = () => {
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "popularity">("newest");
   const [hasVoted, setHasVoted] = useState(false);
   const [remainingVotes, setRemainingVotes] = useState(10);
+
+  // Listen for tour action events to control form visibility
+  useEffect(() => {
+    const handleTourAction = (event: CustomEvent<{ action: TourAction }>) => {
+      const { action } = event.detail;
+      switch (action) {
+        case 'openEndorseForm':
+          setReplyType('endorse');
+          setShowReplyForm(true);
+          setReplyToId(null);
+          break;
+        case 'openObjectForm':
+          setReplyType('object');
+          setShowReplyForm(true);
+          setReplyToId(null);
+          break;
+        case 'closeForm':
+          setShowReplyForm(false);
+          setReplyToId(null);
+          break;
+      }
+    };
+
+    window.addEventListener('tour-action', handleTourAction as EventListener);
+    return () => {
+      window.removeEventListener('tour-action', handleTourAction as EventListener);
+    };
+  }, []);
   
   const concern = mockConcerns.find((c) => c.id === id);
 

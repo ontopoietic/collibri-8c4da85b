@@ -168,7 +168,7 @@ export const ReplyForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-card p-6 rounded-lg border border-border">
+    <form onSubmit={handleSubmit} className="space-y-4 bg-card p-6 rounded-lg border border-border" data-tour="reply-form">
       {replyType !== 'question' && allowedCategories.length > 1 && (
         <div className="space-y-3">
           <label className="text-sm font-medium">Response Type</label>
@@ -182,6 +182,7 @@ export const ReplyForm = ({
                   key={cat}
                   type="button"
                   onClick={() => setCategory(cat)}
+                  data-tour={`reply-type-${cat}`}
                   className={cn(
                     "flex flex-col items-start gap-2 p-4 rounded-lg border-2 transition-all",
                     category === cat
