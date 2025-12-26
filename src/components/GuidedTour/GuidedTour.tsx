@@ -90,26 +90,34 @@ export const GuidedTour: React.FC = () => {
     const tooltipWidth = 320;
     const tooltipHeight = 200;
     const padding = 16;
-    const arrowOffset = isMobile ? 16 : 12; // More offset on mobile
+    const arrowOffset = isMobile ? 20 : 12; // More offset on mobile
     const bottomMargin = 100; // Safe margin for bottom nav and button visibility
 
     let position: TooltipPosition = {};
-    let effectivePosition = effectiveStepData.position;
+    
+    // Use mobilePosition if on mobile and it's defined, otherwise use default position
+    let effectivePosition = (isMobile && effectiveStepData.mobilePosition) 
+      ? effectiveStepData.mobilePosition 
+      : effectiveStepData.position;
 
-    // Smart position flipping on mobile when there's not enough space
-    if (isMobile) {
-      const spaceRight = window.innerWidth - rect.right;
-      const spaceLeft = rect.left;
-      const spaceTop = rect.top;
-      const spaceBottom = window.innerHeight - rect.bottom - bottomMargin;
+    // Smart position flipping when there's not enough space
+    const spaceRight = window.innerWidth - rect.right;
+    const spaceLeft = rect.left;
+    const spaceTop = rect.top;
+    const spaceBottom = window.innerHeight - rect.bottom - bottomMargin;
 
-      if (effectivePosition === "right" && spaceRight < tooltipWidth + arrowOffset + padding) {
-        // Not enough space on right, flip to bottom or top
-        effectivePosition = spaceBottom > spaceTop ? "bottom" : "top";
-      } else if (effectivePosition === "left" && spaceLeft < tooltipWidth + arrowOffset + padding) {
-        // Not enough space on left, flip to bottom or top
-        effectivePosition = spaceBottom > spaceTop ? "bottom" : "top";
-      }
+    // Flip horizontal positions if not enough space
+    if (effectivePosition === "right" && spaceRight < tooltipWidth + arrowOffset + padding) {
+      effectivePosition = spaceBottom > spaceTop ? "bottom" : "top";
+    } else if (effectivePosition === "left" && spaceLeft < tooltipWidth + arrowOffset + padding) {
+      effectivePosition = spaceBottom > spaceTop ? "bottom" : "top";
+    }
+    
+    // Flip vertical positions if not enough space
+    if (effectivePosition === "top" && spaceTop < tooltipHeight + arrowOffset + padding) {
+      effectivePosition = "bottom";
+    } else if (effectivePosition === "bottom" && spaceBottom < tooltipHeight + arrowOffset) {
+      effectivePosition = "top";
     }
 
     switch (effectivePosition) {
