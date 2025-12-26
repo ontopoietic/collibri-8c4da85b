@@ -2,6 +2,13 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 
 export type TourAction = 'openEndorseForm' | 'openObjectForm' | 'closeForm';
 
+export interface AlternativeContent {
+  targetSelector: string | null;
+  title: string;
+  description: string;
+  position: "top" | "bottom" | "left" | "right";
+}
+
 export interface TourStep {
   id: string;
   targetSelector: string | null;
@@ -10,6 +17,7 @@ export interface TourStep {
   position: "top" | "bottom" | "left" | "right";
   route?: string;
   action?: TourAction;
+  alternativeContent?: AlternativeContent;
 }
 
 interface TourContextType {
@@ -17,12 +25,15 @@ interface TourContextType {
   currentStep: number;
   hasCompleted: boolean;
   steps: TourStep[];
+  currentPhase: string;
+  setCurrentPhase: (phase: string) => void;
   startTour: () => void;
   nextStep: () => void;
   prevStep: () => void;
   skipTour: () => void;
   endTour: () => void;
   currentStepData: TourStep | null;
+  getEffectiveStepData: () => TourStep | null;
 }
 
 const TourContext = createContext<TourContextType | undefined>(undefined);
@@ -68,6 +79,13 @@ export const tourSteps: TourStep[] = [
     description: "Click here to submit a new problem you've noticed or propose a solution. In the Class phase, you can create new concerns.",
     position: "bottom",
     route: "/",
+    // Alternative step when not in class phase
+    alternativeContent: {
+      targetSelector: '[data-tour="navigation"]',
+      title: "Creating New Concerns",
+      description: "New concerns can only be created during the Class phase. Once the discussion moves to Grade or School phase, the focus shifts to refining and voting on existing proposals.",
+      position: "bottom" as const,
+    },
   },
   {
     id: "vote-button",
@@ -173,6 +191,7 @@ export const tourSteps: TourStep[] = [
 export const TourProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [currentPhase, setCurrentPhase] = useState<string>("class");
   const [hasCompleted, setHasCompleted] = useState(() => {
     return localStorage.getItem(TOUR_COMPLETED_KEY) === "true";
   });
@@ -212,6 +231,24 @@ export const TourProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const currentStepData = isActive ? tourSteps[currentStep] : null;
 
+  // Get effective step data, applying alternative content when target not available
+  const getEffectiveStepData = useCallback((): TourStep | null => {
+    if (!isActive || !currentStepData) return null;
+    
+    // Check if this step has alternative content and if we're not in class phase
+    if (currentStepData.id === "new-concern" && currentPhase !== "class" && currentStepData.alternativeContent) {
+      return {
+        ...currentStepData,
+        targetSelector: currentStepData.alternativeContent.targetSelector,
+        title: currentStepData.alternativeContent.title,
+        description: currentStepData.alternativeContent.description,
+        position: currentStepData.alternativeContent.position,
+      };
+    }
+    
+    return currentStepData;
+  }, [isActive, currentStepData, currentPhase]);
+
   return (
     <TourContext.Provider
       value={{
@@ -219,12 +256,15 @@ export const TourProvider: React.FC<{ children: React.ReactNode }> = ({ children
         currentStep,
         hasCompleted,
         steps: tourSteps,
+        currentPhase,
+        setCurrentPhase,
         startTour,
         nextStep,
         prevStep,
         skipTour,
         endTour,
         currentStepData,
+        getEffectiveStepData,
       }}
     >
       {children}

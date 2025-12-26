@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTour } from "@/contexts/TourContext";
 import { ConcernCard } from "@/components/ConcernCard";
 import { NewConcernDialog } from "@/components/NewConcernDialog";
 import { VariantVoting } from "@/components/VariantVoting";
@@ -36,6 +37,7 @@ const Index = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { isAdmin, adminModeEnabled } = useAdmin();
+  const { setCurrentPhase } = useTour();
   const [concerns, setConcerns] = useState<Concern[]>(mockConcerns);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterBy, setFilterBy] = useState<"all" | "my-posts" | "followed" | "unnoticed" | "problems" | "proposals">("all");
@@ -54,7 +56,7 @@ const Index = () => {
   
   // Simulation state
   const [isSimulating, setIsSimulating] = useState(false);
-  const [simulationProgress, setSimulationProgress] = useState(100); // 0-100%
+  const [simulationProgress, setSimulationProgress] = useState(30); // 0-100%, default to end of class phase
   const [persistedSimulationDay, setPersistedSimulationDay] = useState<number | null>(() => {
     const saved = localStorage.getItem('collibri-simulation-day');
     return saved ? parseFloat(saved) : null;
@@ -97,6 +99,11 @@ const Index = () => {
   };
   
   const currentPhase: Phase = getCurrentPhase();
+
+  // Sync current phase with tour context
+  useEffect(() => {
+    setCurrentPhase(currentPhase);
+  }, [currentPhase, setCurrentPhase]);
 
   const handleSimulationToggle = () => {
     if (isSimulating) {

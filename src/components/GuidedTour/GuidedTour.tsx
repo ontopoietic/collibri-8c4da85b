@@ -22,17 +22,21 @@ export const GuidedTour: React.FC = () => {
     nextStep,
     prevStep,
     skipTour,
+    getEffectiveStepData,
   } = useTour();
 
   const [tooltipPosition, setTooltipPosition] = useState<TooltipPosition>({});
   const [spotlightRect, setSpotlightRect] = useState<DOMRect | null>(null);
   const [isPositioned, setIsPositioned] = useState(false);
 
+  // Get the effective step data (may use alternative content based on phase)
+  const effectiveStepData = getEffectiveStepData();
+
   const calculatePosition = useCallback(() => {
-    if (!currentStepData) return;
+    if (!effectiveStepData) return;
 
     // Modal-only step (no target)
-    if (!currentStepData.targetSelector) {
+    if (!effectiveStepData.targetSelector) {
       setSpotlightRect(null);
       setTooltipPosition({
         top: window.innerHeight / 2 - 100,
@@ -42,7 +46,7 @@ export const GuidedTour: React.FC = () => {
       return;
     }
 
-    const target = document.querySelector(currentStepData.targetSelector);
+    const target = document.querySelector(effectiveStepData.targetSelector);
     if (!target) {
       // Target not found, center the tooltip
       setSpotlightRect(null);
@@ -76,10 +80,10 @@ export const GuidedTour: React.FC = () => {
     }
 
     calculateTooltipPosition(rect);
-  }, [currentStepData]);
+  }, [effectiveStepData]);
 
   const calculateTooltipPosition = (rect: DOMRect) => {
-    if (!currentStepData) return;
+    if (!effectiveStepData) return;
 
     const tooltipWidth = 320;
     const tooltipHeight = 200;
@@ -89,7 +93,7 @@ export const GuidedTour: React.FC = () => {
 
     let position: TooltipPosition = {};
 
-    switch (currentStepData.position) {
+    switch (effectiveStepData.position) {
       case "top":
         position = {
           top: rect.top - tooltipHeight - arrowOffset,
@@ -208,7 +212,7 @@ export const GuidedTour: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isActive, calculatePosition]);
 
-  if (!isActive || !currentStepData) return null;
+  if (!isActive || !effectiveStepData) return null;
 
   return (
     <div className="fixed inset-0 z-[10000]">
@@ -261,11 +265,11 @@ export const GuidedTour: React.FC = () => {
           }}
         >
           <TourTooltip
-            title={currentStepData.title}
-            description={currentStepData.description}
+            title={effectiveStepData.title}
+            description={effectiveStepData.description}
             currentStep={currentStep}
             totalSteps={steps.length}
-            position={currentStepData.position}
+            position={effectiveStepData.position}
             onNext={nextStep}
             onPrev={prevStep}
             onSkip={skipTour}
