@@ -130,7 +130,7 @@ const Index = () => {
   const handleResetTimeline = () => {
     setPersistedSimulationDay(null);
     localStorage.removeItem('collibri-simulation-day');
-    setSimulationProgress(100);
+    setSimulationProgress(30); // Reset to day 29
   };
 
   // Determine which variant selection phase we're in (if any)
