@@ -31,21 +31,6 @@ export const TourTooltip: React.FC<TourTooltipProps> = ({
   isLast,
   style,
 }) => {
-  const getArrowClasses = () => {
-    const base = "absolute w-3 h-3 bg-card border rotate-45";
-    switch (position) {
-      case "top":
-        return cn(base, "bottom-[-7px] left-1/2 -translate-x-1/2 border-t-0 border-l-0");
-      case "bottom":
-        return cn(base, "top-[-7px] left-1/2 -translate-x-1/2 border-b-0 border-r-0");
-      case "left":
-        return cn(base, "right-[-7px] top-1/2 -translate-y-1/2 border-l-0 border-b-0");
-      case "right":
-        return cn(base, "left-[-7px] top-1/2 -translate-y-1/2 border-r-0 border-t-0");
-      default:
-        return base;
-    }
-  };
 
   const handleNext = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -73,9 +58,6 @@ export const TourTooltip: React.FC<TourTooltipProps> = ({
       className="w-80 shadow-xl border-primary/20 bg-card z-[10001] relative pointer-events-auto"
       style={style}
     >
-      {/* Arrow pointer */}
-      <div className={getArrowClasses()} />
-      
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <CardTitle className="text-lg font-semibold text-foreground">
