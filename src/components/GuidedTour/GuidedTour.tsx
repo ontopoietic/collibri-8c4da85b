@@ -231,6 +231,18 @@ export const GuidedTour: React.FC = () => {
     return () => clearTimeout(timeout);
   }, [isActive, currentStep, location.pathname, calculatePosition]);
 
+  // Re-calculate position after actions that trigger dynamic elements (forms, modals)
+  useEffect(() => {
+    if (!isActive || !currentStepData?.action) return;
+
+    // Wait for animation to complete before recalculating
+    const timeout = setTimeout(() => {
+      calculatePosition();
+    }, 350);
+
+    return () => clearTimeout(timeout);
+  }, [isActive, currentStepData?.action, calculatePosition]);
+
   // Recalculate on resize
   useEffect(() => {
     if (!isActive) return;
@@ -240,44 +252,61 @@ export const GuidedTour: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isActive, calculatePosition]);
 
+  // Consistent padding around spotlight
+  const SPOTLIGHT_PADDING = 8;
+
   if (!isActive || !effectiveStepData) return null;
 
   return (
     <div className="fixed inset-0 z-[10000]">
-      {/* Overlay with spotlight cutout */}
-      <div
-        className="absolute inset-0 transition-all duration-300"
-        style={{
-          background: spotlightRect
-            ? `radial-gradient(circle at ${spotlightRect.left + spotlightRect.width / 2}px ${spotlightRect.top + spotlightRect.height / 2}px, transparent ${Math.max(spotlightRect.width, spotlightRect.height) / 2 + 8}px, rgba(0, 0, 0, 0.75) ${Math.max(spotlightRect.width, spotlightRect.height) / 2 + 40}px)`
-            : "rgba(0, 0, 0, 0.75)",
-        }}
-        onClick={(e) => {
-          // Allow clicking through to spotlight target
-          if (spotlightRect) {
-            const x = e.clientX;
-            const y = e.clientY;
-            if (
-              x >= spotlightRect.left &&
-              x <= spotlightRect.right &&
-              y >= spotlightRect.top &&
-              y <= spotlightRect.bottom
-            ) {
-              return;
-            }
-          }
-        }}
-      />
+      {/* 4-panel rectangular overlay for precise spotlight cutout */}
+      {spotlightRect ? (
+        <>
+          {/* Top panel - from top of screen to top of target */}
+          <div 
+            className="absolute left-0 right-0 top-0 bg-black/75 transition-all duration-300"
+            style={{ height: Math.max(0, spotlightRect.top - SPOTLIGHT_PADDING) }}
+          />
+          {/* Bottom panel - from bottom of target to bottom of screen */}
+          <div 
+            className="absolute left-0 right-0 bottom-0 bg-black/75 transition-all duration-300"
+            style={{ top: spotlightRect.bottom + SPOTLIGHT_PADDING }}
+          />
+          {/* Left panel - from left edge to left of target (between top/bottom panels) */}
+          <div 
+            className="absolute bg-black/75 transition-all duration-300"
+            style={{ 
+              top: Math.max(0, spotlightRect.top - SPOTLIGHT_PADDING),
+              left: 0,
+              width: Math.max(0, spotlightRect.left - SPOTLIGHT_PADDING),
+              height: spotlightRect.height + SPOTLIGHT_PADDING * 2
+            }}
+          />
+          {/* Right panel - from right of target to right edge */}
+          <div 
+            className="absolute bg-black/75 transition-all duration-300"
+            style={{
+              top: Math.max(0, spotlightRect.top - SPOTLIGHT_PADDING),
+              left: spotlightRect.right + SPOTLIGHT_PADDING,
+              right: 0,
+              height: spotlightRect.height + SPOTLIGHT_PADDING * 2
+            }}
+          />
+        </>
+      ) : (
+        /* Full overlay when no target */
+        <div className="absolute inset-0 bg-black/75" />
+      )}
 
       {/* Spotlight border highlight */}
       {spotlightRect && (
         <div
           className="absolute border-2 border-primary rounded-lg pointer-events-none transition-all duration-300"
           style={{
-            top: spotlightRect.top - 4,
-            left: spotlightRect.left - 4,
-            width: spotlightRect.width + 8,
-            height: spotlightRect.height + 8,
+            top: spotlightRect.top - SPOTLIGHT_PADDING,
+            left: spotlightRect.left - SPOTLIGHT_PADDING,
+            width: spotlightRect.width + SPOTLIGHT_PADDING * 2,
+            height: spotlightRect.height + SPOTLIGHT_PADDING * 2,
             boxShadow: "0 0 0 4px hsl(var(--primary) / 0.3)",
           }}
         />
