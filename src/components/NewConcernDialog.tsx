@@ -68,6 +68,7 @@ export const NewConcernDialog = ({ onSubmit }: NewConcernDialogProps) => {
         size="lg" 
         className="gap-2 bg-new-concern text-new-concern-foreground hover:bg-new-concern"
         onClick={() => setOpen(true)}
+        data-tour="new-concern"
       >
         <Plus className="h-5 w-5" />
         New Concern

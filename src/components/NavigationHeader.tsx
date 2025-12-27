@@ -206,9 +206,7 @@ export const NavigationHeader = ({
           {!isMobile && (
             <div className="flex items-center gap-2" data-tour="navigation">
               {showNewConcernButton && onNewConcern && currentPhase === 'class' && (
-                <div data-tour="new-concern">
-                  <NewConcernDialog onSubmit={onNewConcern} />
-                </div>
+                <NewConcernDialog onSubmit={onNewConcern} />
               )}
               {/* Forum */}
               <Button
