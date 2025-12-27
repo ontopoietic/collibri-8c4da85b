@@ -79,10 +79,10 @@ const Index = () => {
     return "school";
   };
 
-  // Use persisted day if available, otherwise use current time
+  // Use persisted day if available, otherwise default to day 29
   const effectiveTime = persistedSimulationDay !== null
     ? new Date(allPhasesStartDate.getTime() + persistedSimulationDay * 24 * 60 * 60 * 1000)
-    : now;
+    : new Date(allPhasesStartDate.getTime() + 29 * 24 * 60 * 60 * 1000);
 
   const simulatedCurrentTime = isSimulating ? getSimulatedTime(simulationProgress) : effectiveTime;
   
@@ -91,7 +91,7 @@ const Index = () => {
       ? (simulationProgress / 100) * totalDuration
       : persistedSimulationDay !== null 
         ? persistedSimulationDay 
-        : Math.floor((now.getTime() - allPhasesStartDate.getTime()) / (1000 * 60 * 60 * 24));
+        : 29; // Default to day 29
     
     if (daysPassed < 30) return "class";
     if (daysPassed < 60) return "grade";
