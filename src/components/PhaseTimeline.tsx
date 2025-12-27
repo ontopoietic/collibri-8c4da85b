@@ -99,12 +99,12 @@ export const PhaseTimeline = ({
   const today = new Date();
   const actualDaysPassed = Math.floor((today.getTime() - phaseStartDate.getTime()) / (1000 * 60 * 60 * 24));
   
-  // Use slider value when simulating, persisted day when available, otherwise use actual days
+  // Use slider value when simulating, persisted day when available, otherwise default to day 29
   const daysPassed = isSimulating 
     ? Math.min(Math.floor((sliderValue / 100) * phaseDurationDays), phaseDurationDays - 1)
     : persistedDay !== null 
       ? persistedDay
-      : actualDaysPassed;
+      : 29; // Default to day 29 (end of class phase)
   
   // Find current main phase for tracking changes
   const currentMainPhase = mainPhases.find(p => daysPassed >= p.deliberationStart && daysPassed < p.votingEnd);
