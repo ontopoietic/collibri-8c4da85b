@@ -4,6 +4,9 @@ import { useTour } from "@/contexts/TourContext";
 import { TourTooltip } from "./TourTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 
+// Spotlight padding constant
+const SPOTLIGHT_PADDING = 8;
+
 interface TooltipPosition {
   top?: number;
   left?: number;
@@ -251,9 +254,6 @@ export const GuidedTour: React.FC = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isActive, calculatePosition]);
-
-  // Consistent padding around spotlight
-  const SPOTLIGHT_PADDING = 8;
 
   if (!isActive || !effectiveStepData) return null;
 
