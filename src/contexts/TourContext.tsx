@@ -52,9 +52,9 @@ export const tourSteps: TourStep[] = [
   },
   {
     id: "forum-overview",
-    targetSelector: '[data-tour="concern-list"]',
+    targetSelector: '[data-tour="concern-card"]',
     title: "The Forum",
-    description: "This is where all concerns are displayed. Concerns can be problems that need solving or proposals for improvements.",
+    description: "The forum is made up of concerns – problems that need solving or proposals for improvements. Each card shows a concern's title, votes, and reply count. Click on any card to see the full discussion.",
     position: "top",
     mobilePosition: "bottom",
     route: "/",
@@ -65,15 +65,6 @@ export const tourSteps: TourStep[] = [
     title: "Phase Timeline",
     description: "Discussions progress through 3 phases: Class → Grade → School. Each phase expands the audience and refines the best ideas.",
     position: "bottom",
-    route: "/",
-  },
-  {
-    id: "concern-card",
-    targetSelector: '[data-tour="concern-card"]',
-    title: "Concern Cards",
-    description: "Each card shows a concern with its title, description, votes, and reply count. Click on a card to see the full discussion.",
-    position: "top",
-    mobilePosition: "bottom",
     route: "/",
   },
   {
