@@ -309,6 +309,7 @@ const ReplyDetail = () => {
             originalText={reply.text}
             availableReplies={availableReplies}
             parentConcernType={concern.type}
+            compact
           />
         </MobileFormDrawer>
       )}
