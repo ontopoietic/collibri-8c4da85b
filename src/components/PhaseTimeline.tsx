@@ -308,7 +308,7 @@ export const PhaseTimeline = ({
                           <ChevronRight className="h-3 w-3 text-muted-foreground flex-shrink-0 self-start mt-[34px]" />
                           
                           {/* Variant Selection Section */}
-                          <div className="w-24">
+                          <div className="w-24" data-tour="review-phase">
                             <div className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md h-7 bg-muted border border-border">
                               <CheckSquare className="h-4 w-4 text-foreground" />
                               <span className="text-xs font-medium text-foreground">Review</span>
@@ -454,7 +454,7 @@ export const PhaseTimeline = ({
                     <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0 self-start mt-[34px]" />
                     
                     {/* Selection */}
-                    <div className="w-24">
+                    <div className="w-24" data-tour="review-phase">
                       <div className="flex items-center gap-1.5 mb-2 px-2 py-1 rounded-md h-7 bg-muted border border-border">
                         <CheckSquare className="h-4 w-4 text-foreground" />
                         <span className="text-xs font-medium text-foreground">Review</span>
