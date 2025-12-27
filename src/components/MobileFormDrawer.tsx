@@ -23,8 +23,8 @@ export const MobileFormDrawer = ({
 }: MobileFormDrawerProps) => {
   return (
     <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent className="h-[95vh] max-h-[95vh]">
-        <DrawerHeader className="flex items-center justify-between border-b border-border pb-4">
+      <DrawerContent className="h-[95vh] max-h-[95vh] overflow-hidden">
+        <DrawerHeader className="flex items-center justify-between border-b border-border pb-4 min-w-0">
           <DrawerTitle className="text-lg font-semibold">{title}</DrawerTitle>
           <Button
             variant="ghost"
@@ -36,8 +36,8 @@ export const MobileFormDrawer = ({
           </Button>
         </DrawerHeader>
         {/* Native scrollable container instead of ScrollArea */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden pb-6 pt-4 px-4">
-          <div className="w-full min-w-0">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden pb-6 pt-4 px-4 min-w-0">
+          <div className="w-full min-w-0 overflow-hidden">
             {children}
           </div>
         </div>
