@@ -231,13 +231,11 @@ export const PhaseTimeline = ({
             {/* Current Phase Card - Swipeable Carousel */}
             <div className="overflow-hidden touch-pan-x" ref={emblaRef}>
               <div className="flex">
-                {mainPhases.map((phase) => {
+                {mainPhases.map((phase, index) => {
                   const isCompleted = daysPassed >= phase.votingEnd;
                   const isCurrent = daysPassed >= phase.deliberationStart && daysPassed < phase.votingEnd;
-                  const isViewing = viewedPhase === phase.key;
-                  const isDisplayed = viewedPhase ? phase.key === viewedPhase : isCurrent;
-                  
-                  if (!isDisplayed && !isCurrent && !isCompleted) return null;
+                  const isFuture = daysPassed < phase.deliberationStart;
+                  const daysUntilStart = Math.ceil(phase.deliberationStart - daysPassed);
                   
                   // Calculate progress for this specific phase
                   const deliberationDuration = phase.deliberationEnd - phase.deliberationStart;
@@ -251,7 +249,7 @@ export const PhaseTimeline = ({
                   let phaseVotingDaysIn = 0;
                   let phaseIsVotingComplete = false;
                   
-                  if (isCompleted || isViewing) {
+                  if (isCompleted) {
                     phaseDeliberationProgress = 100;
                     phaseVotingProgress = 100;
                     phaseIsVotingComplete = true;
@@ -268,6 +266,26 @@ export const PhaseTimeline = ({
                     }
                   }
                   
+                  // Render future phase with "Starts in X days" message
+                  if (isFuture) {
+                    return (
+                      <div 
+                        key={phase.key} 
+                        className="flex-[0_0_100%] min-w-0 px-1"
+                      >
+                        <div className="rounded-xl p-4 border bg-muted/30 border-border">
+                          <div className="flex flex-col items-center justify-center py-4 text-center">
+                            <phase.icon className="h-8 w-8 text-muted-foreground/50 mb-2" />
+                            <span className="text-sm font-medium text-muted-foreground/70">{phase.label} Phase</span>
+                            <span className="text-lg font-bold text-muted-foreground mt-2">
+                              Starts in {daysUntilStart} {daysUntilStart === 1 ? 'day' : 'days'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                  
                   return (
                     <div 
                       key={phase.key} 
@@ -281,7 +299,7 @@ export const PhaseTimeline = ({
                       <div className={cn(
                         "rounded-xl p-4 border",
                         (isCompleted || daysPassed >= 95) && "cursor-pointer hover:shadow-md transition-shadow",
-                        isCompleted || isViewing
+                        isCompleted
                           ? "bg-muted/50 border-muted-foreground/20" 
                           : "bg-primary/10 border-primary/20"
                       )}>
@@ -291,16 +309,16 @@ export const PhaseTimeline = ({
                             <div className="flex items-center gap-2 mb-2 h-7">
                               <phase.icon className={cn(
                                 "h-4 w-4",
-                                isCompleted || isViewing ? "text-muted-foreground" : "text-primary"
+                                isCompleted ? "text-muted-foreground" : "text-primary"
                               )} />
                               <span className={cn(
                                 "text-sm font-bold",
-                                isCompleted || isViewing ? "text-muted-foreground" : "text-foreground"
+                                isCompleted ? "text-muted-foreground" : "text-foreground"
                               )}>{phase.label}</span>
                             </div>
                             <Progress value={phaseDeliberationProgress} className="h-2 mb-1" />
                             <span className="text-xs text-muted-foreground">
-                              {isCompleted || isViewing ? "Complete" : phaseIsInDeliberation ? `Day ${Math.floor(phaseDeliberationDaysIn) + 1} of 30` : "Complete"}
+                              {isCompleted ? "Complete" : phaseIsInDeliberation ? `Day ${Math.floor(phaseDeliberationDaysIn) + 1} of 30` : "Complete"}
                             </span>
                           </div>
                           
@@ -315,7 +333,7 @@ export const PhaseTimeline = ({
                             </div>
                             <Progress value={phaseVotingProgress} className="h-2 mb-1 [&>div]:bg-[#A8BDFF]" />
                             <span className="text-[10px] text-muted-foreground">
-                              {isCompleted || isViewing ? "Done" : phaseIsInVoting ? `Day ${Math.floor(phaseVotingDaysIn) + 1}/5` : phaseIsVotingComplete ? "Done" : "Soon"}
+                              {isCompleted ? "Done" : phaseIsInVoting ? `Day ${Math.floor(phaseVotingDaysIn) + 1}/5` : phaseIsVotingComplete ? "Done" : "Soon"}
                             </span>
                           </div>
                         </div>
@@ -333,6 +351,8 @@ export const PhaseTimeline = ({
                 const isCurrent = daysPassed >= phase.deliberationStart && daysPassed < phase.votingEnd;
                 const isViewing = viewedPhase === phase.key;
                 
+                const isFuture = daysPassed < phase.deliberationStart;
+                
                 return (
                   <button
                     key={phase.key}
@@ -340,9 +360,9 @@ export const PhaseTimeline = ({
                       // Scroll carousel to this phase
                       emblaApi?.scrollTo(index);
                       // Update viewed phase state
-                      if (isCurrent || isViewing) {
+                      if (isCurrent) {
                         setViewedPhase(null);
-                      } else if (isCompleted) {
+                      } else {
                         setViewedPhase(phase.key);
                       }
                       // Navigate to leaderboard for completed phases or at day 95+
@@ -351,11 +371,11 @@ export const PhaseTimeline = ({
                       }
                     }}
                     className={cn(
-                      "w-4 h-4 rounded-full transition-all",
+                      "w-4 h-4 rounded-full transition-all cursor-pointer hover:scale-110",
                       selectedCarouselIndex === index && "ring-2 ring-primary ring-offset-2 ring-offset-card",
-                      (isCompleted || isCurrent) ? "bg-primary cursor-pointer hover:scale-110" : "bg-muted cursor-default"
+                      (isCompleted || isCurrent) ? "bg-primary" : "bg-muted"
                     )}
-                    aria-label={`${phase.label} phase${isCurrent ? " (current)" : ""}${isCompleted ? " (completed)" : ""}`}
+                    aria-label={`${phase.label} phase${isCurrent ? " (current)" : ""}${isCompleted ? " (completed)" : ""}${isFuture ? " (upcoming)" : ""}`}
                   />
                 );
               })}
@@ -397,14 +417,34 @@ export const PhaseTimeline = ({
                 }
               }
               
+              const daysUntilStart = Math.ceil(phase.deliberationStart - daysPassed);
+              
+              // Render future phase with "Starts in X days" message
+              if (isUpcoming) {
+                return (
+                  <div 
+                    key={phase.key}
+                    className="rounded-xl p-4 border transition-all bg-muted/30 border-border"
+                  >
+                    <div className="h-5 mb-2" /> {/* Spacer to match other cards */}
+                    <div className="flex flex-col items-center justify-center py-4 text-center">
+                      <phase.icon className="h-8 w-8 text-muted-foreground/50 mb-2" />
+                      <span className="text-sm font-medium text-muted-foreground/70">{phase.label} Phase</span>
+                      <span className="text-lg font-bold text-muted-foreground mt-2">
+                        Starts in {daysUntilStart} {daysUntilStart === 1 ? 'day' : 'days'}
+                      </span>
+                    </div>
+                  </div>
+                );
+              }
+              
               return (
                 <div 
                   key={phase.key}
                   className={cn(
                     "rounded-xl p-4 border transition-all",
                     isCompleted ? "bg-muted/50 border-muted-foreground/20 cursor-pointer hover:shadow-md" :
-                    isCurrent ? "bg-primary/10 border-primary/20" :
-                    "bg-muted/30 border-border opacity-60"
+                    "bg-primary/10 border-primary/20"
                   )}
                   onClick={() => {
                     // Allow clicking if phase is completed OR if we're at day 95+
@@ -435,12 +475,11 @@ export const PhaseTimeline = ({
                       <div className="flex items-center gap-2 mb-2 h-7">
                         <phase.icon className={cn(
                           "h-4 w-4",
-                          isCompleted ? "text-muted-foreground" : 
-                          isCurrent ? "text-primary" : "text-muted-foreground"
+                          isCompleted ? "text-muted-foreground" : "text-primary"
                         )} />
                         <span className={cn(
                           "text-sm font-bold",
-                          isCompleted || !isCurrent ? "text-muted-foreground" : "text-foreground"
+                          isCompleted ? "text-muted-foreground" : "text-foreground"
                         )}>{phase.label}</span>
                       </div>
                       <Progress value={phaseDeliberationProgress} className="h-2 mb-1" />
