@@ -184,7 +184,7 @@ export const GuidedTour: React.FC = () => {
     // Get the computed border-radius from the target element
     const computedStyle = window.getComputedStyle(target);
     const borderRadius = parseFloat(computedStyle.borderRadius) || 8;
-    setSpotlightBorderRadius(borderRadius + SPOTLIGHT_PADDING);
+    setSpotlightBorderRadius(borderRadius);
 
     // Scroll element into view if needed
     const isInView =
@@ -286,6 +286,18 @@ export const GuidedTour: React.FC = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isActive, calculatePosition, getEffectiveStepData]);
+
+  // Disable scrolling while tour is active
+  useEffect(() => {
+    if (isActive) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isActive]);
 
   if (!isActive || !effectiveStepData) return null;
 
