@@ -160,7 +160,7 @@ export const tourSteps: TourStep[] = [
     id: "navigation",
     targetSelector: '[data-tour="navigation"]',
     title: "Navigation",
-    description: "Use these buttons to explore Statistics, Leaderboard, and the relationship Graph. Stay informed about the community's progress.",
+    description: "Use these buttons to switch between the Forum, Statistics, and Leaderboard. Stay informed about the community's progress.",
     position: "bottom",
     route: "/",
     action: "closeQuotaModal",
