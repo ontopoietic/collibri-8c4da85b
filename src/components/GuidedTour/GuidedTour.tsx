@@ -164,7 +164,7 @@ export const GuidedTour: React.FC = () => {
     setIsPositioned(true);
   }, [isMobile]);
 
-  // Smart scroll function that positions element optimally based on tooltip placement
+  // Smart scroll function that ALWAYS positions element optimally based on tooltip placement
   const scrollToOptimalPosition = useCallback((target: HTMLElement, stepData: TourStep): Promise<void> => {
     return new Promise((resolve) => {
       const rect = target.getBoundingClientRect();
@@ -172,62 +172,43 @@ export const GuidedTour: React.FC = () => {
       const elementHeight = rect.height + SPOTLIGHT_PADDING * 2;
       
       // Determine the intended tooltip position
-      const tooltipPosition = (isMobile && stepData.mobilePosition) 
+      const tooltipPos = (isMobile && stepData.mobilePosition) 
         ? stepData.mobilePosition 
         : stepData.position;
       
-      let targetScrollTop: number;
-      let needsScroll = false;
+      // Calculate where the element SHOULD be positioned for optimal tooltip placement
+      let idealTop: number;
       
-      if (tooltipPosition === "top") {
-        // Tooltip goes above: position element toward bottom of viewport
+      if (tooltipPos === "top") {
+        // Tooltip goes above: element should be positioned lower in viewport
         // Leave REQUIRED_SPACE_TOP at top for tooltip
-        const idealTop = REQUIRED_SPACE_TOP;
-        const currentTop = rect.top;
-        
-        if (currentTop < idealTop) {
-          // Element is too high, need to scroll down to create space above
-          targetScrollTop = window.scrollY - (idealTop - currentTop);
-          needsScroll = true;
-        } else if (rect.bottom > viewportHeight - 50) {
-          // Element is partially off-screen at bottom
-          targetScrollTop = window.scrollY + (rect.bottom - viewportHeight + 100);
-          needsScroll = true;
-        }
-      } else if (tooltipPosition === "bottom") {
-        // Tooltip goes below: position element toward top of viewport
-        // Leave space at bottom for tooltip
-        const idealTop = HEADER_HEIGHT + 20;
-        const maxTop = viewportHeight - elementHeight - REQUIRED_SPACE_BOTTOM;
-        const currentTop = rect.top;
-        
-        if (currentTop < HEADER_HEIGHT) {
-          // Element is behind header
-          targetScrollTop = window.scrollY + (currentTop - idealTop);
-          needsScroll = true;
-        } else if (currentTop > maxTop) {
-          // Element is too low, not enough space for tooltip below
-          targetScrollTop = window.scrollY - (maxTop - currentTop);
-          needsScroll = true;
-        }
+        idealTop = REQUIRED_SPACE_TOP;
+      } else if (tooltipPos === "bottom") {
+        // Tooltip goes below: element should be positioned toward top of viewport
+        // Leave space below for tooltip
+        idealTop = HEADER_HEIGHT + 20;
       } else {
-        // left/right: ensure element is vertically visible with some padding
-        const idealTop = HEADER_HEIGHT + 20;
-        const maxTop = viewportHeight - elementHeight - 100;
-        const currentTop = rect.top;
-        
-        if (currentTop < HEADER_HEIGHT || currentTop > maxTop) {
-          // Center vertically, but ensure within bounds
-          const centeredTop = (viewportHeight - elementHeight) / 2;
-          targetScrollTop = window.scrollY + (currentTop - Math.max(idealTop, Math.min(centeredTop, maxTop)));
-          needsScroll = true;
-        }
+        // left/right: center element vertically
+        idealTop = (viewportHeight - elementHeight) / 2;
+        // Ensure it's below header
+        idealTop = Math.max(HEADER_HEIGHT + 20, idealTop);
       }
       
-      // Also check if element is horizontally out of view
+      // Clamp idealTop to ensure element fits in viewport
+      const maxIdealTop = viewportHeight - elementHeight - 50;
+      idealTop = Math.min(idealTop, Math.max(HEADER_HEIGHT, maxIdealTop));
+      idealTop = Math.max(HEADER_HEIGHT, idealTop);
+      
+      // Calculate the scroll amount needed
+      const currentTop = rect.top;
+      const scrollDelta = currentTop - idealTop;
+      const targetScrollTop = window.scrollY + scrollDelta;
+      
+      // Also check horizontal visibility
       const isHorizontallyVisible = rect.left >= 0 && rect.right <= window.innerWidth;
       
-      if (needsScroll && targetScrollTop !== undefined) {
+      // Only scroll if the delta is significant (more than 20px) to avoid unnecessary micro-scrolls
+      if (Math.abs(scrollDelta) > 20) {
         window.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
         // Wait for scroll to complete
         setTimeout(resolve, 350);
