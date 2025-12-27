@@ -131,6 +131,7 @@ export const MobileBottomNav = ({
             variant="ghost"
             size="sm"
             onClick={onNewConcern}
+            data-tour="new-concern"
             className={cn(
               "h-auto py-2 gap-1.5",
               isNewConcernOpen 
