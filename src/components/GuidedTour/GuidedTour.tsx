@@ -6,6 +6,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 // Spotlight constants
 const SPOTLIGHT_PADDING = 8;
+const TOOLTIP_GAP = 12; // Gap between spotlight border and tooltip
 
 interface TooltipPosition {
   top?: number;
@@ -42,9 +43,17 @@ export const GuidedTour: React.FC = () => {
     const tooltipWidth = 320;
     const tooltipHeight = 200;
     const padding = 16;
-    // Larger offset on mobile for bottom-positioned tooltips to avoid overlap with forms
-    const arrowOffset = isMobile ? 28 : 12;
     const bottomMargin = 100; // Safe margin for bottom nav and button visibility
+
+    // Create expanded rect that accounts for spotlight padding
+    const expandedRect = {
+      top: rect.top - SPOTLIGHT_PADDING,
+      left: rect.left - SPOTLIGHT_PADDING,
+      right: rect.right + SPOTLIGHT_PADDING,
+      bottom: rect.bottom + SPOTLIGHT_PADDING,
+      width: rect.width + SPOTLIGHT_PADDING * 2,
+      height: rect.height + SPOTLIGHT_PADDING * 2,
+    };
 
     let position: TooltipPosition = {};
     
@@ -53,34 +62,34 @@ export const GuidedTour: React.FC = () => {
       ? stepData.mobilePosition 
       : stepData.position;
 
-    // Smart position flipping when there's not enough space
-    const spaceRight = window.innerWidth - rect.right;
-    const spaceLeft = rect.left;
-    const spaceTop = rect.top;
-    const spaceBottom = window.innerHeight - rect.bottom - bottomMargin;
+    // Smart position flipping when there's not enough space - use expanded rect
+    const spaceRight = window.innerWidth - expandedRect.right;
+    const spaceLeft = expandedRect.left;
+    const spaceTop = expandedRect.top;
+    const spaceBottom = window.innerHeight - expandedRect.bottom - bottomMargin;
 
     // Flip horizontal positions if not enough space
-    if (effectivePosition === "right" && spaceRight < tooltipWidth + arrowOffset + padding) {
+    if (effectivePosition === "right" && spaceRight < tooltipWidth + TOOLTIP_GAP + padding) {
       effectivePosition = spaceBottom > spaceTop ? "bottom" : "top";
-    } else if (effectivePosition === "left" && spaceLeft < tooltipWidth + arrowOffset + padding) {
+    } else if (effectivePosition === "left" && spaceLeft < tooltipWidth + TOOLTIP_GAP + padding) {
       effectivePosition = spaceBottom > spaceTop ? "bottom" : "top";
     }
     
     // Flip vertical positions if not enough space
-    if (effectivePosition === "top" && spaceTop < tooltipHeight + arrowOffset + padding) {
+    if (effectivePosition === "top" && spaceTop < tooltipHeight + TOOLTIP_GAP + padding) {
       effectivePosition = "bottom";
-    } else if (effectivePosition === "bottom" && spaceBottom < tooltipHeight + arrowOffset) {
+    } else if (effectivePosition === "bottom" && spaceBottom < tooltipHeight + TOOLTIP_GAP) {
       effectivePosition = "top";
     }
 
     switch (effectivePosition) {
       case "top":
         position = {
-          top: rect.top - tooltipHeight - arrowOffset,
+          top: expandedRect.top - tooltipHeight - TOOLTIP_GAP,
           left: Math.max(
             padding,
             Math.min(
-              rect.left + rect.width / 2 - tooltipWidth / 2,
+              expandedRect.left + expandedRect.width / 2 - tooltipWidth / 2,
               window.innerWidth - tooltipWidth - padding
             )
           ),
@@ -88,11 +97,11 @@ export const GuidedTour: React.FC = () => {
         break;
       case "bottom":
         position = {
-          top: rect.bottom + arrowOffset,
+          top: expandedRect.bottom + TOOLTIP_GAP,
           left: Math.max(
             padding,
             Math.min(
-              rect.left + rect.width / 2 - tooltipWidth / 2,
+              expandedRect.left + expandedRect.width / 2 - tooltipWidth / 2,
               window.innerWidth - tooltipWidth - padding
             )
           ),
@@ -103,11 +112,11 @@ export const GuidedTour: React.FC = () => {
           top: Math.max(
             padding,
             Math.min(
-              rect.top + rect.height / 2 - tooltipHeight / 2,
+              expandedRect.top + expandedRect.height / 2 - tooltipHeight / 2,
               window.innerHeight - tooltipHeight - bottomMargin
             )
           ),
-          left: rect.left - tooltipWidth - arrowOffset,
+          left: expandedRect.left - tooltipWidth - TOOLTIP_GAP,
         };
         break;
       case "right":
@@ -115,11 +124,11 @@ export const GuidedTour: React.FC = () => {
           top: Math.max(
             padding,
             Math.min(
-              rect.top + rect.height / 2 - tooltipHeight / 2,
+              expandedRect.top + expandedRect.height / 2 - tooltipHeight / 2,
               window.innerHeight - tooltipHeight - bottomMargin
             )
           ),
-          left: rect.right + arrowOffset,
+          left: expandedRect.right + TOOLTIP_GAP,
         };
         break;
     }
