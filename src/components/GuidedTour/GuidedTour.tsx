@@ -226,13 +226,33 @@ export const GuidedTour: React.FC = () => {
       return;
     }
 
-    // Small delay to ensure DOM is ready after navigation
+    // Reset state immediately when step changes to prevent stale positions
+    setIsPositioned(false);
+    setSpotlightRect(null);
+
+    // Use requestAnimationFrame + setTimeout for reliable DOM measurement
     const timeout = setTimeout(() => {
-      calculatePosition();
-    }, 100);
+      requestAnimationFrame(() => {
+        calculatePosition();
+      });
+    }, 150);
 
     return () => clearTimeout(timeout);
   }, [isActive, currentStep, location.pathname, calculatePosition]);
+
+  // Secondary recalculation for mobile to handle layout shifts
+  useEffect(() => {
+    if (!isActive || !isMobile) return;
+
+    // Extra recalculation after layout stabilizes on mobile
+    const timeout = setTimeout(() => {
+      requestAnimationFrame(() => {
+        calculatePosition();
+      });
+    }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [isActive, currentStep, isMobile, calculatePosition]);
 
   // Re-calculate position after actions that trigger dynamic elements (forms, modals)
   useEffect(() => {
@@ -240,7 +260,9 @@ export const GuidedTour: React.FC = () => {
 
     // Wait for animation to complete before recalculating
     const timeout = setTimeout(() => {
-      calculatePosition();
+      requestAnimationFrame(() => {
+        calculatePosition();
+      });
     }, 350);
 
     return () => clearTimeout(timeout);
@@ -260,7 +282,7 @@ export const GuidedTour: React.FC = () => {
   return (
     <div className="fixed inset-0 z-[10000]">
       {/* 4-panel rectangular overlay for precise spotlight cutout */}
-      {spotlightRect ? (
+      {isPositioned && spotlightRect ? (
         <>
           {/* Top panel - from top of screen to top of target */}
           <div 
@@ -294,12 +316,12 @@ export const GuidedTour: React.FC = () => {
           />
         </>
       ) : (
-        /* Full overlay when no target */
+        /* Full overlay during transition or when no target */
         <div className="absolute inset-0 bg-black/75" />
       )}
 
       {/* Spotlight border highlight */}
-      {spotlightRect && (
+      {isPositioned && spotlightRect && (
         <div
           className="absolute border-2 border-primary rounded-lg pointer-events-none transition-all duration-300"
           style={{
