@@ -108,6 +108,7 @@ const Index = () => {
   // Listen for tour reset event to reset simulation to class phase
   useEffect(() => {
     const handleTourReset = () => {
+      setIsSimulating(false); // Stop simulation to ensure phase updates immediately
       setPersistedSimulationDay(null);
       localStorage.removeItem('collibri-simulation-day');
       setSimulationProgress(30); // End of class phase
