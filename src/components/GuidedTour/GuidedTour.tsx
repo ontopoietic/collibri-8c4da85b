@@ -286,32 +286,22 @@ export const GuidedTour: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-[10000]">
-      {/* Overlay with rounded cutout using CSS mask */}
+      {/* Overlay with rounded cutout using box-shadow technique */}
       {isPositioned && spotlightRect ? (
         <div 
-          className="absolute inset-0 bg-black/75 transition-all duration-300"
-          style={{
-            maskImage: `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${window.innerWidth}' height='${window.innerHeight}'><rect width='100%' height='100%' fill='white'/><rect x='${spotlightRect.left - SPOTLIGHT_PADDING}' y='${spotlightRect.top - SPOTLIGHT_PADDING}' width='${spotlightRect.width + SPOTLIGHT_PADDING * 2}' height='${spotlightRect.height + SPOTLIGHT_PADDING * 2}' rx='${SPOTLIGHT_BORDER_RADIUS}' ry='${SPOTLIGHT_BORDER_RADIUS}' fill='black'/></svg>`)}")`,
-            WebkitMaskImage: `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${window.innerWidth}' height='${window.innerHeight}'><rect width='100%' height='100%' fill='white'/><rect x='${spotlightRect.left - SPOTLIGHT_PADDING}' y='${spotlightRect.top - SPOTLIGHT_PADDING}' width='${spotlightRect.width + SPOTLIGHT_PADDING * 2}' height='${spotlightRect.height + SPOTLIGHT_PADDING * 2}' rx='${SPOTLIGHT_BORDER_RADIUS}' ry='${SPOTLIGHT_BORDER_RADIUS}' fill='black'/></svg>`)}")`,
-          }}
-        />
-      ) : (
-        /* Full overlay during transition or when no target */
-        <div className="absolute inset-0 bg-black/75" />
-      )}
-
-      {/* Spotlight border highlight */}
-      {isPositioned && spotlightRect && (
-        <div
-          className="absolute border-2 border-primary rounded-lg pointer-events-none transition-all duration-300"
+          className="absolute border-2 border-primary pointer-events-none transition-all duration-300"
           style={{
             top: spotlightRect.top - SPOTLIGHT_PADDING,
             left: spotlightRect.left - SPOTLIGHT_PADDING,
             width: spotlightRect.width + SPOTLIGHT_PADDING * 2,
             height: spotlightRect.height + SPOTLIGHT_PADDING * 2,
-            boxShadow: "0 0 0 4px hsl(var(--primary) / 0.3)",
+            borderRadius: SPOTLIGHT_BORDER_RADIUS,
+            boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.75), 0 0 0 4px hsl(var(--primary) / 0.3)',
           }}
         />
+      ) : (
+        /* Full overlay during transition or when no target */
+        <div className="absolute inset-0 bg-black/75" />
       )}
 
       {/* Tooltip */}
