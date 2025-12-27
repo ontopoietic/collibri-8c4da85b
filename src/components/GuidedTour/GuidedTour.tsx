@@ -4,8 +4,9 @@ import { useTour, TourStep } from "@/contexts/TourContext";
 import { TourTooltip } from "./TourTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Spotlight padding constant
+// Spotlight constants
 const SPOTLIGHT_PADDING = 8;
+const SPOTLIGHT_BORDER_RADIUS = 8; // matches rounded-lg
 
 interface TooltipPosition {
   top?: number;
@@ -285,40 +286,15 @@ export const GuidedTour: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-[10000]">
-      {/* 4-panel rectangular overlay for precise spotlight cutout */}
+      {/* Overlay with rounded cutout using CSS mask */}
       {isPositioned && spotlightRect ? (
-        <>
-          {/* Top panel - from top of screen to top of target */}
-          <div 
-            className="absolute left-0 right-0 top-0 bg-black/75 transition-all duration-300"
-            style={{ height: Math.max(0, spotlightRect.top - SPOTLIGHT_PADDING) }}
-          />
-          {/* Bottom panel - from bottom of target to bottom of screen */}
-          <div 
-            className="absolute left-0 right-0 bottom-0 bg-black/75 transition-all duration-300"
-            style={{ top: spotlightRect.bottom + SPOTLIGHT_PADDING }}
-          />
-          {/* Left panel - from left edge to left of target (between top/bottom panels) */}
-          <div 
-            className="absolute bg-black/75 transition-all duration-300"
-            style={{ 
-              top: Math.max(0, spotlightRect.top - SPOTLIGHT_PADDING),
-              left: 0,
-              width: Math.max(0, spotlightRect.left - SPOTLIGHT_PADDING),
-              height: spotlightRect.height + SPOTLIGHT_PADDING * 2
-            }}
-          />
-          {/* Right panel - from right of target to right edge */}
-          <div 
-            className="absolute bg-black/75 transition-all duration-300"
-            style={{
-              top: Math.max(0, spotlightRect.top - SPOTLIGHT_PADDING),
-              left: spotlightRect.right + SPOTLIGHT_PADDING,
-              right: 0,
-              height: spotlightRect.height + SPOTLIGHT_PADDING * 2
-            }}
-          />
-        </>
+        <div 
+          className="absolute inset-0 bg-black/75 transition-all duration-300"
+          style={{
+            maskImage: `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${window.innerWidth}' height='${window.innerHeight}'><rect width='100%' height='100%' fill='white'/><rect x='${spotlightRect.left - SPOTLIGHT_PADDING}' y='${spotlightRect.top - SPOTLIGHT_PADDING}' width='${spotlightRect.width + SPOTLIGHT_PADDING * 2}' height='${spotlightRect.height + SPOTLIGHT_PADDING * 2}' rx='${SPOTLIGHT_BORDER_RADIUS}' ry='${SPOTLIGHT_BORDER_RADIUS}' fill='black'/></svg>`)}")`,
+            WebkitMaskImage: `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${window.innerWidth}' height='${window.innerHeight}'><rect width='100%' height='100%' fill='white'/><rect x='${spotlightRect.left - SPOTLIGHT_PADDING}' y='${spotlightRect.top - SPOTLIGHT_PADDING}' width='${spotlightRect.width + SPOTLIGHT_PADDING * 2}' height='${spotlightRect.height + SPOTLIGHT_PADDING * 2}' rx='${SPOTLIGHT_BORDER_RADIUS}' ry='${SPOTLIGHT_BORDER_RADIUS}' fill='black'/></svg>`)}")`,
+          }}
+        />
       ) : (
         /* Full overlay during transition or when no target */
         <div className="absolute inset-0 bg-black/75" />
