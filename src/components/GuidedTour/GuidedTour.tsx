@@ -6,7 +6,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 // Spotlight constants
 const SPOTLIGHT_PADDING = 8;
-const SPOTLIGHT_BORDER_RADIUS = 8; // matches rounded-lg
 
 interface TooltipPosition {
   top?: number;
@@ -31,6 +30,7 @@ export const GuidedTour: React.FC = () => {
 
   const [tooltipPosition, setTooltipPosition] = useState<TooltipPosition>({});
   const [spotlightRect, setSpotlightRect] = useState<DOMRect | null>(null);
+  const [spotlightBorderRadius, setSpotlightBorderRadius] = useState<number>(8);
   const [isPositioned, setIsPositioned] = useState(false);
 
   // Get the effective step data (may use alternative content based on phase)
@@ -166,7 +166,7 @@ export const GuidedTour: React.FC = () => {
       return;
     }
 
-    const target = document.querySelector(stepData.targetSelector);
+    const target = document.querySelector(stepData.targetSelector) as HTMLElement;
     if (!target) {
       // Target not found, center the tooltip
       setSpotlightRect(null);
@@ -180,6 +180,11 @@ export const GuidedTour: React.FC = () => {
 
     const rect = target.getBoundingClientRect();
     setSpotlightRect(rect);
+    
+    // Get the computed border-radius from the target element
+    const computedStyle = window.getComputedStyle(target);
+    const borderRadius = parseFloat(computedStyle.borderRadius) || 8;
+    setSpotlightBorderRadius(borderRadius + SPOTLIGHT_PADDING);
 
     // Scroll element into view if needed
     const isInView =
@@ -295,7 +300,7 @@ export const GuidedTour: React.FC = () => {
             left: spotlightRect.left - SPOTLIGHT_PADDING,
             width: spotlightRect.width + SPOTLIGHT_PADDING * 2,
             height: spotlightRect.height + SPOTLIGHT_PADDING * 2,
-            borderRadius: SPOTLIGHT_BORDER_RADIUS,
+            borderRadius: spotlightBorderRadius,
             boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.75), 0 0 0 4px hsl(var(--primary) / 0.3)',
           }}
         />
