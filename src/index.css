@@ -219,6 +219,11 @@ All colors MUST be HSL.
   }
 }
 
+/* Fix vaul drawer pseudo-element that can cause layout issues */
+[data-vaul-drawer]::after {
+  height: unset !important;
+}
+
 .phase-button:hover {
   background-color: #B3B9C7 !important;
   border-color: #B3B9C7 !important;
