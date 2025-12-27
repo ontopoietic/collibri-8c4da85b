@@ -274,10 +274,10 @@ export const PhaseTimeline = ({
                         className="flex-[0_0_100%] min-w-0 px-1"
                       >
                         <div className="rounded-xl p-4 border bg-muted/30 border-border">
-                          <div className="flex flex-col items-center justify-center py-4 text-center">
-                            <phase.icon className="h-8 w-8 text-muted-foreground/50 mb-2" />
+                          <div className="flex flex-col items-center justify-center py-2 text-center">
+                            <phase.icon className="h-5 w-5 text-muted-foreground/50 mb-1" />
                             <span className="text-sm font-medium text-muted-foreground/70">{phase.label} Phase</span>
-                            <span className="text-lg font-bold text-muted-foreground mt-2">
+                            <span className="text-base font-bold text-muted-foreground mt-1">
                               Starts in {daysUntilStart} {daysUntilStart === 1 ? 'day' : 'days'}
                             </span>
                           </div>
@@ -427,10 +427,10 @@ export const PhaseTimeline = ({
                     className="rounded-xl p-4 border transition-all bg-muted/30 border-border"
                   >
                     <div className="h-5 mb-2" /> {/* Spacer to match other cards */}
-                    <div className="flex flex-col items-center justify-center py-4 text-center">
-                      <phase.icon className="h-8 w-8 text-muted-foreground/50 mb-2" />
+                    <div className="flex flex-col items-center justify-center py-1 text-center">
+                      <phase.icon className="h-5 w-5 text-muted-foreground/50 mb-1" />
                       <span className="text-sm font-medium text-muted-foreground/70">{phase.label} Phase</span>
-                      <span className="text-lg font-bold text-muted-foreground mt-2">
+                      <span className="text-base font-bold text-muted-foreground mt-1">
                         Starts in {daysUntilStart} {daysUntilStart === 1 ? 'day' : 'days'}
                       </span>
                     </div>
