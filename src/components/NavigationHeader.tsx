@@ -104,12 +104,13 @@ export const NavigationHeader = ({
           {/* Mobile Header Icons */}
           {isMobile && (
             <div className="flex items-center gap-2">
-              <Popover>
+              <Popover open={quotaOpen} onOpenChange={setQuotaOpen}>
                 <PopoverTrigger asChild>
                   <Button 
                     variant="ghost" 
                     size="icon"
                     className={iconButtonClass}
+                    data-tour="quota"
                   >
                     <Gauge className="h-5 w-5" />
                   </Button>
