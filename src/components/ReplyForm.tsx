@@ -168,7 +168,7 @@ export const ReplyForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-card p-4 sm:p-6 rounded-lg border border-border" data-tour="reply-form">
+    <form onSubmit={handleSubmit} className="w-full overflow-hidden space-y-4 bg-card p-4 sm:p-6 rounded-lg border border-border" data-tour="reply-form">
       {replyType !== 'question' && allowedCategories.length > 1 && (
         <div className="space-y-3">
           <label className="text-sm font-medium">Response Type</label>
