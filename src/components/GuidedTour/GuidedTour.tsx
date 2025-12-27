@@ -4,9 +4,13 @@ import { useTour, TourStep } from "@/contexts/TourContext";
 import { TourTooltip } from "./TourTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Spotlight constants
+// Spotlight and tooltip constants
 const SPOTLIGHT_PADDING = 8;
 const TOOLTIP_GAP = 12; // Gap between spotlight border and tooltip
+const TOOLTIP_HEIGHT = 200;
+const HEADER_HEIGHT = 80; // Space for sticky header
+const REQUIRED_SPACE_TOP = TOOLTIP_HEIGHT + TOOLTIP_GAP + SPOTLIGHT_PADDING + 20;
+const REQUIRED_SPACE_BOTTOM = TOOLTIP_HEIGHT + TOOLTIP_GAP + SPOTLIGHT_PADDING + 100; // Extra for bottom nav
 
 interface TooltipPosition {
   top?: number;
@@ -160,8 +164,84 @@ export const GuidedTour: React.FC = () => {
     setIsPositioned(true);
   }, [isMobile]);
 
+  // Smart scroll function that positions element optimally based on tooltip placement
+  const scrollToOptimalPosition = useCallback((target: HTMLElement, stepData: TourStep): Promise<void> => {
+    return new Promise((resolve) => {
+      const rect = target.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const elementHeight = rect.height + SPOTLIGHT_PADDING * 2;
+      
+      // Determine the intended tooltip position
+      const tooltipPosition = (isMobile && stepData.mobilePosition) 
+        ? stepData.mobilePosition 
+        : stepData.position;
+      
+      let targetScrollTop: number;
+      let needsScroll = false;
+      
+      if (tooltipPosition === "top") {
+        // Tooltip goes above: position element toward bottom of viewport
+        // Leave REQUIRED_SPACE_TOP at top for tooltip
+        const idealTop = REQUIRED_SPACE_TOP;
+        const currentTop = rect.top;
+        
+        if (currentTop < idealTop) {
+          // Element is too high, need to scroll down to create space above
+          targetScrollTop = window.scrollY - (idealTop - currentTop);
+          needsScroll = true;
+        } else if (rect.bottom > viewportHeight - 50) {
+          // Element is partially off-screen at bottom
+          targetScrollTop = window.scrollY + (rect.bottom - viewportHeight + 100);
+          needsScroll = true;
+        }
+      } else if (tooltipPosition === "bottom") {
+        // Tooltip goes below: position element toward top of viewport
+        // Leave space at bottom for tooltip
+        const idealTop = HEADER_HEIGHT + 20;
+        const maxTop = viewportHeight - elementHeight - REQUIRED_SPACE_BOTTOM;
+        const currentTop = rect.top;
+        
+        if (currentTop < HEADER_HEIGHT) {
+          // Element is behind header
+          targetScrollTop = window.scrollY + (currentTop - idealTop);
+          needsScroll = true;
+        } else if (currentTop > maxTop) {
+          // Element is too low, not enough space for tooltip below
+          targetScrollTop = window.scrollY - (maxTop - currentTop);
+          needsScroll = true;
+        }
+      } else {
+        // left/right: ensure element is vertically visible with some padding
+        const idealTop = HEADER_HEIGHT + 20;
+        const maxTop = viewportHeight - elementHeight - 100;
+        const currentTop = rect.top;
+        
+        if (currentTop < HEADER_HEIGHT || currentTop > maxTop) {
+          // Center vertically, but ensure within bounds
+          const centeredTop = (viewportHeight - elementHeight) / 2;
+          targetScrollTop = window.scrollY + (currentTop - Math.max(idealTop, Math.min(centeredTop, maxTop)));
+          needsScroll = true;
+        }
+      }
+      
+      // Also check if element is horizontally out of view
+      const isHorizontallyVisible = rect.left >= 0 && rect.right <= window.innerWidth;
+      
+      if (needsScroll && targetScrollTop !== undefined) {
+        window.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
+        // Wait for scroll to complete
+        setTimeout(resolve, 350);
+      } else if (!isHorizontallyVisible) {
+        target.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        setTimeout(resolve, 350);
+      } else {
+        resolve();
+      }
+    });
+  }, [isMobile]);
+
   // Calculate position - accepts stepData as parameter to avoid stale closure
-  const calculatePosition = useCallback((stepData: TourStep | null) => {
+  const calculatePosition = useCallback(async (stepData: TourStep | null) => {
     if (!stepData) return;
 
     // Modal-only step (no target)
@@ -187,34 +267,19 @@ export const GuidedTour: React.FC = () => {
       return;
     }
 
-    const rect = target.getBoundingClientRect();
-    setSpotlightRect(rect);
-    
     // Get the computed border-radius from the target element
     const computedStyle = window.getComputedStyle(target);
     const borderRadius = parseFloat(computedStyle.borderRadius) || 8;
     setSpotlightBorderRadius(borderRadius);
 
-    // Scroll element into view if needed
-    const isInView =
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= window.innerHeight &&
-      rect.right <= window.innerWidth;
-
-    if (!isInView) {
-      target.scrollIntoView({ behavior: "smooth", block: "center" });
-      // Recalculate after scroll
-      setTimeout(() => {
-        const newRect = target.getBoundingClientRect();
-        setSpotlightRect(newRect);
-        calculateTooltipPosition(newRect, stepData);
-      }, 300);
-      return;
-    }
-
-    calculateTooltipPosition(rect, stepData);
-  }, [calculateTooltipPosition]);
+    // Smart scroll to optimal position based on tooltip placement
+    await scrollToOptimalPosition(target, stepData);
+    
+    // Get fresh rect after potential scroll
+    const finalRect = target.getBoundingClientRect();
+    setSpotlightRect(finalRect);
+    calculateTooltipPosition(finalRect, stepData);
+  }, [calculateTooltipPosition, scrollToOptimalPosition]);
 
   // Navigation effect - remains unchanged
 
