@@ -36,7 +36,7 @@ export const MobileFormDrawer = ({
             <X className="h-4 w-4" />
           </Button>
         </DrawerHeader>
-        <ScrollArea className="flex-1 px-4 pb-6 pt-4">
+        <ScrollArea className="flex-1 px-0 pb-6 pt-4">
           {children}
         </ScrollArea>
       </DrawerContent>
