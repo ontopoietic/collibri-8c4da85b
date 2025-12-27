@@ -47,9 +47,30 @@ export const TourTooltip: React.FC<TourTooltipProps> = ({
     }
   };
 
+  const handleNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('TourTooltip: Next button clicked');
+    onNext();
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('TourTooltip: Prev button clicked');
+    onPrev();
+  };
+
+  const handleSkip = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('TourTooltip: Skip button clicked');
+    onSkip();
+  };
+
   return (
     <Card
-      className="w-80 shadow-xl border-primary/20 bg-card z-[10001] relative"
+      className="w-80 shadow-xl border-primary/20 bg-card z-[10001] relative pointer-events-auto"
       style={style}
     >
       {/* Arrow pointer */}
@@ -63,8 +84,8 @@ export const TourTooltip: React.FC<TourTooltipProps> = ({
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6 -mr-2 -mt-1"
-            onClick={onSkip}
+            className="h-6 w-6 -mr-2 -mt-1 pointer-events-auto"
+            onClick={handleSkip}
           >
             <X className="h-4 w-4" />
           </Button>
@@ -87,8 +108,8 @@ export const TourTooltip: React.FC<TourTooltipProps> = ({
             <Button
               variant="outline"
               size="sm"
-              onClick={onPrev}
-              className="gap-1"
+              onClick={handlePrev}
+              className="gap-1 pointer-events-auto"
             >
               <ChevronLeft className="h-4 w-4" />
               Back
@@ -96,8 +117,8 @@ export const TourTooltip: React.FC<TourTooltipProps> = ({
           )}
           <Button
             size="sm"
-            onClick={onNext}
-            className="gap-1"
+            onClick={handleNext}
+            className="gap-1 pointer-events-auto"
           >
             {isLast ? "Finish" : "Next"}
             {!isLast && <ChevronRight className="h-4 w-4" />}

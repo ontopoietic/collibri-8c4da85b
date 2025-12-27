@@ -216,16 +216,25 @@ export const TourProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const nextStep = useCallback(() => {
+    console.log('TourContext: nextStep called, currentStep:', currentStep, 'totalSteps:', tourSteps.length);
     if (currentStep < tourSteps.length - 1) {
-      setCurrentStep((prev) => prev + 1);
+      setCurrentStep((prev) => {
+        console.log('TourContext: Moving to step', prev + 1);
+        return prev + 1;
+      });
     } else {
+      console.log('TourContext: Last step reached, ending tour');
       endTour();
     }
   }, [currentStep, endTour]);
 
   const prevStep = useCallback(() => {
+    console.log('TourContext: prevStep called, currentStep:', currentStep);
     if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
+      setCurrentStep((prev) => {
+        console.log('TourContext: Moving back to step', prev - 1);
+        return prev - 1;
+      });
     }
   }, [currentStep]);
 
