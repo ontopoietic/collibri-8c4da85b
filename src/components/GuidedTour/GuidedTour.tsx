@@ -376,7 +376,7 @@ export const GuidedTour: React.FC = () => {
   if (!isActive || !effectiveStepData) return null;
 
   return (
-    <div className="fixed inset-0 z-[10000]">
+    <div className="fixed inset-0 z-[10000] pointer-events-none">
       {/* Overlay with rounded cutout using box-shadow technique */}
       {isPositioned && spotlightRect ? (
         <div 
@@ -398,7 +398,7 @@ export const GuidedTour: React.FC = () => {
       {/* Tooltip */}
       {isPositioned && (
         <div
-          className="absolute transition-all duration-300"
+          className="absolute transition-all duration-300 pointer-events-auto"
           style={{
             top: tooltipPosition.top,
             left: tooltipPosition.left,
