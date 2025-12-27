@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useTour } from "@/contexts/TourContext";
+import { useTour, TourStep } from "@/contexts/TourContext";
 import { TourTooltip } from "./TourTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -34,62 +34,10 @@ export const GuidedTour: React.FC = () => {
 
   // Get the effective step data (may use alternative content based on phase)
   const effectiveStepData = getEffectiveStepData();
-
-  const calculatePosition = useCallback(() => {
-    if (!effectiveStepData) return;
-
-    // Modal-only step (no target)
-    if (!effectiveStepData.targetSelector) {
-      setSpotlightRect(null);
-      setTooltipPosition({
-        top: window.innerHeight / 2 - 100,
-        left: window.innerWidth / 2 - 160,
-      });
-      setIsPositioned(true);
-      return;
-    }
-
-    const target = document.querySelector(effectiveStepData.targetSelector);
-    if (!target) {
-      // Target not found, center the tooltip
-      setSpotlightRect(null);
-      setTooltipPosition({
-        top: window.innerHeight / 2 - 100,
-        left: window.innerWidth / 2 - 160,
-      });
-      setIsPositioned(true);
-      return;
-    }
-
-    const rect = target.getBoundingClientRect();
-    setSpotlightRect(rect);
-
-    // Scroll element into view if needed
-    const isInView =
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= window.innerHeight &&
-      rect.right <= window.innerWidth;
-
-    if (!isInView) {
-      target.scrollIntoView({ behavior: "smooth", block: "center" });
-      // Recalculate after scroll
-      setTimeout(() => {
-        const newRect = target.getBoundingClientRect();
-        setSpotlightRect(newRect);
-        calculateTooltipPosition(newRect);
-      }, 300);
-      return;
-    }
-
-    calculateTooltipPosition(rect);
-  }, [effectiveStepData]);
-
   const isMobile = useIsMobile();
 
-  const calculateTooltipPosition = (rect: DOMRect) => {
-    if (!effectiveStepData) return;
-
+  // Calculate tooltip position - accepts stepData as parameter to avoid stale closure
+  const calculateTooltipPosition = useCallback((rect: DOMRect, stepData: TourStep) => {
     const tooltipWidth = 320;
     const tooltipHeight = 200;
     const padding = 16;
@@ -100,9 +48,9 @@ export const GuidedTour: React.FC = () => {
     let position: TooltipPosition = {};
     
     // Use mobilePosition if on mobile and it's defined, otherwise use default position
-    let effectivePosition = (isMobile && effectiveStepData.mobilePosition) 
-      ? effectiveStepData.mobilePosition 
-      : effectiveStepData.position;
+    let effectivePosition = (isMobile && stepData.mobilePosition) 
+      ? stepData.mobilePosition 
+      : stepData.position;
 
     // Smart position flipping when there's not enough space
     const spaceRight = window.innerWidth - rect.right;
@@ -200,7 +148,60 @@ export const GuidedTour: React.FC = () => {
 
     setTooltipPosition(position);
     setIsPositioned(true);
-  };
+  }, [isMobile]);
+
+  // Calculate position - accepts stepData as parameter to avoid stale closure
+  const calculatePosition = useCallback((stepData: TourStep | null) => {
+    if (!stepData) return;
+
+    // Modal-only step (no target)
+    if (!stepData.targetSelector) {
+      setSpotlightRect(null);
+      setTooltipPosition({
+        top: window.innerHeight / 2 - 100,
+        left: window.innerWidth / 2 - 160,
+      });
+      setIsPositioned(true);
+      return;
+    }
+
+    const target = document.querySelector(stepData.targetSelector);
+    if (!target) {
+      // Target not found, center the tooltip
+      setSpotlightRect(null);
+      setTooltipPosition({
+        top: window.innerHeight / 2 - 100,
+        left: window.innerWidth / 2 - 160,
+      });
+      setIsPositioned(true);
+      return;
+    }
+
+    const rect = target.getBoundingClientRect();
+    setSpotlightRect(rect);
+
+    // Scroll element into view if needed
+    const isInView =
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= window.innerHeight &&
+      rect.right <= window.innerWidth;
+
+    if (!isInView) {
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Recalculate after scroll
+      setTimeout(() => {
+        const newRect = target.getBoundingClientRect();
+        setSpotlightRect(newRect);
+        calculateTooltipPosition(newRect, stepData);
+      }, 300);
+      return;
+    }
+
+    calculateTooltipPosition(rect, stepData);
+  }, [calculateTooltipPosition]);
+
+  // Navigation effect - remains unchanged
 
   // Navigate to required route for current step and dispatch actions
   useEffect(() => {
@@ -231,51 +232,54 @@ export const GuidedTour: React.FC = () => {
     setSpotlightRect(null);
 
     // Use requestAnimationFrame + setTimeout for reliable DOM measurement
+    // Pass fresh step data to avoid stale closure
     const timeout = setTimeout(() => {
       requestAnimationFrame(() => {
-        calculatePosition();
+        calculatePosition(getEffectiveStepData());
       });
     }, 150);
 
     return () => clearTimeout(timeout);
-  }, [isActive, currentStep, location.pathname, calculatePosition]);
+  }, [isActive, currentStep, location.pathname, calculatePosition, getEffectiveStepData]);
 
   // Secondary recalculation for mobile to handle layout shifts
   useEffect(() => {
     if (!isActive || !isMobile) return;
 
     // Extra recalculation after layout stabilizes on mobile
+    // Pass fresh step data to avoid stale closure
     const timeout = setTimeout(() => {
       requestAnimationFrame(() => {
-        calculatePosition();
+        calculatePosition(getEffectiveStepData());
       });
     }, 400);
 
     return () => clearTimeout(timeout);
-  }, [isActive, currentStep, isMobile, calculatePosition]);
+  }, [isActive, currentStep, isMobile, calculatePosition, getEffectiveStepData]);
 
   // Re-calculate position after actions that trigger dynamic elements (forms, modals)
   useEffect(() => {
     if (!isActive || !currentStepData?.action) return;
 
     // Wait for animation to complete before recalculating
+    // Pass fresh step data to avoid stale closure
     const timeout = setTimeout(() => {
       requestAnimationFrame(() => {
-        calculatePosition();
+        calculatePosition(getEffectiveStepData());
       });
     }, 350);
 
     return () => clearTimeout(timeout);
-  }, [isActive, currentStepData?.action, calculatePosition]);
+  }, [isActive, currentStepData?.action, calculatePosition, getEffectiveStepData]);
 
   // Recalculate on resize
   useEffect(() => {
     if (!isActive) return;
 
-    const handleResize = () => calculatePosition();
+    const handleResize = () => calculatePosition(getEffectiveStepData());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isActive, calculatePosition]);
+  }, [isActive, calculatePosition, getEffectiveStepData]);
 
   if (!isActive || !effectiveStepData) return null;
 
