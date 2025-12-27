@@ -221,6 +221,16 @@ export const GuidedTour: React.FC = () => {
     });
   }, [isMobile]);
 
+  // Retry mechanism for finding conditionally rendered elements
+  const findTargetWithRetry = useCallback(async (selector: string, maxRetries = 3): Promise<HTMLElement | null> => {
+    for (let i = 0; i < maxRetries; i++) {
+      const target = document.querySelector(selector) as HTMLElement;
+      if (target) return target;
+      await new Promise(resolve => setTimeout(resolve, 200));
+    }
+    return null;
+  }, []);
+
   // Calculate position - accepts stepData as parameter to avoid stale closure
   const calculatePosition = useCallback(async (stepData: TourStep | null) => {
     if (!stepData) return;
@@ -236,9 +246,10 @@ export const GuidedTour: React.FC = () => {
       return;
     }
 
-    const target = document.querySelector(stepData.targetSelector) as HTMLElement;
+    // Use retry logic for conditionally rendered elements
+    const target = await findTargetWithRetry(stepData.targetSelector);
     if (!target) {
-      // Target not found, center the tooltip
+      // Target not found after retries, center the tooltip
       setSpotlightRect(null);
       setTooltipPosition({
         top: window.innerHeight / 2 - 100,
@@ -260,7 +271,7 @@ export const GuidedTour: React.FC = () => {
     const finalRect = target.getBoundingClientRect();
     setSpotlightRect(finalRect);
     calculateTooltipPosition(finalRect, stepData);
-  }, [calculateTooltipPosition, scrollToOptimalPosition]);
+  }, [calculateTooltipPosition, scrollToOptimalPosition, findTargetWithRetry]);
 
   // Navigation effect - remains unchanged
 
