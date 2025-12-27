@@ -574,6 +574,7 @@ const ConcernDetail = () => {
               originalText={replyToTarget?.text ?? concern.description}
               availableReplies={availableReplies}
               parentConcernType={concern.type}
+              compact
             />
           </MobileFormDrawer>
         )}

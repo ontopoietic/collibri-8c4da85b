@@ -41,6 +41,7 @@ interface ReplyFormProps {
   originalText?: string;
   availableReplies?: Reply[];
   parentConcernType?: "problem" | "proposal" | "counter-proposal";
+  compact?: boolean;
 }
 
 const categoryConfig = {
@@ -76,6 +77,7 @@ export const ReplyForm = ({
   originalText = "",
   availableReplies = [],
   parentConcernType,
+  compact = false,
 }: ReplyFormProps) => {
   const [category, setCategory] = useState<ReplyCategory | "">("");
   const [title, setTitle] = useState("");
@@ -168,11 +170,14 @@ export const ReplyForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-full overflow-hidden box-border space-y-4 bg-card p-4 sm:p-6 rounded-lg border border-border" data-tour="reply-form">
+    <form onSubmit={handleSubmit} className={cn(
+      "w-full max-w-full overflow-hidden box-border space-y-4",
+      !compact && "bg-card p-4 sm:p-6 rounded-lg border border-border"
+    )} data-tour="reply-form">
       {replyType !== 'question' && allowedCategories.length > 1 && (
         <div className="space-y-3">
           <label className="text-sm font-medium">Response Type</label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {allowedCategories.map((cat) => {
               const config = categoryConfig[cat as keyof typeof categoryConfig];
               if (!config) return null;
