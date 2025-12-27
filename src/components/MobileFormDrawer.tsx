@@ -7,7 +7,6 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface MobileFormDrawerProps {
   isOpen: boolean;
@@ -36,11 +35,12 @@ export const MobileFormDrawer = ({
             <X className="h-4 w-4" />
           </Button>
         </DrawerHeader>
-        <ScrollArea className="flex-1 pb-6 pt-4">
-          <div className="px-4 overflow-hidden max-w-full">
+        {/* Native scrollable container instead of ScrollArea */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden pb-6 pt-4 px-4">
+          <div className="w-full max-w-full">
             {children}
           </div>
-        </ScrollArea>
+        </div>
       </DrawerContent>
     </Drawer>
   );
