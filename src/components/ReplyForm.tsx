@@ -171,13 +171,13 @@ export const ReplyForm = ({
 
   return (
     <form onSubmit={handleSubmit} className={cn(
-      "w-full max-w-full overflow-hidden box-border space-y-4",
+      "w-full max-w-full min-w-0 overflow-hidden box-border space-y-4",
       !compact && "bg-card p-4 sm:p-6 rounded-lg border border-border"
     )} data-tour="reply-form">
       {replyType !== 'question' && allowedCategories.length > 1 && (
-        <div className="space-y-3">
+        <div className="space-y-3 min-w-0">
           <label className="text-sm font-medium">Response Type</label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 min-w-0">
             {allowedCategories.map((cat) => {
               const config = categoryConfig[cat as keyof typeof categoryConfig];
               if (!config) return null;

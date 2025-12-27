@@ -37,7 +37,7 @@ export const MobileFormDrawer = ({
         </DrawerHeader>
         {/* Native scrollable container instead of ScrollArea */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden pb-6 pt-4 px-4">
-          <div className="w-full max-w-[calc(100vw-32px)]">
+          <div className="w-full min-w-0">
             {children}
           </div>
         </div>

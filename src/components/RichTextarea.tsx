@@ -15,7 +15,7 @@ export const RichTextarea = forwardRef<HTMLTextAreaElement, RichTextareaProps>(
     useImperativeHandle(ref, () => textareaRef.current as HTMLTextAreaElement);
 
     return (
-      <div className="w-full">
+      <div className="w-full min-w-0 max-w-full">
         <FormattingToolbar 
           textareaRef={textareaRef} 
           value={value} 
