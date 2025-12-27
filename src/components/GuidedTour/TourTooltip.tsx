@@ -58,52 +58,50 @@ export const TourTooltip: React.FC<TourTooltipProps> = ({
       className="w-80 shadow-xl border-primary/20 bg-card z-[10001] relative pointer-events-auto"
       style={style}
     >
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-1">
         <div className="flex items-start justify-between">
-          <CardTitle className="text-lg font-semibold text-foreground">
+          <CardTitle className="text-base font-medium text-foreground">
             {title}
           </CardTitle>
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6 -mr-2 -mt-1 pointer-events-auto"
+            className="h-5 w-5 -mr-2 -mt-1 pointer-events-auto"
             onClick={handleSkip}
           >
-            <X className="h-4 w-4" />
+            <X className="h-3.5 w-3.5" />
           </Button>
         </div>
       </CardHeader>
       
-      <CardContent className="pb-4">
-        <p className="text-sm text-muted-foreground leading-relaxed">
+      <CardContent className="pb-2">
+        <p className="text-xs text-muted-foreground leading-normal">
           {description}
         </p>
       </CardContent>
       
-      <CardFooter className="flex items-center justify-between pt-0">
-        <span className="text-xs text-muted-foreground">
+      <CardFooter className="flex items-center justify-between pt-0 pb-2">
+        <span className="text-[10px] text-muted-foreground">
           {currentStep + 1} of {totalSteps}
         </span>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {!isFirst && (
             <Button
               variant="outline"
-              size="sm"
               onClick={handlePrev}
-              className="gap-1 pointer-events-auto"
+              className="h-7 px-2 text-xs gap-1 pointer-events-auto"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-3.5 w-3.5" />
               Back
             </Button>
           )}
           <Button
-            size="sm"
             onClick={handleNext}
-            className="gap-1 pointer-events-auto"
+            className="h-7 px-2 text-xs gap-1 pointer-events-auto"
           >
             {isLast ? "Finish" : "Next"}
-            {!isLast && <ChevronRight className="h-4 w-4" />}
+            {!isLast && <ChevronRight className="h-3.5 w-3.5" />}
           </Button>
         </div>
       </CardFooter>
