@@ -265,7 +265,10 @@ export const GuidedTour: React.FC = () => {
     setSpotlightBorderRadius(borderRadius);
 
     // Smart scroll to optimal position based on tooltip placement
-    await scrollToOptimalPosition(target, stepData);
+    // Skip scrolling for fixed/sticky elements like navigation bars
+    if (!stepData.noScroll) {
+      await scrollToOptimalPosition(target, stepData);
+    }
     
     // Get fresh rect after potential scroll
     const finalRect = target.getBoundingClientRect();

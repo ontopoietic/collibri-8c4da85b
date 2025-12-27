@@ -20,6 +20,7 @@ export interface TourStep {
   route?: string;
   action?: TourAction;
   alternativeContent?: AlternativeContent;
+  noScroll?: boolean;
 }
 
 interface TourContextType {
@@ -82,6 +83,7 @@ export const tourSteps: TourStep[] = [
     description: "Click here to submit a new problem you've noticed or propose a solution. In the Class phase, you can create new concerns.",
     position: "bottom",
     route: "/",
+    noScroll: true,
     alternativeContent: {
       targetSelector: '[data-tour="navigation"]',
       title: "Creating New Concerns",
