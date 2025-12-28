@@ -548,7 +548,7 @@ const Index = () => {
               </button>
               
               {isProblem && (
-                <div className="space-y-3 pl-2">
+                <div className="space-y-3">
                   <Input
                     placeholder="Problem Title"
                     value={problemTitle}
@@ -586,7 +586,7 @@ const Index = () => {
               </button>
               
               {isSolution && (
-                <div className="space-y-3 pl-2">
+                <div className="space-y-3">
                   <Input
                     placeholder="Solution Title"
                     value={solutionTitle}
@@ -661,7 +661,7 @@ const Index = () => {
                 </button>
                 
                 {isProblem && (
-                  <div className="space-y-3 pl-2">
+                  <div className="space-y-3">
                     <Input
                       placeholder="Problem Title"
                       value={problemTitle}
@@ -699,7 +699,7 @@ const Index = () => {
                 </button>
                 
                 {isSolution && (
-                  <div className="space-y-3 pl-2">
+                  <div className="space-y-3">
                     <Input
                       placeholder="Solution Title"
                       value={solutionTitle}
