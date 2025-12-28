@@ -15,7 +15,7 @@ export const RichTextarea = forwardRef<HTMLTextAreaElement, RichTextareaProps>(
     useImperativeHandle(ref, () => textareaRef.current as HTMLTextAreaElement);
 
     return (
-    <div className="w-full min-w-0 max-w-full overflow-hidden rounded-md ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+    <div className="w-full min-w-0 max-w-full overflow-hidden rounded-md border border-input ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
       <FormattingToolbar 
         textareaRef={textareaRef} 
         value={value} 
@@ -25,7 +25,7 @@ export const RichTextarea = forwardRef<HTMLTextAreaElement, RichTextareaProps>(
         ref={textareaRef}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={cn("rounded-t-none border-t-0 focus-visible:ring-0 focus-visible:ring-offset-0", className)}
+        className={cn("rounded-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0", className)}
         {...props}
       />
     </div>
