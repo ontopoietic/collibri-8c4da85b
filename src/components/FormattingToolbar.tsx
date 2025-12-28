@@ -82,7 +82,7 @@ export const FormattingToolbar = ({ textareaRef, value, onChange }: FormattingTo
 
   return (
     <TooltipProvider>
-      <div className="flex items-center gap-0.5 p-1 pl-2 bg-background border border-b-0 border-input">
+      <div className="flex items-center gap-0.5 p-1 pl-2 bg-background border-b border-input">
         {formatActions.map(({ type, icon: Icon, label, shortcut }) => (
           <Tooltip key={type}>
             <TooltipTrigger asChild>
