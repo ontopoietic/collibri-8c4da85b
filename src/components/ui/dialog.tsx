@@ -38,7 +38,7 @@ const DialogContent = React.forwardRef<
       className={cn(
         "fixed z-50 grid w-full gap-4 border bg-background p-6 shadow-lg duration-200",
         // Mobile-first: bottom sheet as DEFAULT
-        "inset-x-0 bottom-0 top-auto translate-x-0 translate-y-0 rounded-t-xl rounded-b-none max-h-[85vh] overflow-y-auto",
+        "inset-x-0 bottom-0 top-auto translate-x-0 translate-y-0 rounded-t-xl rounded-b-none max-h-[85vh] overflow-y-auto overscroll-contain",
         // Desktop: override to centered modal
         "sm:inset-auto sm:left-[50%] sm:top-[50%] sm:bottom-auto sm:translate-x-[-50%] sm:translate-y-[-50%] sm:max-w-lg sm:rounded-lg sm:max-h-none sm:overflow-visible",
         // Animations - base
