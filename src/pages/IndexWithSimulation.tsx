@@ -6,7 +6,7 @@ import { NewConcernDialog } from "@/components/NewConcernDialog";
 import { VariantVoting } from "@/components/VariantVoting";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { RichTextarea } from "@/components/RichTextarea";
 import { Concern, ConcernType, Phase, SolutionLevel, Reply, UserQuota } from "@/types/concern";
 import { mockConcerns } from "@/data/mockData";
 import { Search, Play, Pause, AlertTriangle, Lightbulb, Filter, ArrowUpDown, Check, ListFilter, User, Heart, EyeOff, Clock, ArrowUp, TrendingUp, Users, School, Building2 } from "lucide-react";
@@ -554,11 +554,11 @@ const Index = () => {
                     value={problemTitle}
                     onChange={(e) => setProblemTitle(e.target.value)}
                   />
-                  <Textarea
+                  <RichTextarea
                     placeholder="Describe the problem..."
                     value={problemDescription}
-                    onChange={(e) => setProblemDescription(e.target.value)}
-                    rows={4}
+                    onChange={setProblemDescription}
+                    className="min-h-[100px]"
                   />
                 </div>
               )}
@@ -592,11 +592,11 @@ const Index = () => {
                     value={solutionTitle}
                     onChange={(e) => setSolutionTitle(e.target.value)}
                   />
-                  <Textarea
+                  <RichTextarea
                     placeholder="Describe your solution..."
                     value={solutionDescription}
-                    onChange={(e) => setSolutionDescription(e.target.value)}
-                    rows={4}
+                    onChange={setSolutionDescription}
+                    className="min-h-[100px]"
                   />
                   <Select value={solutionLevel} onValueChange={(value: SolutionLevel) => setSolutionLevel(value)}>
                     <SelectTrigger>
@@ -667,11 +667,11 @@ const Index = () => {
                       value={problemTitle}
                       onChange={(e) => setProblemTitle(e.target.value)}
                     />
-                    <Textarea
+                    <RichTextarea
                       placeholder="Describe the problem..."
                       value={problemDescription}
-                      onChange={(e) => setProblemDescription(e.target.value)}
-                      rows={4}
+                      onChange={setProblemDescription}
+                      className="min-h-[100px]"
                     />
                   </div>
                 )}
@@ -705,11 +705,11 @@ const Index = () => {
                       value={solutionTitle}
                       onChange={(e) => setSolutionTitle(e.target.value)}
                     />
-                    <Textarea
+                    <RichTextarea
                       placeholder="Describe your solution..."
                       value={solutionDescription}
-                      onChange={(e) => setSolutionDescription(e.target.value)}
-                      rows={4}
+                      onChange={setSolutionDescription}
+                      className="min-h-[100px]"
                     />
                     <Select value={solutionLevel} onValueChange={(value: SolutionLevel) => setSolutionLevel(value)}>
                       <SelectTrigger>
